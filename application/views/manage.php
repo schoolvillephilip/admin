@@ -26,7 +26,7 @@
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="demo-pli-home"></i></a></li>
                     <li><a href="#">Manage</a></li>
-                    <li class="active">roduct</li>
+                    <li class="active">product</li>
                 </ol>
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End breadcrumb-->
@@ -63,7 +63,6 @@
                                     <td><i class="fa fa-plus"></i></td>
                                 </tr>
                             <?php endforeach;?>
-
                             </tbody>
                         </table>
                     </div>

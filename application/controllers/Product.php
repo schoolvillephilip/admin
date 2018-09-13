@@ -79,7 +79,7 @@ class Product extends CI_Controller{
                 // Product Block
             $product_table = array(
                 'seller_id' => base64_decode($this->session->userdata('logged_id')),
-                'sku' => strtoupper(generate_token(10)),
+                'sku' => strtoupper(generate_token(6)),
                 'product_name' => cleanit($this->input->post('product_name')),
                 'brand_name' => cleanit($this->input->post('brand_name')),
                 'model' => cleanit($this->input->post('model')),
@@ -93,7 +93,7 @@ class Product extends CI_Controller{
                 'main_material' => cleanit($this->input->post('main_material')),
                 'dimensions' => cleanit($this->input->post('dimensions')),
                 'weight'    => cleanit($this->input->post('weight')),
-                'product_warranty' => htmlentities($this->input->post('product_warranty')),
+                'product_warranty' => htmlentities($this->input->post('product_warranty') , ENT_QUOTES),
                 'warranty_type' => json_encode($this->input->post('warranty_type')),
                 'warranty_address' => $this->input->post('warranty_address'),
                 'certifications' => json_encode($this->input->post('certifications')),
@@ -101,15 +101,22 @@ class Product extends CI_Controller{
                 'created_on' => get_now()
             );
 
-            $product_id  = $this->seller->insert_data('products', $product_table);
 
-                // Product Features Block
-    //                if( $this->input->post('attributes') !== null  && sizeof($this->input->post('attributes') > 0 ) ){
-    //                    // this is a multi-dimensional array
-    //                    foreach( $this->input->post('attributes') as $attributes => $attribute ){
-    //                        echo $attribute;
-    //                    }
-    //                }
+            //     Product Features Block
+            // Since we are getting the specification name; we loop through the specification json
+            // SELECT id FROM specifications WHERE spec_name = 'POST_KEY'
+            $attributes = array();
+            foreach($_POST as $post => $value ){
+                if( substr_compare('attribute_',$post,0,10 ) == 0 ){
+                    // we found a match
+                    if( !empty($value )) {
+                        $feature_name = explode('_', $post);
+                        $attributes[$feature_name[1]] = $value;
+                    }
+                }
+            }
+            $product_table['attributes'] = json_encode($attributes);
+            $product_id  = $this->seller->insert_data('products', $product_table);
 
             // Product Variation Block
             $count_check = sizeof($this->input->post('sale_price'));

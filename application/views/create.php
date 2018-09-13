@@ -279,13 +279,13 @@
                                                                                         <?php if( !empty($specification['options']) ) :
                                                                                             $options = json_decode($specification['options']);
                                                                                         ?>
-                                                                                            <select name="attributes[]" class="selectpicker" <?php if($specification['multiple_options']) echo 'multiple'; ?>  title="Choose <?= $specification['spec_name']; ?>" data-width="100%">
+                                                                                            <select name="attribute_<?= $specification['spec_name']; ?>" class="selectpicker" <?php if($specification['multiple_options']) echo 'multiple'; ?>  title="Choose <?= $specification['spec_name']; ?>" data-width="100%">
                                                                                             <?php foreach ($options as $key => $value ) : ?>
                                                                                                 <option value="<?= $value; ?>"><?= ucwords(trim($value)); ?></option>
                                                                                             <?php endforeach; ?>
                                                                                             </select>
                                                                                         <?php else: ?>
-                                                                                            <input type="text" placeholder="<?= $specification['spec_name']; ?>" name="attributes[]" class="form-control">
+                                                                                            <input type="text" placeholder="<?= $specification['spec_name']; ?>" name="attribute_<?= $specification['spec_name']; ?>" class="form-control">
                                                                                         <?php endif; ?>
                                                                                         <span class="text-sm text-dark"><?= $specification['description']; ?></span>
                                                                                     </div>

@@ -135,13 +135,12 @@ Class Seller_model extends CI_Model{
         }
     }
 
-    function get_product($id, $select = ''){
+    function get_product($id, $status = '', $select = ''){
         $this->db->where('seller_id', $id);
+        if( $status !== '' ) $this->db->where('product_status', $status );
         $this->db->select($select);
         $results = $this->db->get('products')->result_array();
         if( !empty($results) ){
-//            $result = (array)$result;
-            // get the price and the availability
             foreach ( $results as $result ){
                 $this->db->where('product_id', $result['id'] );
                 $this->db->select('AVG(sale_price) AS sale_price, AVG(discount_price) AS discount_price');

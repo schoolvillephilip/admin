@@ -65,7 +65,7 @@
                         </li>
 
                         <!--Menu list item-->
-                        <li class="<?php if($pg_name == 'product') echo 'class="active-sub"'?>">
+                        <li class="<?php if($pg_name == 'product' || $pg_name == 'manage_product' ) echo 'class="active-sub"'?>">
                             <a href="#">
                                 <i class="demo-pli-split-vertical-2"></i>
                                 <span class="menu-title">Products</span>
@@ -73,26 +73,18 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse <?php if($pg_name = 'product') echo 'in';?>">
+                            <ul class="collapse <?php if($pg_name == 'product' || $pg_name == 'manage_product') echo 'in';?>">
                                 <li <?php if($sub_name =='select_category') echo 'class="active-link"' ?>><a href="<?= base_url('product'); ?>">Select Category</a></li>
                                 <li <?php if($sub_name == 'add_product') echo 'class="active-link"' ?>><a href="<?= base_url('product/create'); ?>">Add new product</a></li>
-<!--                                <li>-->
-<!--                                    <a href="#">Manage Products<i class="arrow"></i></a>-->
-<!--                                    <ul class="collapse">-->
-<!--                                        <li href="--><?//= base_url('manage/'); ?><!--"> All Product</li>-->
-<!--                                        <li href="--><?//= base_url('manage/pending'); ?><!--"> Awaiting Approval</li>-->
-<!--                                        <li href="--><?//= base_url('manage/missing_images'); ?><!--"> Missing Images</li>-->
-<!--                                        <li href="--><?//= base_url('manage/sold_out'); ?><!--"> Sold Out</li>-->
-<!--                                        <li href="--><?//= base_url('manage/inactive'); ?><!--"> Inactive</li>-->
-<!--                                    </ul>-->
-<!--                                </li>-->
+
                                 <li>
                                     <a href="#">Manage Products<i class="arrow"></i></a>
                                     <!--Submenu-->
                                     <ul class="collapse">
-                                        <li><a href="<?= base_url('manage/'); ?>">Delivered</a></li>
-                                        <li><a href="<?= base_url('manage/pending'); ?>">Canceled</a></li>
-                                        <li><a href="<?= base_url('manage/missing_images'); ?>">Failed Delivery</a></li>
+                                        <li><a href="<?= base_url('manage/'); ?>">All Products</a></li>
+                                        <li><a href="<?= base_url('manage/pending'); ?>">Pending</a></li>
+                                        <li><a href="<?= base_url('manage/delivered'); ?>">Delivered</a></li>
+                                        <li><a href="<?= base_url('manage/missing_images'); ?>">Missing Images</a></li>
                                         <li><a href="<?= base_url('manage/sold_out'); ?>"">Returned</a></li>
                                         <li><a href="<?= base_url('manage/inactive'); ?>"">Inactive</a></li>
                                     </ul>
