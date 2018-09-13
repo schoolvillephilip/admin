@@ -13,14 +13,15 @@
     <link href="<?= base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/nifty.min.css')?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/demo/nifty-demo-icons.min.css')?>" rel="stylesheet">
-    <?php if( in_array($pg_name, array('product','template', 'settings'))) :?>
+    <?php if( in_array($pg_name, array('product','template', 'settings','select_category','category','sub_category'))) :?>
         <link href="<?= base_url('assets/plugins/bootstrap-validator/bootstrapValidator.min.css')?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/dropzone/dropzone.min.html')?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css')?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.css')?>" rel="stylesheet">
+        <link href="<?= base_url('assets/plugins/bootstrap-table/bootstrap-table.min.css')?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')?>" rel="stylesheet">
     <?php endif; ?>
-    <?php if( in_array($pg_name, array('manage_product') ) ): ?>
+    <?php if( in_array($pg_name, array('manage_product','select_category',) ) ): ?>
         <!--DataTables [ OPTIONAL ]-->
         <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">
