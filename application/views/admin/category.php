@@ -1,4 +1,6 @@
 <?php $this->load->view('templates/meta_tags'); ?>
+<link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
+<link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">
 </head>
 <body>
     <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -40,46 +42,33 @@
 							<h3 class="panel-title" style="font-weight: bold">Category</h3>
 						</div>
 						<div class="panel-body">
-							<table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
+							<table id="basic" class="table table-striped table-bordered" cellspacing="0"
 								   width="100%">
 								<thead>
 								<tr>
-									<th>Name</th>
-									<th class="min-tablet">Date Created</th>
-									<th class="min-tablet">Action</th>
+                                    <th></th>
+									<th class="text-center">Name</th>
+									<th class="min-tablet text-center">Date Created</th>
+									<th class="min-tablet text-center">Action</th>
 								</tr>
 								</thead>
 								<tbody>
-								<tr>
-									<td><a href="<?= base_url('categories/category_detail'); ?>">Home Audio / Video</a></td>
-									<td>2018-08-24 21:20:30</td>
-									<td><input id="1" type='checkbox' name='featured_image' title="select this item"
-											   value="1"></td>
-								</tr>
-								<tr>
-									<td>Men Wears</td>
-									<td>2018-08-24 21:23:40</td>
-									<td><input id="2" type='checkbox' name='featured_image' title="select this item"
-											   value="2"></i></td>
-								</tr>
-								<tr>
-									<td>Tablet Phones</td>
-									<td>2018-08-24 21:23:59</td>
-									<td><input id="3" type='checkbox' name='featured_image' title="select this item"
-											   value="3"></i></td>
-								</tr>
-								<tr>
-									<td>Graphics Design</td>
-									<td>2018-08-27 11:15:54</td>
-									<td><input id="4" type='checkbox' name='featured_image' title="select this item"
-											   value="4"></i></td>
-								</tr>
-								<tr>
-									<td>Ladies Wears</td>
-									<td>2018-08-27 11:15:54</td>
-									<td><input id="5" type='checkbox' name='featured_image' title="select this item"
-											   value="5"></i></td>
-								</tr>
+                                    <?php foreach($categories->result() as $category ) : ?>
+                                        <tr>
+                                            <td class="text-center"><input id="1" type='checkbox' title="select this item"
+                                                                           value="1"></i></td>
+                                            <td class="text-center">
+                                                <a href="<?= base_url('categories/category_detail/' . $category->root_category_id); ?>"><?= ucwords($category->name)?></a>
+                                            </td>
+                                            <td class="text-center"><?= neatDate($category->inserted_at); ?></td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-mint btn-active-mint">Edit</button>
+                                                    <button class="btn btn-danger btn-active-danger">Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
@@ -130,6 +119,22 @@
 
 
     <?php $this->load->view('templates/scripts'); ?>
+    <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
+    <script>
+        $(document).ready(function (x) {
+            $('#basic').dataTable( {
+                "responsive": true,
+                "language": {
+                    "paginate": {
+                        "previous": '<i class="demo-psi-arrow-left"></i>',
+                        "next": '<i class="demo-psi-arrow-right"></i>'
+                    }
+                }
+            } );
+        });
+    </script>
 
 </body>
 

@@ -4,7 +4,7 @@
         <!--================================-->
         <div class="navbar-header">
             <a href="index-2.html" class="navbar-brand">
-                <img src="img/carrito-logo" alt="Nifty Logo" class="brand-icon">
+                <img src="img/carrito-logo" alt="Carrito Logo" class="brand-icon">
                 <div class="brand-title">
                     <span class="brand-text">Carrito</span>
                 </div>
@@ -16,7 +16,6 @@
         <!--================================-->
         <div class="navbar-content">
             <ul class="nav navbar-top-links">
-
                 <!--Navigation toogle button-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <li class="tgl-menu-btn">

@@ -5,8 +5,8 @@
 		<!--================================-->
 		<div class="mainnav-brand">
 			<a href="<?= base_url(); ?>" class="brand">
-				<img src="<?= base_url('assets/img/carrito-logo.png'); ?>" alt="Carrito marketplace Logo"
-					 class="brand-icon">
+<!--				<img src="--><?//= base_url('assets/img/carrito-logo.png'); ?><!--" alt="Carrito marketplace Logo"-->
+<!--					 class="brand-icon">-->
 				<span class="brand-text">Carrito</span>
 			</a>
 			<a href="#" class="mainnav-toggle"><i class="pci-cross pci-circle icon-lg"></i></a>
@@ -23,9 +23,9 @@
 					<!--================================-->
 					<div id="mainnav-profile" class="mainnav-profile">
 						<div class="profile-wrap text-center">
-							<div class="pad-btm">
-								<img class="img-circle img-md" src="img/profile-photos/1.png" alt="Profile Picture">
-							</div>
+<!--							<div class="pad-btm">-->
+<!--								<img class="img-circle img-md" src="img/profile-photos/1.png" alt="Profile Picture">-->
+<!--							</div>-->
 							<a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
                                                 <i class="dropdown-caret"></i>

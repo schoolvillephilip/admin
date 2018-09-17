@@ -1,4 +1,6 @@
 <?php $this->load->view('templates/meta_tags'); ?>
+<link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
+<link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -40,48 +42,39 @@
 						<h3 class="panel-title" style="font-weight: bold">Specifications</h3>
 					</div>
 					<div class="panel-body">
-						<table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
+						<table id="basic" class="table table-striped table-bordered" cellspacing="0"
 							   width="100%">
 							<thead>
 							<tr>
+								<th></th>
 								<th>Specification Name</th>
 								<th class="min-tablet">Description</th>
+								<th class="min-tablet">Options</th>
 								<th class="min-tablet">Action</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td><a href="<?= base_url('categories/specification_detail'); ?>">Features</a></td>
-								<td>Select the features of the product</td>
-								<td><input id="1" type='checkbox' name='featured_image' title="select this item"
-										   value="1"></i></td>
-							</tr>
-							<tr>
-								<td>Display Features</td>
-								<td>Specify the type of display. Example: Retina, Full HD, 3D</td>
-								<td><input id="2" type='checkbox' name='featured_image' title="select this item"
-										   value="2"></i></td>
-							</tr>
-							<tr>
-								<td>Refresh Rate</td>
-								<td>Specifying the screen refresh rate in MHz Example: 40</td>
-								<td><input id="3" type='checkbox' name='featured_image' title="select this item"
-										   value="3"></i></td>
-							</tr>
-							<tr>
-								<td>Display Size</td>
-								<td>Specify the size of the display in inch. Example: 47</td>
-								<td><input id="4" type='checkbox' name='featured_image' title="select this item"
-										   value="4"></i></td>
-							</tr>
-							<tr>
-								<td>Heel type</td>
-								<td>Define the type of heel the shoe has Example: e.g. Block, Cuban, Flared, Mid,
-									Stiletto
-								</td>
-								<td><input id="5" type='checkbox' name='featured_image' title="select this item"
-										   value="5"></i></td>
-							</tr>
+                                <?php foreach($specifications->result() as $specification ) : ?>
+                                    <tr>
+                                        <td><input id="1" type='checkbox' title="select this item"
+                                                   value="1"></i></td>
+                                        <td><a href="<?= base_url('categories/specification_detail'); ?>"><?= $specification->spec_name; ?></a></td>
+                                        <td><?= $specification->description; ?></td>
+                                        <td>
+                                            <?php
+                                                $options = json_decode($specification->options);
+                                                if( !is_null($options) )
+                                                    foreach( $options as $option ) echo $option .' ,'
+                                            ?>
+                                        </td>
+                                        <td class="text-center">
+
+                                                <button class="btn btn-mint btn-active-mint">Edit</button>
+                                                <button class="btn btn-danger btn-active-danger">Delete</button>
+<!--                                            </div>-->
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
 							</tbody>
 						</table>
 					</div>
@@ -126,11 +119,22 @@
 </div>
 <!--===================================================-->
 <!-- END OF CONTAINER -->
-<!--JAVASCRIPT-->
-<!--=================================================-->
-
-
 <?php $this->load->view('templates/scripts'); ?>
+<script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
+<script>
+    $(document).ready(function (x) {
+        $('#basic').dataTable( {
+            "responsive": true,
+            "language": {
+                "paginate": {
+                    "previous": '<i class="demo-psi-arrow-left"></i>',
+                    "next": '<i class="demo-psi-arrow-right"></i>'
+                }
+            }
+        } );
+    });
+</script>
 </body>
-
 </html>

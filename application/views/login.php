@@ -14,7 +14,7 @@
 		        <div class="panel-body">
 		            <div class="mar-ver pad-btm">
 		                <h1 class="h3 text-2x">Login</h1>
-		                <p class="text-semibold">Sign In to your seller account</p>
+		                <p class="text-semibold">Sign In to your admin account</p>
                         <?php $this->load->view('msg_view'); ?>
 		            </div>
 		            <?= form_open('login/process'); ?>
@@ -34,7 +34,6 @@
 		
 		        <div class="pad-all">
 		            <a href="<?= base_url('reset'); ?>" class="btn-link mar-rgt">Forgot password ?</a>
-		            <a href="<?= base_url('register'); ?>" class="btn-link mar-lft">Create a seller account</a>
 		        </div>
 		    </div>
 		</div>
@@ -43,11 +42,8 @@
     </div>
     <!--===================================================-->
     <!-- END OF CONTAINER -->
-
     <!--JAVASCRIPT-->
     <!--=================================================-->
-    <?php foreach ($scripts as $tag ) : ?>
-        <script src="<?= base_url('assets/') . $tag; ?>"></script>
-    <?php endforeach;?>
+    <?php $this->load->view('templates/scripts.php'); ?>
 </body>
 </html>

@@ -11,16 +11,15 @@ class Login extends CI_Controller{
         $this->load->model('seller_model', 'seller');
         if( $this->session->userdata('logged_in') ){
             // Ursher the person to where he is coming from
-            if( !empty($this->session->userdata('referred_from')) ) redirect($this->session->userdata('referred_from'));
+            $referred_from = $this->session->userdata('referred_from');
+            if( !empty( $referred_from ) ) redirect( $referred_from );
             redirect('login');
         } 
     }
 
     public function index(){
-        $page_data['page_title'] = 'Login to your seller account';
+        $page_data['page_title'] = 'Login to your admin account';
         $page_data['pg_name'] = 'login';
-        $page_data['meta_tags'] = array( 'css/bootstrap.min.css','css/nifty.min.css','css/nifty-demo-icons.min.css','css/nifty-demo.min.css');
-        $page_data['scripts'] = array('js/jquery.min.js','js/bootstrap.min.js', 'js/nifty.min.js');
         $this->load->view('login', $page_data);
     }
 
@@ -34,7 +33,6 @@ class Login extends CI_Controller{
             // $this->output->enable_profiler(TRUE);
             $this->form_validation->set_rules('email', 'Email Address','trim|required|xss_clean|valid_email');
             $this->form_validation->set_rules('password', 'Password','trim|required|xss_clean|min_length[6]|max_length[15]');
-            $output_array['status'] = 'error';
             if ($this->form_validation->run() == FALSE) {
                 $this->session->set_flashdata('error_msg','There was an error with the login information. Please fix the following <br />' . validation_errors() );
                 redirect('login');
