@@ -26,9 +26,7 @@
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
-					<li><a href="#">Categories</a></li>
-					<li><a href="#">Categories List</a></li>
-					<li class="active">Home Audio / Video</li>
+					<li><a href="#">Category</a></li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
@@ -37,35 +35,36 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="panel">
+                    <?php $this->load->view('msg_view'); ?>
 					<div class="panel-heading">
-						<h3 class="panel-title" style="font-weight: bold">Home Audio / Video</h3>
+						<h3 class="panel-title" style="font-weight: bold"><?= $category->name; ?></h3>
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal">
+                        <?= form_open('', 'class="form-horizontal"'); ?>
 							<div class="form-group">
-								<label class="col-lg-3 control-label" for="demo-hor-inputemail">Name</label>
+								<label class="col-lg-3 control-label" for="">Root Category Name</label>
 								<div class="col-lg-7">
-									<input type="text" value="Home Audio / Video" id="demo-hor-inputemail"
-										   class="form-control"/>
+                                    <select name="root_category_id" class="selectpicker"
+                                            title="Select Root Category..." data-width="100%">
+                                        <?php foreach($root_categories->result() as $root_category ){
+                                            $selected = $root_category->root_category_id == $category->root_category_id ? 'selected' : '';
+                                            echo '<option value="'.$root_category->root_category_id.'" '.$selected.'>'.$root_category->name.' </option>';
+                                        }
+                                        ?>
+                                    </select>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-lg-3 control-label">Root Category</label>
+								<label class="col-lg-3 control-label">Category Name</label>
 								<div class="col-lg-7">
-									<select name="features[]" class="selectpicker" multiple
-											title="Choose features..." data-width="100%">
-										<option selected="selected" name="electronics">Electronics</option>
-										<option name="fashion">Fashion</option>
-									</select>
+                                    <input type="text" name="name" value="<?= $category->name; ?>" required class="form-control"/>
 								</div>
-
-
-					</div>
-					<div class="panel-footer text-center">
-						<button class="btn btn-primary" type="submit">Submit</button>
-					</div>
-
-					</form>
+                            </div>
+                            <input type="hidden" name="id" value="<?= $category->category_id; ?>">
+                            <div class="panel-footer text-center">
+                                <button class="btn btn-primary" type="submit">Update</button>
+                            </div>
+                        <?= form_close(); ?>
 				</div>
 			</div>
 		</div>

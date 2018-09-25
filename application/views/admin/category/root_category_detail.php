@@ -37,23 +37,46 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="panel">
+                    <?php $this->load->view('msg_view'); ?>
 					<div class="panel-heading">
-						<h3 class="panel-title" style="font-weight: bold">Fashion</h3>
+						<h3 class="panel-title" style="font-weight: bold">Editing <?= $category->name; ?> root category</h3>
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label class="col-lg-3 control-label" for="demo-hor-inputemail">Name</label>
-								<div class="col-lg-7">
-									<input type="name" value="Electronics/Tablets" id="demo-hor-inputemail"
-										   class="form-control"/>
-								</div>
-							</div>
+                        <?= form_open_multipart('', 'class="form-horizontal"');?>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="">Root Category Name</label>
+                                <div class="col-lg-7">
+                                    <input type="text" name="name" class="form-control" value="<?= $category->name;?>" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="">Icon</label>
+                                <div class="col-lg-7">
+                                    <input type="text" name="icon" class="form-control" value="<?= $category->icon; ?>" required placeholder="Eg fa-telephone : Get the icon from frontawesome.com"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="">Description</label>
+                                <div class="col-lg-7">
+                                    <textarea name="description" class="form-control"><?= $category->description; ?></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="">Category Image</label>
+                                <div class="col-lg-7">
+                                    <span class="">
+                                        <img src="<?= base_url('data/settings/categories/'. $category->image);?>" width="40" height="40">
+                                    </span>
+                                    <input type="file" name="image" />
+                                    <span style="margin-top:3px;" class="text-dark">Change Image? Image should be a PNG, transparent with at most 500 X 300px</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="id" value="<?= $category->root_category_id; ?>" >
+                            <input type="hidden" name="img" value="<?= $category->image; ?>">
 							<div class="panel-footer text-center">
-								<button class="btn btn-primary" type="submit">Submit</button>
+								<button class="btn btn-primary" type="submit">Update</button>
 							</div>
-
-						</form>
+                        <?= form_close(); ?>
 					</div>
 				</div>
 			</div>

@@ -55,8 +55,12 @@ Class Admin_model extends CI_Model{
     }
 
     // Update table
-    function update_data( $access = '' , $data = array(), $table_name = 'sellers'){
-        $this->db->where('id', $access);
+    function update_data( $access = '' , $data = array(), $table_name = 'sellers', $label = ''){
+        if( $label != '') {
+            $this->db->where($label, $access);
+        }else{
+            $this->db->where('id', $access);
+        }
         return $this->db->update( $table_name, $data );
     }
 
@@ -113,62 +117,17 @@ Class Admin_model extends CI_Model{
         return $this->db->get('sellers')->row();
     }
 
-    /**
-     * @param $sub_id
-     * @return array|string
-     */
-    function get_specification($sub_id){
-        $this->db->select('specifications');
-        $this->db->where('sub_category_id', $sub_id);
-        $specs = $this->db->get('sub_category')->row();
-        $return = array();
-
-        if( !empty($specs->specifications) || $specs->specifications !== '' ){
-            $decode = json_decode($specs->specifications);
-            foreach ( $decode as $key => $value ){
-                $this->db->select('spec_name,options,description,multiple_options');
-                $this->db->from('specifications');
-//                $this->db->where('tab', $type);
-                $this->db->where('id', $value);
-                $output = $this->db->get()->row_array();
-                array_push( $return, $output );
-            }
-            return $return;
-        }else{
-            return '';
-        }
-    }
-
-    /**
-     * @param $id
-     * @param string $status
-     * @param string $select
-     * @return array
-     */
-    function get_product($id, $status = '', $select = ''){
-        $this->db->where('seller_id', $id);
-        if( $status !== '' ) $this->db->where('product_status', $status );
-        $this->db->select($select);
-        $results = $this->db->get('products')->result_array();
-        if( !empty($results) ){
-            foreach ( $results as $result ){
-                $this->db->where('product_id', $result['id'] );
-                $this->db->select('AVG(sale_price) AS sale_price, AVG(discount_price) AS discount_price');
-                $variation = $this->db->get('product_variation')->row_array();
-                $results['sale_price'] = $variation['sale_price'];
-                $results['discount_price'] = $variation['discount_price'];
-            }
-        }
-        return $results;
-    }
-
-    /**
+      /**
      * @param string $id
      * @return CI_DB_result
      */
     function get_root_categories($id = '' ){
-        if( $id != '' ) $this->db->where('root_category_id', $id);
-        return $this->db->get('root_category');
+        if( $id != '' ) {
+            $this->db->where('root_category_id', $id);
+            return $this->db->get('root_category')->row();
+        }else{
+            return $this->db->get('root_category');
+        }
     }
 
     /**
@@ -176,8 +135,28 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_result
      */
     function get_categories($id = '' ){
-        if( $id != '' ) $this->db->where('category_id', $id);
-        return $this->db->get('category');
+            if( $id != '' ) {
+                $output = $this->db->query('SELECT c.name, c.category_id, 
+                              c.root_category_id, r.name as root_name 
+                              FROM category AS c INNER JOIN root_category AS r 
+                              ON c.root_category_id = r.root_category_id WHERE category_id = ? ', $id)->row();
+                return $output;
+            }else{
+                $this->db->select('c.name,c.category_id, c.root_category_id, r.name as root_name')
+                    ->from('category as c, root_category as r')
+                    ->where('c.root_category_id = r.root_category_id');
+                return $this->db->get();
+            }
+    }
+
+    /**
+     * Fetching all the category details associated with a root id
+     * @param string root $id
+     * @return CI_DB_result
+     */
+    function get_categories_by_rootid($id = '' ){
+        if( $id != '' ) $this->db->where('root_category_id', $id);
+        return $this->db->get('category')->result_array();
     }
 
     /**
@@ -194,8 +173,21 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_result
      */
     function get_specifications($id = ''){
-        if( $id != '' ) $this->db->where('id', $id );
-        return $this->db->get('specifications');
+        if( $id != '' ) {
+            $this->db->where('id', $id );
+            return $this->db->get('specifications')->row();
+        }else{
+            return $this->db->get('specifications');
+        }
     }
+
+    function get_sub_detail( $id = '' ){
+        $output = $this->db->query('SELECT sub.sub_category_id, sub.name, sub.specifications, cat.category_id category_id, cat.name category_name, root.root_category_id root_category_id, root.name root_category_name
+        FROM sub_category AS sub INNER JOIN root_category root ON sub.root_category_id = root.root_category_id INNER JOIN category cat ON sub.category_id  = cat.category_id
+        WHERE sub_category_id =  ? ',  $id )->row();
+        return $output;
+    }
+
+
 
 }

@@ -38,15 +38,59 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="panel">
+                    <?php $this->load->view('msg_view'); ?>
 					<div class="panel-heading">
-						<h3 class="panel-title" style="font-weight: bold">Specifications</h3>
+						<div class="panel-title">
+                            <a class="btn btn-danger" style="color: #fff;" href="<?= base_url('categories/specification/add')?>">Add New Specification</a>
+                        </div>
 					</div>
 					<div class="panel-body">
-						<table id="basic" class="table table-striped table-bordered" cellspacing="0"
+                        <?php if($this->uri->segment(3) && cleanit($this->uri->segment(3)) == 'add') : ?>
+                            <?= form_open('', 'class="form-horizontal"'); ?>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="">Specification
+                                    Name</label>
+                                <div class="col-lg-7">
+                                    <input type="text" name="spec_name" class="form-control" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Specification Options?</label>
+                                <div class="col-lg-7">
+                                    <input id="has_option" type='checkbox' title="Does this have option" >
+                                </div>
+                            </div>
+                            <div id="has_option">
+                                <div id="options" style="display: none;">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Options</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="options" placeholder="type the options separated by comma (,)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Should this have multiple select?</label>
+                                        <div class="col-lg-7">
+                                            <input id="multiple" name="multiple" type='checkbox' title="Allow multiple select" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="description">Description</label>
+                                <div class="col-lg-7">
+                                    <textarea class="form-control" name="description"></textarea>
+                                </div>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+                            <?= form_close(); ?>
+                        <?php else : ?>
+						    <table id="basic" class="table table-striped table-bordered" cellspacing="0"
 							   width="100%">
 							<thead>
 							<tr>
-								<th></th>
 								<th>Specification Name</th>
 								<th class="min-tablet">Description</th>
 								<th class="min-tablet">Options</th>
@@ -56,9 +100,7 @@
 							<tbody>
                                 <?php foreach($specifications->result() as $specification ) : ?>
                                     <tr>
-                                        <td><input id="1" type='checkbox' title="select this item"
-                                                   value="1"></i></td>
-                                        <td><a href="<?= base_url('categories/specification_detail'); ?>"><?= $specification->spec_name; ?></a></td>
+                                        <td><a href="<?= base_url('categories/specification_detail/' . $specification->id); ?>"><?= $specification->spec_name; ?></a></td>
                                         <td><?= $specification->description; ?></td>
                                         <td>
                                             <?php
@@ -68,15 +110,14 @@
                                             ?>
                                         </td>
                                         <td class="text-center">
-
-                                                <button class="btn btn-mint btn-active-mint">Edit</button>
-                                                <button class="btn btn-danger btn-active-danger">Delete</button>
-<!--                                            </div>-->
+                                            <a href="<?= base_url('categories/specification_detail/' . $specification->id);?>" class="btn btn-mint btn-active-mint">Edit</a>
+                                            <button class="btn btn-danger btn-active-danger">Delete</button>
                                         </td>
                                     </tr>
                                 <?php endforeach;?>
 							</tbody>
 						</table>
+                        <?php endif; ?>
 					</div>
 				</div>
 			</div>
@@ -134,6 +175,19 @@
                 }
             }
         } );
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#has_option').change(function(){
+            if(this.checked){
+                $('#options').fadeIn('slow');
+                $('#options_field').attr('required', true);
+            }else{
+                $('#options').fadeOut('slow');
+            }
+
+        });
     });
 </script>
 </body>

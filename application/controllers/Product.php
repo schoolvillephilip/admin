@@ -16,16 +16,22 @@ class Product extends CI_Controller{
             if( !empty($from) ) redirect($from);
             redirect('login');
         }
+         $this->output->enable_profiler(TRUE);
+//        $this->output->set_header('Last-Modified:'.gmdate('D, d M Y H:i:s').'GMT');
+//        $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
+//        $this->output->set_header('Cache-Control: post-check=0, pre-check=0',false);
+//        $this->output->set_header('Pragma: no-cache');
     }
 
     public function index(){
         if( $this->input->post('rootcategory') && $this->input->post('category') && $this->input->post('subcategory')  ){
             $chosen_array = array(
-                'rootcategory' => base64_decode($this->input->post('rootcategory')),
+                'rootcategory' => $this->input->post('rootcategory'),
                 'category' => $this->input->post('category'),
                 'subcategory' => $this->input->post('subcategory')
             );
             $this->session->set_userdata($chosen_array);
+//            print_r( $chosen_array );
             redirect('product/create');
         }else{
             // Unset the category
@@ -46,9 +52,18 @@ class Product extends CI_Controller{
      *
      */
     public function create(){
+
         // check if we have the category session set
         if( $this->session->has_userdata('rootcategory')  && $this->session->has_userdata('category') && $this->session->has_userdata('subcategory') ){
             $this->load->helper('query_helper');
+            $new_session = array();
+            $new_session['sub_id'] = $sub_id = $this->session->userdata('subcategory');
+            $new_session['new_rootcategory'] = $this->seller->get_category_name($this->session->userdata('rootcategory'), 'root_category')->name;
+            $new_session['new_category'] = $this->seller->get_category_name($this->session->userdata('category'), 'category')->name;
+            $new_session['new_subcategory'] = $this->seller->get_category_name($sub_id, 'sub_category')->name;
+
+            $page_data['specifications'] = $this->seller->get_specification($sub_id);
+            $this->session->set_userdata( $new_session );
             // Check if post method
             $page_data['page_title'] = 'Add product';
             $page_data['pg_name'] = 'product';
@@ -56,7 +71,6 @@ class Product extends CI_Controller{
             $page_data['profile'] = $this->seller->get_profile_details(base64_decode($this->session->userdata('logged_id')),
                 'first_name,last_name,email,profile_pic');
             // check the specification attached with the sub category
-            $page_data['specifications'] = $this->seller->get_specification($this->session->userdata('subcategory'));
             $this->load->view('create', $page_data);
         }else{
             // redirect to make a selection of category
@@ -75,6 +89,9 @@ class Product extends CI_Controller{
             $product_table = array(
                 'seller_id' => base64_decode($this->session->userdata('logged_id')),
                 'sku' => strtoupper(generate_token(6)),
+                'rootcategory' => $this->session->userdata('new_rootcategory'),
+                'category' => $this->session->userdata('new_category'),
+                'subcategory' => $this->session->userdata('new_subcategory'),
                 'product_name' => cleanit($this->input->post('product_name')),
                 'brand_name' => cleanit($this->input->post('brand_name')),
                 'model' => cleanit($this->input->post('model')),
@@ -104,8 +121,15 @@ class Product extends CI_Controller{
             foreach($_POST as $post => $value ){
                 if( substr_compare('attribute_',$post,0,10 ) == 0 ){
                     // we found a match
-                    if( !empty($value )) {
-                        $feature_name = explode('_', $post);
+                    // check if its a multiple
+
+//                    {"Features":[" Anti Glare"],"Display":"gps"}
+                    // @TODO: fix the multiple value
+                    $feature_name = explode('_', $post);
+                    if( is_array($post) && !empty($value)){
+
+                        $attributes[$feature_name[1]] = json_encode($value);
+                    }elseif(!empty($value)){
                         $attributes[$feature_name[1]] = $value;
                     }
                 }
@@ -224,7 +248,7 @@ class Product extends CI_Controller{
      */
     function append_category(){
         $this->load->helper('query_helper');
-        $id = base64_decode($this->input->post('id'));
+        $id = $this->input->post('id');
         if( !is_null($id) ){
             echo json_encode(get_categories_by_root_id($id) , JSON_UNESCAPED_SLASHES);
         }

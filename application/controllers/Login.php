@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller{
     public function __construct(){
         // @todo
-        // Check if the user is already loggedin
+        // Check if the user is already logged in
         // Also check where the user is coming from
         // $this->session->set_userdata('referred_from', current_url());
         parent::__construct();
@@ -12,8 +12,7 @@ class Login extends CI_Controller{
         if( $this->session->userdata('logged_in') ){
             // Ursher the person to where he is coming from
             $referred_from = $this->session->userdata('referred_from');
-            if( !empty( $referred_from ) ) redirect( $referred_from );
-            redirect('login');
+            if( !empty( $referred_from ) ) {redirect( $referred_from );}else{ redirect('product');}
         } 
     }
 

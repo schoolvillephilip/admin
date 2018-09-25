@@ -38,39 +38,66 @@
                 <!--===================================================-->
 				<div id="page-content">
 					<div class="panel">
+                        <?php $this->load->view('msg_view'); ?>
 						<div class="panel-heading">
-							<h3 class="panel-title" style="font-weight: bold">Category</h3>
+                            <div class="panel-title">
+                                <a class="btn btn-danger" style="color: #fff;" href="<?= base_url('categories/category/add')?>">Add New Category</a>
+                            </div>
 						</div>
 						<div class="panel-body">
-							<table id="basic" class="table table-striped table-bordered" cellspacing="0"
-								   width="100%">
-								<thead>
-								<tr>
-                                    <th></th>
-									<th class="text-center">Name</th>
-									<th class="min-tablet text-center">Date Created</th>
-									<th class="min-tablet text-center">Action</th>
-								</tr>
-								</thead>
-								<tbody>
+                            <?php if($this->uri->segment(3) && cleanit($this->uri->segment(3)) == 'add') : ?>
+                                <?= form_open('', 'class="form-horizontal"'); ?>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Root Category</label>
+                                        <div class="col-lg-7">
+                                            <select name="root_category" required class="selectpicker rootcat"
+                                                    title="Choose Root Category..."
+                                                    data-width="100%">
+                                                <option value="">-- Choose a root category--</option>
+                                                <?php foreach($root_categories->result() as $root_category ) echo '<option value="'.$root_category->root_category_id.'">'.$root_category->name.' </option>'; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="">Category Name</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" name="category" class="form-control" required/>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer text-center">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                    </div>
+                                <?= form_close(); ?>
+                            <?php else : ?>
+                                <table id="basic" class="table table-striped table-bordered" cellspacing="0"
+                                       width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">Name</th>
+                                        <th class="min-tablet text-center">Category Name</th>
+                                        <th class="min-tablet text-center">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
                                     <?php foreach($categories->result() as $category ) : ?>
                                         <tr>
-                                            <td class="text-center"><input id="1" type='checkbox' title="select this item"
-                                                                           value="1"></i></td>
                                             <td class="text-center">
-                                                <a href="<?= base_url('categories/category_detail/' . $category->root_category_id); ?>"><?= ucwords($category->name)?></a>
+                                                <a href="<?= base_url('categories/category_detail/' . $category->root_category_id ); ?>"><?= ucwords($category->name)?></a>
                                             </td>
-                                            <td class="text-center"><?= neatDate($category->inserted_at); ?></td>
+                                            <td class="text-center">
+                                                <?= $category->root_name; ?>
+                                            </td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-mint btn-active-mint">Edit</button>
+                                                    <a class="btn btn-mint btn-active-mint" href="<?= base_url('categories/category_detail/' . $category->category_id); ?>" >Edit</a>
                                                     <button class="btn btn-danger btn-active-danger">Delete</button>
                                                 </div>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
-								</tbody>
-							</table>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
 						</div>
 					</div>
 				</div>
