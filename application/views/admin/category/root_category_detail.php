@@ -56,6 +56,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                            	<label class="col-lg-3 control-label" for="">Title</label>
+                            	<div class="col-lg-7">
+                            		<input type="text" name="title" class="form-control" value="<?= $category->title?>" placeholder="Buy phones and tablets">
+                            	</div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-3 control-label" for="">Description</label>
                                 <div class="col-lg-7">
                                     <textarea name="description" class="form-control"><?= $category->description; ?></textarea>

@@ -38,6 +38,7 @@ class Categories extends CI_Controller{
             $data = array(
                 'name'  => $this->input->post('name'),
                 'icon'  => $this->input->post('icon'),
+                'title' => $this->input->post('title'),
                 'description' => cleanit($this->input->post('description'))
             );
             if( isset($_FILES) ){
@@ -65,6 +66,7 @@ class Categories extends CI_Controller{
             $data = array(
                 'name' => $this->input->post('name'),
                 'icon' => $this->input->post('icon'),
+                'title' => $this->input->post('title'),
                 'description' => $this->input->post('description')
             );
             if( isset($_FILES) && !empty($_FILES) ){
@@ -277,7 +279,7 @@ class Categories extends CI_Controller{
             $data = array(
                 'spec_name' => cleanit($this->input->post('spec_name')),
                 'options' => $opt,
-                'multiple' => $multiple,
+                'multiple_options' => $multiple,
                 'description' => cleanit($this->input->post('description'))
             );
             if( $this->admin->update_data($this->input->post('id'), $data, 'specifications') ){
