@@ -97,7 +97,7 @@
 								<li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
 										href="<?= base_url('sellers') ?>">Sellers Overview</a></li>
 								<li <?php if ($sub_name == 'manage_sellers') echo 'class="active-link"' ?>><a
-										href="<?= base_url('sellers/manage'); ?>">Manage Sellers</a></li>
+										href="<?= base_url('sellers/manage'); ?>">Approve Sellers</a></li>
 
 							</ul>
 						</li>
