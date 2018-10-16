@@ -102,6 +102,23 @@
 							</ul>
 						</li>
 
+						<li class="<?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>">
+							<a href="#">
+								<i class="demo-pli-gear"></i>
+								<span class="menu-title">Products</span>
+								<i class="arrow"></i>
+							</a>
+
+							<!--Submenu-->
+							<ul class="collapse <?php if ($pg_name == 'product') echo 'in'; ?>">
+								<li <?php if ($sub_name == 'products_overview') echo 'class="active-link"' ?>><a
+										href="<?= base_url('product') ?>">Products Overview</a></li>
+								<li <?php if ($sub_name == 'manage_product') echo 'class="active-link"' ?>><a
+										href="<?= base_url('product/manage'); ?>">Manage Product</a></li>
+
+							</ul>
+						</li>
+
 						<li class="<?php if ($pg_name == 'orders') echo 'class="active-sub"' ?>">
 							<a href="#">
 								<i class="demo-pli-gear"></i>
