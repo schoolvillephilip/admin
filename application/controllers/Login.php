@@ -52,7 +52,7 @@ class Login extends CI_Controller{
                     $session_data = array('logged_in' => true, 'logged_id' => base64_encode($user_id));
                     $this->session->set_userdata($session_data);
                     $this->session->set_flashdata('success_msg','You are now logged in!');
-                    redirect('product');
+                    redirect('dashboard');
                 }
             }
         }
