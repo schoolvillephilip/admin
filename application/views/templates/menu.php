@@ -85,6 +85,40 @@
 							</ul>
 						</li>
 
+						<li class="<?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>">
+							<a href="#">
+								<i class="demo-pli-gear"></i>
+								<span class="menu-title">Sellers</span>
+								<i class="arrow"></i>
+							</a>
+
+							<!--Submenu-->
+							<ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
+								<li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
+										href="<?= base_url('sellers') ?>">Sellers Overview</a></li>
+								<li <?php if ($sub_name == 'manage_sellers') echo 'class="active-link"' ?>><a
+										href="<?= base_url('sellers/manage'); ?>">Manage Sellers</a></li>
+
+							</ul>
+						</li>
+
+						<li class="<?php if ($pg_name == 'orders') echo 'class="active-sub"' ?>">
+							<a href="#">
+								<i class="demo-pli-gear"></i>
+								<span class="menu-title">Orders</span>
+								<i class="arrow"></i>
+							</a>
+
+							<!--Submenu-->
+							<ul class="collapse <?php if ($pg_name == 'orders') echo 'in'; ?>">
+								<li <?php if ($sub_name == 'orders_overview') echo 'class="active-link"' ?>><a
+										href="<?= base_url('orders') ?>">Sellers Overview</a></li>
+								<li <?php if ($sub_name == 'manage_sellers') echo 'class="active-link"' ?>><a
+										href="<?= base_url('orders/manage'); ?>">Manage Orders</a></li>
+
+							</ul>
+						</li>
+
 
 						<li class="list-divider"></li>
 						<li class="<?php if ($pg_name == 'settings') echo 'class="active-sub"' ?>">
