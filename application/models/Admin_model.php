@@ -203,20 +203,42 @@ Class Admin_model extends CI_Model
         WHERE sub_category_id =  ? ', $id)->row();
 		return $output;
 	}
-    
+
 	/**
-	 * @param $id
+	 * @param $type = 
 	 * @return CI_DB_result
 	 */
-	function get_seller_lists()
-	{
+	function get_seller_lists($type = ''){
 		$query = "SELECT id,first_name, last_name, email, legal_company_name, main_category,profile_pic,reg_no, last_login FROM sellers";
+        if( $type != '' ) $query .= " WHERE account_status = '$type'";
+        // die( $query );
 		return $this->db->query($query)->result();
 	}
 
-	function get_product_list()
-	{
+	function get_product_list(){
 		$query = "SELECT id, product_name, rootcategory, category, product_line, product_status FROM products";
 		return $this->db->query($query)->result();
 	}
+
+    /**
+     * @param $id
+     * @return CI_DB_row
+     */
+
+    function product_sold_count($id){
+        $query = "SELECT COUNT(qty) as sold FROM orders WHERE seller_id = $id AND status = 'completed'";
+        return $this->db->query($query)->row();
+    }
+
+    /**
+     * @param $id
+     * @return CI_DB_result
+     */
+
+    function product_count($id){
+        $query = "SELECT COUNT(*) as prod FROM products WHERE seller_id = $id";
+        return $this->db->query($query)->row();
+    }
+
+
 }

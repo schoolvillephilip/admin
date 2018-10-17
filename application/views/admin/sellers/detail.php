@@ -27,8 +27,8 @@
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
 					<li><a href="#">Dashboard</a></li>
-					<li>All sellers</li>
-					<li class="active">Philip Sokoya</li>
+					<li>Seller' detail</li>
+					<li class="active"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?></li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
@@ -62,7 +62,7 @@
 								<?php endif; ?>
 								<ul class="list-unstyled text-center bord-top pad-top mar-no row">
 									<li class="col-xs-4">
-										<span class="text-lg text-semibold text-main">1,245</span>
+										<span class="text-lg text-semibold text-main"><?= number_format($sold_count->sold); ?></span>
 										<p class="text-muted mar-no">Sold Items</p>
 									</li>
 									<li class="col-xs-4">
@@ -70,7 +70,7 @@
 										<p class="text-muted mar-no">Active Promotions</p>
 									</li>
 									<li class="col-xs-4">
-										<span class="text-lg text-semibold text-main">450</span>
+										<span class="text-lg text-semibold text-main"><?= number_format($product_count->prod); ?></span>
 										<p class="text-muted mar-no">All Products</p>
 									</li>
 								</ul>
@@ -150,7 +150,7 @@
 				<!--===================================================-->
 				<div class="panel">
 					<div class="panel-heading">
-						<h3 class="panel-title">Philip Sokoya Products</h3>
+						<h3 class="panel-title"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?>'s Products</h3>
 					</div>
 					<div class="panel-body">
 						<table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
@@ -166,36 +166,18 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td>1542</td>
-								<td>Samsung Galaxy S9 - BLACK (Dual Sim) - Official Warranty</td>
-								<td>X5PJUH</td>
-								<td>61</td>
-								<td>
-									<div class="label label-table label-success">Approved</div>
-								</td>
-								<td>10/6/2018</td>
-							</tr>
-							<tr>
-								<td>1532</td>
-								<td>Samsung Galaxy J6 - Purple</td>
-								<td>BYZZSP</td>
-								<td>None Sold</td>
-								<td>
-									<div class="label label-table label-danger">Pending</div>
-								</td>
-								<td>10/17/2018</td>
-							</tr>
-							<tr>
-								<td>1525</td>
-								<td>Nokia - 2 - 5&quot; - 1GB RAM, 8GB ROM - Android 7.0 8MP + 5MP - White</td>
-								<td>31WUJE</td>
-								<td>82</td>
-								<td>
-									<div class="label label-table label-success">Approved</div>
-								</td>
-								<td>10/2/2018</td>
-							</tr>
+								<?php foreach($products as $product ) : ?>
+									<tr>
+										<td><?= $product->id; ?></td>
+										<td><?= ?></td>
+										<td><?= $product->sku; ?></td>
+										<td><?= $product->sold; ?></td>
+										<td>
+											<?= productStatus($product->product_status); ?>
+										</td>
+										<td><?= neatDate($product->created_on); ?></td>
+									</tr>
+								<?php endforeach; ?>
 							</tbody>
 						</table>
 					</div>

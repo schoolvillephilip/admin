@@ -44,6 +44,23 @@ if (!function_exists('neatDate')) {
     }
 }
 
+
+if (!function_exists('productStatus')) {
+    function productStatus($status){
+        switch ($status) {
+        	case 'pending':
+        		return '<div class="label label-table label-warning">Pending</div>';
+        		break;
+        	case 'active':
+        		return '<div class="label label-table label-success">Active</div>';
+        		break;        	
+        	default:
+        		return '<div class="label label-table label-danger">Suspended</div>';
+        		break;
+        }
+    }
+}
+
 if (!function_exists('neatTime')) {
     function neatTime($dt){
         $bdate = $dt;
