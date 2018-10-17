@@ -215,8 +215,11 @@ Class Admin_model extends CI_Model
 		return $this->db->query($query)->result();
 	}
 
-	function get_product_list(){
-		$query = "SELECT id, product_name, rootcategory, category, product_line, product_status FROM products";
+	function get_product_list()
+	{
+		$query = "SELECT p.id, p.product_name, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name FROM products as p
+JOIN sellers as s ON ( p.seller_id = s.id )
+";
 		return $this->db->query($query)->result();
 	}
 
