@@ -21,7 +21,7 @@ class Product extends CI_Controller{
         $page_data['sub_name'] = 'product_overview';
         $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('product/overview', $page_data);
+        $this->load->view('admin/dashboard', $page_data);
     }
 
 

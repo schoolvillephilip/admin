@@ -43,18 +43,23 @@
 							<div class="panel-body text-center">
 								<img alt="Profile Picture" class="img-md img-circle mar-btm"
 									 src="/admin/assets/img/profile-photos/1.png">
-								<p class="text-lg text-semibold mar-no text-main">Philip Sokoya</p>
-								<p class="text-semibold mar-no text-main">Registration No : NG-83833</p>
-								<p class="text-muted">PhilTechnologies</p>
+								<p class="text-lg text-semibold mar-no text-main"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?></p>
+								<p class="text-semibold mar-no text-main">Registration No : <?= $seller->reg_no; ?></p>
+								<p class="text-muted"><?= $seller->legal_company_name; ?></p>
 
-								<button class="btn btn-danger mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Block
-								</button>
-								<button class="btn btn-primary mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Verify
-								</button>
-								<button class="btn btn-warning mar-ver"><i class="demo-pli-warning-window icon-fw"></i>Suspend
-								</button>
-
-
+								<?php if( $seller->account_status =="pending" ) : ?>
+									<button class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve Seller
+									</button>
+									<button class="btn btn-danger mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Reject Seller
+									</button>
+								<?php else : ?>
+									<button class="btn btn-danger mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Block
+									</button>
+									<button class="btn btn-primary mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Verify
+									</button>
+									<button class="btn btn-warning mar-ver"><i class="demo-pli-warning-window icon-fw"></i>Suspend
+									</button>
+								<?php endif; ?>
 								<ul class="list-unstyled text-center bord-top pad-top mar-no row">
 									<li class="col-xs-4">
 										<span class="text-lg text-semibold text-main">1,245</span>
@@ -95,42 +100,40 @@
 							<div class="tab-content">
 								<div id="demo-rgt-tab-1" class="tab-pane fade active in">
 									<p class="text-main text-semibold">Email</p>
-									<p>phil@gmail.com</p>
+									<p><?= $seller->email; ?></p>
 									<p class="text-main text-semibold">Company Name</p>
-									<p>PhilTechnologies.com</p>
+									<p><?= $seller->legal_company_name; ?></p>
 									<p class="text-main text-semibold">Address</p>
-									<p>530A Aina Akingbala Street Omole Phase 2</p>
+									<p><?= $seller->address; ?></p>
 									<p class="text-main text-semibold">Registration No</p>
-									<p>NG-83833</p>
+									<p><?= $seller->reg_no; ?></p>
 									<p class="text-main text-semibold">Main Category</p>
-									<p>Tv & Electronics</p>
+									<p><?= $seller->main_category; ?></p>
 									<p class="text-main text-semibold">Terms & Conditions</p>
-									<p>Here is my information... Nothing serious</p>
+									<p><?= $seller->terms; ?></p>
 								</div>
 								<div id="demo-rgt-tab-2" class="tab-pane fade">
 									<p class="text-main text-semibold">Bank Name</p>
-									<p>Guaranty Trust Bank Plc</p>
+									<p><?= $seller->bank_name; ?></p>
 									<p class="text-main text-semibold">Account Name</p>
-									<p>Sokoya Adeniji Philip</p>
+									<p><?= $seller->account_name; ?></p>
 									<p class="text-main text-semibold">Account Number</p>
-									<p>2820226778</p>
+									<p><?= $seller->account_number; ?></p>
 									<p class="text-main text-semibold">Bvn Number</p>
-									<p>7262626228</p>
+									<p><?= $seller->bvn; ?></p>
 
 								</div>
 								<div id="demo-rgt-tab-3" class="tab-pane fade">
-									<p class="text-main text-semibold">Start Date</p>
-									<p>2018/09/22</p>
-									<p class="text-main text-semibold">End Date</p>
-									<p>2018/09/01</p>
+									<p class="text-main text-semibold">Products Active?</p>
+									<p><?= ( $seller->disable_products == 1) ? 'Active' : 'Not Active'; ?></p>
 									<p class="text-main text-semibold">Account Status</p>
-									<p>Null</p>
+									<p><strong><?= $seller->account_status; ?></strong></p>
 									<p class="text-main text-semibold">Date Registered</p>
-									<p>2018/9/14</p>
+									<p><?= neatDate($seller->date_registered); ?></p>
 									<p class="text-main text-semibold">Last Login</p>
-									<p>2018/10/9</p>
+									<p><?= neatDate($seller->last_login); ?></p>
 									<p class="text-main text-semibold">IP Address</p>
-									<p>130.215.123.15</p>
+									<p><?= $seller->ip; ?></p>
 									<p class="text-main text-semibold">Is Approved</p>
 									<p>
 										<button class="btn btn-success btn-rounded">Approved</button>
@@ -197,12 +200,8 @@
 						</table>
 					</div>
 				</div>
-
-
 				<!--===================================================-->
 				<!--End page content-->
-
-
 			</div>
 		</div>
 		<!--===================================================-->
