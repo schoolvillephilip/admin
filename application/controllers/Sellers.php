@@ -38,6 +38,9 @@ class Sellers extends CI_Controller
 			$this->session->set_flashdata('error_msg', 'Sorry the user details can not be found');
 			redirect($_SERVER['HTTP_REFERRER']);
 		}
+		$page_data['sold_count'] = $this->admin->product_sold_count( $id );
+		$page_data['product_count'] = $this->admin->product_count( $id );
+		$page_data['products'] = $this->admin->get_product_list( $id);
 		$this->load->view('admin/sellers/detail', $page_data);
 	}
 
@@ -47,6 +50,7 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'approve_sellers';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
+		$page_data['sellers'] = $this->admin->get_seller_lists($type = 'pending');
 		$this->load->view('admin/sellers/approve', $page_data);
 	}
 
