@@ -169,7 +169,7 @@
 								<?php foreach($products as $product ) : ?>
 									<tr>
 										<td><?= $product->id; ?></td>
-										<td><?= ?></td>
+										<td><?= $product->product_name; ?></td>
 										<td><?= $product->sku; ?></td>
 										<td><?= $product->sold; ?></td>
 										<td>

@@ -40,6 +40,7 @@ class Sellers extends CI_Controller
 		}
 		$page_data['sold_count'] = $this->admin->product_sold_count( $id );
 		$page_data['product_count'] = $this->admin->product_count( $id );
+		$page_data['products'] = $this->admin->get_product_list( $id);
 		$this->load->view('admin/sellers/detail', $page_data);
 	}
 
