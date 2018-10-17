@@ -61,6 +61,7 @@
 									<th class="min-tablet">Category</th>
 									<th class="min-tablet">Product Line</th>
 									<th class="min-desktop">Product Status</th>
+									<th class="min-desktop">Seller</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -80,6 +81,10 @@
 										</td>
 										<td>
 											<?= $product->product_status ?>
+										</td>
+										<td>
+											<a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>">
+												<?= ucwords($product->first_name . ' ' . $product->last_name); ?></a>
 										</td>
 									</tr>
 								<?php endforeach; ?>
