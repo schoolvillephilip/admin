@@ -43,21 +43,25 @@
 							<div class="panel-body text-center">
 								<img alt="Profile Picture" class="img-md img-circle mar-btm"
 									 src="/admin/assets/img/profile-photos/1.png">
-								<p class="text-lg text-semibold mar-no text-main"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?></p>
+								<p class="text-lg text-semibold mar-no text-main"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></p>
 								<p class="text-semibold mar-no text-main">Registration No : <?= $seller->reg_no; ?></p>
 								<p class="text-muted"><?= $seller->legal_company_name; ?></p>
 
-								<?php if( $seller->account_status =="pending" ) : ?>
-									<button class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve Seller
+								<?php if ($seller->account_status == "pending") : ?>
+									<button class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve
+										Seller
 									</button>
-									<button class="btn btn-danger mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Reject Seller
+									<button class="btn btn-danger mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Reject
+										Seller
 									</button>
 								<?php else : ?>
 									<button class="btn btn-danger mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Block
 									</button>
-									<button class="btn btn-primary mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Verify
+									<button class="btn btn-primary mar-ver"><i
+											class="demo-pli-checked-user icon-fw"></i>Verify
 									</button>
-									<button class="btn btn-warning mar-ver"><i class="demo-pli-warning-window icon-fw"></i>Suspend
+									<button class="btn btn-warning mar-ver"><i
+											class="demo-pli-warning-window icon-fw"></i>Suspend
 									</button>
 								<?php endif; ?>
 								<ul class="list-unstyled text-center bord-top pad-top mar-no row">
@@ -125,8 +129,12 @@
 								</div>
 								<div id="demo-rgt-tab-3" class="tab-pane fade">
 									<p class="text-main text-semibold">Products Active?</p>
-									<p><?= ( $seller->disable_products == 1) ? 'Active' : 'Not Active'; ?></p>
+									<p><?= ($seller->disable_products == 1) ? 'Active' : 'Not Active'; ?></p>
 									<p class="text-main text-semibold">Account Status</p>
+									<p>
+										<button
+											class="btn btn-<?= ($seller->account_status == 'approved' || $seller->account_status == 'verified') ? 'success' : 'danger' ?> btn-rounded"><?= ucwords($seller->account_status); ?></button>
+									</p>
 									<p><strong><?= $seller->account_status; ?></strong></p>
 									<p class="text-main text-semibold">Date Registered</p>
 									<p><?= neatDate($seller->date_registered); ?></p>
@@ -134,10 +142,6 @@
 									<p><?= neatDate($seller->last_login); ?></p>
 									<p class="text-main text-semibold">IP Address</p>
 									<p><?= $seller->ip; ?></p>
-									<p class="text-main text-semibold">Is Approved</p>
-									<p>
-										<button class="btn btn-success btn-rounded">Approved</button>
-									</p>
 								</div>
 								<div id="demo-rgt-tab-4" class="tab-pane fade">
 									<p class="text-main text-semibold">Overall Settings</p>
