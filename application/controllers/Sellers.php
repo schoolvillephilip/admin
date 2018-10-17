@@ -16,18 +16,17 @@ class Sellers extends CI_Controller
 		}
 	}
 
-	public function index()
-	{
+	public function index(){
 		$page_data['page_title'] = 'Sellers Overview';
 		$page_data['pg_name'] = 'sellers';
 		$page_data['sub_name'] = 'sellers_overview';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
+		$page_data['sellers'] = $this->admin->get_seller_lists();
 		$this->load->view('admin/sellers/overview', $page_data);
 	}
 
-	public function detail()
-	{
+	public function detail(){
 		$page_data['page_title'] = 'Sellers Detail';
 		$page_data['pg_name'] = 'sellers';
 		$page_data['sub_name'] = 'sellers_detail';
@@ -36,8 +35,7 @@ class Sellers extends CI_Controller
 		$this->load->view('admin/sellers/detail', $page_data);
 	}
 
-	public function approve()
-	{
+	public function approve(){
 		$page_data['page_title'] = 'Approve Sellers';
 		$page_data['pg_name'] = 'sellers';
 		$page_data['sub_name'] = 'approve_sellers';

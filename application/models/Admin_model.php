@@ -188,6 +188,15 @@ Class Admin_model extends CI_Model{
         return $output;
     }
 
+    /**
+     * @param $id
+     * @return CI_DB_result
+     */
+    function get_seller_lists(){
+        $query = "SELECT id,first_name, last_name, email, legal_company_name, main_category,profile_pic,reg_no, last_login FROM sellers";
+        return $this->db->query( $query )->result();
+    }
+
 
 
 }

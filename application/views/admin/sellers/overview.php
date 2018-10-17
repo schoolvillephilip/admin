@@ -55,22 +55,16 @@
 								</tr>
 								</thead>
 								<tbody>
-								<tr>
-									<td><a href="<?= base_url('sellers/detail'); ?>"> Sokoya Philip</a></td>
-									<td>phil@gmail.com</td>
-									<td>PhilTechnologies</td>
-									<td>NG-83833</td>
-									<td>Tv & Electronics</td>
-									<td>2018/10/5</td>
-								</tr>
-								<tr>
-									<td><a href="<?= base_url('sellers/detail'); ?>">Jeffrey Chidi</a></td>
-									<td>jeff@gmail.com</td>
-									<td>JeffTechnologies</td>
-									<td>NG-81302</td>
-									<td>Phones & Tablets</td>
-									<td>2018/10/9</td>
-								</tr>
+									<?php foreach( $sellers as $seller ) : ?>
+										<tr>
+											<td><a href="<?= base_url('sellers/detail/'. $seller->id ); ?>"><?= ucwords($seller->first_name . ' '. $seller->last_name ); ?></a></td>
+											<td><?= $seller->email; ?></td>
+											<td><?= $seller->legal_company_name; ?></td>
+											<td><?= $seller->reg_no; ?></td>
+											<td><?= $seller->main_category; ?></td>
+											<td><?= neatDate($seller->last_login);?></td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
