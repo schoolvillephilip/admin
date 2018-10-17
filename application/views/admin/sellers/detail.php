@@ -66,7 +66,7 @@
 									</li>
 									<li class="col-xs-4">
 										<span class="text-lg text-semibold text-main">450</span>
-										<p class="text-muted mar-no">Products Sold</p>
+										<p class="text-muted mar-no">All Products</p>
 									</li>
 								</ul>
 							</div>

@@ -36,4 +36,14 @@ class Sellers extends CI_Controller
 		$this->load->view('admin/sellers/detail', $page_data);
 	}
 
+	public function approve()
+	{
+		$page_data['page_title'] = 'Approve Sellers';
+		$page_data['pg_name'] = 'sellers';
+		$page_data['sub_name'] = 'approve_sellers';
+		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			'first_name,last_name,email,profile_pic');
+		$this->load->view('admin/sellers/approve', $page_data);
+	}
+
 }
