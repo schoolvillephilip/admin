@@ -27,7 +27,7 @@
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
 					<li><a href="#">Dashboard</a></li>
-					<li>Seller' detail</li>
+					<li>Seller detail</li>
 					<li class="active"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?></li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
