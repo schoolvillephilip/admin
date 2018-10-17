@@ -8,11 +8,11 @@ class Login extends CI_Controller{
         // Also check where the user is coming from
         // $this->session->set_userdata('referred_from', current_url());
         parent::__construct();
-        $this->load->model('seller_model', 'seller');
+        $this->load->model('admin_model', 'seller');
         if( $this->session->userdata('logged_in') ){
             // Ursher the person to where he is coming from
             $referred_from = $this->session->userdata('referred_from');
-            if( !empty( $referred_from ) ) {redirect( $referred_from );}else{ redirect('product');}
+            if( !empty( $referred_from ) ) {redirect( $referred_from );}else{ redirect('dashboard');}
         } 
     }
 

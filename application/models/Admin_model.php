@@ -203,7 +203,7 @@ Class Admin_model extends CI_Model
         WHERE sub_category_id =  ? ', $id)->row();
 		return $output;
 	}
-
+    
 	/**
 	 * @param $id
 	 * @return CI_DB_result
@@ -221,5 +221,4 @@ JOIN sellers as s ON ( p.seller_id = s.id )
 ";
 		return $this->db->query($query)->result();
 	}
-
 }
