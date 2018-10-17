@@ -35,6 +35,16 @@
 			<!--Page content-->
 			<!--===================================================-->
 			<div id="page-content">
+				<div class="row pad-ver">
+					<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
+						<div class="input-group mar-btm">
+							<input type="text" placeholder="Search Seller Records" class="form-control input-lg">
+							<span class="input-group-btn">
+                     <button class="btn btn-primary btn-lg" type="button">Search</button>
+                 </span>
+						</div>
+					</form>
+				</div>
 
 				<div class="row">
 					<div class="panel">
@@ -55,19 +65,32 @@
 								</tr>
 								</thead>
 								<tbody>
-									<?php foreach( $sellers as $seller ) : ?>
-										<tr>
-											<td><a href="<?= base_url('sellers/detail/'. $seller->id ); ?>"><?= ucwords($seller->first_name . ' '. $seller->last_name ); ?></a></td>
-											<td><?= $seller->email; ?></td>
-											<td><?= $seller->legal_company_name; ?></td>
-											<td><?= $seller->reg_no; ?></td>
-											<td><?= $seller->main_category; ?></td>
-											<td><?= neatDate($seller->last_login);?></td>
-										</tr>
-									<?php endforeach; ?>
+								<?php foreach ($sellers as $seller) : ?>
+									<tr>
+										<td>
+											<a href="<?= base_url('sellers/detail/' . $seller->id); ?>"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></a>
+										</td>
+										<td><?= $seller->email; ?></td>
+										<td><?= $seller->legal_company_name; ?></td>
+										<td><?= $seller->reg_no; ?></td>
+										<td><?= $seller->main_category; ?></td>
+										<td><?= neatDate($seller->last_login); ?></td>
+									</tr>
+								<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
+						<ul class="pagination" style="margin: auto auto 5px;">
+							<li class="disabled"><a href="#" class="demo-pli-arrow-left"></a></li>
+							<li class="active"><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><span>...</span></li>
+							<li><a href="#">20</a></li>
+							<li><a href="#" class="demo-pli-arrow-right"></a></li>
+						</ul>
+
 					</div>
 
 				</div>
