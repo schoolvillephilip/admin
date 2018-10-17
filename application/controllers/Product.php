@@ -8,7 +8,7 @@ class Product extends CI_Controller{
         parent::__construct();
         $this->load->model('admin_model', 'admin');
         if (!$this->session->userdata('logged_in')) {
-            // Ursher the person to where he is coming from
+            // Usher the person to where he is coming from
             $from = $this->session->userdata('referred_from');
             if (!empty($from)) redirect($from);
             redirect('login');
@@ -21,8 +21,8 @@ class Product extends CI_Controller{
         $page_data['sub_name'] = 'product_overview';
         $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('admin/dashboard', $page_data);
+		$page_data['products'] = $this->admin->get_product_list();
+        $this->load->view('admin/product/overview', $page_data);
     }
-
 
 }
