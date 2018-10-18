@@ -22,7 +22,29 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'sellers_overview';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
-		$page_data['sellers'] = $this->admin->get_seller_lists();
+
+		$q = '';
+		if( isset($_GET['q']) ) $q = cleanit( $q );
+		$page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
+
+        if( $page > 1 ) $page -= 1;
+        $lists = (array) $this->admin->get_seller_lists( $q, '','','' );
+        // die( var_dump($lists) );
+        $count = 0;
+		$this->load->library('pagination');
+        $this->config->load('pagination'); // Load d config
+        $config = $this->config->item('pagination');
+        $config['base_url'] = current_url() ;
+        $config['total_rows'] = $count; 
+        $config['per_page'] = 1; 
+        $config["num_links"] = 5;
+        $this->pagination->initialize($config);
+
+
+
+        $page_data['pagination'] = $this->pagination->create_links();
+
+		$page_data['sellers'] = $this->admin->get_seller_lists( $q, $config['per_page'], $page);
 		$this->load->view('admin/sellers/overview', $page_data);
 	}
 

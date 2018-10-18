@@ -208,9 +208,11 @@ Class Admin_model extends CI_Model
      * @param $type = 
      * @return CI_DB_result
      */
-    function get_seller_lists($type = ''){
+    function get_seller_lists($search = '', $limit = '', $offset ='', $type = ''){
         $query = "SELECT id,first_name, last_name, email, legal_company_name, main_category,profile_pic,reg_no, last_login FROM sellers";
-        if( $type != '' ) $query .= " WHERE account_status = '$type'";
+        if( $search != '' ) $query.= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (legal_company_name LIKE %$search%) OR (email LIKE %$search%)";
+        if( $type != '' ) $query .= " AND account_status = '$type'";
+        if( $limit != '' && $offset != '') $query .= " LIMIT {$offset},{$limit} ";
         // die( $query );
         return $this->db->query($query)->result();
     }
@@ -253,6 +255,5 @@ Class Admin_model extends CI_Model
         $query = "SELECT COUNT(*) as prod FROM products WHERE seller_id = $id";
         return $this->db->query($query)->row();
     }
-
 
 }
