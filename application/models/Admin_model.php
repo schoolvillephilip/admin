@@ -224,15 +224,13 @@ Class Admin_model extends CI_Model
      * @return CI_DB_result
      */
     function get_product_list($id = '', $product_status = '', $args = array() ){
-        $query = "SELECT p.id, p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name FROM products as p
+        $query = "SELECT p.id, p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN sellers as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
 
         if( $id != '' ) $query .= " WHERE o.seller_id = $id AND p.seller_id = $id";
         if( $id != '' && $product_status != '' ){
             $query .= " AND p.product_status = '$product_status'";
-        }elseif( $product_status != '' ){
-            $query .= " WHERE o.seller_id = $id ";
         }
         $query .= " GROUP BY p.id";
         return $this->db->query($query)->result();
@@ -245,13 +243,15 @@ Class Admin_model extends CI_Model
      */
 
     function get_single_product_detail($id){
-        $query = "SELECT p.*, g.image_name, o.amount, o.quantity_sold, s.first_name, s.last_name, s.email FROM products AS p
+        $query = "SELECT p.*, g.image_name, o.amount, o.quantity_sold, v.variation_qty, s.id as seller_id, s.first_name, s.last_name, s.email FROM products AS p
                     LEFT JOIN product_gallery as g ON (p.seller_id = g.seller_id AND g.featured_image = 1 )
                     LEFT JOIN (SELECT SUM(ord.amount) as amount, ord.seller_id, ord.product_id, SUM(ord.qty) quantity_sold FROM orders AS ord GROUP BY ord.product_id ) AS o
                     ON (o.seller_id = p.seller_id AND o.product_id = p.id)
-                    LEFT JOIN sellers AS s
-                    WHERE p.id = $id AND s.id = p.seller_id = s.id ";
-        return $this->db->query($query)->result();
+                    LEFT JOIN sellers AS s ON (p.seller_id = s.id )
+                    LEFT JOIN (SELECT SUM(var.quantity) AS variation_qty, var.product_id FROM product_variation var GROUP BY var.product_id ) v
+                    ON ( v.product_id = p.id)
+                    WHERE p.id = $id GROUP BY p.id ";
+        return $this->db->query($query)->row();
     }
 
     /**

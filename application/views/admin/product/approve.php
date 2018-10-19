@@ -58,36 +58,22 @@
 								<thead>
 								<tr>
 									<th>Product</th>
-									<th>Model</th>
-									<th>Price</th>
+									<th>Root category</th>
+									<th>Category</th>
 									<th>Seller</th>
 									<th>Date Posted</th>
 								</tr>
 								</thead>
 								<tbody>
-								<tr>
-									<td><a href="/admin/product/detail">Samsung Galaxy J6 - Purple</a></td>
-									<td>J6</td>
-									<td>₦60,000</td>
-									<td>Chidi Jeffrey</td>
-									<td>2018/10/02</td>
-								</tr>
-								<tr>
-									<td><a href="/admin/product/detail">Samsung Galaxy S9 - BLACK (Dual Sim) - Official
-											Warranty</a></td>
-									<td>S9</td>
-									<td>₦80,000</td>
-									<td>Sokoya Philip</td>
-									<td>2018/9/02</td>
-								</tr>
-								<tr>
-									<td><a href="/admin/product/detail">Nokia - 2 - 5" - 1GB RAM, 8GB ROM - Android 7.0
-											8MP + 5MP - White</a></td>
-									<td>Android</td>
-									<td>₦70,000</td>
-									<td>Dan Micheal</td>
-									<td>2018/9/22</td>
-								</tr>
+									<?php foreach( $products as $product ): ?>
+										<tr>
+											<td><a href="<?= base_url('product/detail/' . $product->id); ?>"><?= $product->product_name;?></a></td>
+											<td><?= $product->rootcategory; ?></td>
+											<td><?= $product->category; ?></td>
+											<td><a href="<?= base_url('sellers/detail/'. $product->seller_id); ?>"><?= ucwords($product->first_name . ' ' . $product->last_name); ?></a></td>
+											<td><?= neatDate($product->created_on); ?></td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
