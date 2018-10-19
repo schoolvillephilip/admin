@@ -113,8 +113,8 @@
 							<ul class="collapse <?php if ($pg_name == 'product') echo 'in'; ?>">
 								<li <?php if ($sub_name == 'products_overview') echo 'class="active-link"' ?>><a
 										href="<?= base_url('product') ?>">Products Overview</a></li>
-								<li <?php if ($sub_name == 'manage_product') echo 'class="active-link"' ?>><a
-										href="<?= base_url('product/manage'); ?>">Manage Product</a></li>
+								<li <?php if ($sub_name == 'approve_product') echo 'class="active-link"' ?>><a
+										href="<?= base_url('product/approve'); ?>">Approve Product</a></li>
 
 							</ul>
 						</li>

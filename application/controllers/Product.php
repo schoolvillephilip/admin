@@ -53,5 +53,13 @@ class Product extends CI_Controller
 		var_dump( $page_data['product'] );
 		$this->load->view('admin/product/detail', $page_data);
 	}
-
+	public function approve()
+	{
+		$page_data['page_title'] = 'Approve Product';
+		$page_data['pg_name'] = 'product';
+		$page_data['sub_name'] = 'approve_product';
+		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			'first_name,last_name,email,profile_pic');
+		$this->load->view('admin/product/approve', $page_data);
+	}
 }
