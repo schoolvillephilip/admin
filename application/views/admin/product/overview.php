@@ -68,7 +68,7 @@
 								<?php foreach ($products as $product) : ?>
 									<tr>
 										<td>
-											<a href="product/detail"> <?= $product->product_name ?></a>
+											<a href="<?= base_url('product/detail/' . $product->id ); ?> "> <?= $product->product_name ?></a>
 										</td>
 										<td>
 											<?= $product->rootcategory ?>
@@ -91,17 +91,8 @@
 								</tbody>
 							</table>
 						</div>
-						<ul class="pagination" style="margin: auto auto 5px;">
-							<li class="disabled"><a href="#" class="demo-pli-arrow-left"></a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><span>...</span></li>
-							<li><a href="#">20</a></li>
-							<li><a href="#" class="demo-pli-arrow-right"></a></li>
-						</ul>
 
+						<!-- <?= $pagination; ?> -->
 					</div>
 
 				</div>
