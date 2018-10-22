@@ -21,7 +21,7 @@
         <link href="<?= base_url('assets/plugins/bootstrap-table/bootstrap-table.min.css')?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')?>" rel="stylesheet">
     <?php endif; ?>
-    <?php if( in_array($pg_name, array('manage_product','sellers','product') ) ): ?>
+    <?php if( in_array($pg_name, array('manage_product','sellers','product','orders') ) ): ?>
         <!--DataTables [ OPTIONAL ]-->
         <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">

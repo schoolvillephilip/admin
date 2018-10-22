@@ -21,8 +21,15 @@ class Orders extends CI_Controller{
         $page_data['sub_name'] = 'orders_overview';
         $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('orders/overview', $page_data);
+        $this->load->view('admin/orders/overview', $page_data);
     }
 
-
+    public function detail(){
+		$page_data['page_title'] = 'Orders Detail';
+		$page_data['pg_name'] = 'orders';
+		$page_data['sub_name'] = 'orders_detail';
+		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			'first_name,last_name,email,profile_pic');
+		$this->load->view('admin/orders/detail', $page_data);
+	}
 }

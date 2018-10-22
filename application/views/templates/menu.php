@@ -5,8 +5,9 @@
 		<!--================================-->
 		<div class="mainnav-brand">
 			<a href="<?= base_url(); ?>" class="brand">
-<!--				<img src="--><?//= base_url('assets/img/carrito-logo.png'); ?><!--" alt="Carrito marketplace Logo"-->
-<!--					 class="brand-icon">-->
+				<!--				<img src="-->
+				<? //= base_url('assets/img/carrito-logo.png'); ?><!--" alt="Carrito marketplace Logo"-->
+				<!--					 class="brand-icon">-->
 				<span class="brand-text">Carrito</span>
 			</a>
 			<a href="#" class="mainnav-toggle"><i class="pci-cross pci-circle icon-lg"></i></a>
@@ -23,9 +24,9 @@
 					<!--================================-->
 					<div id="mainnav-profile" class="mainnav-profile">
 						<div class="profile-wrap text-center">
-<!--							<div class="pad-btm">-->
-<!--								<img class="img-circle img-md" src="img/profile-photos/1.png" alt="Profile Picture">-->
-<!--							</div>-->
+							<!--							<div class="pad-btm">-->
+							<!--								<img class="img-circle img-md" src="img/profile-photos/1.png" alt="Profile Picture">-->
+							<!--							</div>-->
 							<a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
                                                 <i class="dropdown-caret"></i>
@@ -119,21 +120,14 @@
 							</ul>
 						</li>
 
-						<li class="<?php if ($pg_name == 'orders') echo 'class="active-sub"' ?>">
-							<a href="#">
+						<li class="<?php if ($pg_name == 'orders') echo 'class="active-link"' ?>">
+							<a href="<?= base_url('orders') ?>">
 								<i class="demo-pli-gear"></i>
 								<span class="menu-title">Orders</span>
 								<i class="arrow"></i>
 							</a>
 
 							<!--Submenu-->
-							<ul class="collapse <?php if ($pg_name == 'orders') echo 'in'; ?>">
-								<li <?php if ($sub_name == 'orders_overview') echo 'class="active-link"' ?>><a
-										href="<?= base_url('orders') ?>">Sellers Overview</a></li>
-								<li <?php if ($sub_name == 'manage_sellers') echo 'class="active-link"' ?>><a
-										href="<?= base_url('orders/manage'); ?>">Manage Orders</a></li>
-
-							</ul>
 						</li>
 
 
