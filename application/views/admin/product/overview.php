@@ -38,7 +38,7 @@
 				<div class="row pad-ver">
 					<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
 						<div class="input-group mar-btm">
-							<input type="text" placeholder="Search All Produsts" class="form-control input-lg">
+							<input type="text" placeholder="Search All Products" class="form-control input-lg">
 							<span class="input-group-btn">
                      <button class="btn btn-primary btn-lg" type="button">Search</button>
                  </span>
