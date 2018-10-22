@@ -154,7 +154,7 @@
 				<!--===================================================-->
 				<div class="panel">
 					<div class="panel-heading">
-						<h3 class="panel-title"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?>'s Products</h3>
+						<h3 class="panel-title"><?= ucwords($seller->first_name. ' ' . $seller->last_name);?>'s Products based on sales</h3>
 					</div>
 					<div class="panel-body">
 						<table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
@@ -173,7 +173,7 @@
 								<?php foreach($products as $product ) : ?>
 									<tr>
 										<td><?= $product->id; ?></td>
-										<td><?= $product->product_name; ?></td>
+										<td><a href="<?= base_url('product/detail/'. $product->id); ?>"><?= $product->product_name; ?></a></td>
 										<td><?= $product->sku; ?></td>
 										<td><?= $product->sold; ?></td>
 										<td>

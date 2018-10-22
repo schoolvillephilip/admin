@@ -45,7 +45,7 @@
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
 					<li><a href="#">Dashboard</a></li>
 					<li><a href="#">Products</a></li>
-					<li class="active">Samsung Galaxy J6 - Purple</li>
+					<li class="active"><?= ucwords($product->product_name); ?></li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
@@ -57,7 +57,14 @@
 					<div class="col-md-3">
 						<div class="panel" style="border-bottom: 1px solid #25476a">
 							<div class="panel-body text-center shadow-v3" style="max-height: 390px;">
-								<img alt="Featured Image" src="/admin/assets/img/phone.png" style="max-height: 350px;">
+								<?php
+									$split = explode('|', $product->image_name);
+
+								?>
+								<img class="product-img"
+											 src="https://res.cloudinary.com/philo001/image/upload/h_270,w_270,q_auto,f_auto,fl_lossy,dpr_auto/v<?= $split[0] . '/' . $split[1]; ?>"
+											 alt="<?= $product->product_name; ?>"
+											 title="<?= $product->product_name; ?>" style="max-height: 300px;">
 							</div>
 						</div>
 					</div>
@@ -65,7 +72,7 @@
 					<div class="col-md-6">
 						<div class="panel">
 							<div class="panel-heading">
-								<h3 class="panel-title text-bold">Samsung Galaxy J6 - Purple Details</h3>
+								<h3 class="panel-title text-bold"><?= ucwords($product->product_name); ?></h3>
 							</div>
 							<div class="panel-body">
 								<div class="table-responsive">
@@ -78,12 +85,12 @@
 										</thead>
 										<tbody>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Price:</a></td>
+											<td>Price:</a></td>
 											<td class="text-bold">&#8358;80,000</td>
 										</tr>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Seller:</a></td>
-											<td> SOKOYA PHILIP
+											<td>Seller:</a></td>
+											<td><a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
 												<button data-target="#demo-modal-wo-anim" data-toggle="modal"
 														class="btn btn-primary btn-sm" style="float: right"><i
 														class="demo-pli-lock-user icon-fw"></i>Message
@@ -92,24 +99,36 @@
 											</td>
 										</tr>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Product ID:</a></td>
-											<td>X5PJUH</td>
+											<td>Product ID:</a></td>
+											<td><?= $product->sku; ?></td>
 										</tr>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Model:</a></td>
-											<td>S9</td>
+											<td>Product Root Category:</a></td>
+											<td><?= $product->rootcategory; ?></td>
 										</tr>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Main Color</a></td>
-											<td>Black</td>
+											<td>Product Category:</a></td>
+											<td><?= $product->category; ?></td>
 										</tr>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Color Family</a></td>
-											<td>Green</td>
+											<td>Product Sub-category:</a></td>
+											<td><?= $product->subcategory; ?></td>
 										</tr>
 										<tr>
-											<td><a href="javascript:void(0)" class="btn-link">Main Material</a></td>
-											<td>Silicon</td>
+											<td>Product Brand Name:</a></td>
+											<td><?= $product->brand_name; ?></td>
+										</tr>
+										<tr>
+											<td>Model:</a></td>
+											<td><?= $product->model; ?></td>
+										</tr>
+										<tr>
+											<td>Main Color</a></td>
+											<td><?= $product->main_colour; ?></td>
+										</tr>
+										<tr>
+											<td>Main Material</a></td>
+											<td><?= $product->main_material; ?></td>
 										</tr>
 										</tbody>
 									</table>
@@ -121,7 +140,7 @@
 					<div class="col-md-3">
 						<div class="panel bg-mint panel-colorful">
 							<div class="pad-all text-center">
-								<span class="text-3x text-thin">53</span>
+								<span class="text-3x text-thin"><?= is_null($product->quantity_sold) ? 0 : $product->quantity_sold ;?></span>
 								<p>Sales</p>
 								<i class="demo-pli-shopping-bag icon-lg"></i>
 							</div>
@@ -131,8 +150,17 @@
 								<i class=" demo-pli-bag-coin icon-3x"></i>
 							</div>
 							<div class="media-body pad-all">
-								<p class="text-2x mar-no text-semibold text-main">&#8358;140,000</p>
+								<p class="text-2x mar-no text-semibold text-main"><?= ngn($product->amount); ?></p>
 								<p class="text-muted mar-no">Total Amount Earned</p>
+							</div>
+						</div>
+						<div class="panel media middle">
+							<div class="media-left bg-purple pad-all">
+								<i class="demo-pli-bag-coin icon-3x"></i>
+							</div>
+							<div class="media-body pad-all">
+								<p class="text-2x mar-no text-semibold text-main"><?= is_null($product->views) ? 0 : $product->views; ?></p>
+								<p class="text-muted mar-no">Product Views</p>
 							</div>
 						</div>
 						<div class="panel media pad-all bg-info">
@@ -142,7 +170,7 @@
 					                        </span>
 							</div>
 							<div class="media-body">
-								<p class="text-2x mar-no text-semibold">20</p>
+								<p class="text-2x mar-no text-semibold"><?= $product->variation_qty - (is_null($product->quantity_sold) ? 0 : $product->quantity_sold)?></p>
 								<p class="mar-no">Items Available In Stock</p>
 							</div>
 						</div>
@@ -166,47 +194,15 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td>Sim-Type</td>
-								<td>Dual SIM</td>
-							</tr>
-							<tr>
-								<td>OS-Type</td>
-								<td>Android OS</td>
-							</tr>
-							<tr>
-								<td>Measurement</td>
-								<td>1260cm</td>
-							</tr>
-							<tr>
-								<td>Weight</td>
-								<td>300kg</td>
-							</tr>
-							<tr>
-								<td>Battery-Capacity</td>
-								<td>3000mAh</td>
-							</tr>
-							<tr>
-								<td>Internal-Memory</td>
-								<td>256 GB</td>
-							</tr>
-							<tr>
-								<td>RAM</td>
-								<td>6 GB</td>
-							</tr>
-							<tr>
-								<td>Sceen-Size</td>
-								<td>5.9 Inches</td>
-							</tr>
-							<tr>
-								<td>Colour</td>
-								<td>Black</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-							</tr>
-
+								<?php 
+									$attributes = json_decode($product->attributes); 
+									foreach( $attributes as $key => $value ) :
+								?>
+									<tr>
+										<td><?= $key?></td>
+										<td><?= $value; ?></td>
+									</tr>
+								<?php endforeach; ?>
 							</tbody>
 						</table>
 					</div>
@@ -227,35 +223,22 @@
 						<div class="tab-content">
 							<div class="tab-pane fade in active" id="demo-tabs-box-1">
 								<p class="text-main text-semibold">Product Frontline</p>
-								<p>Fouani Nigeria, Trendy Woman Ltd, SEOLAK</p>
+								<p><?= $product->product_line; ?></p>
 								<p class="text-main text-semibold">Product Description</p>
-								<p>Display: 5.8”, Quad HD+ sAMOLED Single Sim Option Camera Main: Super Speed Dual Pixel
-									12 MP OIS (F1.5/F2.4) Camera Front: 8MP AF (F1.7) Processor: 10nm, Octa-core (2.7GHz
-									Quad + 1.7GHz Quad) Memory: 4GB RAM and 64GB Internal storage, External Memory:
-									MicroSD™ up to 400 GB Battery: 3000mAh Security: Intelligent Scan (Iris + Face),
-									Fingerprint Scanner, Water and Dust Resistance: IP68 (1.5 m & 30 min)</p>
+								<p><?= $product->product_description; ?></p>
 								<p class="text-main text-semibold">Certifications</p>
-								<p>Eco Friendly FSC - Forest Stewardship Council</p>
+								<p>
+									<?php $certifications = json_decode($product->certifications);
+										foreach( $certifications as $certification ) echo $certification .', ';
+									?>
+								</p>
 								<p class="text-main text-semibold">Warranty Type</p>
-								<p>This product has the following warranty : Repair by vendor</p>
+								<p><?= $product->warranty_type; ?>
+								</p>
 								<p class="text-main text-semibold">Product Warranty</p>
-								<p>It is a long established fact that a reader will be distracted by the readable
-									content of a page when looking at its layout. The point of using Lorem Ipsum is that
-									it has a more-or-less normal distribution of letters, as opposed to using 'Content
-									here, content here', making it look like readable English. Many desktop publishing
-									packages and web page editors now use Lorem Ipsum as their default model text, and a
-									search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
-									versions have evolved over the years, sometimes by accident, sometimes on purpose
-									(injected humour and the like).</p>
+								<p><?= $product->product_warranty; ?></p>
 								<p class="text-main text-semibold">Warranty Address</p>
-								<p>It is a long established fact that a reader will be distracted by the readable
-									content of a page when looking at its layout. The point of using Lorem Ipsum is that
-									it has a more-or-less normal distribution of letters, as opposed to using 'Content
-									here, content here', making it look like readable English. Many desktop publishing
-									packages and web page editors now use Lorem Ipsum as their default model text, and a
-									search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
-									versions have evolved over the years, sometimes by accident, sometimes on purpose
-									(injected humour and the like).</p>
+								<p><?= $product->warranty_address; ?></p>
 							</div>
 						</div>
 					</div>
