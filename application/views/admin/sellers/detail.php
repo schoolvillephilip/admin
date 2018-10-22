@@ -47,7 +47,7 @@
 								<p class="text-semibold mar-no text-main">Registration No : <?= $seller->reg_no; ?></p>
 								<p class="text-muted"><?= $seller->legal_company_name; ?></p>
 
-								<?php if ($seller->account_status == "pending") : ?>
+								<?php if ($seller->status == "pending") : ?>
 									<button class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve
 										Seller
 									</button>
@@ -87,22 +87,22 @@
 							<!--Nav tabs-->
 							<ul class="nav nav-tabs tabs-right">
 								<li class="active">
-									<a data-toggle="tab" href="#demo-rgt-tab-1">Details</a>
+									<a data-toggle="tab" href="#detail-tab-1">Details</a>
 								</li>
 								<li>
-									<a data-toggle="tab" href="#demo-rgt-tab-2">Bank Details</a>
+									<a data-toggle="tab" href="#detail-tab-2">Bank Details</a>
 								</li>
 								<li>
-									<a data-toggle="tab" href="#demo-rgt-tab-3">Account Details</a>
+									<a data-toggle="tab" href="#detail-tab-3">Account Details</a>
 								</li>
 								<li>
-									<a data-toggle="tab" href="#demo-rgt-tab-4">Settings</a>
+									<a data-toggle="tab" href="#detail-tab-4">Settings</a>
 								</li>
 							</ul>
 
 							<!--Tabs Content-->
 							<div class="tab-content">
-								<div id="demo-rgt-tab-1" class="tab-pane fade active in">
+								<div id="detail-tab-1" class="tab-pane fade active in">
 									<p class="text-main text-semibold">Email</p>
 									<p><?= $seller->email; ?></p>
 									<p class="text-main text-semibold">Company Name</p>
@@ -116,7 +116,7 @@
 									<p class="text-main text-semibold">Terms & Conditions</p>
 									<p><?= $seller->terms; ?></p>
 								</div>
-								<div id="demo-rgt-tab-2" class="tab-pane fade">
+								<div id="detail-tab-2" class="tab-pane fade">
 									<p class="text-main text-semibold">Bank Name</p>
 									<p><?= $seller->bank_name; ?></p>
 									<p class="text-main text-semibold">Account Name</p>
@@ -127,7 +127,7 @@
 									<p><?= $seller->bvn; ?></p>
 
 								</div>
-								<div id="demo-rgt-tab-3" class="tab-pane fade">
+								<div id="detail-tab-3" class="tab-pane fade">
 									<p class="text-main text-semibold">Products Active?</p>
 									<p><?= ($seller->disable_products == 1) ? 'Active' : 'Not Active'; ?></p>
 									<p class="text-main text-semibold">Account Status</p>
@@ -143,7 +143,7 @@
 									<p class="text-main text-semibold">IP Address</p>
 									<p><?= $seller->ip; ?></p>
 								</div>
-								<div id="demo-rgt-tab-4" class="tab-pane fade">
+								<div id="detail-tab-4" class="tab-pane fade">
 									<p class="text-main text-semibold">Overall Settings</p>
 									<p>Coming Soon...</p>
 								</div>

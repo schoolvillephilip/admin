@@ -4,7 +4,7 @@ Class Admin_model extends CI_Model
 {
 
     // Insert data
-    function insert_data($table = 'sellers', $data = array())
+    function insert_data($table = 'users', $data = array())
     {
         try {
             $this->db->insert($table, $data);
@@ -16,7 +16,7 @@ Class Admin_model extends CI_Model
     }
 
     // Login Customer
-    function login($data = array(), $table_name = 'sellers')
+    function login($data = array(), $table_name = 'users')
     {
         if (!empty($data)) {
             $email = cleanit($data['email']);
@@ -28,7 +28,7 @@ Class Admin_model extends CI_Model
                     $password = shaPassword($data['password'], $salt);
                     $this->db->where('email', $data['email']);
                     $this->db->where('password', $password);
-                    $result = $this->db->get('sellers');
+                    $result = $this->db->get('users');
                     if ($result->num_rows() == 1) {
                         $c_update = array('last_login' => get_now(), 'ip' => $_SERVER['REMOTE_ADDR']);
                         $this->db->where('email', $data['email']);
@@ -44,7 +44,7 @@ Class Admin_model extends CI_Model
 
     // Create An Account for user
 
-    function create_account($data = array(), $table_name = 'sellers')
+    function create_account($data = array(), $table_name = 'users')
     {
         $result = '';
         if (!empty($data)) {
@@ -59,7 +59,7 @@ Class Admin_model extends CI_Model
     }
 
     // Update table
-    function update_data($access = '', $data = array(), $table_name = 'sellers', $label = '')
+    function update_data($access = '', $data = array(), $table_name = 'users', $label = '')
     {
         if ($label != '') {
             $this->db->where($label, $access);
@@ -71,12 +71,12 @@ Class Admin_model extends CI_Model
 
     // check if the password is correct
 
-    function cur_pass_match($password = null, $access = '', $table = 'sellers')
+    function cur_pass_match($password = null, $access = '', $table = 'users')
     {
         if ($password) {
             $this->db->where('id', $access);
             $this->db->or_where('email', $access);
-            $salt = $this->db->get('sellers')->row()->salt;
+            $salt = $this->db->get('users')->row()->salt;
             $this->db->where('id', $access);
             $this->db->or_where('email', $access);
             $curpassword = $this->db->get($table)->row()->password;
@@ -90,7 +90,7 @@ Class Admin_model extends CI_Model
     }
 
     // Change Password
-    function change_password($password, $access = '', $table = 'sellers')
+    function change_password($password, $access = '', $table = 'users')
     {
         if ($access == '') $access = $this->session->userdata('logged_id');
         $salt = salt(50);
@@ -112,7 +112,7 @@ Class Admin_model extends CI_Model
     {
         $this->db->select($details);
         $this->db->where('id', $access);
-        return $this->db->get('sellers')->row();
+        return $this->db->get('users')->row();
     }
 
     /**
@@ -120,11 +120,9 @@ Class Admin_model extends CI_Model
      * @param $details : Get all login user  profile details
      * @return mixed
      */
-    function get_profile($access)
-    {
-        $this->db->select("*");
-        $this->db->where('id', $access);
-        return $this->db->get('sellers')->row();
+    function get_profile($access){
+        $query =  "SELECT * FROM users u LEFT JOIN sellers s ON (s.uid = u.id) where u.id = $access";
+        return $this->db->query($query)->row();
     }
 
     /**
@@ -209,13 +207,13 @@ Class Admin_model extends CI_Model
      * @return CI_DB_result
      */
     function get_seller_lists($search = '', $limit = '', $offset = '', $type = ''){
-        $query = "SELECT id,first_name, last_name, email, legal_company_name, main_category,profile_pic,reg_no, last_login FROM sellers";
-        if( $search != '' ) $query.= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (legal_company_name LIKE %$search%) OR (email LIKE %$search%)";
+        $query = "SELECT u.id,first_name,last_name,email,s.main_category,s.legal_company_name,s.reg_no,u.profile_pic,last_login FROM users u LEFT JOIN sellers s ON (u.id = s.uid)";
+        if( $search != '' ) $query.= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
         if( $search != '' && $type != '' ) {
-            $query .= " AND account_status = '$type'";
-        }elseif( $search == '' && $type != '' ) $query .= " WHERE account_status = '$type'";
+            $query .= " AND u.is_seller = '$type'";
+        }elseif( $search == '' && $type != '' ) $query .= " WHERE u.is_seller = '$type'";
         if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
-        
+        // die( $query );
         return $this->db->query($query)->result();
     }
 
@@ -225,7 +223,7 @@ Class Admin_model extends CI_Model
      */
     function get_product_list($id = '', $product_status = '', $args = array() ){
         $query = "SELECT p.id, p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
-            LEFT JOIN sellers as s ON ( p.seller_id = s.id )
+            LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
 
         if( $id != '' ) $query .= " WHERE o.seller_id = $id AND p.seller_id = $id";
@@ -247,7 +245,7 @@ Class Admin_model extends CI_Model
                     LEFT JOIN product_gallery as g ON (p.seller_id = g.seller_id AND g.featured_image = 1 )
                     LEFT JOIN (SELECT SUM(ord.amount) as amount, ord.seller_id, ord.product_id, SUM(ord.qty) quantity_sold FROM orders AS ord GROUP BY ord.product_id ) AS o
                     ON (o.seller_id = p.seller_id AND o.product_id = p.id)
-                    LEFT JOIN sellers AS s ON (p.seller_id = s.id )
+                    LEFT JOIN users AS s ON (p.seller_id = s.id )
                     LEFT JOIN (SELECT SUM(var.quantity) AS variation_qty, var.product_id FROM product_variation var GROUP BY var.product_id ) v
                     ON ( v.product_id = p.id)
                     WHERE p.id = $id GROUP BY p.id ";

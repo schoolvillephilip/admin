@@ -295,7 +295,7 @@
 			<!--Modal header-->
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-				<h4 class="modal-title">Message Seller (Sokoya Philip)</h4>
+				<h4 class="modal-title">Message Seller (<?= ucwords($product->first_name . ' ' . $product->last_name); ?>)</h4>
 			</div>
 			<!--Modal body-->
 			<div class="modal-body">

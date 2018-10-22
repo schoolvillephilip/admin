@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Sellers extends CI_Controller
 {
 
-	public function __construct()
-	{
+	public function __construct(){
 		parent::__construct();
 		$this->load->model('admin_model', 'admin');
 		if (!$this->session->userdata('logged_in')) {
@@ -22,7 +21,6 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'sellers_overview';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
-
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
 		$page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
@@ -50,7 +48,9 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'sellers_detail';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
+
 		$page_data['seller'] = $this->admin->get_profile($id);
+
 		if( empty($page_data['seller']) || empty($id) ) {
 			$this->session->set_flashdata('error_msg', 'Sorry the user details can not be found');
 			redirect($_SERVER['HTTP_REFERRER']);
@@ -67,7 +67,6 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'approve_sellers';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
-
 
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
