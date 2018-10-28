@@ -56,37 +56,28 @@
 								<thead>
 								<tr>
 									<th>Order Code</th>
+									<th>Seller name</th>
 									<th>Customer Name</th>
 									<th class="min-tablet">Customer Phone</th>
 									<th class="min-tablet">Product Name</th>
-									<th class="min-desktop">Product Quantity</th>
+									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
 								</tr>
 								</thead>
 								<tbody>
-								<tr>
-									<td>
-										<a href="orders/detail">431658</a>
-									</td>
-									<td>Sokoya Adeniji</td>
-									<td>08169254598</td>
-									<td>Samsung Galaxy J6 - Purple</td>
-									<td>5</td>
-									<td>400,000</td>
-									<td>2018-10-16</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="orders/detail">398156</a>
-									</td>
-									<td>Chidi Jeffrey</td>
-									<td>08129102144</td>
-									<td>Samsung Galaxy S9 - BLACK (Dual Sim) - Official Warranty</td>
-									<td>1</td>
-									<td>80,000</td>
-									<td>2018-10-15</td>
-								</tr>
+									<?php foreach( $orders as $order ): ?>
+										<tr>
+											<td><a href="<?= base_url('orders/detail/' . $order->order_code); ?>"><?= $order->order_code; ?></a></td>
+											<td><?= ucwords($order->first_name . ' ' . $order->last_name); ?></td>
+											<td><?= $order->customer_name; ?></td>
+											<td><?= $order->customer_phone; ?></td>
+											<td><?= word_limiter($order->product_name, 7, '...')?></td>
+											<td><?= $order->qty; ?></td>
+											<td><?= ngn($order->amount); ?></td>
+											<td><?= neatDate($order->order_date); ?></td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>

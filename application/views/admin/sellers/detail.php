@@ -38,6 +38,7 @@
 			<div id="page-content">
 
 				<div class="row">
+					<?php $this->load->view('msg_view'); ?>
 					<div class="col-md-6">
 						<div class="panel">
 							<div class="panel-body text-center">
@@ -46,23 +47,23 @@
 								<p class="text-lg text-semibold mar-no text-main"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></p>
 								<p class="text-semibold mar-no text-main">Registration No : <?= $seller->reg_no; ?></p>
 								<p class="text-muted"><?= $seller->legal_company_name; ?></p>
+								<p class="text-semibold mar-no text-main">Account Status : <?= accountStatus($seller->status); ?></p>
 
-								<?php if ($seller->status == "pending") : ?>
-									<button class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve
-										Seller
-									</button>
-									<button class="btn btn-danger mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Reject
-										Seller
-									</button>
+								<?php if ($seller->status != "approved") : ?>
+									<a href="<?= base_url('sellers/action/approve/'.$seller->uid); ?>" class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve Seller</a>
+
+									<a href="<?= base_url('sellers/action/reject/'.$seller->uid); ?>" class="btn btn-danger mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Reject Seller</a>
+
 								<?php else : ?>
-									<button class="btn btn-danger mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Block
-									</button>
-									<button class="btn btn-primary mar-ver"><i
-											class="demo-pli-checked-user icon-fw"></i>Verify
-									</button>
-									<button class="btn btn-warning mar-ver"><i
-											class="demo-pli-warning-window icon-fw"></i>Suspend
-									</button>
+
+									<a href="<?= base_url('sellers/action/reject/'.$seller->uid); ?>" class="btn btn-danger mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Block Seller</a>
+
+									<a href="<?= base_url('sellers/action/verify/'.$seller->uid); ?>" class="btn btn-success mar-ver"><i
+											class="demo-pli-checked-user icon-fw"></i>Verify Seller</a>
+
+									<a href="<?= base_url('sellers/action/suspend/'.$seller->uid); ?>" class="btn btn-warning mar-ver"><i
+											class="demo-pli-warning-window icon-fw"></i>Suspend Seller</a>
+
 								<?php endif; ?>
 								<ul class="list-unstyled text-center bord-top pad-top mar-no row">
 									<li class="col-xs-4">
@@ -70,7 +71,7 @@
 										<p class="text-muted mar-no">Sold Items</p>
 									</li>
 									<li class="col-xs-4">
-										<span class="text-lg text-semibold text-main">24</span>
+										<span class="text-lg text-semibold text-main">0</span>
 										<p class="text-muted mar-no">Active Promotions</p>
 									</li>
 									<li class="col-xs-4">
@@ -135,7 +136,7 @@
 										<button
 											class="btn btn-<?= ($seller->account_status == 'approved' || $seller->account_status == 'verified') ? 'success' : 'danger' ?> btn-rounded"><?= ucwords($seller->account_status); ?></button>
 									</p>
-									<p><strong><?= $seller->account_status; ?></strong></p>
+									<p><strong><?= accountStatus($seller->account_status); ?></strong></p>
 									<p class="text-main text-semibold">Date Registered</p>
 									<p><?= neatDate($seller->date_registered); ?></p>
 									<p class="text-main text-semibold">Last Login</p>

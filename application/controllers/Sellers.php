@@ -50,7 +50,6 @@ class Sellers extends CI_Controller
 			'first_name,last_name,email,profile_pic');
 
 		$page_data['seller'] = $this->admin->get_profile($id);
-
 		if( empty($page_data['seller']) || empty($id) ) {
 			$this->session->set_flashdata('error_msg', 'Sorry the user details can not be found');
 			redirect($_SERVER['HTTP_REFERRER']);
@@ -85,8 +84,30 @@ class Sellers extends CI_Controller
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page, 'pending');
-
 		$this->load->view('admin/sellers/approve', $page_data);
+	}
+
+	function approve_seller(){
+		if( $this->input->post() ){
+			$data['is_seller'] = 'approved';
+			if( $this->admin->update_data($this->input->post('seller_id'), $data, 'users') ){
+				// .. update the seller's table also
+				$this->admin->update_data($this->input->post('seller_id'), array('status' => 'approved'), 'sellers', 'uid' );
+				$this->session->set_flashdata('success_msg','The seller account has been approved');
+			}	
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	function action( $action ='' , $seller_id = ''){
+		if( !empty($action) && !empty( $seller_id ) ) {
+			if( $this->admin->seller_account_action( $action, $seller_id) ){
+				$this->session->set_flashdata('success_msg','The seller account has been '.$action);
+			}else{
+				$this->session->set_flashdata('error_msg','The seller account has been ' .$action);
+			}
+		}
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }

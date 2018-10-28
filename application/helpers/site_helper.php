@@ -35,6 +35,22 @@ if (!function_exists('shaPassword')) {
 	}
 }
 
+if (!function_exists('accountStatus')){
+	function accountStatus( $stat = "" ){
+		switch ($stat) {
+			case 'suspended':
+				return '<label class="label label-info">' . ucfirst( $stat ). '</label>';
+				break;
+			case 'approved':
+				return '<label class="label label-warning">' . ucfirst( $stat ). '</label>';
+				break;			
+			default:
+				return '<label class="label label-success">' . ucfirst( $stat ). '</label>';
+				break;
+		}
+	}
+}
+
 if (!function_exists('neatDate')) {
     function neatDate($dt){
         $bdate = $dt;
@@ -49,13 +65,16 @@ if (!function_exists('productStatus')) {
     function productStatus($status){
         switch ($status) {
         	case 'pending':
-        		return '<div class="label label-table label-warning">Pending</div>';
+        		return '<label class="label label-table label-warning">' . ucfirst( $status ). '</label>';
         		break;
-        	case 'active':
-        		return '<div class="label label-table label-success">Active</div>';
-        		break;        	
+        	case 'approved':
+        		return '<label class="label label-table label-success">' . ucfirst( $status ). '</label>';
+        		break;  
+        	case 'missing_images':
+				return '<label class="label label-table label-info">' . ucfirst( $status ). '</label>';
+				break;      	
         	default:
-        		return '<div class="label label-table label-danger">Suspended</div>';
+        		return '<label class="label label-table label-danger">' . ucfirst( $status ). '</label>';
         		break;
         }
     }
@@ -136,6 +155,11 @@ function cleanit($data) {
 	return $data;
 }
 
-function urlify($string){
-    return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
+function urlify($string, $id =''){
+    $new_string = strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
+    if( $id != '' ){
+    	return $new_string .'-'.$id.'/';    	
+    }else{
+    	return $new_string;  
+    }
 }

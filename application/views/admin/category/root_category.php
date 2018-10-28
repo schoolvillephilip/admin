@@ -100,7 +100,7 @@
                                             <img src="<?= base_url('data/settings/categories/' . $root_category->image); ?>" width="40" height="40px">
                                         </td>
                                         <td class="text-center">
-                                            <a href="<?= base_url('categories/root_category/' . $root_category->root_category_id); ?>"><?= ucwords($root_category->name)?></a>
+                                            <a href="<?= base_url('categories/root_category_detail/' . $root_category->root_category_id); ?>"><?= ucwords($root_category->name)?></a>
                                         </td>
                                         <td>
                                             <?= $root_category->description; ?>

@@ -28,7 +28,7 @@
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
 					<li><a href="#">Dashboard</a></li>
 					<li>Order detail</li>
-					<li class="active">#398156</li>
+					<li class="active">#<?= $this->uri->segment(3); ?></li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
@@ -47,39 +47,45 @@
 							<!-- Striped Table -->
 							<!--===================================================-->
 							<div class="panel-body">
+								<?php $x = 1; foreach( $orders as $order ) : ?>
 								<div class="table-responsive">
 									<table class="table table-striped">
 										<thead>
 										<tr>
-											<th>Items</th>
+											<th>Items #<?=$x;?></th>
 											<th>Description</th>
 										</tr>
 										</thead>
 										<tbody>
-										<tr>
-											<td class="btn-link">Order Code</td>
-											<td>431658</td>
-										</tr>
-										<tr>
-											<td class="btn-link">Product Name</td>
-											<td>Samsung Galaxy J6 - Purple</td>
-										</tr>
-										<tr>
-											<td class="btn-link">Customer Name</td>
-											<td>Steve N. Horton</td>
-										</tr>
-										<tr>
-											<td class="btn-link">Quantity</td>
-											<td>2018-10-16</td>
-										</tr>
-										<tr>
-											<td class="btn-link">Status</td>
-											<td><span class="label label-success">Ordered</span>
-											</td>
-										</tr>
+												<tr>
+													<td>Order Code</td>
+													<td><?= $order->order_code; ?></td>
+												</tr>
+												<tr>
+													<td>Product Name</td>
+													<td><?= $order->product_name; ?></td>
+												</tr>
+												<tr>
+													<td>Customer Name</td>
+													<td><?= $order->customer_name; ?></td>
+												</tr>
+												<tr>
+													<td>Customer Phone</td>
+													<td><?= $order->customer_phone; ?></td>
+												</tr>
+												<tr>
+													<td>Quantity</td>
+													<td><?= $order->qty; ?></td>
+												</tr>
+												<tr>
+													<td>Status</td>
+													<td><span class="label label-success"><?= $order->status; ?></span>
+													</td>
+												</tr>
 										</tbody>
 									</table>
 								</div>
+								<?php $x++; endforeach; ?>
 							</div>
 							<!--===================================================-->
 							<!-- End Striped Table -->

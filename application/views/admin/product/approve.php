@@ -37,6 +37,7 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="row pad-ver">
+					<?php $this->load->view('msg_view'); ?>
 					<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
 						<div class="input-group mar-btm">
 							<input type="text" placeholder="Search Pending Product Records"
@@ -61,6 +62,7 @@
 									<th>Root category</th>
 									<th>Category</th>
 									<th>Seller</th>
+									<th>Product Status</th>
 									<th>Date Posted</th>
 								</tr>
 								</thead>
@@ -71,6 +73,7 @@
 											<td><?= $product->rootcategory; ?></td>
 											<td><?= $product->category; ?></td>
 											<td><a href="<?= base_url('sellers/detail/'. $product->seller_id); ?>"><?= ucwords($product->first_name . ' ' . $product->last_name); ?></a></td>
+											<td><?= productStatus($product->product_status); ?></td>
 											<td><?= neatDate($product->created_on); ?></td>
 										</tr>
 									<?php endforeach; ?>

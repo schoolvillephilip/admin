@@ -54,15 +54,13 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="row">
+					<?php $this->load->view('msg_view'); ?>
 					<div class="col-md-3">
 						<div class="panel" style="border-bottom: 1px solid #25476a">
 							<div class="panel-body text-center shadow-v3" style="max-height: 390px;">
-								<?php
-									$split = explode('|', $product->image_name);
-
-								?>
+								
 								<img class="product-img"
-											 src="https://res.cloudinary.com/philo001/image/upload/h_270,w_270,q_auto,f_auto,fl_lossy,dpr_auto/v<?= $split[0] . '/' . $split[1]; ?>"
+											 src="<?= base_url('data/products/'.$product->id.'/'.$product->image_name);?>"
 											 alt="<?= $product->product_name; ?>"
 											 title="<?= $product->product_name; ?>" style="max-height: 300px;">
 							</div>
@@ -132,7 +130,28 @@
 										</tr>
 										</tbody>
 									</table>
-									<button type="button" class="btn btn-block btn-primary">Approve Product</button>
+
+									<?php
+										if( $product->product_status =='approved') :
+									?>
+									<div class="row">
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/suspend/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-warning">Suspend Product</a>
+										</div>
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/delete/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-danger">Delete Product</a>
+										</div>
+									</div>
+									<?php else : ?>
+										<div class="row">
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/approve/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-primary">Approve Product</a>
+										</div>
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/delete/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-danger">Delete Product</a>
+										</div>
+									</div>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
@@ -228,8 +247,15 @@
 								<p><?= $product->product_description; ?></p>
 								<p class="text-main text-semibold">Certifications</p>
 								<p>
-									<?php $certifications = json_decode($product->certifications);
-										foreach( $certifications as $certification ) echo $certification .', ';
+									<?php 
+
+										if( !empty($product->certifications) ) {
+											$certifications = json_decode($product->certifications);
+											foreach( $certifications as $certification ) echo $certification .',' ;
+										}else{
+											echo 'No certification';
+										}
+
 									?>
 								</p>
 								<p class="text-main text-semibold">Warranty Type</p>

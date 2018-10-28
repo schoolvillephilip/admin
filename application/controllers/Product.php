@@ -53,7 +53,7 @@ class Product extends CI_Controller
 		$this->load->view('admin/product/detail', $page_data);
 	}
 
-	public function approve(){
+	public function approve($pid = '', $sid =''){
 		$page_data['page_title'] = 'Approve Product';
 		$page_data['pg_name'] = 'product';
 		$page_data['sub_name'] = 'approve_product';
@@ -61,5 +61,16 @@ class Product extends CI_Controller
 			'first_name,last_name,email,profile_pic');
 		$page_data['products'] = $this->admin->get_product_list('', 'pending');
 		$this->load->view('admin/product/approve', $page_data);
+	}
+
+	public function action($action, $pid = '', $sid =''){
+		$id = cleanit($pid);
+		if( $this->admin->product_listing_action($action, $pid, $sid) ){
+			$this->session->set_flashdata('success_msg', 'The product has been ' . $action . 'ed successfully.');
+			redirect($_SERVER['HTTP_REFERER']);
+		}else{
+			$this->session->set_flashdata('error_msg', 'Oops! There was error processing the action');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
 	}
 }

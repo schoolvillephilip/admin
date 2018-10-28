@@ -1,7 +1,6 @@
 <?php
 
-Class Admin_model extends CI_Model
-{
+Class Admin_model extends CI_Model{
 
     // Insert data
     function insert_data($table = 'users', $data = array())
@@ -20,6 +19,7 @@ Class Admin_model extends CI_Model
     {
         if (!empty($data)) {
             $email = cleanit($data['email']);
+            $this->db->where('is_admin', 1);
             $this->db->where('email', $data['email']);
             if ($this->db->get($table_name)->row()) {
                 $this->db->where('email', $data['email']);
@@ -206,12 +206,13 @@ Class Admin_model extends CI_Model
      * @param $type = 
      * @return CI_DB_result
      */
-    function get_seller_lists($search = '', $limit = '', $offset = '', $type = ''){
-        $query = "SELECT u.id,first_name,last_name,email,s.main_category,s.legal_company_name,s.reg_no,u.profile_pic,last_login FROM users u LEFT JOIN sellers s ON (u.id = s.uid)";
-        if( $search != '' ) $query.= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
-        if( $search != '' && $type != '' ) {
-            $query .= " AND u.is_seller = '$type'";
-        }elseif( $search == '' && $type != '' ) $query .= " WHERE u.is_seller = '$type'";
+    function get_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved'){
+        $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
+        if( $search != '' ) $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
+
+        if( $search != '' && $type != '' ) { $query .= " AND u.is_seller = '$type' ";}
+
+        if( $search == '' && $type != '' ) $query .= " WHERE u.is_seller = '$type'";
         if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
         // die( $query );
         return $this->db->query($query)->result();
@@ -222,13 +223,12 @@ Class Admin_model extends CI_Model
      * @return CI_DB_result
      */
     function get_product_list($id = '', $product_status = '', $args = array() ){
-        $query = "SELECT p.id, p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
+        $query = "SELECT p.id, p.product_status,p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
 
-        if( $id != '' ) $query .= " WHERE o.seller_id = $id AND p.seller_id = $id";
-        if( $id != '' && $product_status != '' ){
-            $query .= " AND p.product_status = '$product_status'";
+        if( $product_status != '' ){
+            $query .= " WHERE p.product_status != 'approved'";
         }
         $query .= " GROUP BY p.id";
         return $this->db->query($query)->result();
@@ -254,6 +254,22 @@ Class Admin_model extends CI_Model
 
     /**
      * @param $id
+     * @return CI_DB_object
+     */
+    function get_orders( $id = ''){
+        $query = "SELECT o.order_code,o.customer_name, o.qty, o.customer_phone, o.amount, o.order_date, o.status, p.product_name, u.first_name, u.last_name FROM orders o
+        LEFT JOIN products p ON (o.product_id = p.id) 
+        LEFT JOIN users u ON (o.seller_id = u.id)";
+
+        if( $id != '' ) {$query .= "WHERE o.order_code = $id GROUP BY o.product_id";
+        }else{
+            $query .= " GROUP BY o.order_code";
+        }
+        return $this->db->query($query)->result();
+    }
+
+    /**
+     * @param $id
      * @return CI_DB_row
      */
 
@@ -271,5 +287,137 @@ Class Admin_model extends CI_Model
         $query = "SELECT COUNT(*) as prod FROM products WHERE seller_id = $id";
         return $this->db->query($query)->row();
     }
+
+    
+
+    /**
+     * @param $sellerid, $title, $content
+     * @return boolean
+     */
+    function notify_seller($seller_id, $title, $content){
+        $data = array(
+            'seller_id' => $seller_id,
+            'title'     => $title,
+            'content'   => $content
+        );
+        try {
+            $this->insert_data('sellers_notification_message', $data);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param $id = product id, $sid = sellerid
+     * @return boolean
+     */
+
+    function product_listing_action( $action, $pid,$sid ){
+        $this->db->where('seller_id', $sid);
+        $this->db->where('id', $pid);
+        if( $this->db->get('products')->num_rows() < 1 ){
+            return false;
+        }else{
+            // @TODO Switch action
+            $this->db->select('product_name');
+            $this->db->where('id', $pid);
+            $product_name = $this->db->get('products')->row()->product_name;
+            switch ($action) {
+                case 'suspend':
+                    if( $this->update_data($pid, array('product_status' => 'suspended'), 'products')){
+                        $this->notify_seller($sid, 
+                            'Your product listing has been suspended', "This is to notify you the product with ( $product_name ) has been suspended.  <br /> Contact support if not please with this action.<br /> Regards."
+                        );
+                        return true;
+                    }
+                    break;
+                case 'approve':
+                    if( $this->update_data($pid, array('product_status' => 'approved'), 'products')){
+                            $this->notify_seller($sid, 
+                                'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a href='" .lang('site_domain')."/" . urlify($product_name, $pid) ."'>Click here to see.</a><br /> Regards."
+                            );
+                            return true;
+                        }
+                        break;
+                case 'delete':
+                    // product_variation
+                    $this->db->where('product_id', $pid);
+                    $this->db->delete('product_variation');
+
+                    // product gallery
+                    $this->db->where('product_id', $pid);
+                    $this->db->delete('product_gallery');
+
+                    // main product
+                    $this->db->where('id', $pid);
+                    $this->db->delete('product');
+                    // remove the images
+                    // rmdir(base_url())
+                    $this->notify_seller($sid, 
+                            'Your product listing has been deleted', "This is to notify you the product with ( $product_name ) has been deleted.  <br /> Contact support if you are not happy with this action. <br /> Regards."
+                        );
+                    return true; 
+                    break;
+            }
+        }
+        return false;
+    }
+    /**
+     * @param $id = product id, $sid = sellerid
+     * @return boolean
+     */
+
+    function seller_account_action( $action, $sid ){
+        $this->db->where('uid', $sid);
+        if( $this->db->get('sellers')->num_rows() < 1 ){
+            return false;
+        }else{
+            // Note: When an account is not approved, the products should be suspended
+            switch ($action) {
+                case 'suspend':
+                    $status = $this->update_data($sid,array('status' => 'suspended'), 'sellers', 'uid');
+                    if( $status ){
+                        $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
+                        $this->notify_seller($sid, 
+                            'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
+                        );
+                    }
+                    return $status;
+                    break;
+
+                case 'reject':
+                    $status = $this->update_data($sid,array('status' => 'rejected'), 'sellers', 'uid');
+                    if( $status ){
+                        $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
+                        $this->notify_seller($sid, 
+                            'Your account has been rejected', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
+                        );
+                    }
+                    break;
+
+                case 'approve':
+                    $status = $this->update_data($sid,array('status' => 'approved'), 'sellers', 'uid');
+                    if( $status ){
+                        // We're suppose to activate all the products, but we still need to carefully check before setting them to approve
+                        $this->notify_seller($sid, 
+                            'Your account has been approved', "Congrats, welcome to your seller dashboard.<br /> Regards."
+                        );
+                    }
+                    return $status;
+                    break;
+                case 'delete':
+                    $this->db->Where('uid', $sid);
+                    return $this->db->delete('sellers');
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+        return false;
+    }
+
 
 }

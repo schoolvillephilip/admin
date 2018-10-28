@@ -36,6 +36,7 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="row pad-ver">
+					<?php $this->load->view('msg_view'); ?>
 					<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
 						<div class="input-group mar-btm">
 							<input type="text" placeholder="Search All Products" class="form-control input-lg">
@@ -80,7 +81,7 @@
 											<?= $product->product_line ?>
 										</td>
 										<td>
-											<?= $product->product_status ?>
+											<?= productStatus($product->product_status); ?>
 										</td>
 										<td>
 											<a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>">
