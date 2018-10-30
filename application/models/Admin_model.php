@@ -298,7 +298,8 @@ Class Admin_model extends CI_Model{
         $data = array(
             'seller_id' => $seller_id,
             'title'     => $title,
-            'content'   => $content
+            'content'   => $content,
+            'created_on' => get_now()
         );
         try {
             $this->insert_data('sellers_notification_message', $data);
