@@ -8,7 +8,7 @@ class Login extends CI_Controller{
         // Also check where the user is coming from
         // $this->session->set_userdata('referred_from', current_url());
         parent::__construct();
-        $this->load->model('admin_model', 'seller');
+        $this->load->model('admin_model', 'admin');
         if( $this->session->userdata('logged_in') ){
             // Ursher the person to where he is coming from
             $referred_from = $this->session->userdata('referred_from');
@@ -41,7 +41,7 @@ class Login extends CI_Controller{
                     'password' => $this->input->post('password')
                 );
 
-                $user_id = $this->seller->login($data);
+                $user_id = $this->admin->login($data);
                 if( !is_numeric($user_id)) {
                     $this->session->set_flashdata('error_msg','Sorry! Incorrect username or password.');
                     redirect('login');

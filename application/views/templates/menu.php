@@ -86,13 +86,35 @@
 							</ul>
 						</li>
 
+						<!--Menu list item-->
+						<li>
+							<a href="<?= base_url('brands'); ?>">
+								<i class="demo-pli-inbox-full"></i>
+								<span class="menu-title">Brands</span>
+							</a>
+						</li>
+
+						<li class="<?php if ($pg_name == 'states') echo 'class="active-sub"' ?>">
+							<a href="<?= base_url('states'); ?>">
+								<i class="demo-pli-gear"></i>
+								<span class="menu-title">States & Address</span>
+								<i class="arrow"></i>
+							</a>
+							<!--Submenu-->
+							<ul class="collapse <?php if ($pg_name == 'states') echo 'in'; ?>">
+								<li <?php if ($sub_name == 'states_areas') echo 'class="active-link"' ?>><a
+										href="<?= base_url('states') ?>">States Areas</a></li>
+								<li <?php if ($sub_name == 'pickup_address') echo 'class="active-link"' ?>><a
+										href="<?= base_url('states/pickup_address'); ?>">Pickup Address</a></li>
+							</ul>
+						</li>
+
 						<li class="<?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>">
 							<a href="#">
 								<i class="demo-pli-gear"></i>
 								<span class="menu-title">Sellers</span>
 								<i class="arrow"></i>
 							</a>
-
 							<!--Submenu-->
 							<ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
 								<li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a

@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Sellers extends CI_Controller
 {
 
-	public function __construct()
-	{
+	public function __construct(){
 		parent::__construct();
 		$this->load->model('admin_model', 'admin');
 		if (!$this->session->userdata('logged_in')) {
@@ -22,7 +21,6 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'sellers_overview';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
-
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
 		$page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
@@ -40,7 +38,8 @@ class Sellers extends CI_Controller
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page);
-		$this->load->view('admin/sellers/overview', $page_data);
+		// var_dump($page_data['sellers']);
+		$this->load->view('sellers/overview', $page_data);
 	}
 
 	public function detail(){
@@ -50,15 +49,16 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'sellers_detail';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
+
 		$page_data['seller'] = $this->admin->get_profile($id);
 		if( empty($page_data['seller']) || empty($id) ) {
 			$this->session->set_flashdata('error_msg', 'Sorry the user details can not be found');
 			redirect($_SERVER['HTTP_REFERRER']);
 		}
-		$page_data['sold_count'] = $this->admin->product_sold_count( $id );
-		$page_data['product_count'] = $this->admin->product_count( $id );
-		$page_data['products'] = $this->admin->get_product_list( $id);
-		$this->load->view('admin/sellers/detail', $page_data);
+		$page_data['sold_count'] = $this->admin->product_sold_count($id );
+		$page_data['product_count'] = $this->admin->product_count($id );
+		$page_data['products'] = $this->admin->get_product_list($id);
+		$this->load->view('sellers/detail', $page_data);
 	}
 
 	public function approve(){
@@ -67,7 +67,6 @@ class Sellers extends CI_Controller
 		$page_data['sub_name'] = 'approve_sellers';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
-
 
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
@@ -86,8 +85,30 @@ class Sellers extends CI_Controller
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page, 'pending');
+		$this->load->view('sellers/approve', $page_data);
+	}
 
-		$this->load->view('admin/sellers/approve', $page_data);
+	function approve_seller(){
+		if( $this->input->post() ){
+			$data['is_seller'] = 'approved';
+			if( $this->admin->update_data($this->input->post('seller_id'), $data, 'users') ){
+				// .. update the seller's table also
+				$this->admin->update_data($this->input->post('seller_id'), array('status' => 'approved'), 'sellers', 'uid' );
+				$this->session->set_flashdata('success_msg','The seller account has been approved');
+			}	
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	function action( $action ='' , $seller_id = ''){
+		if( !empty($action) && !empty( $seller_id ) ) {
+			if( $this->admin->seller_account_action( $action, $seller_id) ){
+				$this->session->set_flashdata('success_msg','The seller account has been '.$action);
+			}else{
+				$this->session->set_flashdata('error_msg','The seller account has been ' .$action);
+			}
+		}
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }

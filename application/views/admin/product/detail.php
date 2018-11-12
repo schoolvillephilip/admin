@@ -54,17 +54,15 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="row">
+					<?php $this->load->view('msg_view'); ?>
 					<div class="col-md-3">
 						<div class="panel" style="border-bottom: 1px solid #25476a">
-							<div class="panel-body text-center shadow-v3" style="max-height: 390px;">
-								<?php
-									$split = explode('|', $product->image_name);
-
-								?>
+							<div class="panel-body text-center shadow-v3" style="max-height: 490px;">
+<!--                                http://localhost/admin/data/products/7/e888a678ee969fca1845a6aa6c991ae3.jpg-->
 								<img class="product-img"
-											 src="https://res.cloudinary.com/philo001/image/upload/h_270,w_270,q_auto,f_auto,fl_lossy,dpr_auto/v<?= $split[0] . '/' . $split[1]; ?>"
+											 src="<?= base_url('data/products/'.$product->id.'/'.$product->image_name);?>"
 											 alt="<?= $product->product_name; ?>"
-											 title="<?= $product->product_name; ?>" style="max-height: 300px;">
+											 title="<?= $product->product_name; ?>" style="max-height: 600px;">
 							</div>
 						</div>
 					</div>
@@ -132,7 +130,28 @@
 										</tr>
 										</tbody>
 									</table>
-									<button type="button" class="btn btn-block btn-primary">Approve Product</button>
+
+									<?php
+										if( $product->product_status =='approved') :
+									?>
+									<div class="row">
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/suspend/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-warning">Suspend Product</a>
+										</div>
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/delete/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-danger">Delete Product</a>
+										</div>
+									</div>
+									<?php else : ?>
+										<div class="row">
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/approve/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-primary">Approve Product</a>
+										</div>
+										<div class="col-md-6">
+											<a href="<?= base_url('product/action/delete/'. $product->id.'/'. $product->seller_id); ?>" class="btn btn-block btn-danger">Delete Product</a>
+										</div>
+									</div>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
@@ -228,12 +247,23 @@
 								<p><?= $product->product_description; ?></p>
 								<p class="text-main text-semibold">Certifications</p>
 								<p>
-									<?php $certifications = json_decode($product->certifications);
-										foreach( $certifications as $certification ) echo $certification .', ';
+									<?php
+
+										if( !empty($product->certifications) ) {
+											$certifications = json_decode($product->certifications);
+											foreach( $certifications as $certification ) echo $certification .',' ;
+										}else{
+											echo 'No certification';
+										}
+
 									?>
 								</p>
 								<p class="text-main text-semibold">Warranty Type</p>
-								<p><?= $product->warranty_type; ?>
+								<p>
+                                    <?php if(!empty($product->warranty_type)){
+                                        $warranty = json_decode($product->warranty_type);
+                                        foreach( $warranty as $type ) echo $type .', ';
+                                    } ?>
 								</p>
 								<p class="text-main text-semibold">Product Warranty</p>
 								<p><?= $product->product_warranty; ?></p>
@@ -295,7 +325,7 @@
 			<!--Modal header-->
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-				<h4 class="modal-title">Message Seller (Sokoya Philip)</h4>
+				<h4 class="modal-title">Message Seller (<?= ucwords($product->first_name . ' ' . $product->last_name); ?>)</h4>
 			</div>
 			<!--Modal body-->
 			<div class="modal-body">
