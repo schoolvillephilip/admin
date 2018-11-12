@@ -38,7 +38,7 @@ class Sellers extends CI_Controller
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page);
-		$this->load->view('admin/sellers/overview', $page_data);
+		$this->load->view('sellers/overview', $page_data);
 	}
 
 	public function detail(){
@@ -57,7 +57,7 @@ class Sellers extends CI_Controller
 		$page_data['sold_count'] = $this->admin->product_sold_count( $id );
 		$page_data['product_count'] = $this->admin->product_count( $id );
 		$page_data['products'] = $this->admin->get_product_list( $id);
-		$this->load->view('admin/sellers/detail', $page_data);
+		$this->load->view('sellers/detail', $page_data);
 	}
 
 	public function approve(){
@@ -84,7 +84,7 @@ class Sellers extends CI_Controller
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page, 'pending');
-		$this->load->view('admin/sellers/approve', $page_data);
+		$this->load->view('sellers/approve', $page_data);
 	}
 
 	function approve_seller(){

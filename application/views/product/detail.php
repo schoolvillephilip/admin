@@ -56,13 +56,13 @@
 				<div class="row">
 					<?php $this->load->view('msg_view'); ?>
 					<div class="col-md-3">
-						<div class="panel" style="border-bottom: 1px solid #25476a">
-							<div class="panel-body text-center shadow-v3" style="max-height: 490px;">
+						<div class="panel">
+							<div class="panel-body text-center">
 <!--                                http://localhost/admin/data/products/7/e888a678ee969fca1845a6aa6c991ae3.jpg-->
 								<img class="product-img"
 											 src="<?= base_url('data/products/'.$product->id.'/'.$product->image_name);?>"
 											 alt="<?= $product->product_name; ?>"
-											 title="<?= $product->product_name; ?>" style="max-height: 600px;">
+											 title="<?= $product->product_name; ?>" style="max-height: 320px;">
 							</div>
 						</div>
 					</div>

@@ -1,43 +1,12 @@
 <?php
 // General Site Settings
 $lang['site_state'] = 'development';
-$lang['app_name'] = 'Carrito';
+$lang['app_name'] = 'Onitshamarket';
 $lang['app_email'] = '';
 $lang['notify_email'] = '';
-$lang['site_domain'] = 'carrito.com';
+$lang['site_domain'] = 'onitshamarket.com';
 
 
-
-// Menu Label and Link
-$lang['carrito_deal'] = 'Carrito Deal';
-$lang['carrito_deal_link'] = 'carrito-deal';
-$lang['new_arrival'] = 'New Arrival';
-$lang['new_arrival_link'] = 'new-arrival';
-$lang['top_seller'] = 'Top Seller';
-$lang['top_seller_link'] = 'top-seller';
-$lang['sell_on_carrito'] = 'Sell On Carrito';
-$lang['sell_on_carrito_link'] = 'sell-on-carrito';
-$lang['community'] = 'Community';
-$lang['community_link'] = 'Community';
-$lang['cart_link'] = 'cart';
-$lang['new_customer'] = 'New Customer? Create an Account';
-$lang['new_customer_link'] = 'create';
-$lang['my_account'] = 'My Account';
-$lang['my_account_link'] = 'create';
-$lang['my_orders'] = 'My Orders';
-$lang['my_orders_link'] = 'orders';
-$lang['my_wallet'] = 'My Wallet';
-$lang['my_wallet_link'] = 'wallet';
-$lang['my_coupon'] = 'My Coupon';
-$lang['my_coupon_link'] = 'coupon';
-$lang['forgot_password'] = 'Forgot Your Password?';
-$lang['forgot_password_link'] = 'resetpassword';
-$lang['create_account_link'] = 'create';
-$lang['login_link'] = 'login';
-
-
-// 	Label Text
-$lang['label_why_choose'] = 'why choose us';
 
 // Custom 
 

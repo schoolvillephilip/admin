@@ -22,7 +22,7 @@ class Orders extends CI_Controller{
         $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
             'first_name,last_name,email,profile_pic');
         $page_data['orders'] = $this->admin->get_orders();
-        $this->load->view('admin/orders/overview', $page_data);
+        $this->load->view('orders/overview', $page_data);
     }
 
     public function detail(){
@@ -33,6 +33,6 @@ class Orders extends CI_Controller{
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
         $page_data['orders'] = $this->admin->get_orders( $id );
-		$this->load->view('admin/orders/detail', $page_data);
+		$this->load->view('orders/detail', $page_data);
 	}
 }

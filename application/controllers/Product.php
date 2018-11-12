@@ -39,7 +39,7 @@ class Product extends CI_Controller
   //       $this->pagination->initialize($config);
         // $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['products'] = $this->admin->get_product_list();
-		$this->load->view('admin/product/overview', $page_data);
+		$this->load->view('product/overview', $page_data);
 	}
 
 	public function detail(){
@@ -50,7 +50,7 @@ class Product extends CI_Controller
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
 		$page_data['product'] = $this->admin->get_single_product_detail( $id );
-		$this->load->view('admin/product/detail', $page_data);
+		$this->load->view('product/detail', $page_data);
 	}
 
 	public function approve($pid = '', $sid =''){
@@ -60,7 +60,7 @@ class Product extends CI_Controller
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
 		$page_data['products'] = $this->admin->get_product_list('', 'pending');
-		$this->load->view('admin/product/approve', $page_data);
+		$this->load->view('product/approve', $page_data);
 	}
 
 	public function action($action, $pid = '', $sid =''){

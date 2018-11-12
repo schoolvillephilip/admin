@@ -32,7 +32,7 @@ class Categories extends CI_Controller{
 			'first_name,last_name,email,profile_pic');
 		if( !$this->input->post() ) {
             $page_data['root_categories'] = $this->admin->get_root_categories();
-            $this->load->view('admin/category/root_category', $page_data);
+            $this->load->view('category/root_category', $page_data);
         }else{
 		    // work
             $data = array(
@@ -105,7 +105,7 @@ class Categories extends CI_Controller{
                 $this->session->set_flashdata('error_msg','The root category you are looking for does not exist...');
                 redirect('categories/root_category');
             }
-            $this->load->view('admin/category/root_category_detail', $page_data);
+            $this->load->view('category/root_category_detail', $page_data);
         }
 	}
 
@@ -120,7 +120,7 @@ class Categories extends CI_Controller{
             $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
                 'first_name,last_name,email,profile_pic');
             $page_data['categories'] = $this->admin->get_categories();
-            $this->load->view('admin/category/category', $page_data);
+            $this->load->view('category/category', $page_data);
         }else{
 	        $data = array(
 	            'root_category_id' => $this->input->post('root_category'),
@@ -161,7 +161,7 @@ class Categories extends CI_Controller{
                 $this->session->set_flashdata('error_msg','The category you are looking for does not exist.' );
                 redirect('categories/category');
             }
-            $this->load->view('admin/category/category_detail', $page_data);
+            $this->load->view('category/category_detail', $page_data);
         }
 	}
 
@@ -192,7 +192,7 @@ class Categories extends CI_Controller{
             $page_data['sub_categories'] = $this->admin->get_sub_categories();
             $page_data['categories'] = $this->admin->get_categories();
             $page_data['specifications'] = $this->admin->get_specifications();
-            $this->load->view('admin/category/sub_category', $page_data);
+            $this->load->view('category/sub_category', $page_data);
         }
 	}
 
@@ -212,7 +212,7 @@ class Categories extends CI_Controller{
             redirect('categories/sub_category');
         }
         if( !$this->input->post()){
-            $this->load->view('admin/category/sub_category_detail', $page_data);
+            $this->load->view('category/sub_category_detail', $page_data);
         }else{
 		    $data = array(
                 'root_category_id' => $this->input->post('root_category'),
@@ -259,7 +259,7 @@ class Categories extends CI_Controller{
             $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
                 'first_name,last_name,email,profile_pic');
             $page_data['specifications'] = $this->admin->get_specifications();
-            $this->load->view('admin/category/specification', $page_data);
+            $this->load->view('category/specification', $page_data);
         }
 	}
 
@@ -295,7 +295,7 @@ class Categories extends CI_Controller{
             $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
                 'first_name,last_name,email,profile_pic');
             $page_data['specification'] = $this->admin->get_specifications( $id );
-            $this->load->view('admin/category/specification_detail', $page_data);
+            $this->load->view('category/specification_detail', $page_data);
         }
 	}
     /**

@@ -15,8 +15,7 @@ Class Admin_model extends CI_Model{
     }
 
     // Login Customer
-    function login($data = array(), $table_name = 'users')
-    {
+    function login($data = array(), $table_name = 'users'){
         if (!empty($data)) {
             $email = cleanit($data['email']);
             $this->db->where('is_admin', 1);
@@ -418,6 +417,36 @@ Class Admin_model extends CI_Model{
             }
         }
         return false;
+    }
+
+    function get_brands($id =''){
+        if( $id != '') $this->db->where('id', $id);
+        return $this->db->get('brands');
+    }
+
+    // The states for shipping price
+    function get_states( $id = '' ){
+        if( $id != '' ) $this->db->where('id', $id);
+        return $this->db->get('states');
+    }
+
+    // area price
+
+    function get_address_price( $id = ''){
+        $select = "SELECT s.name state_name, a.id,a.name,a.price,a.sid as sid FROM states s INNER JOIN area a ON(a.sid = s.id)";
+        if( $id != '' ) $select .= " WHERE a.id = $id";
+        return $this->db->query($select);
+    }
+
+    // Confirm if existing
+    function get_num_rows( $table, $where){
+        $this->db->select('*');
+        $this->db->where($where);
+        if( $this->db->get($table)->num_rows() > 0 ){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
