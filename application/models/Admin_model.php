@@ -112,7 +112,7 @@ Class Admin_model extends CI_Model
     {
         $this->db->select($details);
         $this->db->where('id', $access);
-        return $this->db->get('sellers')->row();
+        return $this->db->get('users')->row();
     }
 
     /**
@@ -225,7 +225,7 @@ Class Admin_model extends CI_Model
      */
     function get_product_list($id = '', $product_status = '', $args = array() ){
         $query = "SELECT p.id, p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
-            LEFT JOIN sellers as s ON ( p.seller_id = s.id )
+            LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
 
         if( $id != '' ) $query .= " WHERE o.seller_id = $id AND p.seller_id = $id";
