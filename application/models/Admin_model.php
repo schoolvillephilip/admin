@@ -207,13 +207,10 @@ Class Admin_model extends CI_Model{
      */
     function get_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved'){
         $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
+
         if( $search != '' ) $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
-
         if( $search != '' && $type != '' ) { $query .= " AND u.is_seller = '$type' ";}
-
-        if( $search == '' && $type != '' ) $query .= " WHERE u.is_seller = '$type'";
         if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
-        // die( $query );
         return $this->db->query($query)->result();
     }
 
@@ -225,10 +222,23 @@ Class Admin_model extends CI_Model{
         $query = "SELECT p.id, p.product_status,p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
-
-        if( $product_status != '' ){
-            $query .= " WHERE p.product_status != 'approved'";
+        if( $id != '' ){
+            $query .= " WHERE p.seller_id = $id";
         }
+        if( $product_status != '' ){
+            $query .= " AND p.product_status != 'approved'";
+        }
+        $query .= " GROUP BY p.id";
+        return $this->db->query($query)->result();
+    }
+
+    function get_unapprove_product($id = ''){
+        $query = "SELECT p.id, p.product_status,p.sku, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
+            LEFT JOIN users as s ON ( p.seller_id = s.id )";
+        
+            $query .= " WHERE p.product_status != 'approved'";
+            if( $id != ''){ $query .= " AND p.seller_id = {$id} ";}
+
         $query .= " GROUP BY p.id";
         return $this->db->query($query)->result();
     }
@@ -241,7 +251,7 @@ Class Admin_model extends CI_Model{
 
     function get_single_product_detail($id){
         $query = "SELECT p.*, g.image_name, o.amount, o.quantity_sold, v.variation_qty, s.id as seller_id, s.first_name, s.last_name, s.email FROM products AS p
-                    LEFT JOIN product_gallery as g ON (p.seller_id = g.seller_id AND g.featured_image = 1 )
+                    LEFT JOIN (SELECT ga.image_name, ga.seller_id FROM product_gallery ga WHERE ga.featured_image = 1 AND ga.product_id = $id LIMIT 1) g ON (p.seller_id = g.seller_id )
                     LEFT JOIN (SELECT SUM(ord.amount) as amount, ord.seller_id, ord.product_id, SUM(ord.qty) quantity_sold FROM orders AS ord GROUP BY ord.product_id ) AS o
                     ON (o.seller_id = p.seller_id AND o.product_id = p.id)
                     LEFT JOIN users AS s ON (p.seller_id = s.id )

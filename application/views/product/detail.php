@@ -56,15 +56,12 @@
 				<div class="row">
 					<?php $this->load->view('msg_view'); ?>
 					<div class="col-md-3">
-						<div class="panel">
-							<div class="panel-body text-center">
-<!--                                http://localhost/admin/data/products/7/e888a678ee969fca1845a6aa6c991ae3.jpg-->
-								<img class="product-img"
-											 src="<?= base_url('data/products/'.$product->id.'/'.$product->image_name);?>"
-											 alt="<?= $product->product_name; ?>"
-											 title="<?= $product->product_name; ?>" style="max-height: 320px;">
-							</div>
-						</div>
+						<p>
+							<img class="product-img"
+									 src="<?= base_url('data/products/'.$product->id.'/'.$product->image_name);?>"
+									 alt="<?= $product->product_name; ?>"
+									 title="<?= $product->product_name; ?>" style="max-width: 330px;">
+						</p>
 					</div>
 
 					<div class="col-md-6">
@@ -83,11 +80,7 @@
 										</thead>
 										<tbody>
 										<tr>
-											<td>Price:</a></td>
-											<td class="text-bold">&#8358;80,000</td>
-										</tr>
-										<tr>
-											<td>Seller:</a></td>
+											<td>Seller:</td>
 											<td><a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
 												<button data-target="#demo-modal-wo-anim" data-toggle="modal"
 														class="btn btn-primary btn-sm" style="float: right"><i
@@ -97,35 +90,35 @@
 											</td>
 										</tr>
 										<tr>
-											<td>Product ID:</a></td>
+											<td>Product ID:</td>
 											<td><?= $product->sku; ?></td>
 										</tr>
 										<tr>
-											<td>Product Root Category:</a></td>
+											<td>Product Root Category:</td>
 											<td><?= $product->rootcategory; ?></td>
 										</tr>
 										<tr>
-											<td>Product Category:</a></td>
+											<td>Product Category:</td>
 											<td><?= $product->category; ?></td>
 										</tr>
 										<tr>
-											<td>Product Sub-category:</a></td>
+											<td>Product Sub-category:</td>
 											<td><?= $product->subcategory; ?></td>
 										</tr>
 										<tr>
-											<td>Product Brand Name:</a></td>
+											<td>Product Brand Name:</td>
 											<td><?= $product->brand_name; ?></td>
 										</tr>
 										<tr>
-											<td>Model:</a></td>
+											<td>Model:</td>
 											<td><?= $product->model; ?></td>
 										</tr>
 										<tr>
-											<td>Main Color</a></td>
+											<td>Main Color</td>
 											<td><?= $product->main_colour; ?></td>
 										</tr>
 										<tr>
-											<td>Main Material</a></td>
+											<td>Main Material:</td>
 											<td><?= $product->main_material; ?></td>
 										</tr>
 										</tbody>

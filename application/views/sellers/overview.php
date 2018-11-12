@@ -38,7 +38,7 @@
 				<div class="row pad-ver">
 					<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
 						<div class="input-group mar-btm">
-							<input type="text" placeholder="Search Seller Records" class="form-control input-lg">
+							<input type="text" placeholder="Search seller with name or email" class="form-control input-lg">
 							<span class="input-group-btn">
                      <button class="btn btn-primary btn-lg" type="button">Search</button>
                  </span>
@@ -62,19 +62,21 @@
 									<th class="min-tablet">Reg No.</th>
 									<th class="min-desktop">Main Category</th>
 									<th class="min-desktop">Last Login</th>
+									<th class="min-tablet">Account Status</th>
 								</tr>
 								</thead>
 								<tbody>
 								<?php foreach ($sellers as $seller) : ?>
 									<tr>
 										<td>
-											<a href="<?= base_url('sellers/detail/' .$seller->id); ?>"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></a>
+											<a href="<?= base_url('sellers/detail/' .$seller->uid); ?>"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></a>
 										</td>
 										<td><?= $seller->email; ?></td>
 										<td><?= $seller->legal_company_name; ?></td>
 										<td><?= $seller->reg_no; ?></td>
 										<td><?= $seller->main_category; ?></td>
 										<td><?= neatDate($seller->last_login); ?></td>
+										<td><?= accountStatus($seller->status); ?></td>
 									</tr>
 								<?php endforeach; ?>
 								</tbody>

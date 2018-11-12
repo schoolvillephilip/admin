@@ -38,6 +38,7 @@ class Sellers extends CI_Controller
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links(); 
 		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page);
+		// var_dump($page_data['sellers']);
 		$this->load->view('sellers/overview', $page_data);
 	}
 
@@ -54,9 +55,9 @@ class Sellers extends CI_Controller
 			$this->session->set_flashdata('error_msg', 'Sorry the user details can not be found');
 			redirect($_SERVER['HTTP_REFERRER']);
 		}
-		$page_data['sold_count'] = $this->admin->product_sold_count( $id );
-		$page_data['product_count'] = $this->admin->product_count( $id );
-		$page_data['products'] = $this->admin->get_product_list( $id);
+		$page_data['sold_count'] = $this->admin->product_sold_count($id );
+		$page_data['product_count'] = $this->admin->product_count($id );
+		$page_data['products'] = $this->admin->get_product_list($id);
 		$this->load->view('sellers/detail', $page_data);
 	}
 

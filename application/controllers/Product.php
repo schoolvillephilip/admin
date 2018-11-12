@@ -59,7 +59,7 @@ class Product extends CI_Controller
 		$page_data['sub_name'] = 'approve_product';
 		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
 			'first_name,last_name,email,profile_pic');
-		$page_data['products'] = $this->admin->get_product_list('', 'pending');
+		$page_data['products'] = $this->admin->get_unapprove_product();
 		$this->load->view('product/approve', $page_data);
 	}
 
