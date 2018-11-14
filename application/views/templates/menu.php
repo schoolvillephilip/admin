@@ -63,7 +63,7 @@
                         </li>
 
                         <!--Menu list item-->
-                        <li class="">
+                        <li <?php if ($pg_name == 'settings') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-gear"></i>
                                 <span class="menu-title">Settings</span>
@@ -71,11 +71,11 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse">
+                            <ul class="collapse <?php if ($pg_name == 'settings') echo 'in' ?>;">
+                                <li <?php if ($sub_name == 'gen_set') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings') ?>">General Settings</a></li>
                                 <li><a
-                                            href="#">General Settings</a></li>
-                                <li><a
-                                            href="#">Mail Settings</a></li>
+                                            href="<?= base_url('dashboard') ?>">Mail Settings</a></li>
                                 <li><a
                                             href="#">Edit Footer</a></li>
                             </ul>
@@ -89,11 +89,26 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse">
+                            <ul  class="collapse <?php if ($pg_name == 'store_settings' ) echo 'in' ?>;">
                                 <li><a
-                                            href="#">Global Store Settings</a></li>
+                                            href="#">Pages Settings
+                                        <i class="arrow"></i>
+                                    </a>
+                                    <ul  class="collapse <?php if ($pg_name == 'page_settings') echo 'in' ?>;">
+                                        <li><a
+                                                    href="#">Homepage</a></li>
+                                        <li><a
+                                                    href="#">Category</a></li>
+                                        <li><a
+                                                    href="#">Checkout</a></li>
+                                        <li><a
+                                                    href="#">Single Product</a></li>
+                                    </ul>
+                                </li>
                                 <li><a
                                             href="#">Homepage Products</a></li>
+                                <li><a
+                                            href="#">Payment Methods</a></li>
                                 <li><a
                                             href="#">Store Online/Offline</a></li>
                             </ul>
