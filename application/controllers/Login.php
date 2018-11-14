@@ -20,7 +20,7 @@ class Login extends CI_Controller{
 
     public function index(){
         $page_data['page_title'] = 'Login to your admin account';
-        $page_data['pg_page'] = 'login';
+        $page_data['pg_name'] = 'login';
         $this->load->view('login', $page_data);
     }
 
