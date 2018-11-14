@@ -18,7 +18,7 @@ class Brands extends CI_Controller{
 		$page_data['page_title'] = 'Brands';
 		$page_data['pg_name'] = 'select_category';
 		$page_data['sub_name'] = 'brands';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
         $page_data['brands'] = $this->admin->get_brands();
 		$this->load->view('brands/all_brands', $page_data);
@@ -47,7 +47,7 @@ class Brands extends CI_Controller{
             $page_data['page_title'] = 'Brands';
             $page_data['pg_name'] = 'brand';
             $page_data['sub_name'] = 'add_brand';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $this->load->view('brands/add', $page_data);
         }
@@ -59,7 +59,7 @@ class Brands extends CI_Controller{
         $page_data['page_title'] = 'Brands';
         $page_data['pg_name'] = 'brand';
         $page_data['sub_name'] = 'add_brand';
-        $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $page_data['brand'] = $this->admin->get_brands( $id )->row();
         // echo($page_data['brand']->brand_name );
