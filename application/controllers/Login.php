@@ -44,11 +44,15 @@ class Login extends CI_Controller{
                 if( !$user ) {
                     $this->session->set_flashdata('error_msg','Sorry! Incorrect username or password.');
                     redirect('login');
-                }else{                    
-                    $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );
-                    $this->session->set_userdata($session_data);
-                    $this->session->set_flashdata('success_msg','You are now logged in!');
-                    redirect('dashboard');
+                }else{  
+                    if( $user->groups < 1 ) {
+                        header('Location : ' . lang('site_domain'));
+                    }else{
+                        $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );
+                        $this->session->set_userdata($session_data);
+                        $this->session->set_flashdata('success_msg','You are now logged in!');
+                        redirect('dashboard');                        
+                    }                  
                 }
             }
         }
