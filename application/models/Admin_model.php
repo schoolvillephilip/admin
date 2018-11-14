@@ -14,7 +14,7 @@ Class Admin_model extends CI_Model{
         return $result;
     }
 
-    // Login Customer
+    // Login 
     function login($data = array(), $table_name = 'users'){
         if (!empty($data)) {
             $email = cleanit($data['email']);
@@ -32,12 +32,27 @@ Class Admin_model extends CI_Model{
                         $c_update = array('last_login' => get_now(), 'ip' => $_SERVER['REMOTE_ADDR']);
                         $this->db->where('email', $data['email']);
                         $this->db->update($table_name, $c_update);
-                        return $result->row(0)->id;
+                        return $result->row();
                     } else {
                         return false;
                     }
                 }
             }
+        }
+    }
+
+    // Check user Persmission
+    function hasPermission( $group_id, $key ){
+        $this->db->select('permissions');
+        $this->db->where('id', $group_id);
+        $group = $this->db->get('groups');    
+        if($group){
+            $permission = json_decode($group->permissions,true);
+            if($permission[$key] == true ){
+                return true;
+            }
+
+            return false;
         }
     }
 

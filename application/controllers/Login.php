@@ -16,15 +16,15 @@ class Login extends CI_Controller{
         } 
     }
 
+    public $referred_from = '';
+
     public function index(){
         $page_data['page_title'] = 'Login to your admin account';
-        $page_data['pg_name'] = 'login';
+        $page_data['pg_page'] = 'login';
         $this->load->view('login', $page_data);
     }
 
-    /*
-     * @Incoming : accepts the login POST parameters : email and password
-     * */
+
     public function process() {
         if(!$_POST){
             redirect('login');
@@ -40,16 +40,14 @@ class Login extends CI_Controller{
                     'email' => $this->input->post('email'),
                     'password' => $this->input->post('password')
                 );
-
-                $user_id = $this->admin->login($data);
-                if( !is_numeric($user_id)) {
+                $user = $this->admin->login($data);
+                if( !$user ) {
                     $this->session->set_flashdata('error_msg','Sorry! Incorrect username or password.');
                     redirect('login');
-                }else{
-                    // @TODO
-                    // Check if the user already have some products in the cart, and going to checkout
-                    // Perform every other actions necessary
-                    $session_data = array('logged_in' => true, 'logged_id' => base64_encode($user_id));
+                }elseif( $user->groups < 1 ){
+
+                }else{                    
+                    $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );
                     $this->session->set_userdata($session_data);
                     $this->session->set_flashdata('success_msg','You are now logged in!');
                     redirect('dashboard');
