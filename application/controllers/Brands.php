@@ -67,6 +67,7 @@ class Brands extends CI_Controller{
         
     }
 
+
     function process(){
         $id = $this->input->post('id');
         $this->form_validation->set_rules('brand_name', 'Brand name','trim|required|xss_clean');
