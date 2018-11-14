@@ -24,7 +24,8 @@
                     <div id="mainnav-profile" class="mainnav-profile">
                         <div class="profile-wrap text-center">
                             <div class="pad-btm">
-                                <img src="<?= base_url('assets/img/onitshamarket-logo.png'); ?>" alt="<?= lang('app_name');?>" class="brand-title img-responsive">
+                                <img src="<?= base_url('assets/img/onitshamarket-logo.png'); ?>"
+                                     alt="<?= lang('app_name'); ?>" class="brand-title img-responsive">
                             </div>
                             <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
@@ -62,7 +63,7 @@
                         </li>
 
                         <!--Menu list item-->
-                        <li class="<?php if ($pg_name == 'select_category') echo 'class="active-sub"' ?>">
+                        <li class="">
                             <a href="#">
                                 <i class="demo-pli-gear"></i>
                                 <span class="menu-title">Settings</span>
@@ -70,19 +71,19 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'root_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/root_category'); ?>">Root Categories</a></li>
-                                <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/category'); ?>">Categories</a></li>
-                                <li <?php if ($sub_name == 'sub_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/sub_category'); ?>">Sub Categories</a></li>
-                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
+                            <ul class="collapse">
+                                <li><a
+                                            href="#">General Settings</a></li>
+                                <li><a
+                                            href="#">Company Details</a></li>
+                                <li><a
+                                            href="#">Mail Settings</a></li>
+                                <li><a
+                                            href="#">Edit Footer</a></li>
                             </ul>
                         </li>
                         <!--Menu list item-->
-                        <li class="<?php if ($pg_name == 'select_category') echo 'class="active-sub"' ?>">
+                        <li class="">
                             <a href="#">
                                 <i class="demo-pli-gears"></i>
                                 <span class="menu-title">Store Settings</span>
@@ -90,15 +91,15 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'root_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/root_category'); ?>">Root Categories</a></li>
-                                <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/category'); ?>">Categories</a></li>
-                                <li <?php if ($sub_name == 'sub_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/sub_category'); ?>">Sub Categories</a></li>
-                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
+                            <ul class="collapse">
+                                <li><a
+                                            href="#">Global Store Settings</a></li>
+                                <li><a
+                                            href="#">Homepage Products</a></li>
+                                <li><a
+                                            href="#">Mail Settings</a></li>
+                                <li><a
+                                            href="#">Edit Footer</a></li>
                             </ul>
                         </li>
 
