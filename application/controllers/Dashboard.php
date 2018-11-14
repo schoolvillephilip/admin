@@ -15,9 +15,9 @@ class Dashboard extends CI_Controller{
     }
 
     public function index(){
-        $page_data['page_title'] = 'Sellers Overview';
-        $page_data['pg_name'] = 'sellers';
-        $page_data['sub_name'] = 'sellers_overview';
+        $page_data['page_title'] = 'Admin Dashboard';
+        $page_data['pg_name'] = 'dashboard';
+        $page_data['sub_name'] = 'dashboard';
         $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
             'first_name,last_name,email,profile_pic');
         $this->load->view('admin/dashboard', $page_data);

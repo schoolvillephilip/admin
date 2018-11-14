@@ -3,12 +3,6 @@
         <!--Brand logo & name-->
         <!--================================-->
         <div class="navbar-header">
-            <a href="index-2.html" class="navbar-brand">
-                <img src="img/carrito-logo" alt="Carrito Logo" class="brand-icon">
-                <div class="brand-title">
-                    <span class="brand-text">Carrito</span>
-                </div>
-            </a>
         </div>
         <!--================================-->
         <!--End brand logo & name-->
