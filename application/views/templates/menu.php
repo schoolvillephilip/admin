@@ -126,7 +126,7 @@
                             <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
 
-                                <li>
+                                <li <?php if ($sub_name == 'brands') echo 'class="active-link"' ?>>
                                     <a href="<?= base_url('brands'); ?>">
                                         <span class="menu-title">Brands</span>
                                     </a>
@@ -151,7 +151,7 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
+                            <ul class="">
                                 <li><a
                                             href="#">Gift Cards</a></li>
                                 <li><a
