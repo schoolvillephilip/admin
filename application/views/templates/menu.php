@@ -95,9 +95,9 @@
                                 <li><a
                                             href="#">Global Store Settings</a></li>
                                 <li><a
-                                            href="#">Homepage Products</a></li>
+                                            href="#">Homepage Products Option</a></li>
                                 <li><a
-                                            href="#">Mail Settings</a></li>
+                                            href="#">Store Online/Offline</a></li>
                                 <li><a
                                             href="#">Edit Footer</a></li>
                             </ul>
