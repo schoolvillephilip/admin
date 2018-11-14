@@ -12,9 +12,9 @@ class Dashboard extends CI_Controller{
             if (!empty($from)) redirect($from);
             redirect('login');
         }
-        if( $this->session->userdata('groups') < 1 ){
-            header('Location: '. lang('site_domain'));
-        }
+        // if( $this->session->userdata('groups') < 1 ){
+        //     header('Location: http://www.'.lang('site_domain') );
+        // }
     }
 
 
