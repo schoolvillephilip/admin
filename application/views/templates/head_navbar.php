@@ -15,7 +15,7 @@
         <!--Navbar Dropdown-->
         <!--================================-->
         <div class="navbar-content">
-            <ul class="nav navbar-top-links">
+            <ul class="nav navbar-top-links pull-left">
                 <!--Navigation toogle button-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <li class="tgl-menu-btn">
