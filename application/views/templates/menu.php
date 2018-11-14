@@ -119,12 +119,18 @@
                         <li class="<?php if ($pg_name == 'select_category') echo 'class="active-sub"' ?>">
                             <a href="#">
                                 <i class="demo-pli-split-vertical-2"></i>
-                                <span class="menu-title">Categories</span>
+                                <span class="menu-title">Brand &amp; Categories</span>
                                 <i class="arrow"></i>
                             </a>
 
                             <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
+
+                                <li>
+                                    <a href="<?= base_url('brands'); ?>">
+                                        <span class="menu-title">Brands</span>
+                                    </a>
+                                </li>
                                 <li <?php if ($sub_name == 'root_category') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('categories/root_category'); ?>">Root Categories</a></li>
                                 <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
@@ -155,12 +161,6 @@
                             </ul>
                         </li>
                         <!--Menu list item-->
-                        <li>
-                            <a href="<?= base_url('brands'); ?>">
-                                <i class="demo-pli-inbox-full"></i>
-                                <span class="menu-title">Brands</span>
-                            </a>
-                        </li>
 
                         <li class="<?php if ($pg_name == 'states') echo 'class="active-sub"' ?>">
                             <a href="<?= base_url('states'); ?>">
