@@ -12,13 +12,18 @@ class Dashboard extends CI_Controller{
             if (!empty($from)) redirect($from);
             redirect('login');
         }
+        if( $this->session->userdata('groups') < 1 ){
+            header('Location: '. lang('site_domain'));
+        }
     }
+
+
 
     public function index(){
         $page_data['page_title'] = 'Sellers Overview';
         $page_data['pg_name'] = 'sellers';
         $page_data['sub_name'] = 'sellers_overview';
-        $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $this->load->view('admin/dashboard', $page_data);
     }

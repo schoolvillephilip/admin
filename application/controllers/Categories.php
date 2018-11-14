@@ -19,7 +19,7 @@ class Categories extends CI_Controller{
 		$page_data['page_title'] = 'Choose Category';
 		$page_data['pg_name'] = 'product';
 		$page_data['sub_name'] = 'select_category';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$this->load->view('choose_category', $page_data);
 	}
@@ -28,7 +28,7 @@ class Categories extends CI_Controller{
 		$page_data['page_title'] = 'Select Root Category';
 		$page_data['pg_name'] = 'select_category';
 		$page_data['sub_name'] = 'root_category';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		if( !$this->input->post() ) {
             $page_data['root_categories'] = $this->admin->get_root_categories();
@@ -98,7 +98,7 @@ class Categories extends CI_Controller{
             $page_data['page_title'] = 'Root Category Detail';
             $page_data['pg_name'] = 'select_category';
             $page_data['sub_name'] = 'root_category_detail';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['category'] = $this->admin->get_root_categories( $id );
             if( empty($page_data['category']) ) {
@@ -117,7 +117,7 @@ class Categories extends CI_Controller{
             $page_data['page_title'] = 'Select Category';
             $page_data['pg_name'] = 'select_category';
             $page_data['sub_name'] = 'category';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['categories'] = $this->admin->get_categories();
             $this->load->view('category/category', $page_data);
@@ -153,7 +153,7 @@ class Categories extends CI_Controller{
             $page_data['page_title'] = 'Category Detail';
             $page_data['pg_name'] = 'select_category';
             $page_data['sub_name'] = 'category_detail';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['category'] = $this->admin->get_categories( $id );
             $page_data['root_categories'] = $this->admin->get_root_categories();
@@ -186,7 +186,7 @@ class Categories extends CI_Controller{
             $page_data['page_title'] = 'Select Sub Category';
             $page_data['pg_name'] = 'select_category';
             $page_data['sub_name'] = 'sub_category';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['root_categories'] = $this->admin->get_root_categories();
             $page_data['sub_categories'] = $this->admin->get_sub_categories();
@@ -201,7 +201,7 @@ class Categories extends CI_Controller{
         $page_data['page_title'] = 'Sub Category Detail';
         $page_data['pg_name'] = 'select_category';
         $page_data['sub_name'] = 'sub_category_detail';
-        $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $page_data['root_categories'] = $this->admin->get_root_categories();
         $page_data['categories'] = $this->admin->get_categories();
@@ -256,7 +256,7 @@ class Categories extends CI_Controller{
             $page_data['page_title'] = 'Select Specification';
             $page_data['pg_name'] = 'select_category';
             $page_data['sub_name'] = 'specification';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['specifications'] = $this->admin->get_specifications();
             $this->load->view('category/specification', $page_data);
@@ -292,7 +292,7 @@ class Categories extends CI_Controller{
             $page_data['page_title'] = 'Specification Detail';
             $page_data['pg_name'] = 'select_category';
             $page_data['sub_name'] = 'specification_detail';
-            $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['specification'] = $this->admin->get_specifications( $id );
             $this->load->view('category/specification_detail', $page_data);
