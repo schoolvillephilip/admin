@@ -69,16 +69,15 @@
                                 </div>
                             </div>
                             <div class="media-body">
-                                <p class="text-2x mar-no text-semibold">2841</p>
+                                <p class="text-2x mar-no text-semibold"><?= $sellers_stats + $buyers_stats; ?></p>
                                 <p class="mar-no">Total Users</p>
-                                <!--Sparkline pie chart -->
                                 <div>
                                     <div class="pad-all">
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold">34</span> Sellers
+                                            <span class="pull-right text-bold"><?= $sellers_stats; ?></span> Sellers
                                         </p>
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold">2807</span> Buyers
+                                            <span class="pull-right text-bold"><?= $buyers_stats; ?></span> Buyers
                                         </p>
                                     </div>
                                 </div>
@@ -93,16 +92,16 @@
                                 </div>
                             </div>
                             <div class="media-body">
-                                <p class="text-2x mar-no text-semibold">1081</p>
+                                <p class="text-2x mar-no text-semibold"><?= $products_approved_stats + $products_pending_stats; ?></p>
                                 <p class="mar-no">Total Products</p>
                                 <!--Sparkline pie chart -->
                                 <div>
                                     <div class="pad-all">
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold">1002</span> Approved
+                                            <span class="pull-right text-bold"><?= $products_approved_stats; ?></span> Approved
                                         </p>
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold">79</span> Pending
+                                            <span class="pull-right text-bold"><?= $products_pending_stats; ?></span> Pending
                                         </p>
                                     </div>
                                 </div>
@@ -213,7 +212,7 @@
                                         New products - This Week</h3>
                                 </div>
                                 <div class="panel-body maintotals text-3x">
-                                    <b>104</b>
+                                    <b><?= $new_product_count; ?></b>
                                 </div>
                             </div>
                         </div>

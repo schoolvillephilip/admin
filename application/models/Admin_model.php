@@ -465,15 +465,24 @@ Class Admin_model extends CI_Model{
         return $this->db->query($select);
     }
 
-    // Confirm if existing
-    function get_num_rows( $table, $where){
-        $this->db->select('*');
-        $this->db->where($where);
-        if( $this->db->get($table)->num_rows() > 0 ){
-            return true;
-        }else{
-            return false;
+
+    /**
+     * Return the num of rows of a table with certain conditions if found
+     * @param $table
+     * @param array $where
+     * @param array $or_where
+     * @return int
+     */
+    function get_num_rows($table, $where = array(), $or_where = array() ){
+        if( !empty($where) ) {
+            $this->db->where($where);
+            $this->db->or_where($or_where);
         }
+        return $this->db->get( $table )->num_rows();
+    }
+
+    function run_sql( $query ){
+        return $this->db->query( $query );
     }
 
 
