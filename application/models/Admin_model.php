@@ -403,6 +403,7 @@ Class Admin_model extends CI_Model{
                 case 'suspend':
                     $status = $this->update_data($sid,array('status' => 'suspended'), 'sellers', 'uid');
                     if( $status ){
+                        $this->db->where('product_status', 'pending');
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
                         $this->notify_seller($sid, 
                             'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
@@ -414,6 +415,7 @@ Class Admin_model extends CI_Model{
                 case 'reject':
                     $status = $this->update_data($sid,array('status' => 'rejected'), 'sellers', 'uid');
                     if( $status ){
+                        // Products to be deleted
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
                         $this->notify_seller($sid, 
                             'Your account has been rejected', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."

@@ -19,7 +19,7 @@ class Sellers extends CI_Controller
 		$page_data['page_title'] = 'Sellers Overview';
 		$page_data['pg_name'] = 'sellers';
 		$page_data['sub_name'] = 'sellers_overview';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id')	,
 			'first_name,last_name,email,profile_pic');
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
@@ -47,7 +47,7 @@ class Sellers extends CI_Controller
 		$page_data['page_title'] = 'Sellers Detail';
 		$page_data['pg_name'] = 'sellers';
 		$page_data['sub_name'] = 'sellers_detail';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id')	,
 			'first_name,last_name,email,profile_pic');
 
 		$page_data['seller'] = $this->admin->get_profile($id);
@@ -65,7 +65,7 @@ class Sellers extends CI_Controller
 		$page_data['page_title'] = 'Approve Sellers';
 		$page_data['pg_name'] = 'sellers';
 		$page_data['sub_name'] = 'approve_sellers';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id')	,
 			'first_name,last_name,email,profile_pic');
 
 		$q = '';
@@ -91,7 +91,7 @@ class Sellers extends CI_Controller
 	function approve_seller(){
 		if( $this->input->post() ){
 			$data['is_seller'] = 'approved';
-			if( $this->admin->update_data($this->input->post('seller_id'), $data, 'users') ){
+			if( $this->admin->update_data($this->input->post('seller_id'), array('is_seller' => 'approved'), 'users') ){
 				// .. update the seller's table also
 				$this->admin->update_data($this->input->post('seller_id'), array('status' => 'approved'), 'sellers', 'uid' );
 				$this->session->set_flashdata('success_msg','The seller account has been approved');

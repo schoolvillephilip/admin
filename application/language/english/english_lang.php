@@ -4,7 +4,7 @@ $lang['site_state'] = 'development';
 $lang['app_name'] = 'Onitshamarket';
 $lang['app_email'] = '';
 $lang['notify_email'] = '';
-$lang['site_domain'] = 'https://onitshamarket.com';
+$lang['site_domain'] = 'http://onitshamarket.com';
 
 
 

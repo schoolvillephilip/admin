@@ -46,7 +46,8 @@ class Login extends CI_Controller{
                     redirect('login');
                 }else{  
                     if( $user->groups < 1 ) {
-                        header('Location : ' . lang('site_domain'));
+                        // header('Location : ' . lang('site_domain'));
+                        redirect( lang('site_domain'));
                     }else{
                         $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );
                         $this->session->set_userdata($session_data);
