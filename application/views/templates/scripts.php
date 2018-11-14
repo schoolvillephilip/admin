@@ -13,10 +13,16 @@
     <script src="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.js'); ?>"></script>
     <script src="<?= base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js'); ?>"></script>
 <?php endif; ?>
-<?php if( in_array($pg_name, array('manage_product','select_category,','sellers','product','orders'))) :?>
+<?php if( in_array($pg_name, array('manage_product','select_category,','sellers','product','orders','dashboard'))) :?>
     <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
     <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
     <script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
+
+<?php endif; ?>
+<?php if( in_array($pg_name, array('dashboard'))) :?>
+    <script src="<?= base_url('assets/js/raph.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/moris.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/demo/morris-js.js'); ?>"></script>
 
 <?php endif; ?>
 

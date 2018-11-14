@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $page_title; ?></title>
-    <link rel="shortcut icon" href="<?= base_url('assets/landing/img/favicon.png'); ?>" type="image/png">
-    <link rel="icon" href="<?= base_url('assets/landing/img/favicon.png'); ?>" type="image/png">
+    <link rel="shortcut icon" href="<?= base_url('assets/img/favicon.png'); ?>" type="image/png">
+    <link rel="icon" href="<?= base_url('assets/img/favicon.png'); ?>" type="image/png">
     <link rel="canonical" href="<?= current_url(); ?>"/>
     <!--=================================================-->
     <!--Open Sans Font [ OPTIONAL ]-->
@@ -29,6 +29,8 @@
         <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">
     <?php endif;?>
+
+    <link href="<?= base_url('assets/plugins/morrris-js/morris.min.css'); ?>" rel="stylesheet">
     <style>
         #demo-nifty-settings{
             display: none;
