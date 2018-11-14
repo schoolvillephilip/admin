@@ -44,8 +44,6 @@ class Login extends CI_Controller{
                 if( !$user ) {
                     $this->session->set_flashdata('error_msg','Sorry! Incorrect username or password.');
                     redirect('login');
-                }elseif( $user->groups < 1 ){
-
                 }else{                    
                     $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );
                     $this->session->set_userdata($session_data);
