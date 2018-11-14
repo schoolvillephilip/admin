@@ -75,8 +75,6 @@
                                 <li><a
                                             href="#">General Settings</a></li>
                                 <li><a
-                                            href="#">Company Details</a></li>
-                                <li><a
                                             href="#">Mail Settings</a></li>
                                 <li><a
                                             href="#">Edit Footer</a></li>
@@ -95,11 +93,9 @@
                                 <li><a
                                             href="#">Global Store Settings</a></li>
                                 <li><a
-                                            href="#">Homepage Products Option</a></li>
+                                            href="#">Homepage Products</a></li>
                                 <li><a
                                             href="#">Store Online/Offline</a></li>
-                                <li><a
-                                            href="#">Edit Footer</a></li>
                             </ul>
                         </li>
 
@@ -150,14 +146,12 @@
 
                             <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'root_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/root_category'); ?>">Root Categories</a></li>
-                                <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/category'); ?>">Categories</a></li>
-                                <li <?php if ($sub_name == 'sub_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/sub_category'); ?>">Sub Categories</a></li>
-                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
+                                <li><a
+                                            href="#">Gift Cards</a></li>
+                                <li><a
+                                            href="#">Special Offers</a></li>
+                                <li><a
+                                            href="#">Discount Coupon</a></li>
                             </ul>
                         </li>
                         <!--Menu list item-->
