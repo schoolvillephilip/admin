@@ -74,8 +74,8 @@
                             <ul class="collapse <?php if ($pg_name == 'settings') echo 'in' ?>;">
                                 <li <?php if ($sub_name == 'gen_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings') ?>">General Settings</a></li>
-                                <li><a
-                                            href="<?= base_url('dashboard') ?>">Mail Settings</a></li>
+                                <li <?php if ($sub_name == 'mail_set') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/mail') ?>">Mail Settings</a></li>
                                 <li><a
                                             href="#">Edit Footer</a></li>
                             </ul>

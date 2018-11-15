@@ -26,16 +26,14 @@ class Settings extends CI_Controller
 		$this->load->view('admin/settings/general', $page_data);
 	}
 
-	public function homepage()
+	public function mail()
 	{
-		$id = cleanit($this->uri->segment(3));
-		$page_data['page_title'] = 'Orders Detail';
-		$page_data['pg_name'] = 'orders';
-		$page_data['sub_name'] = 'orders_detail';
+		$page_data['page_title'] = 'Mail Settings';
+		$page_data['pg_name'] = 'settings';
+		$page_data['sub_name'] = 'mail_set';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-		$page_data['orders'] = $this->admin->get_orders($id);
-		$this->load->view('orders/detail', $page_data);
+		$this->load->view('admin/settings/mail', $page_data);
 	}
 
 	/*
