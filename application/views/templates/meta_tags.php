@@ -15,6 +15,7 @@
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="<?= base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/nifty.min.css')?>" rel="stylesheet">
+    <link href="<?= base_url('assets/plugins/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/demo/nifty-demo-icons.min.css')?>" rel="stylesheet">
     <?php if( in_array($pg_name, array('product','template', 'settings','select_category','category','sub_category'))) :?>
         <link href="<?= base_url('assets/plugins/bootstrap-validator/bootstrapValidator.min.css')?>" rel="stylesheet">
