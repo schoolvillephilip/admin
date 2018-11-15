@@ -96,7 +96,7 @@
                                     </a>
                                     <ul  class="collapse <?php if ($pg_name == 'store_settings') echo 'in' ?>;">
                                         <li><a
-                                                    href="#">Homepage</a></li>
+                                                    href="<?= base_url('settings/home') ?>">Homepage</a></li>
                                         <li><a
                                                     href="#">Category</a></li>
                                         <li><a
