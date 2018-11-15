@@ -143,15 +143,45 @@ Class Admin_model extends CI_Model{
      * @param string $id
      * @return CI_DB_result
      */
-    function get_root_categories($id = '')
-    {
-        if ($id != '') {
-            $this->db->where('root_category_id', $id);
-            return $this->db->get('root_category')->row();
-        } else {
-            return $this->db->get('root_category');
-        }
+    function get_all_categories(){
+        return $this->db->get('categories')->result();
     }
+
+
+    /**
+     * @param string $id
+     * @return CI_DB_row
+     */
+    function get_single_category( $pid ){
+        $this->db->where('id', $pid );
+        return $this->db->get('categories')->row();
+    }
+
+    /**
+     * @param string $slug
+     * @return CI_DB_row
+     */
+    function check_slug( $slug ){
+        do {
+            $slug = $slug;
+            $count = 0; 
+            $this->db->where( 'slug', $slug);
+            $this->db->from('categories');
+            if( $this->db->count_all_results() >= 1 ){
+                $number = random_string('nozero', 6);
+                $slug = $slug.'-'.$number;
+                $this->db->where('slug', $slug);
+                $this->db->from('categories');
+                $count = $this->db->count_all_results();
+            }else{
+                $count = 0;
+            }
+        } while ($count >= 1);
+            return $slug;
+    }
+
+
+
 
     /**
      * @param string $id
@@ -178,9 +208,8 @@ Class Admin_model extends CI_Model{
      * @param string root $id
      * @return CI_DB_result
      */
-    function get_categories_by_rootid($id = '')
-    {
-        if ($id != '') $this->db->where('root_category_id', $id);
+    function get_categories_by_rootid($id = ''){
+        if ($id != '') $this->db->where('pid', $id);
         return $this->db->get('category')->result_array();
     }
 
