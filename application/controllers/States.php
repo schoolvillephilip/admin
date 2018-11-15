@@ -18,7 +18,7 @@ class States extends CI_Controller{
         $page_data['page_title'] = 'States Overview';
         $page_data['pg_name'] = 'states';
         $page_data['sub_name'] = 'states_overview';
-        $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $page_data['states'] = $this->admin->get_states();
         $page_data['areas'] = $this->admin->get_address_price();
@@ -43,7 +43,7 @@ class States extends CI_Controller{
                     $name = $this->input->post('state');
                     if( $this->admin->get_num_rows('states', array('name' => strtolower($name) ))){
                         $this->session->set_flashdata('error_msg', 'The state is already existing.');
-                        redirect($_SERFER['HTTP_REFERER']);
+                        redirect($_SERVER['HTTP_REFERER']);
                     }
                     if( is_int($this->admin->insert_data('states', array('name' => strtolower($name) ))) ){
                         $this->session->set_flashdata('success_msg', 'The state has been added successfully.');

@@ -21,7 +21,7 @@ class Categories extends CI_Controller
 		$page_data['page_title'] = 'Choose Category';
 		$page_data['pg_name'] = 'product';
 		$page_data['sub_name'] = 'select_category';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$this->load->view('choose_category', $page_data);
 	}
@@ -31,7 +31,7 @@ class Categories extends CI_Controller
 		$page_data['page_title'] = 'Select Root Category';
 		$page_data['pg_name'] = 'select_category';
 		$page_data['sub_name'] = 'root_category';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		if (!$this->input->post()) {
 			$page_data['root_categories'] = $this->admin->get_root_categories();

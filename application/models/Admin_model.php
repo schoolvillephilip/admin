@@ -14,7 +14,7 @@ Class Admin_model extends CI_Model{
         return $result;
     }
 
-    // Login Customer
+    // Login 
     function login($data = array(), $table_name = 'users'){
         if (!empty($data)) {
             $email = cleanit($data['email']);
@@ -32,12 +32,27 @@ Class Admin_model extends CI_Model{
                         $c_update = array('last_login' => get_now(), 'ip' => $_SERVER['REMOTE_ADDR']);
                         $this->db->where('email', $data['email']);
                         $this->db->update($table_name, $c_update);
-                        return $result->row(0)->id;
+                        return $result->row();
                     } else {
                         return false;
                     }
                 }
             }
+        }
+    }
+
+    // Check user Persmission
+    function hasPermission( $group_id, $key ){
+        $this->db->select('permissions');
+        $this->db->where('id', $group_id);
+        $group = $this->db->get('groups');    
+        if($group){
+            $permission = json_decode($group->permissions,true);
+            if($permission[$key] == true ){
+                return true;
+            }
+
+            return false;
         }
     }
 
@@ -388,6 +403,7 @@ Class Admin_model extends CI_Model{
                 case 'suspend':
                     $status = $this->update_data($sid,array('status' => 'suspended'), 'sellers', 'uid');
                     if( $status ){
+                        $this->db->where('product_status', 'pending');
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
                         $this->notify_seller($sid, 
                             'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
@@ -399,6 +415,7 @@ Class Admin_model extends CI_Model{
                 case 'reject':
                     $status = $this->update_data($sid,array('status' => 'rejected'), 'sellers', 'uid');
                     if( $status ){
+                        // Products to be deleted
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
                         $this->notify_seller($sid, 
                             'Your account has been rejected', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
@@ -448,15 +465,24 @@ Class Admin_model extends CI_Model{
         return $this->db->query($select);
     }
 
-    // Confirm if existing
-    function get_num_rows( $table, $where){
-        $this->db->select('*');
-        $this->db->where($where);
-        if( $this->db->get($table)->num_rows() > 0 ){
-            return true;
-        }else{
-            return false;
+
+    /**
+     * Return the num of rows of a table with certain conditions if found
+     * @param $table
+     * @param array $where
+     * @param array $or_where
+     * @return int
+     */
+    function get_num_rows($table, $where = array(), $or_where = array() ){
+        if( !empty($where) ) {
+            $this->db->where($where);
+            $this->db->or_where($or_where);
         }
+        return $this->db->get( $table )->num_rows();
+    }
+
+    function run_sql( $query ){
+        return $this->db->query( $query );
     }
 
 
