@@ -41,73 +41,47 @@
                     <?php $this->load->view('msg_view'); ?>
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <a class="btn btn-danger" style="color: #fff;" href="<?= base_url('categories/root_category/add')?>">Add New Root Category</a>
+                            <a class="btn btn-danger" style="color: #fff;" href="<?= base_url('categories/add')?>">Add New Root Category</a>
                         </div>
                     </div>
 					<div class="panel-body">
-                        <?php if( $this->uri->segment(3) && cleanit($this->uri->segment(3)) == 'add' ) : ?>
-                            <?= form_open_multipart('', 'class="form-horizontal"'); ?>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="">Root Category Name</label>
-                                <div class="col-lg-7">
-                                    <input type="text" name="name" class="form-control" required/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="">Icon</label>
-                                <div class="col-lg-7">
-                                    <input type="text" name="icon" class="form-control" required placeholder="Eg fa-telephone : Get the icon from frontawesome.com"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="">Title</label>
-                                <div class="col-lg-7">
-                                    <input type="text" name="title" class="form-control" placeholder="Buy phones and tablets">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="">Description</label>
-                                <div class="col-lg-7">
-                                    <textarea name="description" class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="">Category Image</label>
-                                <div class="col-lg-7">
-                                    <input type="file" name="image" />
-                                    <span style="margin-top:3px;" class="text-dark">Image should be a PNG, transparent with at most 500 X 300px</span>
-                                </div>
-                            </div>
-                            <div class="panel-footer text-center">
-                                <button class="btn btn-primary" type="submit">Save</button>
-                            </div>
-                            <?= form_close(); ?>
-                        <?php else : ?>
-						    <table id="basic" class="table table-striped table-bordered" cellspacing="0"
+						<table id="basic" class="table table-striped table-bordered" cellspacing="0"
 							   width="100%">
 							<thead>
 							<tr>
                                 <th>Image</th>
                                 <th class="text-center">Name</th>
+                                <th class="text-center">Parent Category</th>
+                                <th class="text-center">Title</th>
                                 <th class="text-center">Description</th>
                                 <th class="text-center">Action</th>
 							</tr>
 							</thead>
 							<tbody>
-                                <?php foreach($root_categories->result() as $root_category ) : ?>
+                                <?php foreach($categories as $category ) : ?>
                                     <tr>
                                         <td class="text-center">
-                                            <img src="<?= base_url('data/settings/categories/' . $root_category->image); ?>" width="40" height="40px">
+                                            <img src="<?= base_url('data/settings/categories/' . $category->image); ?>" width="40" height="40px">
                                         </td>
                                         <td class="text-center">
-                                            <a href="<?= base_url('categories/root_category_detail/' . $root_category->root_category_id); ?>"><?= ucwords($root_category->name)?></a>
+                                            <a href="<?= base_url('categories/detail/' . $category->id); ?>"><?= ucwords($category->name)?></a>
                                         </td>
                                         <td>
-                                            <?= $root_category->description; ?>
+                                            <?php if($category->pid != 0 ) :
+                                                    $parent_name = $this->admin->get_single_category( $category->pid )->name;
+                                                    echo $parent_name;
+                                            ?>
+                                            <?php else : ?>
+                                                No Parent Category
+                                            <?php endif; ?>
+                                        </td>        
+                                        <td><?=  word_limiter($category->title, 5); ?></td>                                
+                                        <td>
+                                            <?= word_limiter($category->description, 10); ?>
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a class="btn btn-mint btn-active-mint" href="<?= base_url('categories/root_category_detail/' . $root_category->root_category_id); ?>">Edit</a>
+                                                <a class="btn btn-mint btn-active-mint" href="<?= base_url('categories/edit/' . $category->id); ?>">Edit</a>
                                                 <button class="btn btn-danger btn-active-danger">Delete</button>
                                             </div>
                                         </td>
@@ -115,12 +89,12 @@
                                 <?php endforeach; ?>
 							</tbody>
 						</table>
-                        <?php endif; ?>
 					</div>
 				</div>
 			</div>
 			<!--===================================================-->
 			<!--End page content-->
+            
 
 		</div>
 		<!--===================================================-->

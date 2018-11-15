@@ -16,54 +16,74 @@ class Categories extends CI_Controller
 		}
 	}
 
+	// View All categories
 	public function index()
 	{
-		$page_data['page_title'] = 'Choose Category';
-		$page_data['pg_name'] = 'product';
-		$page_data['sub_name'] = 'select_category';
+		$page_data['page_title'] = 'Site Category';
+		$page_data['pg_name'] = 'select_category';
+		$page_data['sub_name'] = 'category';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-		$this->load->view('choose_category', $page_data);
+		$page_data['categories'] = $this->admin->get_all_categories();
+		$this->load->view('category/categories', $page_data);
 	}
 
-	public function root_category()
-	{
-		$page_data['page_title'] = 'Select Root Category';
-		$page_data['pg_name'] = 'select_category';
-		$page_data['sub_name'] = 'root_category';
-		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-			'first_name,last_name,email,profile_pic');
-		if (!$this->input->post()) {
-			$page_data['root_categories'] = $this->admin->get_root_categories();
-			$this->load->view('category/root_category', $page_data);
-		} else {
-			// work
+
+	// Create
+	public function add(){
+
+		if( $this->input->post() ) {
+
+			$this->form_validation->set_rules('name', 'Name','trim|required|xss_clean');
+			$this->form_validation->set_rules('title', 'Title','trim|required|xss_clean');
+            $this->form_validation->set_rules('description', 'Description','trim|required|xss_clean');
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->session->set_flashdata('error_msg','There was an error with the data provided ' . validation_errors() );
+                redirect('categories/add');
+            }
+
 			$data = array(
-				'name' => $this->input->post('name'),
+				'pid'	=> $this->input->post('pid'),
+				'title' => cleanit( $this->input->post('title')),
+				'name' => cleanit($this->input->post('name')),
 				'icon' => $this->input->post('icon'),
-				'title' => $this->input->post('title'),
 				'description' => cleanit($this->input->post('description'))
 			);
-			if (isset($_FILES)) {
-				$filename = $this->do_upload('image');
+
+			if (isset($_FILES) && $_FILES['upload_image']['name'] != '' ) {
+				$filename = $this->do_upload('upload_image');
 				if ($filename !== false) {
 					$data['image'] = $filename;
 				} else {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
-			// save the image
-			if ($this->admin->insert_data('root_category', $data)) {
-				$this->session->set_flashdata('success_msg', 'The root category has been created successfully.');
+
+			// Slug
+			$slug = urlify( $this->input->post('name') );
+			$data['slug'] = $this->admin->check_slug( $slug );
+
+			if ($this->admin->insert_data('categories', $data)) {
+				$this->session->set_flashdata('success_msg', 'The category has been created successfully.');
 			} else {
 				$this->session->set_flashdata('error_msg', 'There was an error creating the root category.');
 			}
-			redirect($_SERVER['HTTP_REFERER']);
+			redirect('categories');
+
+		}else{
+			$page_data['page_title'] = 'Add Category';
+			$page_data['pg_name'] = 'add_category';
+			$page_data['sub_name'] = 'category';
+			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+				'first_name,last_name,email,profile_pic');
+			$page_data['categories'] = $this->admin->get_all_categories();
+			$this->load->view('category/add', $page_data);
 		}
 	}
 
-	public function root_category_detail()
-	{
+	// Category Edit
+	public function edit(){
 		$id = cleanit($this->uri->segment(3));
 		if ($this->input->post()) {
 			// update
@@ -73,14 +93,12 @@ class Categories extends CI_Controller
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description')
 			);
-			if (isset($_FILES) && !empty($_FILES)) {
+			if (isset($_FILES) && ($_FILES['image']['name'] != '' )) {
 				$filename = $this->do_upload('image');
 				if ($filename !== false) {
 					$img = $this->input->post('img');
 					$md5file = file_get_contents('./data/settings/categories/' . $filename);
 					$md5file2 = file_get_contents('./data/settings/categories/' . $img);
-
-//                    die(md5($md5file) . ' and ' . md5($md5file2));
 					if (!empty($img) && (md5($md5file) == md5($md5file2))) {
 						unlink(realpath('./data/settings/categories/' . $filename));
 					} else {
@@ -92,24 +110,25 @@ class Categories extends CI_Controller
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
-			if ($this->admin->update_data($this->input->post('id'), $data, 'root_category', 'root_category_id')) {
+			if ($this->admin->update_data($this->input->post('id'), $data, 'categories')) {
 				$this->session->set_flashdata('success_msg', 'The specification has been updated successfully.');
 			} else {
 				$this->session->set_flashdata('error_msg', 'There was an error updating the specification.');
 			}
 			redirect($_SERVER['HTTP_REFERER']);
 		} else {
-			$page_data['page_title'] = 'Root Category Detail';
+			$page_data['page_title'] = 'Edit Category';
 			$page_data['pg_name'] = 'select_category';
-			$page_data['sub_name'] = 'root_category_detail';
-			$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			$page_data['sub_name'] = 'category';
+			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
-			$page_data['category'] = $this->admin->get_root_categories($id);
+			$page_data['category'] = $this->admin->get_single_category($id);
+			$page_data['categories'] = $this->admin->get_all_categories();
 			if (empty($page_data['category'])) {
 				$this->session->set_flashdata('error_msg', 'The root category you are looking for does not exist...');
-				redirect('categories/root_category');
+				redirect('categories');
 			}
-			$this->load->view('category/root_category_detail', $page_data);
+			$this->load->view('category/category_detail', $page_data);
 		}
 	}
 
@@ -147,9 +166,8 @@ class Categories extends CI_Controller
 		$page_data['page_title'] = 'Create Category';
 		$page_data['pg_name'] = 'select_category';
 		$page_data['sub_name'] = 'category';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-//			$page_data['categories'] = $this->admin->get_categories();
 		$this->load->view('category/create', $page_data);
 	}
 
@@ -207,7 +225,7 @@ class Categories extends CI_Controller
 			$page_data['page_title'] = 'Select Sub Category';
 			$page_data['pg_name'] = 'select_category';
 			$page_data['sub_name'] = 'sub_category';
-			$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['root_categories'] = $this->admin->get_root_categories();
 			$page_data['sub_categories'] = $this->admin->get_sub_categories();
@@ -223,7 +241,7 @@ class Categories extends CI_Controller
 		$page_data['page_title'] = 'Sub Category Detail';
 		$page_data['pg_name'] = 'select_category';
 		$page_data['sub_name'] = 'sub_category_detail';
-		$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$page_data['root_categories'] = $this->admin->get_root_categories();
 		$page_data['categories'] = $this->admin->get_categories();
@@ -279,7 +297,7 @@ class Categories extends CI_Controller
 			$page_data['page_title'] = 'Select Specification';
 			$page_data['pg_name'] = 'select_category';
 			$page_data['sub_name'] = 'specification';
-			$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['specifications'] = $this->admin->get_specifications();
 			$this->load->view('category/specification', $page_data);
@@ -316,7 +334,7 @@ class Categories extends CI_Controller
 			$page_data['page_title'] = 'Specification Detail';
 			$page_data['pg_name'] = 'select_category';
 			$page_data['sub_name'] = 'specification_detail';
-			$page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['specification'] = $this->admin->get_specifications($id);
 			$this->load->view('category/specification_detail', $page_data);

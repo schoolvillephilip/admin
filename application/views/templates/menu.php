@@ -94,7 +94,7 @@
                                             href="#">Pages Settings
                                         <i class="arrow"></i>
                                     </a>
-                                    <ul  class="collapse <?php if ($pg_name == 'page_settings') echo 'in' ?>;">
+                                    <ul  class="collapse <?php if ($pg_name == 'store_settings') echo 'in' ?>;">
                                         <li><a
                                                     href="#">Homepage</a></li>
                                         <li><a
@@ -146,13 +146,10 @@
                                         <span class="menu-title">Brands</span>
                                     </a>
                                 </li>
-                                <li <?php if ($sub_name == 'root_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/root_category'); ?>">Root Categories</a></li>
                                 <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/category'); ?>">Categories</a></li>
-                                <li <?php if ($sub_name == 'sub_category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories/sub_category'); ?>">Sub Categories</a></li>
-                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('categories'); ?>">Categories</a></li>
+                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>>
+                                    <a
                                             href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
                             </ul>
                         </li>

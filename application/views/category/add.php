@@ -30,7 +30,7 @@
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
 					<li><a href="#">Category</a></li>
-					<li class="active">Category List</li>
+					<li class="active">Add New Category</li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
@@ -39,33 +39,40 @@
 			<!--===================================================-->
 			<div id="page-content">
 				<div class="panel">
+					<?php $this->load->view('msg_view'); ?>
 					<div class="panel-heading">
-						<div class="panel-title"></div>
+						<div class="panel-title">Add New Category</div>
 					</div>
 					<div class="panel-body">
-						<?= form_open('', 'class="form-horizontal"'); ?>
+						<?= form_open_multipart('', 'class="form-horizontal"'); ?>
 							<div class="form-group">
 								<label class="col-lg-3 control-label">Parent Category</label>
 								<div class="col-lg-7">
-									<select name="root_category" required class="selectpicker rootcat"
+									<select name="pid" required class="selectpicker form-control"
 											title="Choose Parent Category..."
 											data-width="100%">
-										<option value="">-- Choose a parent category--</option>
-										<?php foreach ($root_categories->result() as $root_category) echo '<option value="' . $root_category->root_category_id . '">' . $root_category->name . ' </option>'; ?>
+										<option value="0" selected="">-- Choose a parent category--</option>
+										<?php foreach ($categories as $category) echo '<option value="' . $category->id . '">' . $category->name . ' </option>'; ?>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-lg-3 control-label" for="">Icon</label>
 								<div class="col-lg-7">
-									<input type="text" name="icon" class="form-control" required
+									<input type="text" name="icon" class="form-control"
 										   placeholder="Eg fa-telephone : Get the icon from frontawesome.com"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-lg-3 control-label" for="">Category Name *</label>
 								<div class="col-lg-7">
-									<input type="text" name="category" class="form-control" required/>
+									<input type="text" name="name" class="form-control" required/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-3 control-label" for="">Category Title *</label>
+								<div class="col-lg-7">
+									<input type="text" name="title" class="form-control" placeholder="Eg: Buy Computing Online in Nigeria" required/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -77,7 +84,7 @@
 							<div class="form-group">
 								<label class="col-lg-3 control-label" for="">Category Image</label>
 								<div class="col-lg-7">
-									<input type="file" name="image"/>
+									<input type="file" name="upload_image"/>
 									<span style="margin-top:3px;" class="text-dark">Image should be a PNG, transparent with at most 500 X 300px</span>
 								</div>
 							</div>
