@@ -94,7 +94,7 @@
                                             href="#">Pages Settings
                                         <i class="arrow"></i>
                                     </a>
-                                    <ul  class="collapse <?php if ($pg_name == 'page_settings') echo 'in' ?>;">
+                                    <ul  class="collapse <?php if ($pg_name == 'store_settings') echo 'in' ?>;">
                                         <li><a
                                                     href="#">Homepage</a></li>
                                         <li><a
