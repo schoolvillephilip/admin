@@ -94,7 +94,7 @@
                                             href="#">Pages Settings
                                         <i class="arrow"></i>
                                     </a>
-                                    <ul  class="collapse <?php if ($pg_name == 'page_settings') echo 'in' ?>;">
+                                    <ul  class="collapse <?php if ($pg_name == 'store_settings') echo 'in' ?>;">
                                         <li><a
                                                     href="#">Homepage</a></li>
                                         <li><a
@@ -221,21 +221,21 @@
 
 
                         <li class="list-divider"></li>
-                        <li class="<?php if ($pg_name == 'settings') echo 'class="active-sub"' ?>">
+                        <li class="<?php if ($pg_name == 'pro_settings') echo 'class="active"' ?>">
                             <a href="#">
-                                <i class="demo-pli-gear"></i>
-                                <span class="menu-title">Settings</span>
+                                <i class="demo-pli-add-user-star"></i>
+                                <span class="menu-title">Profile</span>
                                 <i class="arrow"></i>
                             </a>
 
                             <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'settings') echo 'in'; ?>">
+                            <ul class="collapse <?php if ($pg_name == 'pro_settings') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'profile') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('settings') ?>">Profile</a></li>
+                                            href="<?= base_url('profile_settings') ?>">Profile Settings</a></li>
                                 <li <?php if ($sub_name == 'change_password') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('settings/change_password'); ?>">Change Password</a></li>
+                                            href="<?= base_url('profile_settings/change_password'); ?>">Change Password</a></li>
                                 <li <?php if ($sub_name == 'notification') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('settings/notification'); ?>">Notification Setting</a>
+                                            href="<?= base_url('profile_settings/notification'); ?>">Notification Setting</a>
                                 </li>
 
                             </ul>
