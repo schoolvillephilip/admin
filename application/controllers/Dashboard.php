@@ -19,6 +19,7 @@ class Dashboard extends CI_Controller{
         $page_data['page_title'] = 'Admin Dashboard';
         $page_data['pg_name'] = 'dashboard';
         $page_data['sub_name'] = 'dashboard';
+        $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
 

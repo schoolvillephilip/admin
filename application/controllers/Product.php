@@ -20,6 +20,7 @@ class Product extends CI_Controller
 		$page_data['page_title'] = 'Product Overview';
 		$page_data['pg_name'] = 'product';
 		$page_data['sub_name'] = 'product_overview';
+        $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		// $q = '';
@@ -47,6 +48,7 @@ class Product extends CI_Controller
 		$page_data['page_title'] = 'Product Detail';
 		$page_data['pg_name'] = 'product';
 		$page_data['sub_name'] = 'product_detail';
+        $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$page_data['product'] = $this->admin->get_single_product_detail( $id );
@@ -57,6 +59,7 @@ class Product extends CI_Controller
 		$page_data['page_title'] = 'Approve Product';
 		$page_data['pg_name'] = 'product';
 		$page_data['sub_name'] = 'approve_product';
+        $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$page_data['products'] = $this->admin->get_unapprove_product();

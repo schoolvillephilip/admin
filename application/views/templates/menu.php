@@ -74,14 +74,14 @@
                             <ul class="collapse <?php if ($pg_name == 'settings') echo 'in' ?>;">
                                 <li <?php if ($sub_name == 'gen_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings') ?>">General Settings</a></li>
-                                <li><a
-                                            href="<?= base_url('dashboard') ?>">Mail Settings</a></li>
+                                <li <?php if ($sub_name == 'mail_set') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/mail') ?>">Mail Settings</a></li>
                                 <li><a
                                             href="#">Edit Footer</a></li>
                             </ul>
                         </li>
                         <!--Menu list item-->
-                        <li class="">
+                        <li <?php if ($pg_name == 'store_settings') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-gears"></i>
                                 <span class="menu-title">Store Settings</span>
@@ -89,14 +89,14 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul  class="collapse <?php if ($pg_name == 'store_settings' ) echo 'in' ?>;">
+                            <ul  class="collapse <?php if ($pg_name == 'store_settings' ) echo 'in active' ?>;">
                                 <li><a
                                             href="#">Pages Settings
                                         <i class="arrow"></i>
                                     </a>
-                                    <ul  class="collapse <?php if ($pg_name == 'store_settings') echo 'in' ?>;">
-                                        <li><a
-                                                    href="#">Homepage</a></li>
+                                    <ul  class="collapse <?php if ($sub_name == 'page_settings') echo 'in' ?>;">
+                                        <li <?php if ($least_sub == 'homepage') echo 'class="active-link"' ?>><a
+                                                    href="<?= base_url('settings/home') ?>">Homepage</a></li>
                                         <li><a
                                                     href="#">Category</a></li>
                                         <li><a
@@ -108,7 +108,7 @@
                                 <li><a
                                             href="#">Homepage Products</a></li>
                                 <li><a
-                                            href="#">Payment Methods</a></li>
+                                            href="<?= base_url('settings/payment') ?>">Payment Methods</a></li>
                                 <li><a
                                             href="#">Store Online/Offline</a></li>
                             </ul>
