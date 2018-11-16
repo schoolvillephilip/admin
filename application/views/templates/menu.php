@@ -89,7 +89,7 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul  class="collapse <?php if ($pg_name == 'store_settings' ) echo 'in active' ?>;">
+                            <ul  class="collapse <?php if ($pg_name == 'store_settings' ) echo 'in' ?>;">
                                 <li><a
                                             href="#">Pages Settings
                                         <i class="arrow"></i>
@@ -97,11 +97,11 @@
                                     <ul  class="collapse <?php if ($sub_name == 'page_settings') echo 'in' ?>;">
                                         <li <?php if ($least_sub == 'homepage') echo 'class="active-link"' ?>><a
                                                     href="<?= base_url('settings/home') ?>">Homepage</a></li>
-                                        <li><a
+                                        <li <?php if ($least_sub == 'category') echo 'class="active-link"' ?>><a
                                                     href="#">Category</a></li>
-                                        <li><a
+                                        <li <?php if ($least_sub == 'checkout') echo 'class="active-link"' ?>><a
                                                     href="#">Checkout</a></li>
-                                        <li><a
+                                        <li <?php if ($least_sub == 'single_prod') echo 'class="active-link"' ?>><a
                                                     href="#">Single Product</a></li>
                                     </ul>
                                 </li>

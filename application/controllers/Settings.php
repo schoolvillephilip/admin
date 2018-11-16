@@ -66,9 +66,9 @@ class Settings extends CI_Controller
 	public function home()
 		//Home Page
 	{
-		$page_data['page_title'] = 'Home Page Settings';
+		$page_data['page_title'] = 'Homepage Settings';
 		$page_data['pg_name'] = 'store_settings';
-		$page_data['sub_name'] = 'page_setting';
+		$page_data['sub_name'] = 'page_settings';
 		$page_data['least_sub'] = 'homepage';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
