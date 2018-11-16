@@ -204,13 +204,13 @@ Class Admin_model extends CI_Model{
     }
 
     /**
-     * Fetching all the category details associated with a root id
-     * @param string root $id
+     * Fetching all the children category
+     * @param string $id
      * @return CI_DB_result
      */
-    function get_categories_by_rootid($id = ''){
+    function get_children_categories($id = ''){
         if ($id != '') $this->db->where('pid', $id);
-        return $this->db->get('category')->result_array();
+        return $this->db->get('categories')->result_array();
     }
 
     /**

@@ -345,11 +345,10 @@ class Categories extends CI_Controller
 	 * @param int : root_category_id
 	 * @return:  JSON categories id, name
 	 */
-	function append_category()
-	{
+	function append_category() {
 		$id = $this->input->post('id');
 		if (!is_null($id)) {
-			echo json_encode($this->admin->get_categories_by_rootid($id), JSON_UNESCAPED_SLASHES);
+			echo json_encode($this->admin->get_children_categories($id), JSON_UNESCAPED_SLASHES);
 		}
 		exit;
 	}
