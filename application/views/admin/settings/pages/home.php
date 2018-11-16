@@ -18,7 +18,7 @@
 				<!--Page Title-->
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<div id="page-title">
-					<h1 class="page-header text-overflow">General Settings</h1>
+					<h1 class="page-header text-overflow">Homepage Settings</h1>
 				</div>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End page title-->
@@ -26,8 +26,9 @@
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
-					<li><a href="#">Settings</a></li>
-					<li class="active">General</li>
+					<li><a href="#">Store Settings</a></li>
+                    <li>Pages</li>
+                    <li class="active">Homepage</li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->

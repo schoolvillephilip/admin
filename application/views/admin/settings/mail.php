@@ -18,7 +18,7 @@
                 <!--Page Title-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
-                    <h1 class="page-header text-overflow">General Settings</h1>
+                    <h1 class="page-header text-overflow">Mail Settings</h1>
                 </div>
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End page title-->
@@ -85,14 +85,14 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="name_from">From Name</label>
                             <div class="col-md-9">
-                                <input type="number" id="name_from" class="form-control" placeholder="Enter Name">
+                                <input type="text" id="name_from" class="form-control" placeholder="Enter Name">
                                 <small class="help-block">Name that mail receiver sees as sender</small>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="email_from">From Email </label>
                             <div class="col-md-9">
-                                <input type="number" id="email_from" class="form-control" placeholder="example@host.com">
+                                <input type="email" id="email_from" class="form-control" placeholder="example@host.com">
                                 <small class="help-block">Email that mail receiver sees as sender</small>
                             </div>
                         </div>

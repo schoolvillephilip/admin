@@ -45,7 +45,7 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('admin/settings/mail', $page_data);
+        $this->load->view('admin/settings/payment', $page_data);
     }
 
 
