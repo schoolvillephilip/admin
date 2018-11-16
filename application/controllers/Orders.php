@@ -19,6 +19,7 @@ class Orders extends CI_Controller{
         $page_data['page_title'] = 'Orders Overview';
         $page_data['pg_name'] = 'orders';
         $page_data['sub_name'] = 'orders_overview';
+        $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $page_data['orders'] = $this->admin->get_orders();
@@ -30,6 +31,7 @@ class Orders extends CI_Controller{
 		$page_data['page_title'] = 'Orders Detail';
 		$page_data['pg_name'] = 'orders';
 		$page_data['sub_name'] = 'orders_detail';
+        $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
         $page_data['orders'] = $this->admin->get_orders( $id );

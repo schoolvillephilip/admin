@@ -21,20 +21,39 @@ class Settings extends CI_Controller
 		$page_data['page_title'] = 'General Settings';
 		$page_data['pg_name'] = 'settings';
 		$page_data['sub_name'] = 'gen_set';
+        $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$this->load->view('admin/settings/general', $page_data);
 	}
 
-	public function mail()
-	{
-		$page_data['page_title'] = 'Mail Settings';
-		$page_data['pg_name'] = 'settings';
-		$page_data['sub_name'] = 'mail_set';
-		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-			'first_name,last_name,email,profile_pic');
-		$this->load->view('admin/settings/mail', $page_data);
-	}
+    public function mail()
+    {
+        $page_data['page_title'] = 'Mail Settings';
+        $page_data['pg_name'] = 'settings';
+        $page_data['sub_name'] = 'mail_set';
+        $page_data['least_sub'] = '';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('admin/settings/mail', $page_data);
+    }
+    public function payment()
+    {
+        $page_data['page_title'] = 'Payment Methods';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'payment_set';
+        $page_data['least_sub'] = '';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('admin/settings/mail', $page_data);
+    }
+
+
+
+
+
+
+
 
 	/*
      * Pages Settings controller
@@ -50,6 +69,7 @@ class Settings extends CI_Controller
 		$page_data['page_title'] = 'Home Page Settings';
 		$page_data['pg_name'] = 'store_settings';
 		$page_data['sub_name'] = 'page_setting';
+		$page_data['least_sub'] = 'homepage';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$this->load->view('admin/settings/pages/home', $page_data);
