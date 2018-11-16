@@ -193,7 +193,7 @@
                             </ul>
                         </li>
 
-                        <li class="<?php if ($pg_name == 'orders') echo 'class="active-link"' ?>">
+                        <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
                             <a href="<?= base_url('orders') ?>">
                                 <i class="demo-pli-shopping-basket"></i>
                                 <span class="menu-title">Sales &amp; Orders</span>
