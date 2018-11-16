@@ -93,6 +93,21 @@
                             </div>
                             <input type="hidden" name="id" value="<?= $category->id; ?>" >
                             <input type="hidden" name="img" value="<?= $category->image; ?>">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="specification">Specifications</label>
+                                <div class="col-lg-7">
+                                    <span class="text-dark" style="margin: 4px; padding-bottom: 5px;"><a href="<?= base_url('categories/specification/add'); ?>">Click to create new specification, if not found below.</a> </span><br /><br />
+                                    <?php foreach($specifications->result() as $specification ) :
+                                            $specs = json_decode( $category->specifications );
+                                            $checked = (!is_null($specs) && in_array($specification->id, $specs) ) ? 'checked' : '';
+                                        ?>
+                                        <span style="margin-right: 5px;">
+                                            <input type="checkbox" name="specifications[]" value="<?= $specification->id; ?>" <?= $checked; ?> >
+                                                <?= $specification->spec_name; ?>
+                                        </span>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
 							<div class="panel-footer text-center">
 								<button class="btn btn-primary" type="submit">Update</button>
 								<a href="<?= base_url('categories'); ?>" class="btn btn-danger"> Go Back To All Categories</a>

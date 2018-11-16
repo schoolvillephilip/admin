@@ -43,12 +43,14 @@ class Categories extends CI_Controller
                 $this->session->set_flashdata('error_msg','There was an error with the data provided ' . validation_errors() );
                 redirect('categories/add');
             }
-
+            $specifications = $this->input->post('specifications');
+            $specs = !empty($specifications) ? json_encode($specifications) : '';
 			$data = array(
 				'pid'	=> $this->input->post('pid'),
 				'title' => cleanit( $this->input->post('title')),
 				'name' => cleanit($this->input->post('name')),
 				'icon' => $this->input->post('icon'),
+				'specifications' => $specs,
 				'description' => cleanit($this->input->post('description'))
 			);
 
@@ -90,10 +92,13 @@ class Categories extends CI_Controller
 		$id = cleanit($this->uri->segment(3));
 		if ($this->input->post()) {
 			// update
+			$specifications = $this->input->post('specifications');
+            $specs = !empty($specifications) ? json_encode($specifications) : '';
 			$data = array(
 				'name' => $this->input->post('name'),
 				'icon' => $this->input->post('icon'),
 				'title' => $this->input->post('title'),
+				'specifications' => $specs,
 				'description' => $this->input->post('description')
 			);
 			if (isset($_FILES) && ($_FILES['image']['name'] != '' )) {
@@ -132,6 +137,7 @@ class Categories extends CI_Controller
 				$this->session->set_flashdata('error_msg', 'The root category you are looking for does not exist...');
 				redirect('categories');
 			}
+			$page_data['specifications'] = $this->admin->get_specifications();
 			$this->load->view('category/category_detail', $page_data);
 		}
 	}
