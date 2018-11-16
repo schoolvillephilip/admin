@@ -49,6 +49,7 @@
                                     <select name="pid" class="selectpicker form-control"
 											title="Choose Parent Category..."
 											data-width="100%">
+										<option value="0">-- Select A Parent Category --</option>
                                     	<?php foreach ($categories as $cat) : ?>
                                     		<option value="<?= $cat->id; ?>" <?php if($cat->id == $category->pid) echo 'selected'; ?>><?= $cat->name ?></option> ?>
                                     	<?php endforeach; ?>
