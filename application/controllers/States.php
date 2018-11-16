@@ -29,7 +29,7 @@ class States extends CI_Controller{
         $page_data['page_title'] = 'Pickup Address';
         $page_data['pg_name'] = 'states';
         $page_data['sub_name'] = 'pickup_address';
-        $page_data['profile'] = $this->admin->get_profile_details(base64_decode($this->session->userdata('logged_id')),
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $this->load->view('states/pickup_address', $page_data);
     }
