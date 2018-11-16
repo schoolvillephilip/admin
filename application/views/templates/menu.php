@@ -107,7 +107,7 @@
                                 </li>
                                 <li><a
                                             href="#">Homepage Products</a></li>
-                                <li><a
+                                <li <?php if ($sub_name == 'payment_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/payment') ?>">Payment Methods</a></li>
                                 <li><a
                                             href="#">Store Online/Offline</a></li>
@@ -155,7 +155,7 @@
                         </li>
 
                         <!--Menu list item-->
-                        <li class="<?php if ($pg_name == 'select_category') echo 'class="active-sub"' ?>">
+                        <li class="<?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>">
                             <a href="#">
                                 <i class="demo-pli-medal-2"></i>
                                 <span class="menu-title">Discount Options</span>
@@ -163,13 +163,13 @@
                             </a>
 
                             <!--Submenu-->
-                            <ul class="">
-                                <li><a
-                                            href="#">Gift Cards</a></li>
-                                <li><a
-                                            href="#">Special Offers</a></li>
-                                <li><a
-                                            href="#">Discount Coupon</a></li>
+                            <ul class="collapse <?php if ($pg_name == 'disc_opt') echo 'in'; ?>">
+                                <li <?php if ($sub_name == 'gift_card') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/discount/giftcards') ?>">Gift Cards</a></li>
+                                <li <?php if ($sub_name == 'special') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/discount/special') ?>">Special Offers</a></li>
+                                <li <?php if ($sub_name == 'coupon') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/discount/coupons') ?>">Discount Coupon</a></li>
                             </ul>
                         </li>
                         <!--Menu list item-->

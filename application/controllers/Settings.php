@@ -47,6 +47,40 @@ class Settings extends CI_Controller
             'first_name,last_name,email,profile_pic');
         $this->load->view('admin/settings/payment', $page_data);
     }
+    public function discount($page)
+    {
+        switch ($page) {
+            case 'giftcards' :
+                $page_data['page_title'] = 'Gift Cards';
+                $page_data['pg_name'] = 'disc_opt';
+                $page_data['sub_name'] = 'gift_card';
+                $page_data['least_sub'] = '';
+                $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+                    'first_name,last_name,email,profile_pic');
+                $this->load->view('admin/settings/discount/gift', $page_data);
+                break;
+            case 'coupons' :
+                $page_data['page_title'] = 'Discount Coupons';
+                $page_data['pg_name'] = 'disc_opt';
+                $page_data['sub_name'] = 'coupon';
+                $page_data['least_sub'] = '';
+                $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+                    'first_name,last_name,email,profile_pic');
+                $this->load->view('admin/settings/discount/coupon', $page_data);
+                break;
+            case 'special' :
+                $page_data['page_title'] = 'Special Offers';
+                $page_data['pg_name'] = 'disc_opt';
+                $page_data['sub_name'] = 'special';
+                $page_data['least_sub'] = '';
+                $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+                    'first_name,last_name,email,profile_pic');
+                $this->load->view('admin/settings/discount/special', $page_data);
+                break;
+            default:
+
+        }
+    }
 
 
 
