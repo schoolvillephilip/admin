@@ -152,9 +152,19 @@ Class Admin_model extends CI_Model{
      * @param string $id
      * @return CI_DB_row
      */
-    function get_single_category( $pid ){
-        $this->db->where('id', $pid );
+    function get_single_category( $id ){
+        $this->db->where('id', $id );
         return $this->db->get('categories')->row();
+    }
+
+    /**
+     * Fetching all the children category
+     * @param string $id
+     * @return CI_DB_result
+     */
+    function get_children_categories($pid = ''){
+        if ($id != '') $this->db->where('pid', $pid);
+        return $this->db->get('categories')->result_array();
     }
 
     /**
@@ -203,15 +213,7 @@ Class Admin_model extends CI_Model{
         }
     }
 
-    /**
-     * Fetching all the category details associated with a root id
-     * @param string root $id
-     * @return CI_DB_result
-     */
-    function get_categories_by_rootid($id = ''){
-        if ($id != '') $this->db->where('pid', $id);
-        return $this->db->get('category')->result_array();
-    }
+    
 
     /**
      * @param string $id
