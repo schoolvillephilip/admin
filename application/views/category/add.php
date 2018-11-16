@@ -88,6 +88,20 @@
 									<span style="margin-top:3px;" class="text-dark">Image should be a PNG, transparent with at most 500 X 300px</span>
 								</div>
 							</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label" for="specification">Specifications</label>
+							<div class="col-lg-7">
+								<span class="text-dark"><a
+										href="<?= base_url('categories/specification/add'); ?>">Click to create new specification, if not found below.</a> </span><br/><br/>
+								<?php foreach ($specifications->result() as $specification) : ?>
+									<span style="margin-right: 5px;">
+                                            <input type="checkbox" name="specifications[]"
+												   value="<?= $specification->id; ?>"> <?= $specification->spec_name; ?>
+                                        </span>
+								<?php endforeach; ?>
+							</div>
+
+						</div>
 							<div class="panel-footer text-center">
 								<button class="btn btn-primary" type="submit">Save</button>
 							</div>

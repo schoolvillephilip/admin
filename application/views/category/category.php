@@ -64,6 +64,7 @@
                                             <input type="text" name="category" class="form-control" required/>
                                         </div>
                                     </div>
+
                                     <div class="panel-footer text-center">
                                         <button class="btn btn-primary" type="submit">Save</button>
                                     </div>

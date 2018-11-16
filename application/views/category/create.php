@@ -44,46 +44,46 @@
 					</div>
 					<div class="panel-body">
 						<?= form_open('', 'class="form-horizontal"'); ?>
-							<div class="form-group">
-								<label class="col-lg-3 control-label">Parent Category</label>
-								<div class="col-lg-7">
-									<select name="root_category" required class="selectpicker rootcat"
-											title="Choose Parent Category..."
-											data-width="100%">
-										<option value="">-- Choose a parent category--</option>
-										<?php foreach ($root_categories->result() as $root_category) echo '<option value="' . $root_category->root_category_id . '">' . $root_category->name . ' </option>'; ?>
-									</select>
-								</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Parent Category</label>
+							<div class="col-lg-7">
+								<select name="root_category" required class="selectpicker rootcat"
+										title="Choose Parent Category..."
+										data-width="100%">
+									<option value="">-- Choose a parent category--</option>
+									<?php foreach ($root_categories->result() as $root_category) echo '<option value="' . $root_category->root_category_id . '">' . $root_category->name . ' </option>'; ?>
+								</select>
 							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label" for="">Icon</label>
-								<div class="col-lg-7">
-									<input type="text" name="icon" class="form-control" required
-										   placeholder="Eg fa-telephone : Get the icon from frontawesome.com"/>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label" for="">Icon</label>
+							<div class="col-lg-7">
+								<input type="text" name="icon" class="form-control" required
+									   placeholder="Eg fa-telephone : Get the icon from frontawesome.com"/>
 							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label" for="">Category Name *</label>
-								<div class="col-lg-7">
-									<input type="text" name="category" class="form-control" required/>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label" for="">Category Name *</label>
+							<div class="col-lg-7">
+								<input type="text" name="category" class="form-control" required/>
 							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label" for="">Description *</label>
-								<div class="col-lg-7">
-									<textarea name="description" class="form-control"></textarea>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label" for="">Description *</label>
+							<div class="col-lg-7">
+								<textarea name="description" class="form-control"></textarea>
 							</div>
-							<div class="form-group">
-								<label class="col-lg-3 control-label" for="">Category Image</label>
-								<div class="col-lg-7">
-									<input type="file" name="image"/>
-									<span style="margin-top:3px;" class="text-dark">Image should be a PNG, transparent with at most 500 X 300px</span>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label" for="">Category Image</label>
+							<div class="col-lg-7">
+								<input type="file" name="image"/>
+								<span style="margin-top:3px;" class="text-dark">Image should be a PNG, transparent with at most 500 X 300px</span>
 							</div>
-							<div class="panel-footer text-center">
-								<button class="btn btn-primary" type="submit">Save</button>
-							</div>
+						</div>
+						<div class="panel-footer text-center">
+							<button class="btn btn-primary" type="submit">Save</button>
+						</div>
 						<?= form_close(); ?>
 					</div>
 				</div>

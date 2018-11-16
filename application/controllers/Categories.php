@@ -77,6 +77,7 @@ class Categories extends CI_Controller
 			$page_data['sub_name'] = 'category';
 			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
+			$page_data['specifications'] = $this->admin->get_specifications();
 			$page_data['categories'] = $this->admin->get_all_categories();
 			$this->load->view('category/add', $page_data);
 		}
@@ -166,6 +167,7 @@ class Categories extends CI_Controller
 		$page_data['page_title'] = 'Create Category';
 		$page_data['pg_name'] = 'select_category';
 		$page_data['sub_name'] = 'category';
+		$page_data['specifications'] = $this->admin->get_specifications();
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$this->load->view('category/create', $page_data);
