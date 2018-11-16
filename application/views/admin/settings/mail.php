@@ -58,7 +58,7 @@
                         <div class="form-group"><label class="col-md-3 control-label" for="smtp_sec">SMTP
                                 Security</label>
                             <div class="col-md-9">
-                                <select class="selectpicker" data-live-search="true" data-width="100%" name="smtp_sec">
+                                <select class="selectpicker" data-live-search="true" data-width="100%" id="smtp_sec">
                                     <option>TLS</option>
                                     <option>SSL</option>
                                     <option>SL</option>
