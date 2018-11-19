@@ -41,6 +41,48 @@
                         <h3 class="panel-title">Store Status</h3>
                     </div>
                     <div class="panel-body">
+                        <form class="form-horizontal">
+                            <div class="form-group pad-ver">
+                                <label class="col-md-3 control-label">Store Enabled</label>
+                                <div class="col-md-9">
+                                    <div class="radio">
+
+                                        <!-- Inline radio buttons -->
+                                        <input id="enable_radio" class="magic-radio" type="radio" name="enabled_radio" checked>
+                                        <label for="enable_radio">Yes</label>
+
+                                        <input id="enable_radio-2" class="magic-radio" type="radio" name="enabled_radio">
+                                        <label for="enable_radio-2">No</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="stat_name">Date to Enable</label>
+                                <div class="col-md-9">
+                                    <input type="date" id="stat_name" class="form-control">
+                                    <small class="help-block">Select date to bring store back online</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="stat_phones">If Disabled, Enable for IP Address(es)</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="stat_phones" class="form-control" placeholder="0.0.0.0">
+                                    <small class="help-block">Enter the IP Addresses to allow separated by a comma(,)</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="stat_mails">Reason Offline</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" rows="5">
+
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <!--===================================================-->
