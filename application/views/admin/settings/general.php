@@ -40,12 +40,13 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">General Site Settings</h3>
                     </div>
-                    <form class="panel-body form-horizontal">
+                    <?php $this->load->view('msg_view'); ?>
+                    <?= form_open('', 'class="panel-body form-horizontal"')?>
                         <!--Text Input-->
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="meta_key">Default Meta Keywords</label>
                             <div class="col-md-9">
-                                <input type="text" id="meta_key" class="form-control" placeholder="Meta Keywords">
+                                <input type="text" id="meta_key" name="keywords" class="form-control" value="<?= !empty($settings->keywords) ? $settings->keywords :''; ?>" placeholder="Meta Keywords">
                                 <small class="help-block">Enter the default meta keywords</small>
                             </div>
                         </div>
@@ -53,11 +54,11 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="meta_desc">Default Meta Description</label>
                             <div class="col-md-9">
-                                <input type="text" id="meta_desc" class="form-control" placeholder="Meta Description">
+                                <input type="text" id="meta_desc" name="description" class="form-control" value="<?= !empty($settings->description) ? $settings->description : '';?>" placeholder="Meta Description">
                                 <small class="help-block">Enter the default meta descriptions</small>
                             </div>
                         </div>
-                        <div class="form-group"><label class="col-md-3 control-label" for="lang">Default
+                        <!-- <div class="form-group"><label class="col-md-3 control-label" for="lang">Default
                                 Language</label>
                             <div class="col-md-9">
                                 <select class="selectpicker" data-live-search="true" data-width="100%" name="lang">
@@ -71,8 +72,8 @@
 
                                 <small class="help-block">Select the default site language</small>
                             </div>
-                        </div>
-                        <div class="form-group"><label class="col-md-3 control-label" for="color">Default
+                        </div> -->
+                        <!-- <div class="form-group"><label class="col-md-3 control-label" for="color">Default
                                 Color Theme</label>
                             <div class="col-md-9">
                                 <select class="selectpicker" data-live-search="true" data-width="100%" name="color">
@@ -98,7 +99,7 @@
                                 </select>
                                 <small class="help-block">Select the minimum invoice digit length</small>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="socials">
                                 Social Links
@@ -108,29 +109,31 @@
                                     <div class="input-group mar-btm col-md-12">
                                         <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
                                         <input type="text" class="form-control"
-                                               placeholder="http://twitter.com/your-profile" name="twitter">
+                                               placeholder="http://twitter.com/your-profile" name="twitter_link" value="<?= !empty($settings->twitter_link) ? $settings->twitter_link : ''; ?>">
                                     </div>
                                     <div class="input-group mar-btm col-md-12">
                                         <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
                                         <input type="text" class="form-control"
-                                               placeholder="http://facebook.com/your-profile" name="facebook">
+                                               placeholder="http://facebook.com/your-profile" name="facebook_link" value="<?= !empty($settings->facebook_link) ? $settings->facebook_link : ''; ?>">
                                     </div>
                                     <div class="input-group mar-btm col-md-12">
                                         <span class="input-group-addon"><i class="fa fa-instagram"></i></span>
                                         <input type="text" class="form-control"
-                                               placeholder="http://instagram.com/your-profile" name="instagram">
+                                               placeholder="http://instagram.com/your-profile" name="instagram_link" value="<?= !empty($settings->instagram_link) ? $settings->instagram_link : ''; ?>">
                                     </div>
                                     <div class="input-group mar-btm col-md-12">
                                         <span class="input-group-addon"><i class="fa fa-youtube"></i></span>
                                         <input type="text" class="form-control"
-                                               placeholder="http://youtube.com/your-profile" name="youtube">
+                                               placeholder="http://youtube.com/your-profile" name="youtube_link" value="<?= !empty($settings->youtube_link) ? $settings->youtube_link : ''; ?>">
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="update" value="<?= !empty($settings->id) ? $settings->id : ''; ?>">
                         <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-primary" type="submit">Save/Update</button>
                         </div>
+                        <?= form_close(); ?>
                 </div>
             </div>
             <!--===================================================-->

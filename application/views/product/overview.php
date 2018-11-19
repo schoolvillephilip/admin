@@ -58,24 +58,22 @@
 								<thead>
 								<tr>
 									<th>Product Name</th>
-									<th>Root Category</th>
-									<th class="min-tablet">Category</th>
+									<th>Category Name</th>
 									<th class="min-tablet">Product Line</th>
 									<th class="min-desktop">Product Status</th>
 									<th class="min-desktop">Seller</th>
 								</tr>
 								</thead>
 								<tbody>
-								<?php foreach ($products as $product) : ?>
+								<?php foreach ($products as $product) : 
+										$category = $this->admin->get_single_category( $product->category_id );
+								?>
 									<tr>
 										<td>
 											<a href="<?= base_url('product/detail/' . $product->id ); ?> "> <?= $product->product_name ?></a>
 										</td>
 										<td>
-											<?= $product->rootcategory ?>
-										</td>
-										<td>
-											<?= $product->category ?>
+											<?= !empty($category->name) ? $category->name : 'Category Does not exist'; ?>
 										</td>
 										<td>
 											<?= $product->product_line ?>
@@ -154,7 +152,6 @@
 	});
 
 </script>
-<!--	<script src="/assets/plugins/datatables/media/js/jquery.dataTables.js"></script>-->
 </body>
 
 </html>

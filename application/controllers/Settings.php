@@ -16,15 +16,40 @@ class Settings extends CI_Controller
 		}
 	}
 
-	public function index()
-	{
-		$page_data['page_title'] = 'General Settings';
-		$page_data['pg_name'] = 'settings';
-		$page_data['sub_name'] = 'gen_set';
-        $page_data['least_sub'] = '';
-		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-			'first_name,last_name,email,profile_pic');
-		$this->load->view('admin/settings/general', $page_data);
+	public function index(){
+        if( $this->input->post() ){
+            $data = array();
+            foreach( $_POST as $key => $value ){
+                $data[$key] = cleanit( $value );
+            }
+            $update = $this->input->post('update');
+            if( !empty($update) ) {
+                $id = $data['update'];
+                unset($data['update']);
+                if( $this->admin->update_data( $id, $data, 'general_settings') ){
+                    $this->session->set_flashdata('success_msg', 'General settings updated successfully.');
+                }else{
+                    $this->session->set_flashdata('error_msg', 'There was an error updating the general settings.');
+                }
+            }else{
+                unset($data['update']);
+                if( $this->admin->insert_data( 'general_settings', $data ) ){
+                    $this->session->set_flashdata('success_msg', 'General settings saved.');
+                }else{
+                    $this->session->set_flashdata('error_msg', 'There was an error saving the general settings.');
+                }
+            }
+            redirect('settings');
+        }else {
+    		$page_data['page_title'] = 'General Settings';
+    		$page_data['pg_name'] = 'settings';
+    		$page_data['sub_name'] = 'gen_set';
+            $page_data['least_sub'] = '';
+    		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+    			'first_name,last_name,email,profile_pic');
+            $page_data['settings'] = $this->admin->get_row('general_settings');
+    		$this->load->view('admin/settings/general', $page_data);
+        }
 	}
 
     public function mail()

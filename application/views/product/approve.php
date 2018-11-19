@@ -59,7 +59,6 @@
 								<thead>
 								<tr>
 									<th>Product</th>
-									<th>Root category</th>
 									<th>Category</th>
 									<th>Seller</th>
 									<th>Product Status</th>
@@ -70,8 +69,8 @@
 									<?php foreach( $products as $product ): ?>
 										<tr>
 											<td><a href="<?= base_url('product/detail/' . $product->id); ?>"><?= $product->product_name;?></a></td>
-											<td><?= $product->rootcategory; ?></td>
-											<td><?= $product->category; ?></td>
+											<?php $category = $this->admin->get_single_category( $product->category_id ); ?>
+											<td><?= !empty($category->name) ? $category->name : ''; ?></td>
 											<td><a href="<?= base_url('sellers/detail/'. $product->seller_id); ?>"><?= ucwords($product->first_name . ' ' . $product->last_name); ?></a></td>
 											<td><?= productStatus($product->product_status); ?></td>
 											<td><?= neatDate($product->created_on); ?></td>

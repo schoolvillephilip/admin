@@ -265,7 +265,7 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_result
      */
     function get_product_list($id = '', $product_status = '', $args = array() ){
-        $query = "SELECT p.id, p.product_status,p.sku, o.sold, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
+        $query = "SELECT p.id, p.product_status,p.sku, o.sold, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
         if( $id != '' ){
@@ -279,7 +279,7 @@ Class Admin_model extends CI_Model{
     }
 
     function get_unapprove_product($id = ''){
-        $query = "SELECT p.id, p.product_status,p.sku, p.product_name, p.created_on, p.rootcategory, p.category, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
+        $query = "SELECT p.id, p.product_status,p.sku, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )";
         
             $query .= " WHERE p.product_status != 'approved'";
@@ -512,8 +512,20 @@ Class Admin_model extends CI_Model{
         return $this->db->get( $table )->num_rows();
     }
 
+
+    // General function to SQL
     function run_sql( $query ){
         return $this->db->query( $query );
+    }
+
+    // Get row
+    // Get a row of a paticular table
+    // Return CI_row
+    function get_row( $table_name, $condition = array() ){
+        if( !empty( $conditionn ) ){
+            $this->db->where( $condition );
+        }
+        return $this->db->get( $table_name )->row();
     }
 
 

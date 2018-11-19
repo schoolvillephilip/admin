@@ -94,16 +94,9 @@
 											<td><?= $product->sku; ?></td>
 										</tr>
 										<tr>
-											<td>Product Root Category:</td>
-											<td><?= $product->rootcategory; ?></td>
-										</tr>
-										<tr>
-											<td>Product Category:</td>
-											<td><?= $product->category; ?></td>
-										</tr>
-										<tr>
-											<td>Product Sub-category:</td>
-											<td><?= $product->subcategory; ?></td>
+											<?php $category = $this->admin->get_single_category( $product->category_id ); ?>
+											<td>Category Name:</td>
+											<td><?= !empty($category->name) ? $category->name : ''; ?></td>
 										</tr>
 										<tr>
 											<td>Product Brand Name:</td>
