@@ -54,8 +54,8 @@
                                 <label class="col-md-3 control-label">Display Image</label>
                                 <div class="col-md-9">
 					                        <span class="pull-left btn btn-primary btn-file">
-					                        Browse... <input type="file">
-					                        </span>
+					                        Select Image <input type="file">
+					                        </span><br/><br/>
                                     <small class="help-block">Select gift card image</small>
                                 </div>
                             </div>
@@ -101,6 +101,9 @@
 
         </div>
 
+        <!--===================================================-->
+    </div>
+
         <!--MAIN NAVIGATION-->
         <!--===================================================-->
         <?php $this->load->view('templates/menu'); ?>
@@ -119,10 +122,9 @@
         <button class="scroll-top btn">
             <i class="pci-chevron chevron-up"></i>
         </button>
-        <!--===================================================-->
-    </div>
     <!--===================================================-->
     <!-- END OF CONTAINER -->
+    </div>
     <!--JAVASCRIPT-->
     <!--=================================================-->
 
