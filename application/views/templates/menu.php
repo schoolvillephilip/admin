@@ -186,10 +186,6 @@
                                             href="<?= base_url('states') ?>">States Areas</a></li>
                                 <li <?php if ($sub_name == 'pickup_address') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('states/pickup_address'); ?>">Pickup Address</a></li>
-                                <li><a
-                                            href="#">Shipping Zones</a></li>
-                                <li><a
-                                            href="#">Shipping Rate</a></li>
                             </ul>
                         </li>
 
