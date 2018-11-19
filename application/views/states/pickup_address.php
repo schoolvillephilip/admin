@@ -18,7 +18,7 @@
                 <!--Page Title-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
-                    <h1 class="page-header text-overflow">Gift Cards</h1>
+                    <h1 class="page-header text-overflow">Pickup Address</h1>
                 </div>
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End page title-->
@@ -26,8 +26,8 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="demo-pli-home"></i></a></li>
-                    <li><a href="#">Discount Options</a></li>
-                    <li class="active">Gift Cards</li>
+                    <li><a href="#">Shipping</a></li>
+                    <li class="active">Pickup Address</li>
                 </ol>
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End breadcrumb-->
@@ -38,10 +38,9 @@
             <div id="page-content">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Gift Cards</h3>
+                        <h3 class="panel-title">Add Pickup Address</h3>
                     </div>
                     <div class="panel-body">
-
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="gc_name">Gift Card Name</label>
@@ -85,50 +84,49 @@
                                 <button class="btn btn-primary" type="submit">Save</button>
                             </div>
                         </form>
-
-                        <div class="panel" style="margin-top: 40px;">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">All Gift Cards</h3>
-                            </div>
-                            <div class="panel-body">
-                            </div>
-
                     </div>
                 </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">All Pickup Addresses</h3>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!--End page content-->
 
             </div>
 
 
         </div>
 
-        <!--===================================================-->
     </div>
+    <!--MAIN NAVIGATION-->
+    <!--===================================================-->
+    <?php $this->load->view('templates/menu'); ?>
+    <!--===================================================-->
+    <!--END MAIN NAVIGATION-->
 
-        <!--MAIN NAVIGATION-->
-        <!--===================================================-->
-        <?php $this->load->view('templates/menu'); ?>
-        <!--===================================================-->
-        <!--END MAIN NAVIGATION-->
-
-        <!-- FOOTER -->
-        <!--===================================================-->
-        <?php $this->load->view('templates/footer'); ?>
-        <!--===================================================-->
-        <!-- END FOOTER -->
+    <!-- FOOTER -->
+    <!--===================================================-->
+    <?php $this->load->view('templates/footer'); ?>
+    <!--===================================================-->
+    <!-- END FOOTER -->
 
 
-        <!-- SCROLL PAGE BUTTON -->
-        <!--===================================================-->
-        <button class="scroll-top btn">
-            <i class="pci-chevron chevron-up"></i>
-        </button>
+    <!-- SCROLL PAGE BUTTON -->
+    <!--===================================================-->
+    <button class="scroll-top btn">
+        <i class="pci-chevron chevron-up"></i>
+    </button>
+    <!--===================================================-->
     <!--===================================================-->
     <!-- END OF CONTAINER -->
-    </div>
     <!--JAVASCRIPT-->
     <!--=================================================-->
+</div>
 
-
-    <?php $this->load->view('templates/scripts'); ?>
+<?php $this->load->view('templates/scripts'); ?>
 </body>
 </html>

@@ -61,7 +61,7 @@
                                 <label class="col-md-3 control-label" for="cp_discount">Discount &#8358;</label>
                                 <div class="col-md-9">
                                     <input type="text" id="cp_discount" class="form-control" placeholder="0.00">
-                                    <small class="help-block">Enter the name you want to call the gift card</small>
+                                    <small class="help-block">Enter the discount on the sales</small>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -166,7 +166,7 @@
         <!--===================================================-->
         <button class="scroll-top btn">
             <i class="pci-chevron chevron-up"></i>
-        </button>
+        </button></div>
         <!--===================================================-->
     </div>
     <!--===================================================-->

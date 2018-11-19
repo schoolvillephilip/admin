@@ -103,6 +103,8 @@ class Settings extends CI_Controller
                 $this->load->view('admin/settings/discount/special', $page_data);
                 break;
             default:
+                return redirect($page);
+                break;
 
         }
     }
