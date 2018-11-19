@@ -62,16 +62,7 @@ class Settings extends CI_Controller
             'first_name,last_name,email,profile_pic');
         $this->load->view('settings/mail', $page_data);
     }
-    public function payment()
-    {
-        $page_data['page_title'] = 'Payment Methods';
-        $page_data['pg_name'] = 'store_settings';
-        $page_data['sub_name'] = 'payment_set';
-        $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-            'first_name,last_name,email,profile_pic');
-        $this->load->view('settings/payment', $page_data);
-    }
+
     //discount controllers here
     public function discount($page)
     {
@@ -111,6 +102,33 @@ class Settings extends CI_Controller
     }
 
 
+    /*
+     * All Store Settings Controller Section
+     * Pages
+     * Payment Methods
+     * Store Status
+     * */
+
+    public function payment()
+    {
+        $page_data['page_title'] = 'Payment Methods';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'payment_set';
+        $page_data['least_sub'] = '';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/payment', $page_data);
+    }
+    public function store_status()
+    {
+        $page_data['page_title'] = 'Store Online/Offline';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'store_stat';
+        $page_data['least_sub'] = '';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/store_status', $page_data);
+    }
 
 
 

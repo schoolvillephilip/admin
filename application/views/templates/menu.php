@@ -109,8 +109,8 @@
                                             href="#">Homepage Products</a></li>
                                 <li <?php if ($sub_name == 'payment_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/payment') ?>">Payment Methods</a></li>
-                                <li><a
-                                            href="#">Store Online/Offline</a></li>
+                                <li <?php if ($sub_name == 'store_stat') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/store_status') ?>">Store Online/Offline</a></li>
                             </ul>
                         </li>
 
