@@ -43,30 +43,35 @@
                     <div class="panel-body">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="gc_name">Gift Card Name</label>
+                                <label class="col-md-3 control-label" for="pka_name">Store Title</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="gc_name" class="form-control" placeholder="Enter Name">
-                                    <small class="help-block">Enter the name you want to call the gift card</small>
+                                    <input type="text" id="pka_name" class="form-control" placeholder="Enter Title">
+                                    <small class="help-block">Enter the title of the pickup location</small>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Display Image</label>
+                                <label class="col-md-3 control-label" for="pka_phones">Phones of Store Workers</label>
                                 <div class="col-md-9">
-					                        <span class="pull-left btn btn-primary btn-file">
-					                        Select Image <input type="file">
-					                        </span><br/><br/>
-                                    <small class="help-block">Select gift card image</small>
+                                    <input type="text" id="pka_phones" class="form-control" placeholder="Enter Phones">
+                                    <small class="help-block">Enter the phone numbers of workers separated by a comma(,)</small>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="gc_value">Value &#8358;</label>
+                                <label class="col-md-3 control-label" for="pka_mails">Emails of Store Workers</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="gc_value" class="form-control" placeholder="0.00">
-                                    <small class="help-block">Enter the value you want for the gift card</small>
+                                    <input type="text" id="pka_mails" class="form-control" placeholder="Enter Emails">
+                                    <small class="help-block">Enter the emails of workers separated by a comma(,)</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="pka_add">Store Address</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="pka_add" class="form-control" placeholder="Enter Address">
+                                    <small class="help-block">Enter the pickup location address in full</small>
                                 </div>
                             </div>
                             <div class="form-group pad-ver">
-                                <label class="col-md-3 control-label">Enabled</label>
+                                <label class="col-md-3 control-label">Pickup Location Enabled</label>
                                 <div class="col-md-9">
                                     <div class="radio">
 
