@@ -18,7 +18,7 @@
 				<!--Page Title-->
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<div id="page-title">
-					<h1 class="page-header text-overflow">State and area shipping address</h1>
+					<h1 class="page-header text-overflow">State Areas</h1>
 				</div>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End page title-->
@@ -26,8 +26,8 @@
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
-					<li>Dashboard</li>
-					<li class="active">State and Area Shipping Address</li>
+					<li>Shipping</li>
+					<li class="active">State Areas</li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->

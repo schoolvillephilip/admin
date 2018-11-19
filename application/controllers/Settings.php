@@ -48,7 +48,7 @@ class Settings extends CI_Controller
     		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
     			'first_name,last_name,email,profile_pic');
             $page_data['settings'] = $this->admin->get_row('general_settings');
-    		$this->load->view('admin/settings/general', $page_data);
+    		$this->load->view('settings/general', $page_data);
         }
 	}
 
@@ -60,7 +60,7 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('admin/settings/mail', $page_data);
+        $this->load->view('settings/mail', $page_data);
     }
     public function payment()
     {
@@ -70,8 +70,9 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('admin/settings/payment', $page_data);
+        $this->load->view('settings/payment', $page_data);
     }
+    //discount controllers here
     public function discount($page)
     {
         switch ($page) {
@@ -82,7 +83,7 @@ class Settings extends CI_Controller
                 $page_data['least_sub'] = '';
                 $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                     'first_name,last_name,email,profile_pic');
-                $this->load->view('admin/settings/discount/gift', $page_data);
+                $this->load->view('settings/discount/gift', $page_data);
                 break;
             case 'coupons' :
                 $page_data['page_title'] = 'Discount Coupons';
@@ -91,7 +92,7 @@ class Settings extends CI_Controller
                 $page_data['least_sub'] = '';
                 $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                     'first_name,last_name,email,profile_pic');
-                $this->load->view('admin/settings/discount/coupon', $page_data);
+                $this->load->view('settings/discount/coupon', $page_data);
                 break;
             case 'special' :
                 $page_data['page_title'] = 'Special Offers';
@@ -100,7 +101,7 @@ class Settings extends CI_Controller
                 $page_data['least_sub'] = '';
                 $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                     'first_name,last_name,email,profile_pic');
-                $this->load->view('admin/settings/discount/special', $page_data);
+                $this->load->view('settings/discount/special', $page_data);
                 break;
             default:
                 return redirect($page);
@@ -133,6 +134,6 @@ class Settings extends CI_Controller
 		$page_data['least_sub'] = 'homepage';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-		$this->load->view('admin/settings/pages/home', $page_data);
+		$this->load->view('settings/pages/home', $page_data);
 	}
 }
