@@ -97,7 +97,7 @@ class Categories extends CI_Controller
             $pid =
 			$data = array(
 				'name' => $this->input->post('name'),
-				'pid'	=> $this->input->post('pid');
+				'pid'	=> $this->input->post('pid'),
 				'icon' => $this->input->post('icon'),
 				'title' => $this->input->post('title'),
 				'specifications' => $specs,
