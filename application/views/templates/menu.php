@@ -76,8 +76,8 @@
                                             href="<?= base_url('settings') ?>">General Settings</a></li>
                                 <li <?php if ($sub_name == 'mail_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/mail') ?>">Mail Settings</a></li>
-                                <li><a
-                                            href="#">Edit Footer</a></li>
+                                <li  <?php if ($sub_name == 'e_foot') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/edit_footer') ?>">Edit Footer</a></li>
                             </ul>
                         </li>
                         <!--Menu list item-->

@@ -63,6 +63,17 @@ class Settings extends CI_Controller
         $this->load->view('settings/mail', $page_data);
     }
 
+    public function edit_footer()
+    {
+        $page_data['page_title'] = 'Edit Footer';
+        $page_data['pg_name'] = 'settings';
+        $page_data['sub_name'] = 'e_foot';
+        $page_data['least_sub'] = '';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/edit_footer', $page_data);
+    }
+
     //discount controllers here
     public function discount($page)
     {
