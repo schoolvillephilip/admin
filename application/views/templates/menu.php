@@ -76,8 +76,8 @@
                                             href="<?= base_url('settings') ?>">General Settings</a></li>
                                 <li <?php if ($sub_name == 'mail_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/mail') ?>">Mail Settings</a></li>
-                                <li><a
-                                            href="#">Edit Footer</a></li>
+                                <li  <?php if ($sub_name == 'e_foot') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/edit_footer') ?>">Edit Footer</a></li>
                             </ul>
                         </li>
                         <!--Menu list item-->
@@ -109,8 +109,8 @@
                                             href="#">Homepage Products</a></li>
                                 <li <?php if ($sub_name == 'payment_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/payment') ?>">Payment Methods</a></li>
-                                <li><a
-                                            href="#">Store Online/Offline</a></li>
+                                <li <?php if ($sub_name == 'store_stat') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('settings/store_status') ?>">Store Online/Offline</a></li>
                             </ul>
                         </li>
 
@@ -186,10 +186,6 @@
                                             href="<?= base_url('states') ?>">States Areas</a></li>
                                 <li <?php if ($sub_name == 'pickup_address') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('states/pickup_address'); ?>">Pickup Address</a></li>
-                                <li><a
-                                            href="#">Shipping Zones</a></li>
-                                <li><a
-                                            href="#">Shipping Rate</a></li>
                             </ul>
                         </li>
 
@@ -209,8 +205,8 @@
                             </a>
                             <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('sellers') ?>">All Users</a></li>
+                                <li <?php if ($sub_name == 'users') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('sellers/all_users') ?>">All Users</a></li>
                                 <li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('sellers') ?>">Sellers</a></li>
                                 <li <?php if ($sub_name == 'approve_sellers') echo 'class="active-link"' ?>><a

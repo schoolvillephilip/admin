@@ -259,6 +259,13 @@ Class Admin_model extends CI_Model{
         if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
         return $this->db->query($query)->result();
     }
+    function get_user_lists($search = '', $limit = '', $offset = ''){
+        $query = "SELECT * FROM users";
+
+        if( $search != '' ) $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
+        if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
+        return $this->db->query($query)->result();
+    }
 
     /**
      * @param $id, $type( product_status) 

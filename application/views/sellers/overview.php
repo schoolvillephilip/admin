@@ -26,7 +26,7 @@
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="demo-pli-home"></i></a></li>
-					<li><a href="#">Dashboard</a></li>
+					<li><a href="#">User Management</a></li>
 					<li class="active">All sellers</li>
 				</ol>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
