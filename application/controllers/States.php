@@ -27,13 +27,32 @@ class States extends CI_Controller{
     }
 
     public function pickup_address(){
-        $page_data['page_title'] = 'Pickup Address';
-        $page_data['pg_name'] = 'states';
-        $page_data['sub_name'] = 'pickup_address';
-        $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-            'first_name,last_name,email,profile_pic');
-        $this->load->view('states/pickup_address', $page_data);
+        if( !$this->input->post() ){
+            $page_data['page_title'] = 'Pickup Address';
+            $page_data['pg_name'] = 'states';
+            $page_data['sub_name'] = 'pickup_address';
+            $page_data['least_sub'] = '';
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+                'first_name,last_name,email,profile_pic');
+            $page_data['areas'] = $this->admin->get_results( 'area' );
+            $page_data['pickup_address'] = $this->admin->get_results('pickup_address');
+            $this->load->view('states/pickup_address', $page_data);
+        }else{
+            $data = array(
+                'title' => cleanit( $this->input->post('title')),
+                'phones'    => cleanit($this->input->post('phones')),
+                'emails'     => cleanit($this->input->post('email')),
+                'address'   => cleanit($this->input->post('address')),
+                'enable'    => $this->input->post('enable'),
+                'available_area'     => json_encode($this->input->post('areas'))
+            );
+            if( $this->admin->insert_data('pickup_address', $data) ){
+                $this->session->set_flashdata('success_msg','The Pickup Address has been added.');
+            }else{
+                $this->session->set_flashdata('error_msg', 'Error adding the pickup address');
+            }
+            redirect('states/pickup_address');
+        }
     }
 
     function process(){

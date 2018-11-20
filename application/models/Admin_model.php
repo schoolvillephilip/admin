@@ -536,4 +536,17 @@ Class Admin_model extends CI_Model{
     }
 
 
+    /**
+     * @param $table_name
+     * @param array $condition
+     * @return array
+     */
+    function get_results($table_name = '', $condition = array() ){
+        if( !empty( $condition) ){
+            $this->db->where( $condition );
+        }
+        return $this->db->get( $table_name )->result();
+    }
+
+
 }
