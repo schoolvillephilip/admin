@@ -202,6 +202,33 @@
             }
         });
     });
+
+
+    var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+            var matches, substringRegex;
+            matches = [];
+            substrRegex = new RegExp(q, 'i');
+            $.each(strs, function(i, str) {
+                if (substrRegex.test(str)) {
+                    matches.push(str);
+                }
+            });
+            cb(matches);
+        };
+    };
+
+    option = [];
+    <?php foreach ($options_array as $option) :  ?>
+    option.push("<?=$option->name;?>");
+    <?php endforeach;?>
+
+    $('#var_opt').tagsinput({
+        typeaheadjs: {
+            name: 'states',
+            source: substringMatcher(option)
+        }
+    });
 </script>
 </body>
 </html>

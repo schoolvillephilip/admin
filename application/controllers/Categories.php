@@ -152,6 +152,7 @@ class Categories extends CI_Controller
 				$this->session->set_flashdata('error_msg', 'The root category you are looking for does not exist...');
 				redirect('categories');
 			}
+            $page_data['options_array'] = $this->admin->get_results('options')->result();
 			$page_data['specifications'] = $this->admin->get_specifications();
 			$this->load->view('category/category_detail', $page_data);
 		}
