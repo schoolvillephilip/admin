@@ -135,7 +135,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Options</label>
                                     <div class="col-lg-7" id="the_sugg">
-                                        <input data-role="tagsinput" type="text" class="form-control typeahead" name="variations"
+                                        <input data-role="tagsinput" type="text" class="form-control typeahead" name="variation_options"
                                                placeholder="type the options separated by comma (,)" id="var_opt">
                                     </div>
                                 </div>
@@ -245,13 +245,15 @@
         'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
         'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
     ];
-
-    //var option = "<?//=$options?>//";
+    option = [];
+    <?php foreach ($options as $option) :  ?>
+    option.push("<?=$option->name;?>");
+    <?php endforeach;?>
 
     $('#var_opt').tagsinput({
         typeaheadjs: {
             name: 'states',
-            source: substringMatcher(data)
+            source: substringMatcher(option)
         }
     });
 </script>

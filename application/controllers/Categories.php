@@ -43,11 +43,13 @@ class Categories extends CI_Controller
             $specs = !empty($specifications) ? json_encode($specifications) : '';
             $variation_name = $this->input->post('variation_name');
             $variation_options = $this->input->post('variation_options');
+
             if( $this->input->post('has_variation') == true && empty( $variation_name) && empty( $variation_options) ){
                 $this->session->set_flashdata('error_msg','Variation name and options can not be empty.' );
                 redirect('categories/add');
             }else{
                 // check if the option is available else add
+
 
             }
 
