@@ -115,25 +115,26 @@
                             <div class="col-lg-7">
 
                                 <div class="checkbox">
-                                    <input id="has_option" type='checkbox' title="Does this have variation"
+                                    <input id="has_option" type='checkbox' name="has_variation" title="Does this have variation"
                                            class="magic-checkbox">
-                                    <label for="has_option">Does Category Have Variations?</label>
+                                    <label for="has_option">Does This Category Have Variations?</label>
                                 </div>
                             </div>
                         </div>
                         <div id="has_option">
                             <div id="options" style="display: none;">
                                 <div class="form-group">
+<!--                                    <span style="margin-bottom: 9px;" class="text-semibold">The Variation will dynamic for sellers when creating product.</span>-->
                                     <label class="col-lg-3 control-label" for="">Variation Name</label>
                                     <div class="col-lg-7">
-                                        <input type="text" name="var_name" class="form-control" placeholder="Eg: Size"
+                                        <input type="text" name="variation_name" class="form-control" placeholder="Eg: Size"
                                                id="var_name"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Options</label>
                                     <div class="col-lg-7">
-                                        <input type="text" class="form-control" name="variations"
+                                        <input type="text" class="form-control" name="variation_options"
                                                placeholder="type the options separated by comma (,)" id="var_opt">
                                     </div>
                                 </div>
