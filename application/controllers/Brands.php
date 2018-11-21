@@ -21,7 +21,7 @@ class Brands extends CI_Controller{
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-        $page_data['brands'] = $this->admin->get_brands();
+        $page_data['brands'] = $this->admin->get_results('brands');
 		$this->load->view('brands/all_brands', $page_data);
 	}
 
@@ -64,7 +64,7 @@ class Brands extends CI_Controller{
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $page_data['brand'] = $this->admin->get_brands( $id )->row();
+        $page_data['brand'] = $this->admin->get_row( 'brands', "( WHERE id = {$id})" );
         // echo($page_data['brand']->brand_name );
         $this->load->view('brands/detail', $page_data);
         
