@@ -246,7 +246,7 @@
         'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
     ];
 
-    var option = <?=$options?>;
+    //var option = "<?//=$options?>//";
 
     $('#var_opt').tagsinput({
         typeaheadjs: {
