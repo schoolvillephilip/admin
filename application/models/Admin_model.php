@@ -539,5 +539,32 @@ Class Admin_model extends CI_Model{
         return $this->db->get( $table_name );
     }
 
+    /**
+     * @param $variation_name
+     * @return int|string
+     */
+    function check_variation_option($variation_name ){
+        $this->db->select('id');
+        $this->db->where('name', $variation_name);
+        $result = $this->db->get('options');
+        if( $result->num_rows() > 0 ){
+            $this->db->select('id');
+            $this->db->where('name', $variation_name);
+            return $this->db->get('options')->row()->id;
+        }else{
+            $this->db->insert('options', array('name' => $variation_name));
+            return $this->db->insert_id();
+        }
+    }
+
+    function get_options_name( $options = array() ){
+        if( !empty( $options ) ) {
+            $query = "SELECT name FROM options WHERE id IN ('".implode("','",$options)."')";
+            return $this->db->query( $query )->result();
+        }else{
+            return '';
+        }
+    }
+
 
 }

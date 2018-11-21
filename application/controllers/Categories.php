@@ -42,22 +42,30 @@ class Categories extends CI_Controller
             $specifications = $this->input->post('specifications');
             $specs = !empty($specifications) ? json_encode($specifications) : '';
             $variation_name = $this->input->post('variation_name');
-            $variation_options = $this->input->post('variation_options');
-            if( $this->input->post('has_variation') == true && empty( $variation_name) && empty( $variation_options) ){
+            $variation = $this->input->post('variation_options');
+            if( $this->input->post('has_variation') == true && empty( $variation_name) && empty( $variation) ){
                 $this->session->set_flashdata('error_msg','Variation name and options can not be empty.' );
                 redirect('categories/add');
             }else{
-                // check if the option is available else add
-
+                $options_array = array();
+                $options = explode(',', $variation);
+                foreach( $options as $option ){
+                    $option = strtoupper( $option );
+                    $id = $this->admin->check_variation_option( $option );
+                    array_push( $options_array, $id);
+                }
+                $opt = json_encode( $options_array);
             }
-
+            $commission = $this->input->post('commisission');
 			$data = array(
 				'pid'	=> $this->input->post('pid'),
 				'title' => cleanit( $this->input->post('title')),
 				'name' => cleanit($this->input->post('name')),
 				'icon' => $this->input->post('icon'),
-				'commission' => $this->input->post('commisission'),
+				'commission' => !empty( $commission) ? $commission : 0,
 				'specifications' => $specs,
+				'variation_name' => $variation_name,
+				'variation_options' => $opt,
 				'description' => cleanit($this->input->post('description'))
 			);
 
@@ -69,7 +77,6 @@ class Categories extends CI_Controller
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
-
 			// Slug
 			$slug = urlify( $this->input->post('name') );
 			$data['slug'] = $this->admin->check_slug( $slug );
@@ -100,7 +107,6 @@ class Categories extends CI_Controller
 			// update
 			$specifications = $this->input->post('specifications');
             $specs = !empty($specifications) ? json_encode($specifications) : '';
-            $pid =
 			$data = array(
 				'name' => $this->input->post('name'),
 				'pid'	=> $this->input->post('pid'),
@@ -140,7 +146,8 @@ class Categories extends CI_Controller
 			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['category'] = $this->admin->get_single_category($id);
-			$page_data['categories'] = $this->admin->get_all_categories();
+			$page_data['options'] = $this->admin->get_options_name(json_decode($page_data['category']->variation_options));
+			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )")->result();
 			if (empty($page_data['category'])) {
 				$this->session->set_flashdata('error_msg', 'The root category you are looking for does not exist...');
 				redirect('categories');

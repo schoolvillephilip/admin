@@ -112,7 +112,7 @@
                             </ul>
                         </li>
 
-                        <li class="<?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>">
+                        <li <?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>>
                             <a href="#">
                                 <i class="demo-pli-list-view"></i>
                                 <span class="menu-title">Product Catalogue</span>
@@ -129,7 +129,7 @@
                             </ul>
                         </li>
                         <!--Menu list item-->
-                        <li class="<?php if ($pg_name == 'select_category') echo 'class="active-sub"' ?>">
+                        <li <?php if ($pg_name == 'select_category') echo 'class="active-sub"' ?>>
                             <a href="#">
                                 <i class="demo-pli-split-vertical-2"></i>
                                 <span class="menu-title">Brand &amp; Categories</span>
@@ -153,7 +153,7 @@
                         </li>
 
                         <!--Menu list item-->
-                        <li class="<?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>">
+                        <li <?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-medal-2"></i>
                                 <span class="menu-title">Discount Options</span>
@@ -172,7 +172,7 @@
                         </li>
                         <!--Menu list item-->
 
-                        <li class="<?php if ($pg_name == 'states') echo 'class="active-sub"' ?>">
+                        <li <?php if ($pg_name == 'states') echo 'class="active-sub"' ?>>
                             <a href="<?= base_url('states'); ?>">
                                 <i class="demo-pli-map-2"></i>
                                 <span class="menu-title">Shipping</span>
@@ -195,7 +195,7 @@
 
                         </li>
 
-                        <li class="<?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>">
+                        <li <?php if ($pg_name == 'sellers') echo 'class="active-sub"' ?>>
                             <a href="#">
                                 <i class="demo-pli-find-user"></i>
                                 <span class="menu-title">User Management</span>
@@ -215,7 +215,7 @@
 
 
                         <li class="list-divider"></li>
-                        <li class="<?php if ($pg_name == 'pro_settings') echo 'class="active"' ?>">
+                        <li <?php if ($pg_name == 'pro_settings') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-add-user-star"></i>
                                 <span class="menu-title">Profile</span>

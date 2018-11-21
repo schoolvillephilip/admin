@@ -1,7 +1,4 @@
 <?php $this->load->view('templates/meta_tags'); ?>
-<link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
-<link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>"
-      rel="stylesheet">
 <link href="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.css'); ?>" rel="stylesheet">
 </head>
 <body>
@@ -125,7 +122,6 @@
                         <div id="has_option">
                             <div id="options" style="display: none;">
                                 <div class="form-group">
-<!--                                    <span style="margin-bottom: 9px;" class="text-semibold">The Variation will dynamic for sellers when creating product.</span>-->
                                     <label class="col-lg-3 control-label" for="">Variation Name</label>
                                     <div class="col-lg-7">
                                         <input type="text" name="variation_name" class="form-control" placeholder="Eg: Size"
@@ -134,8 +130,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Options</label>
-                                    <div class="col-lg-7" id="the_sugg">
-                                        <input data-role="tagsinput" type="text" class="form-control typeahead" name="variations"
+                                    <div class="col-lg-7" id="">
+                                        <input data-role="tagsinput" type="text" class="form-control typeahead" name="variation_options"
                                                placeholder="type the options separated by comma (,)" id="var_opt">
                                     </div>
                                 </div>
@@ -150,7 +146,6 @@
             </div>
             <!--===================================================-->
             <!--End page content-->
-
         </div>
         <!--===================================================-->
         <!--END CONTENT CONTAINER-->
@@ -185,25 +180,9 @@
 
 
 <?php $this->load->view('templates/scripts'); ?>
-<script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/typeahead.js/typeahead.bundle.min.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js'); ?>"></script>
-<script
-        src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
-<script>
-    $(document).ready(function (x) {
-        $('#basic').dataTable({
-            "responsive": true,
-            "language": {
-                "paginate": {
-                    "previous": '<i class="demo-psi-arrow-left"></i>',
-                    "next": '<i class="demo-psi-arrow-right"></i>'
-                }
-            }
-        });
-    });
-</script>
+
 <script>
     $(document).ready(function () {
         $('#has_option').change(function () {
@@ -256,5 +235,4 @@
     });
 </script>
 </body>
-
 </html>

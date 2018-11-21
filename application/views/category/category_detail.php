@@ -1,4 +1,5 @@
 <?php $this->load->view('templates/meta_tags'); ?>
+<link href="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.css'); ?>" rel="stylesheet">
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -18,21 +19,21 @@
 				<!--Page Title-->
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<div id="page-title">
-					<h1 class="page-header text-overflow">Fashion</h1>
+					<h1 class="page-header text-overflow"><?= $category->name; ?></h1>
 				</div>
-				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<!--End page title-->
-				<!--Breadcrumb-->
-				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="demo-pli-home"></i></a></li>
-					<li><a href="#">Category</a></li>
-					<li><a href="#">Category Detail</a></li>
-					<li class="active"><?= $category->name; ?></li>
-				</ol>
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <!--End page title-->
+                <!--Breadcrumb-->
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="demo-pli-home"></i></a></li>
+                    <li><a href="#">Category</a></li>
+                    <li><a href="#">Category Detail</a></li>
+                    <li class="active"><?= $category->name; ?></li>
+                </ol>
+            </div>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
-			</div>
 			<!--Page content-->
 			<!--===================================================-->
 			<div id="page-content">
@@ -49,7 +50,7 @@
                                     <select name="pid" class="selectpicker form-control"
 											title="Choose Parent Category..."
 											data-width="100%">
-										<option value="0">-- Select A Parent Category --</option>
+										<option value="">-- Select A Parent Category --</option>
                                     	<?php foreach ($categories as $cat) : ?>
                                     		<option value="<?= $cat->id; ?>" <?php if($cat->id == $category->pid) echo 'selected'; ?>><?= $cat->name ?></option> ?>
                                     	<?php endforeach; ?>
@@ -94,6 +95,7 @@
                             </div>
                             <input type="hidden" name="id" value="<?= $category->id; ?>" >
                             <input type="hidden" name="img" value="<?= $category->image; ?>">
+
                             <div class="form-group">
                                 <label class="col-lg-3 control-label" for="specification">Specifications</label>
                                 <div class="col-lg-7">
@@ -109,51 +111,73 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-							<div class="panel-footer text-center">
-								<button class="btn btn-primary" type="submit">Update</button>
-								<a href="<?= base_url('categories'); ?>" class="btn btn-danger"> Go Back To All Categories</a>
-							</div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label"></label>
+                                <div class="col-lg-7">
+                                    <div class="checkbox">
+                                        <input id="has_option" type='checkbox' <?= !empty($category->variation_name) ? 'checked' : ''; ?> name="has_variation" title="Does this have variation"
+                                               class="magic-checkbox">
+                                        <label for="has_option">Does This Category Have Variations?</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="has_option">
+                                <div id="options" style="display: <?= !empty($category->variation_name) ? 'block' : 'none'; ?>;">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="">Variation Name</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" name="variation_name" value="<?= $category->variation_name; ?>" class="form-control" placeholder="Eg: Size"
+                                                   id="var_name"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Options</label>
+                                        <div class="col-lg-7" id="">
+                                            <?php $value = '';
+                                                if( !empty( $options) ){
+                                                    foreach( $options as $option) $value .= $option->name .',';
+                                                }
+                                            ?>
+                                            <input data-role="tagsinput" type="text" class="form-control typeahead" value="<?= $value; ?>" name="variation_options"
+                                                   placeholder="type the options separated by comma (,)" id="var_opt">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <button class="btn btn-primary" type="submit">Update</button>
+                                <a href="<?= base_url('categories'); ?>" class="btn btn-danger"> Go Back To All Categories</a>
+                            </div>
                         <?= form_close(); ?>
 					</div>
 				</div>
 			</div>
+            <!--===================================================-->
+            <!--End page content-->
 		</div>
-		<!--===================================================-->
-		<!--End page content-->
+        <!--===================================================-->
+        <!--END CONTENT CONTAINER-->
 
+
+        <!--ASIDE-->
+        <!--===================================================-->
+        <?php $this->load->view('templates/menu'); ?>
+        <!--===================================================-->
 	</div>
-	<!--===================================================-->
-	<!--END CONTENT CONTAINER-->
+    <!-- FOOTER -->
+    <!--===================================================-->
+    <?php $this->load->view('templates/footer'); ?>
+    <!--===================================================-->
+    <!-- END FOOTER -->
 
 
-	<!--ASIDE-->
-	<!--===================================================-->
-	<?php $this->load->view('templates/aside_menu'); ?>
-	<!--===================================================-->
-	<!--END ASIDE-->
+    <!-- SCROLL PAGE BUTTON -->
+    <!--===================================================-->
+    <button class="scroll-top btn">
+        <i class="pci-chevron chevron-up"></i>
+    </button>
+    <!--===================================================-->
 
-	<!--MAIN NAVIGATION-->
-	<!--===================================================-->
-	<?php $this->load->view('templates/menu'); ?>
-	<!--===================================================-->
-	<!--END MAIN NAVIGATION-->
-
-</div>
-
-
-<!-- FOOTER -->
-<!--===================================================-->
-<?php $this->load->view('templates/footer'); ?>
-<!--===================================================-->
-<!-- END FOOTER -->
-
-
-<!-- SCROLL PAGE BUTTON -->
-<!--===================================================-->
-<button class="scroll-top btn">
-	<i class="pci-chevron chevron-up"></i>
-</button>
-<!--===================================================-->
 </div>
 <!--===================================================-->
 <!-- END OF CONTAINER -->
@@ -162,6 +186,22 @@
 
 
 <?php $this->load->view('templates/scripts'); ?>
+<script src="<?= base_url('assets/plugins/typeahead.js/typeahead.bundle.min.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js'); ?>"></script>
+<script>
+    $(document).ready(function () {
+        $('#has_option').change(function () {
+            if (this.checked) {
+                $('#options').fadeIn('slow');
+                $('#var_opt').attr('required', true);
+                $('#var_name').attr('required', true);
+            } else {
+                $('#options').fadeOut('slow');
+                $('#var_opt').attr('required', false);
+                $('#var_name').attr('required', false);
+            }
+        });
+    });
+</script>
 </body>
-
 </html>
