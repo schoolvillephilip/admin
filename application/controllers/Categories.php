@@ -82,7 +82,8 @@ class Categories extends CI_Controller
 			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['specifications'] = $this->admin->get_specifications();
-			$page_data['categories'] = $this->admin->get_all_categories();
+			$page_data['options'] = $this->admin->get_results('options');
+			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )");
 			$this->load->view('category/add', $page_data);
 		}
 	}
