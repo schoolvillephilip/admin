@@ -2,6 +2,7 @@
 <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
 <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>"
       rel="stylesheet">
+<link href="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.css'); ?>" rel="stylesheet">
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -132,8 +133,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Options</label>
-                                    <div class="col-lg-7">
-                                        <input type="text" class="form-control" name="variations"
+                                    <div class="col-lg-7" id="the_sugg">
+                                        <input data-role="tagsinput" type="text" class="form-control typeahead" name="variations"
                                                placeholder="type the options separated by comma (,)" id="var_opt">
                                     </div>
                                 </div>
@@ -152,13 +153,6 @@
         </div>
         <!--===================================================-->
         <!--END CONTENT CONTAINER-->
-
-
-        <!--ASIDE-->
-        <!--===================================================-->
-        <?php $this->load->view('templates/aside_menu'); ?>
-        <!--===================================================-->
-        <!--END ASIDE-->
 
         <!--MAIN NAVIGATION-->
         <!--===================================================-->
@@ -192,6 +186,8 @@
 <?php $this->load->view('templates/scripts'); ?>
 <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/typeahead.js/typeahead.bundle.min.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js'); ?>"></script>
 <script
         src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
 <script>
@@ -219,8 +215,43 @@
                 $('#var_opt').attr('required', false);
                 $('#var_name').attr('required', false);
             }
-
         });
+    });
+
+
+
+    var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+            var matches, substringRegex;
+            matches = [];
+            substrRegex = new RegExp(q, 'i');
+            $.each(strs, function(i, str) {
+                if (substrRegex.test(str)) {
+                    matches.push(str);
+                }
+            });
+            cb(matches);
+        };
+    };
+
+    var data = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    ];
+
+    var option = <?=$options?>;
+
+    $('#var_opt').tagsinput({
+        typeaheadjs: {
+            name: 'states',
+            source: substringMatcher(data)
+        }
     });
 </script>
 </body>
