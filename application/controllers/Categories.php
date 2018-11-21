@@ -25,30 +25,25 @@ class Categories extends CI_Controller
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-		$page_data['categories'] = $this->admin->get_results('categories');
+		$page_data['categories'] = $this->admin->get_results('categories')->result();
 		$this->load->view('category/categories', $page_data);
 	}
 
 
 	// Create
 	public function add(){
-
 		if( $this->input->post() ) {
-
 			$this->form_validation->set_rules('name', 'Name','trim|required|xss_clean');
 			$this->form_validation->set_rules('title', 'Title','trim|required|xss_clean');
             $this->form_validation->set_rules('description', 'Description','trim|required|xss_clean');
-
             if ($this->form_validation->run() == FALSE) {
                 $this->session->set_flashdata('error_msg','There was an error with the data provided ' . validation_errors() );
                 redirect('categories/add');
             }
-            
             $specifications = $this->input->post('specifications');
             $specs = !empty($specifications) ? json_encode($specifications) : '';
             $variation_name = $this->input->post('variation_name');
             $variation_options = $this->input->post('variation_options');
-
             if( $this->input->post('has_variation') == true && empty( $variation_name) && empty( $variation_options) ){
                 $this->session->set_flashdata('error_msg','Variation name and options can not be empty.' );
                 redirect('categories/add');
@@ -79,7 +74,6 @@ class Categories extends CI_Controller
 			// Slug
 			$slug = urlify( $this->input->post('name') );
 			$data['slug'] = $this->admin->check_slug( $slug );
-
 			if ($this->admin->insert_data('categories', $data)) {
 				$this->session->set_flashdata('success_msg', 'The category has been created successfully.');
 			} else {
@@ -95,8 +89,8 @@ class Categories extends CI_Controller
 			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['specifications'] = $this->admin->get_specifications();
-//			$page_data['options'] = $this->admin->get_results('options');
-			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )");
+			$page_data['options'] = $this->admin->get_results('options')->result();
+			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )")->result();
 			$this->load->view('category/add', $page_data);
 		}
 	}
