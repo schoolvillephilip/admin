@@ -25,7 +25,7 @@ class Categories extends CI_Controller
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-		$page_data['categories'] = $this->admin->get_all_categories();
+		$page_data['categories'] = $this->admin->get_results('categories');
 		$this->load->view('category/categories', $page_data);
 	}
 
@@ -43,13 +43,26 @@ class Categories extends CI_Controller
                 $this->session->set_flashdata('error_msg','There was an error with the data provided ' . validation_errors() );
                 redirect('categories/add');
             }
+            
             $specifications = $this->input->post('specifications');
             $specs = !empty($specifications) ? json_encode($specifications) : '';
+            $variation_name = $this->input->post('variation_name');
+            $variation_options = $this->input->post('variation_options');
+
+            if( $this->input->post('has_variation') == true && empty( $variation_name) && empty( $variation_options) ){
+                $this->session->set_flashdata('error_msg','Variation name and options can not be empty.' );
+                redirect('categories/add');
+            }else{
+                // check if the option is available else add
+
+            }
+
 			$data = array(
 				'pid'	=> $this->input->post('pid'),
 				'title' => cleanit( $this->input->post('title')),
 				'name' => cleanit($this->input->post('name')),
 				'icon' => $this->input->post('icon'),
+				'commission' => $this->input->post('commisission'),
 				'specifications' => $specs,
 				'description' => cleanit($this->input->post('description'))
 			);
@@ -82,7 +95,7 @@ class Categories extends CI_Controller
 			$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 				'first_name,last_name,email,profile_pic');
 			$page_data['specifications'] = $this->admin->get_specifications();
-			$page_data['options'] = $this->admin->get_results('options');
+//			$page_data['options'] = $this->admin->get_results('options');
 			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )");
 			$this->load->view('category/add', $page_data);
 		}

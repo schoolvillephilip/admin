@@ -141,15 +141,6 @@ Class Admin_model extends CI_Model{
 
     /**
      * @param string $id
-     * @return CI_DB_result
-     */
-    function get_all_categories(){
-        return $this->db->get('categories')->result();
-    }
-
-
-    /**
-     * @param string $id
      * @return CI_DB_row
      */
     function get_single_category( $id ){
