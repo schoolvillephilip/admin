@@ -96,7 +96,7 @@ class Categories extends CI_Controller
 				'first_name,last_name,email,profile_pic');
 			$page_data['specifications'] = $this->admin->get_specifications();
 			$page_data['options'] = $this->admin->get_results('options')->result();
-			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )")->result();
+			$page_data['categories'] = $this->admin->get_results('categories')->result();
 			$this->load->view('category/add', $page_data);
 		}
 	}

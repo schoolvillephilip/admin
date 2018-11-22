@@ -72,15 +72,13 @@
 							<div class="panel-body">
 								<div class="table-responsive">
 									<table class="table table-striped">
-										<thead>
-										<tr>
-											<th>Item</th>
-											<th>Description</th>
-										</tr>
-										</thead>
 										<tbody>
+                                        <tr>
+                                            <td><strong>Posted On</strong></td>
+                                            <td><?= neatDate($product->created_on) .', '. neatTime($product->created_on);?></td>
+                                        </tr>
 										<tr>
-											<td>Seller:</td>
+											<td><strong>Seller:</strong></td>
 											<td><a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
 												<button data-target="#demo-modal-wo-anim" data-toggle="modal"
 														class="btn btn-primary btn-sm" style="float: right"><i
@@ -90,12 +88,12 @@
 											</td>
 										</tr>
 										<tr>
-											<td>Product ID:</td>
+											<td><strong>Product ID:</strong></td>
 											<td><?= $product->sku; ?></td>
 										</tr>
 										<tr>
-											<?php $category = $this->admin->get_single_category( $product->category_id ); ?>
-											<td>Category Name:</td>
+											<?php $category = $this->admin->get_row('categories','name', "( id = {$product->category_id} )"); ?>
+											<td><strong>Category Name:</strong></td>
 											<td><?= !empty($category->name) ? $category->name : ''; ?></td>
 										</tr>
 										<tr>
