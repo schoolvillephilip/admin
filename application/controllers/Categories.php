@@ -43,10 +43,11 @@ class Categories extends CI_Controller
             $specs = !empty($specifications) ? json_encode($specifications) : '';
             $variation_name = $this->input->post('variation_name');
             $variation = $this->input->post('variation_options');
+            $opt ='';
             if( $this->input->post('has_variation') == true && empty( $variation_name) && empty( $variation) ){
                 $this->session->set_flashdata('error_msg','Variation name and options can not be empty.' );
                 redirect('categories/add');
-            }else{
+            }elseif( !empty( $variation)){
                 $options_array = array();
                 $options = explode(',', $variation);
                 foreach( $options as $option ){
@@ -56,7 +57,7 @@ class Categories extends CI_Controller
                 }
                 $opt = json_encode( $options_array);
             }
-            $commission = $this->input->post('commisission');
+            $commission = $this->input->post('commission');
 			$data = array(
 				'pid'	=> $this->input->post('pid'),
 				'title' => cleanit( $this->input->post('title')),
@@ -112,6 +113,7 @@ class Categories extends CI_Controller
 				'pid'	=> $this->input->post('pid'),
 				'icon' => $this->input->post('icon'),
 				'title' => $this->input->post('title'),
+				'commission' => $this->input->post('commission'),
 				'specifications' => $specs,
 				'description' => $this->input->post('description')
 			);

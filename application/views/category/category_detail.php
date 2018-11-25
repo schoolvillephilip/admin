@@ -82,6 +82,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-3 control-label" for="">Category Commission (%) *</label>
+                                <div class="col-lg-7">
+                                    <input type="text" name="commission" class="form-control" placeholder="Eg: 10%"
+                                           required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-3 control-label" for="">Category Image</label>
                                 <div class="col-lg-7">
                                     <?php if( !empty($category->image) ): ?>

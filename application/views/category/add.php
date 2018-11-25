@@ -46,13 +46,14 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Parent Category</label>
                             <div class="col-lg-7">
-                                <select name="pid" required class="selectpicker form-control"
+                                <select name="pid" class="selectpicker form-control"
                                         title="Choose Parent Category..."
                                         data-width="100%">
                                     <option value="0" selected="">-- Choose a parent category--</option>
                                     <?php foreach ($categories as $category) echo '<option value="' . $category->id . '">' . $category->name . ' </option>'; ?>
                                 </select>
                             </div>
+
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label" for="">Icon</label>
@@ -139,6 +140,7 @@
                         </div>
                         <div class="panel-footer text-center">
                             <button class="btn btn-primary" type="submit">Save</button>
+                            <a href="<?= base_url('categories'); ?>" class="btn btn-danger"> Go Back To All Categories</a>
                         </div>
                         <?= form_close(); ?>
                     </div>
