@@ -76,7 +76,7 @@
 										<td><?= $seller->reg_no; ?></td>
 										<td><?= $seller->main_category; ?></td>
 										<td><?= neatDate($seller->last_login); ?></td>
-										<td><?= accountStatus($seller->status); ?></td>
+										<td><?= accountStatus($seller->is_status); ?></td>
 									</tr>
 								<?php endforeach; ?>
 								</tbody>

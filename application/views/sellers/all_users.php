@@ -64,7 +64,7 @@
                                 <?php foreach ($users as $user) : ?>
                                     <tr>
                                         <td>
-                                            <a href="<?= base_url('sellers/all_user/' .$user->id); ?>"><?= ucwords($user->first_name . ' ' . $user->last_name); ?></a>
+                                            <a href="<?= base_url('sellers/detail/' .$user->id); ?>"><?= ucwords($user->first_name . ' ' . $user->last_name); ?></a>
                                         </td>
                                         <td><?= $user->email; ?></td>
                                     </tr>

@@ -47,9 +47,9 @@
 								<p class="text-lg text-semibold mar-no text-main"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></p>
 								<p class="text-semibold mar-no text-main">Registration No : <?= $seller->reg_no; ?></p>
 								<p class="text-muted"><?= $seller->legal_company_name; ?></p>
-								<p class="text-semibold mar-no text-main">Account Status : <?= accountStatus($seller->status); ?></p>
+								<p class="text-semibold mar-no text-main">Account Status : <?= accountStatus($seller->is_seller); ?></p>
 
-								<?php if ($seller->status != "approved") : ?>
+								<?php if ($seller->is_seller != "approved") : ?>
 									<a href="<?= base_url('sellers/action/approve/'.$seller->uid); ?>" class="btn btn-primary mar-ver"><i class="demo-pli-lock-user icon-fw"></i>Approve Seller</a>
 
 									<a href="<?= base_url('sellers/action/reject/'.$seller->uid); ?>" class="btn btn-danger mar-ver"><i class="demo-pli-checked-user icon-fw"></i>Reject Seller</a>

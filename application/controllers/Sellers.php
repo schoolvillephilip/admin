@@ -25,8 +25,8 @@ class Sellers extends CI_Controller
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
 		$page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
-
         if( $page > 1 ) $page -= 1;
+
         $lists = (array) $this->admin->get_seller_lists($q);
         $count = count( $lists );
 		$this->load->library('pagination');
@@ -98,11 +98,9 @@ class Sellers extends CI_Controller
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id')	,
 			'first_name,last_name,email,profile_pic');
-
 		$q = '';
 		if( isset($_GET['q']) ) $q = cleanit( $q );
 		$page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
-
         if( $page > 1 ) $page -= 1;
         $lists = (array) $this->admin->get_seller_lists($q,'','','pending');
         $count = count( $lists );
@@ -119,17 +117,17 @@ class Sellers extends CI_Controller
 		$this->load->view('sellers/approve', $page_data);
 	}
 
-	function approve_seller(){
-		if( $this->input->post() ){
-			$data['is_seller'] = 'approved';
-			if( $this->admin->update_data($this->input->post('seller_id'), array('is_seller' => 'approved'), 'users') ){
-				// .. update the seller's table also
-				$this->admin->update_data($this->input->post('seller_id'), array('status' => 'approved'), 'sellers', 'uid' );
-				$this->session->set_flashdata('success_msg','The seller account has been approved');
-			}	
-		}
-		redirect($_SERVER['HTTP_REFERER']);
-	}
+//	function approve_seller(){
+//		if( $this->input->post() ){
+//			$data['is_seller'] = 'approved';
+//			if( $this->admin->update_data($this->input->post('seller_id'), array('is_seller' => 'approved'), 'users') ){
+//				// .. update the seller's table also
+//				$this->admin->update_data($this->input->post('seller_id'), array('status' => 'approved'), 'sellers', 'uid' );
+//				$this->session->set_flashdata('success_msg','The seller account has been approved');
+//			}
+//		}
+//		redirect($_SERVER['HTTP_REFERER']);
+//	}
 
 	function action( $action ='' , $seller_id = ''){
 		if( !empty($action) && !empty( $seller_id ) ) {
@@ -138,8 +136,10 @@ class Sellers extends CI_Controller
 			}else{
 				$this->session->set_flashdata('error_msg','The seller account has been ' .$action);
 			}
-		}
-		redirect($_SERVER['HTTP_REFERER']);
-	}
+		}else{
+            $this->session->set_flashdata('error_msg', 'The action you are trying to perform is not allowed.');
+        }
+        redirect($_SERVER['HTTP_REFERER']);
+    }
 
 }

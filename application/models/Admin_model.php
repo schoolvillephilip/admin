@@ -243,13 +243,16 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_result
      */
     function get_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved'){
-        $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
 
-        if( $search != '' ) $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
-        if( $search != '' && $type != '' ) { $query .= " AND u.is_seller = '$type' ";}
+        $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
+        if( $search != '' ) $query .= " WHERE (first_name LIKE '%$search%') OR (last_name LIKE '%$search%') OR (email LIKE '%$search%')";
+        if( $search != '' && $type != '' ) { $query .= " AND u.is_seller != 'approved' ";}else{ $query .= " WHERE u.is_seller != 'approved'"; }
         if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
+//        die( $query );
         return $this->db->query($query)->result();
     }
+
+
     function get_user_lists($search = '', $limit = '', $offset = ''){
         $query = "SELECT * FROM users";
 
@@ -432,8 +435,6 @@ Class Admin_model extends CI_Model{
                 case 'suspend':
                     $status = $this->update_data($sid,array('status' => 'suspended'), 'sellers', 'uid');
                     if( $status ){
-                        $this->db->where('product_status', 'pending');
-                        $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
                         $this->notify_seller($sid, 
                             'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
                         );
@@ -455,8 +456,10 @@ Class Admin_model extends CI_Model{
                 case 'approve':
                     $status = $this->update_data($sid,array('status' => 'approved'), 'sellers', 'uid');
                     if( $status ){
+                        // Update the user table row
+                        $this->update_data($sid, array('is_seller' => 'approved'));
                         // We're suppose to activate all the products, but we still need to carefully check before setting them to approve
-                        $this->notify_seller($sid, 
+                        $this->notify_seller($sid,
                             'Your account has been approved', "Congrats, welcome to your seller dashboard.<br /> Regards."
                         );
                     }
@@ -464,9 +467,10 @@ Class Admin_model extends CI_Model{
                     break;
                 case 'delete':
                     $this->db->Where('uid', $sid);
-                    return $this->db->delete('sellers');
+                    if($this->db->delete('sellers')){
+                         return $this->update_data($sid, array('is_seller' => 'blocked'));
+                    }
                     break;
-
                 default:
                     # code...
                     break;
