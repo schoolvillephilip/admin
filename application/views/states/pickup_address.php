@@ -88,7 +88,7 @@
                                 <label class="col-md-3 control-label">Pickup Location Enabled</label>
                                 <div class="col-md-9">
                                     <div class="row">
-                                        <?php foreach($areas as $area) : ?>
+                                        <?php foreach($areas->result    () as $area) : ?>
                                             <div class="col-md-3">
                                                 <div class="radio">
                                                     <input id="<?= $area->id; ?>" class="magic-checkbox" type="checkbox" name="areas[]" value="<?= $area->id; ?>">
@@ -134,7 +134,7 @@
 
                                             <?php
                                             $selected = json_decode($address->available_area);
-                                            foreach ($areas as $area ):
+                                            foreach ($areas->result() as $area ):
                                                 if(in_array($area->id, $selected)) echo ucwords($area->name) .','; ?>
                                             <?php endforeach; ?>
                                         </td>

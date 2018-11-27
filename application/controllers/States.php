@@ -35,7 +35,7 @@ class States extends CI_Controller{
             $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
             $page_data['areas'] = $this->admin->get_results( 'area' );
-            $page_data['pickup_address'] = $this->admin->get_results('pickup_address');
+            $page_data['pickup_address'] = $this->admin->get_results('pickup_address')->result();
             $this->load->view('states/pickup_address', $page_data);
         }else{
             $data = array(
