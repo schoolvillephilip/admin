@@ -53,16 +53,76 @@
 
 
                     <ul id="mainnav-menu" class="list-group">
-
-                        <!--Menu list item-->
                         <li>
                             <a href="<?= base_url('dashboard') ?>">
                                 <i class="demo-pli-home"></i>
                                 <span class="menu-title">Dashboard</span>
                             </a>
                         </li>
+                        <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
+                            <a href="#">
+                                <i class="demo-pli-list-view"></i>
+                                <span class="menu-title">Product Catalogue</span>
+                                <i class="arrow"></i>
+                            </a>
 
-                        <!--Menu list item-->
+                            <!--Submenu-->
+                            <ul class="collapse <?php if ($pg_name == 'product') echo 'in'; ?>">
+                                <li <?php if ($sub_name == 'products_overview') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('product') ?>">Products Overview</a></li>
+                                <li <?php if ($sub_name == 'approve_product') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('product/approve'); ?>">Approve Product</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
+                            <a href="<?= base_url('orders') ?>">
+                                <i class="demo-pli-shopping-basket"></i>
+                                <span class="menu-title">Sales &amp; Orders</span>
+                            </a>
+
+                        </li>
+                        <li <?php if ($pg_name == 'select_category') echo 'class="active"' ?>>
+                            <a href="#">
+                                <i class="demo-pli-split-vertical-2"></i>
+                                <span class="menu-title">Brand &amp; Categories</span>
+                                <i class="arrow"></i>
+                            </a>
+
+                            <!--Submenu-->
+                            <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
+
+                                <li <?php if ($sub_name == 'brands') echo 'class="active-link"' ?>>
+                                    <a href="<?= base_url('brands'); ?>">
+                                        <span class="menu-title">Brands</span>
+                                    </a>
+                                </li>
+                                <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('categories'); ?>">Categories</a></li>
+                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>>
+                                    <a
+                                            href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
+                            </ul>
+                        </li>
+
+                        <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
+                            <a href="#">
+                                <i class="demo-pli-find-user"></i>
+                                <span class="menu-title">User Management</span>
+                                <i class="arrow"></i>
+                            </a>
+                            <!--Submenu-->
+                            <ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
+                                <li <?php if ($sub_name == 'users') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('sellers/all_users') ?>">All Users</a></li>
+                                <li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('sellers') ?>">Sellers</a></li>
+                                <li <?php if ($sub_name == 'approve_sellers') echo 'class="active-link"' ?>><a
+                                            href="<?= base_url('sellers/approve'); ?>">Approve Sellers</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="list-divider"></li>
                         <li <?php if ($pg_name == 'settings') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-gear"></i>
@@ -70,7 +130,6 @@
                                 <i class="arrow"></i>
                             </a>
 
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'settings') echo 'in' ?>;">
                                 <li <?php if ($sub_name == 'gen_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings') ?>">General Settings</a></li>
@@ -80,7 +139,6 @@
                                             href="<?= base_url('settings/edit_footer') ?>">Edit Footer</a></li>
                             </ul>
                         </li>
-                        <!--Menu list item-->
                         <li <?php if ($pg_name == 'store_settings') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-gears"></i>
@@ -111,48 +169,6 @@
                                             href="<?= base_url('settings/payment') ?>">Payment Methods</a></li>
                             </ul>
                         </li>
-
-                        <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
-                            <a href="#">
-                                <i class="demo-pli-list-view"></i>
-                                <span class="menu-title">Product Catalogue</span>
-                                <i class="arrow"></i>
-                            </a>
-
-                            <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'product') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'products_overview') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('product') ?>">Products Overview</a></li>
-                                <li <?php if ($sub_name == 'approve_product') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('product/approve'); ?>">Approve Product</a></li>
-
-                            </ul>
-                        </li>
-                        <!--Menu list item-->
-                        <li <?php if ($pg_name == 'select_category') echo 'class="active"' ?>>
-                            <a href="#">
-                                <i class="demo-pli-split-vertical-2"></i>
-                                <span class="menu-title">Brand &amp; Categories</span>
-                                <i class="arrow"></i>
-                            </a>
-
-                            <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
-
-                                <li <?php if ($sub_name == 'brands') echo 'class="active-link"' ?>>
-                                    <a href="<?= base_url('brands'); ?>">
-                                        <span class="menu-title">Brands</span>
-                                    </a>
-                                </li>
-                                <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('categories'); ?>">Categories</a></li>
-                                <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>>
-                                    <a
-                                            href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
-                            </ul>
-                        </li>
-
-                        <!--Menu list item-->
                         <li <?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-medal-2"></i>
@@ -170,8 +186,6 @@
                                             href="<?= base_url('settings/discount/coupons') ?>">Discount Coupon</a></li>
                             </ul>
                         </li>
-                        <!--Menu list item-->
-
                         <li <?php if ($pg_name == 'states') echo 'class="active"' ?>>
                             <a href="<?= base_url('states'); ?>">
                                 <i class="demo-pli-map-2"></i>
@@ -186,34 +200,6 @@
                                             href="<?= base_url('states/pickup_address'); ?>">Pickup Address</a></li>
                             </ul>
                         </li>
-
-                        <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
-                            <a href="<?= base_url('orders') ?>">
-                                <i class="demo-pli-shopping-basket"></i>
-                                <span class="menu-title">Sales &amp; Orders</span>
-                            </a>
-
-                        </li>
-
-                        <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
-                            <a href="#">
-                                <i class="demo-pli-find-user"></i>
-                                <span class="menu-title">User Management</span>
-                                <i class="arrow"></i>
-                            </a>
-                            <!--Submenu-->
-                            <ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'users') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('sellers/all_users') ?>">All Users</a></li>
-                                <li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('sellers') ?>">Sellers</a></li>
-                                <li <?php if ($sub_name == 'approve_sellers') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('sellers/approve'); ?>">Approve Sellers</a></li>
-
-                            </ul>
-                        </li>
-
-
                         <li class="list-divider"></li>
                         <li <?php if ($pg_name == 'pro_settings') echo 'class="active"' ?>>
                             <a href="#">
@@ -222,7 +208,6 @@
                                 <i class="arrow"></i>
                             </a>
 
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'pro_settings') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'profile') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('profile_settings') ?>">Profile Settings</a></li>
@@ -234,7 +219,6 @@
 
                             </ul>
                         </li>
-                        <!--Menu list item-->
                         <li>
                             <a href="<?= base_url('help'); ?>">
                                 <i class="demo-pli-information"></i>
