@@ -57,25 +57,31 @@
 								<tr>
 									<th>Order Code</th>
 									<th>Seller name</th>
-									<th>Customer Name</th>
-									<th class="min-tablet">Customer Phone</th>
+									<th class="text-center">Customer Name / Billing Address</th>
+                                    <th>Delivering to State (Area)</th>
 									<th class="min-tablet">Product Name</th>
 									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
+									<th class="min-desktop">Order Status</th>
+									<th class="min-desktop">Action</th>
 								</tr>
 								</thead>
 								<tbody>
 									<?php foreach( $orders as $order ): ?>
 										<tr>
 											<td><a href="<?= base_url('orders/detail/' . $order->order_code); ?>"><?= $order->order_code; ?></a></td>
-											<td><?= ucwords($order->first_name . ' ' . $order->last_name); ?></td>
-											<td><?= $order->customer_name; ?></td>
-											<td><?= $order->customer_phone; ?></td>
+											<td><a href="<?= base_url('sellers/detail/'. $order->seller_id); ?>"><?= ucwords($order->legal_company_name); ?></a></td>
+											<td>
+                                                <?= '<b>Name </b>' . $order->first_name . ' ' . $order->last_name . '; <b> Phone :</b> ' . $order->phone . '; <b>Address: </b>' .$order->address; ?>
+                                            </td>
+                                            <td><?= $order->state . ' ('. $order->area. ')'; ?></td>
 											<td><?= word_limiter($order->product_name, 7, '...')?></td>
-											<td><?= $order->qty; ?></td>
+											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount); ?></td>
 											<td><?= neatDate($order->order_date); ?></td>
+                                            <td><?= ucfirst($order->status)?></td>
+                                            <td>Action Button</td>
 										</tr>
 									<?php endforeach; ?>
 								</tbody>

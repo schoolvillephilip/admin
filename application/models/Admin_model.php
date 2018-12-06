@@ -313,11 +313,14 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_object
      */
     function get_orders( $id = ''){
-        $query = "SELECT o.order_code,o.customer_name, o.qty, o.customer_phone, o.amount, o.order_date, o.status, p.product_name, u.first_name, u.last_name FROM orders o
+        $query = "SELECT o.order_code,b.first_name,b.last_name, b.phone, b.address, ar.name area, st.name state, o.seller_id, o.qty,o.amount, o.order_date, o.status, p.product_name, s.legal_company_name FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
-        LEFT JOIN users u ON (o.seller_id = u.id)";
-
-        if( $id != '' ) {$query .= "WHERE o.order_code = $id GROUP BY o.product_id";
+        LEFT JOIN sellers s ON (o.seller_id = s.uid)
+        LEFT JOIN billing_address b ON (o.billing_address_id = b.id )
+        INNER JOIN states st ON (b.sid = st.id)
+        INNER JOIN area ar ON (b.aid = ar.id)";
+        if( $id != '' ) {
+            $query .= " WHERE o.order_code = $id GROUP BY o.product_id";
         }else{
             $query .= " GROUP BY o.order_code";
         }
