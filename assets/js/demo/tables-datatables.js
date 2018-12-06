@@ -107,7 +107,7 @@ $(document).on('nifty.ready', function() {
 
     var randomInt = function(min,max){
         return Math.floor(Math.random()*(max-min+1)+min);
-    }
+    };
     $('#demo-dt-addrow-btn').on( 'click', function () {
         t.row.add( [
             'Adam Doe',

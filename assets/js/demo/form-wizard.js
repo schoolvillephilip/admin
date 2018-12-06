@@ -158,7 +158,7 @@ $(document).on('nifty.ready', function() {
                 $('#demo-cir-wz').find('.finish').hide().prop('disabled', true);
             }
         }
-    })
+    });
 
 
 

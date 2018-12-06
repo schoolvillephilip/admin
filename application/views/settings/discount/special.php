@@ -2,39 +2,19 @@
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
-
-    <!--NAVBAR-->
-    <!--===================================================-->
     <?php $this->load->view('templates/head_navbar'); ?>
-    <!--===================================================-->
-    <!--END NAVBAR-->
-
     <div class="boxed">
-
-        <!--CONTENT CONTAINER-->
-        <!--===================================================-->
         <div id="content-container">
             <div id="page-head">
-                <!--Page Title-->
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
                     <h1 class="page-header text-overflow">Special Offers</h1>
                 </div>
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                <!--End page title-->
-                <!--Breadcrumb-->
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="demo-pli-home"></i></a></li>
                     <li><a href="#">Discount Options</a></li>
                     <li class="active">Special Offers</li>
                 </ol>
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                <!--End breadcrumb-->
             </div>
-            <!--Page content-->
-            <!--===================================================-->
-
             <div id="page-content">
                 <div class="panel">
                     <div class="panel-heading">
@@ -69,8 +49,6 @@
                                 <label class="col-md-3 control-label">Multi Buy Only</label>
                                 <div class="col-md-9">
                                     <div class="radio">
-
-                                        <!-- Inline radio buttons -->
                                         <input id="multi_radio" class="magic-radio" type="radio" name="multi_radio"
                                                checked>
                                         <label for="multi_radio">Yes</label>
@@ -85,8 +63,6 @@
                                 <label class="col-md-3 control-label">Enabled</label>
                                 <div class="col-md-9">
                                     <div class="radio">
-
-                                        <!-- Inline radio buttons -->
                                         <input id="enable_radio" class="magic-radio" type="radio" name="enabled_radio"
                                                checked>
                                         <label for="enable_radio">Yes</label>
@@ -110,7 +86,6 @@
                             <div class="panel-body">
                                 Loops out all categories
                                 <div class="form-group pad-ver">
-                                    <!-- Radio Buttons -->
                                     <div class="radio">
                                         <input id="demo-form-radio" class="magic-radio" type="radio"
                                                name="cat_radio">
@@ -141,40 +116,18 @@
                     </div>
 
                 </div>
-                <!--===================================================-->
-                <!--End page content-->
 
             </div>
 
 
         </div>
-
-        <!--MAIN NAVIGATION-->
-        <!--===================================================-->
         <?php $this->load->view('templates/menu'); ?>
-        <!--===================================================-->
-        <!--END MAIN NAVIGATION-->
-
-        <!-- FOOTER -->
-        <!--===================================================-->
         <?php $this->load->view('templates/footer'); ?>
-        <!--===================================================-->
-        <!-- END FOOTER -->
-
-
-        <!-- SCROLL PAGE BUTTON -->
-        <!--===================================================-->
         <button class="scroll-top btn">
             <i class="pci-chevron chevron-up"></i>
         </button>
-        <!--===================================================-->
-    </div></div>
-    <!--===================================================-->
-    <!-- END OF CONTAINER -->
-    <!--JAVASCRIPT-->
-    <!--=================================================-->
-
-
-    <?php $this->load->view('templates/scripts'); ?>
+    </div>
+</div>
+<?php $this->load->view('templates/scripts'); ?>
 </body>
 </html>

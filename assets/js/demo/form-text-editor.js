@@ -48,4 +48,4 @@ $(document).on('nifty.ready', function() {
         $('#demo-summernote-edit').summernote('destroy');
     });
 
-})
+});

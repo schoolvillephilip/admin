@@ -3,38 +3,19 @@
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
-
-    <!--NAVBAR-->
-    <!--===================================================-->
     <?php $this->load->view('templates/head_navbar'); ?>
-    <!--===================================================-->
-    <!--END NAVBAR-->
-
     <div class="boxed">
-
-        <!--CONTENT CONTAINER-->
-        <!--===================================================-->
         <div id="content-container">
             <div id="page-head">
-                <!--Page Title-->
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
                     <h1 class="page-header text-overflow">Category</h1>
                 </div>
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                <!--End page title-->
-                <!--Breadcrumb-->
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="demo-pli-home"></i></a></li>
                     <li><a href="#">Category</a></li>
                     <li class="active">Add New Category</li>
                 </ol>
-                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                <!--End breadcrumb-->
             </div>
-            <!--Page content-->
-            <!--===================================================-->
             <div id="page-content">
                 <div class="panel">
                     <?php $this->load->view('msg_view'); ?>
@@ -53,7 +34,6 @@
                                     <?php foreach ($categories as $category) echo '<option value="' . $category->id . '">' . $category->name . ' </option>'; ?>
                                 </select>
                             </div>
-
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label" for="">Icon</label>
@@ -107,12 +87,10 @@
                                         </span>
                                 <?php endforeach; ?>
                             </div>
-
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label"></label>
                             <div class="col-lg-7">
-
                                 <div class="checkbox">
                                     <input id="has_option" type='checkbox' name="has_variation" title="Does this have variation"
                                            class="magic-checkbox">
@@ -146,45 +124,17 @@
                     </div>
                 </div>
             </div>
-            <!--===================================================-->
-            <!--End page content-->
         </div>
-        <!--===================================================-->
-        <!--END CONTENT CONTAINER-->
-
-        <!--MAIN NAVIGATION-->
-        <!--===================================================-->
         <?php $this->load->view('templates/menu'); ?>
-        <!--===================================================-->
-        <!--END MAIN NAVIGATION-->
-
     </div>
-
-
-    <!-- FOOTER -->
-    <!--===================================================-->
     <?php $this->load->view('templates/footer'); ?>
-    <!--===================================================-->
-    <!-- END FOOTER -->
-
-
-    <!-- SCROLL PAGE BUTTON -->
-    <!--===================================================-->
     <button class="scroll-top btn">
         <i class="pci-chevron chevron-up"></i>
     </button>
-    <!--===================================================-->
 </div>
-<!--===================================================-->
-<!-- END OF CONTAINER -->
-<!--JAVASCRIPT-->
-<!--=================================================-->
-
-
 <?php $this->load->view('templates/scripts'); ?>
 <script src="<?= base_url('assets/plugins/typeahead.js/typeahead.bundle.min.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js'); ?>"></script>
-
 <script>
     $(document).ready(function () {
         $('#has_option').change(function () {

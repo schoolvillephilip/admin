@@ -660,7 +660,7 @@ function UGTheme_default(){
 		if(g_objTextPanel)
 			g_objTextPanel.destroy();
 		
-	}
+	};
 	
 	
 	/**
@@ -669,7 +669,7 @@ function UGTheme_default(){
 	this.run = function(){
 		
 		runTheme();
-	}
+	};
 	
 	
 	/**

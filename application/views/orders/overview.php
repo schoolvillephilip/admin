@@ -2,44 +2,25 @@
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
-
-	<!--NAVBAR-->
-	<!--===================================================-->
-	<?php $this->load->view('templates/head_navbar'); ?>
-	<!--===================================================-->
-	<!--END NAVBAR-->
-
-	<div class="boxed">
-
-		<!--CONTENT CONTAINER-->
-		<!--===================================================-->
-		<div id="content-container">
-			<div id="page-head">
-				<!--Page Title-->
-				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<div id="page-title">
-					<h1 class="page-header text-overflow">Orders</h1>
-				</div>
-				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<!--End page title-->
-				<!--Breadcrumb-->
-				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="demo-pli-home"></i></a></li>
-					<li>Dashboard</li>
-					<li class="active">Orders</li>
-				</ol>
-				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<!--End breadcrumb-->
-			</div>
-			<!--Page content-->
-			<!--===================================================-->
-			<div id="page-content">
-				<div class="row pad-ver">
-					<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
-						<div class="input-group mar-btm">
-							<input type="text" placeholder="Search All Orders" class="form-control input-lg">
-							<span class="input-group-btn">
+    <?php $this->load->view('templates/head_navbar'); ?>
+    <div class="boxed">
+        <div id="content-container">
+            <div id="page-head">
+                <div id="page-title">
+                    <h1 class="page-header text-overflow">Orders</h1>
+                </div>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="demo-pli-home"></i></a></li>
+                    <li>Dashboard</li>
+                    <li class="active">Orders</li>
+                </ol>
+            </div>
+            <div id="page-content">
+                <div class="row pad-ver">
+                    <form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
+                        <div class="input-group mar-btm">
+                            <input type="text" placeholder="Search All Orders" class="form-control input-lg">
+                            <span class="input-group-btn">
                      <button class="btn btn-primary btn-lg" type="button">Search</button>
                  </span>
 						</div>
@@ -130,24 +111,17 @@
 	</button>
 	<!--===================================================-->
 </div>
-<!--===================================================-->
-<!-- END OF CONTAINER -->
-<!--JAVASCRIPT-->
-<!--=================================================-->
-
-
 <?php $this->load->view('templates/scripts'); ?>
 <script>
-	$('#demo-dt-basic').dataTable({
-		"responsive": true,
-		"language": {
-			"paginate": {
-				"previous": '<i class="demo-psi-arrow-left"></i>',
-				"next": '<i class="demo-psi-arrow-right"></i>'
-			}
-		}
-	});
+    $('#demo-dt-basic').dataTable({
+        "responsive": true,
+        "language": {
+            "paginate": {
+                "previous": '<i class="demo-psi-arrow-left"></i>',
+                "next": '<i class="demo-psi-arrow-right"></i>'
+            }
+        }
+    });
 </script>
 </body>
-
 </html>

@@ -52,7 +52,7 @@ function UGTheme_grid(){
 			slider_play_button_offset_vert: 8,
 			slider_fullscreen_button_offset_hor: 52,
 			slider_fullscreen_button_offset_vert: 9						
-	}
+	};
 	
 	var g_defaults_bottom = {
 		slider_enable_text_panel: false,
@@ -62,7 +62,7 @@ function UGTheme_grid(){
 		slider_progress_indicator_align_hor: "left",
 		slider_progress_indicator_offset_vert: 36,	
 		slider_progress_indicator_offset_hor: 16
-	}
+	};
 	
 	var g_defaults_top = {
 			slider_enable_text_panel: false,
@@ -79,7 +79,7 @@ function UGTheme_grid(){
 			slider_progress_indicator_offset_vert: 40,			
 			gridpanel_padding_border_top: 4,		    //padding between the top border of the panel
 			gridpanel_padding_border_bottom: 10			//padding between the bottom border of the panel	
-	}
+	};
 	
 	//temp variables
 	var g_temp = {
@@ -398,7 +398,7 @@ function UGTheme_grid(){
 		g_objPanel.destroy();
 		g_objSlider.destroy();
 	
-	}
+	};
 	
 	
 	/**
@@ -407,7 +407,7 @@ function UGTheme_grid(){
 	this.run = function(){
 		
 		runTheme();
-	}
+	};
 	
 	
 	/**

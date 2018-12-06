@@ -351,7 +351,7 @@ $(document).on('nifty.ready', function() {
     // http://abpetkov.github.io/switchery/
     // =================================================================
     var changeCheckbox = document.getElementById('demo-sw-checkstate'), changeField = document.getElementById('demo-sw-checkstate-field');
-    new Switchery(changeCheckbox)
+    new Switchery(changeCheckbox);
     changeField.innerHTML = changeCheckbox.checked;
     changeCheckbox.onchange = function() {
         changeField.innerHTML = changeCheckbox.checked;

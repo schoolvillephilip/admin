@@ -59,7 +59,7 @@ function UGTheme_slider(){
 		g_objGallery = jQuery(gallery);		
 		g_objWrapper = g_objects.g_objWrapper;
 		g_objSlider = g_objects.g_objSlider;
-	}
+	};
 
 	
 	/**

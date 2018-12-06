@@ -156,7 +156,7 @@ function getChildren(id){
         getChildren(e);
     });
 
-};
+}
 function getParent(id){
     cur_cat = categories[(id-1)];
     cur_pid = cur_cat.pid;
@@ -179,4 +179,4 @@ function getParent(id){
         getParent(e);
     });
 
-};
+}

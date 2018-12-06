@@ -23,7 +23,7 @@ $(document).on('nifty.ready', function() {
         valid: 'fa fa-check-circle fa-lg text-success',
         invalid: 'fa fa-times-circle fa-lg',
         validating: 'fa fa-refresh'
-    }
+    };
 
 
 
