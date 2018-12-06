@@ -74,7 +74,7 @@ $(document).on('nifty.ready', function() {
             });
             $('#demo-mail-send-btn').removeClass('hide');
         });
-        return;
+        
     }
 
 

@@ -51,8 +51,7 @@
                     container : 'floating',
                     timer : 5000
                 });
-            };
-
+            }
         });
     });
 
@@ -81,7 +80,7 @@
                     container : 'floating',
                     timer : 5000
                 });
-            };
+            }
         });
     });
 
@@ -360,4 +359,4 @@
     });
 
 
- })
+ });

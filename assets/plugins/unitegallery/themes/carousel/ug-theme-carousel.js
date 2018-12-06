@@ -13,8 +13,8 @@ function UGTheme_carousel(){
 	var t = this;
 	var g_gallery = new UniteGalleryMain(), g_objGallery, g_objects, g_objWrapper;
 	var g_lightbox = new UGLightbox(), g_carousel = new UGCarousel();
-	var g_functions = new UGFunctions(), g_objTileDesign = new UGTileDesign();;
-	var g_objNavWrapper, g_objButtonLeft, g_objButtonRight, g_objButtonPlay, g_objPreloader;
+    var g_functions = new UGFunctions(), g_objTileDesign = new UGTileDesign();
+    var g_objNavWrapper, g_objButtonLeft, g_objButtonRight, g_objButtonPlay, g_objPreloader;
 	var g_apiDefine = new UG_API();
 	
 	var g_options = {
@@ -290,23 +290,23 @@ function UGTheme_carousel(){
 		
 		api.carouselStartAutoplay = function(){
 			g_carousel.startAutoplay();
-		}
+		};
 		
 		api.carouselStopAutoplay = function(){
 			g_carousel.stopAutoplay();
-		}
+		};
 		
 		api.carouselPause = function(){
 			g_carousel.pauseAutoplay();
-		}
+		};
 		
 		api.carouselUnpause = function(){
 			g_carousel.unpauseAutoplay();
-		}
+		};
 		
 		api.scrollLeft = function(numTiles){
 			g_carousel.scrollLeft(numTiles);
-		}	
+		};	
 		
 		api.scrollRight = function(numTiles){
 			g_carousel.scrollRight(numTiles);
@@ -363,7 +363,7 @@ function UGTheme_carousel(){
 		g_carousel.destroy();
 		g_lightbox.destroy();
 		
-	}
+	};
 	
 	
 	/**
@@ -372,7 +372,7 @@ function UGTheme_carousel(){
 	this.run = function(){
 		
 		runTheme();
-	}
+	};
 	
 	
 	/**

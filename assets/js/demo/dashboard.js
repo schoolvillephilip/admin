@@ -124,7 +124,7 @@ $(document).on('nifty.ready', function() {
             tooltipSuffix:' %'
 
         });
-    }
+    };
 
 
 
@@ -154,7 +154,7 @@ $(document).on('nifty.ready', function() {
                 '0:': '#ffffff'
             }
         });
-    }
+    };
 
 
 
@@ -180,14 +180,14 @@ $(document).on('nifty.ready', function() {
             tooltipSuffix: ' Sales',
             barColor: 'rgba(0,0,0,.15)'
         });
-    }
+    };
 
 
     $(window).on('resizeEnd', function(){
         hddSparkline();
         earningSparkline();
         salesSparkline();
-    })
+    });
     hddSparkline();
     earningSparkline();
     salesSparkline();

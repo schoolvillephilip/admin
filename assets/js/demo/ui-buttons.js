@@ -18,7 +18,7 @@ $(document).on('nifty.ready', function() {
     // http://getbootstrap.com/javascript/#buttons
     // =================================================================
     $('#demo-state-btn').on('click', function () {
-        var btn = $(this).button('loading')
+        var btn = $(this).button('loading');
         // business logic...
 
         var doSomething = setTimeout(function(){

@@ -190,7 +190,7 @@ $(document).on('nifty.ready', function () {
         var legendItem = $('<div class=\'morris-legend-items\'></div>').text(label);
         $('<span></span>').css('background-color', chart.options.lineColors[i]).prependTo(legendItem);
         $('#demo-morris-area-legend').append(legendItem)
-    })
+    });
 
 
 
@@ -422,7 +422,7 @@ $(document).on('nifty.ready', function () {
         var legendItem = $('<div class=\'morris-legend-items\'></div>').text(label);
         $('<span></span>').css('background-color', chart.options.lineColors[i]).prependTo(legendItem);
         $('#demo-morris-area-legend-full').append(legendItem)
-    })
+    });
 
 
 

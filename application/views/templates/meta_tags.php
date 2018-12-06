@@ -8,11 +8,7 @@
     <link rel="shortcut icon" href="<?= base_url('assets/img/favicon.png'); ?>" type="image/png">
     <link rel="icon" href="<?= base_url('assets/img/favicon.png'); ?>" type="image/png">
     <link rel="canonical" href="<?= current_url(); ?>"/>
-    <!--=================================================-->
-    <!--Open Sans Font [ OPTIONAL ]-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="<?= base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/nifty.min.css')?>" rel="stylesheet">
     <link href="<?= base_url('assets/plugins/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
@@ -30,7 +26,6 @@
         <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">
     <?php endif;?>
-
 	<link href="<?= base_url('assets/plugins/morris-js/morris.min.css'); ?>" rel="stylesheet">
 	<style>
 		#demo-nifty-settings {

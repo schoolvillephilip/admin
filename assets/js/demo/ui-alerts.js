@@ -38,7 +38,7 @@ $(document).on('nifty.ready', function() {
             }
         ],
         check_closebtn = function() {
-            var btn_stat = input_xbtn.prop("checked")
+            var btn_stat = input_xbtn.prop("checked");
             closebtn_alert = btn_stat;
             if (btn_stat) {
                 alert_preview.prepend('<button class="close"><i class="pci-cross pci-circle"></i></button>');
@@ -163,4 +163,4 @@ $(document).on('nifty.ready', function() {
         });
     });
 
-})
+});

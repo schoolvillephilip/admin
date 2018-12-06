@@ -25,7 +25,7 @@ $(document).on('nifty.ready', function() {
         columns: 'demo-pli-check',
         detailOpen: 'demo-psi-add',
         detailClose: 'demo-psi-remove'
-    }
+    };
 
 
 

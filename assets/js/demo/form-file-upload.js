@@ -35,7 +35,7 @@ $(document).on('nifty.ready', function() {
 
         }
 
-    }
+    };
 
 
 

@@ -37,7 +37,7 @@ $(document).on('nifty.ready', function() {
     });
     $('#demo-foo-expand').on('click', function(){
         fooColExp.trigger('footable_expand_all');
-    })
+    });
 
 
 

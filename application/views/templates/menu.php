@@ -1,8 +1,5 @@
 <nav id="mainnav-container">
     <div id="mainnav">
-
-        <!--It will only appear on small screen devices.-->
-        <!--================================-->
         <div class="mainnav-brand">
             <a href="<?= base_url(); ?>" class="brand">
                 <div class="brand-title">
@@ -11,16 +8,9 @@
             </a>
             <a href="#" class="mainnav-toggle"><i class="pci-cross pci-circle icon-lg"></i></a>
         </div>
-
-
-        <!--Menu-->
-        <!--================================-->
         <div id="mainnav-menu-wrap">
             <div class="nano">
                 <div class="nano-content">
-
-                    <!--Profile Widget-->
-                    <!--================================-->
                     <div id="mainnav-profile" class="mainnav-profile">
                         <div class="profile-wrap text-center">
                             <div class="pad-btm">
@@ -50,8 +40,6 @@
                             </a>
                         </div>
                     </div>
-
-
                     <ul id="mainnav-menu" class="list-group">
                         <li>
                             <a href="<?= base_url('dashboard') ?>">
@@ -65,14 +53,11 @@
                                 <span class="menu-title">Product Catalogue</span>
                                 <i class="arrow"></i>
                             </a>
-
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'product') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'products_overview') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('product') ?>">Products Overview</a></li>
                                 <li <?php if ($sub_name == 'approve_product') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('product/approve'); ?>">Approve Product</a></li>
-
                             </ul>
                         </li>
                         <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
@@ -80,7 +65,6 @@
                                 <i class="demo-pli-shopping-basket"></i>
                                 <span class="menu-title">Sales &amp; Orders</span>
                             </a>
-
                         </li>
                         <li <?php if ($pg_name == 'select_category') echo 'class="active"' ?>>
                             <a href="#">
@@ -88,10 +72,7 @@
                                 <span class="menu-title">Brand &amp; Categories</span>
                                 <i class="arrow"></i>
                             </a>
-
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'select_category') echo 'in'; ?>">
-
                                 <li <?php if ($sub_name == 'brands') echo 'class="active-link"' ?>>
                                     <a href="<?= base_url('brands'); ?>">
                                         <span class="menu-title">Brands</span>
@@ -104,14 +85,12 @@
                                             href="<?= base_url('categories/specification'); ?>">Specifications</a></li>
                             </ul>
                         </li>
-
                         <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-find-user"></i>
                                 <span class="menu-title">User Management</span>
                                 <i class="arrow"></i>
                             </a>
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'users') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('sellers/all_users') ?>">All Users</a></li>
@@ -119,7 +98,6 @@
                                             href="<?= base_url('sellers') ?>">Sellers</a></li>
                                 <li <?php if ($sub_name == 'approve_sellers') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('sellers/approve'); ?>">Approve Sellers</a></li>
-
                             </ul>
                         </li>
                         <li class="list-divider"></li>
@@ -129,13 +107,12 @@
                                 <span class="menu-title">Settings</span>
                                 <i class="arrow"></i>
                             </a>
-
                             <ul class="collapse <?php if ($pg_name == 'settings') echo 'in' ?>;">
                                 <li <?php if ($sub_name == 'gen_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings') ?>">General Settings</a></li>
                                 <li <?php if ($sub_name == 'mail_set') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/mail') ?>">Mail Settings</a></li>
-                                <li  <?php if ($sub_name == 'e_foot') echo 'class="active-link"' ?>><a
+                                <li <?php if ($sub_name == 'e_foot') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/edit_footer') ?>">Edit Footer</a></li>
                             </ul>
                         </li>
@@ -145,14 +122,12 @@
                                 <span class="menu-title">Store Settings</span>
                                 <i class="arrow"></i>
                             </a>
-
-                            <!--Submenu-->
-                            <ul  class="collapse <?php if ($pg_name == 'store_settings' ) echo 'in' ?>;">
+                            <ul class="collapse <?php if ($pg_name == 'store_settings') echo 'in' ?>;">
                                 <li><a
                                             href="#">Pages Settings
                                         <i class="arrow"></i>
                                     </a>
-                                    <ul  class="collapse <?php if ($sub_name == 'page_settings') echo 'in' ?>;">
+                                    <ul class="collapse <?php if ($sub_name == 'page_settings') echo 'in' ?>;">
                                         <li <?php if ($least_sub == 'homepage') echo 'class="active-link"' ?>><a
                                                     href="<?= base_url('settings/home') ?>">Homepage</a></li>
                                         <li <?php if ($least_sub == 'category') echo 'class="active-link"' ?>><a
@@ -175,8 +150,6 @@
                                 <span class="menu-title">Discount Options</span>
                                 <i class="arrow"></i>
                             </a>
-
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'disc_opt') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'gift_card') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('settings/discount/giftcards') ?>">Gift Cards</a></li>
@@ -192,7 +165,6 @@
                                 <span class="menu-title">Shipping</span>
                                 <i class="arrow"></i>
                             </a>
-                            <!--Submenu-->
                             <ul class="collapse <?php if ($pg_name == 'states') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'states_areas') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('states') ?>">States Areas</a></li>
@@ -207,16 +179,16 @@
                                 <span class="menu-title">Profile</span>
                                 <i class="arrow"></i>
                             </a>
-
                             <ul class="collapse <?php if ($pg_name == 'pro_settings') echo 'in'; ?>">
                                 <li <?php if ($sub_name == 'profile') echo 'class="active-link"' ?>><a
                                             href="<?= base_url('profile_settings') ?>">Profile Settings</a></li>
                                 <li <?php if ($sub_name == 'change_password') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('profile_settings/change_password'); ?>">Change Password</a></li>
+                                            href="<?= base_url('profile_settings/change_password'); ?>">Change
+                                        Password</a></li>
                                 <li <?php if ($sub_name == 'notification') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('profile_settings/notification'); ?>">Notification Setting</a>
+                                            href="<?= base_url('profile_settings/notification'); ?>">Notification
+                                        Setting</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li>
@@ -225,7 +197,6 @@
                                 <span class="menu-title">Help & Guidelines</span>
                             </a>
                         </li>
-
                         <li>
                             <a href="<?= base_url('logout'); ?>">
                                 <i class="fa fa-key"></i>
@@ -233,12 +204,8 @@
                             </a>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </div>
-        <!--================================-->
-        <!--End menu-->
-
     </div>
 </nav>

@@ -79,7 +79,7 @@ $(document).on('nifty.ready', function() {
         tooltipOpts: {
             defaultTheme: false
         }
-    }
+    };
 
 
     var plot = $.plot("#demo-realtime-chart", [ getRandomData() ], flotOptions);
@@ -179,7 +179,7 @@ $(document).on('nifty.ready', function() {
     skyconsOptions = {
         "color": "#fff",
         "resizeClear": true
-    }
+    };
 
     /* Main Icon */
     var skycons = new Skycons(skyconsOptions);
@@ -213,7 +213,7 @@ $(document).on('nifty.ready', function() {
     skyconsOptions = {
         "color": "#acb2b7",
         "resizeClear": true
-    }
+    };
 
 
     /* Main Icon */
@@ -225,7 +225,7 @@ $(document).on('nifty.ready', function() {
     skyconsOptions = {
         "color": "#595e62",
         "resizeClear": true
-    }
+    };
 
     /* Small Icons*/
     var skycons2 = new Skycons(skyconsOptions);
@@ -263,7 +263,7 @@ $(document).on('nifty.ready', function() {
     skyconsOptions = {
         "color": "#ffffff",
         "resizeClear": true
-    }
+    };
 
     var skycons = new Skycons(skyconsOptions);
     skycons.add("demo-weather-sm-icon", Skycons.RAIN);
