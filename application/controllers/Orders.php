@@ -23,6 +23,7 @@ class Orders extends CI_Controller{
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $page_data['orders'] = $this->admin->get_orders();
+
         $this->load->view('orders/overview', $page_data);
     }
 

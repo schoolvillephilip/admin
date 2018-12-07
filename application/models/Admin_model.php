@@ -244,7 +244,7 @@ Class Admin_model extends CI_Model{
      */
     function get_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved'){
 
-        $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
+        $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login, u.is_seller FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
         if( $search != '' ) $query .= " WHERE (first_name LIKE '%$search%') OR (last_name LIKE '%$search%') OR (email LIKE '%$search%')";
         if( $search != '' && $type != '' ) { $query .= " AND u.is_seller != 'approved' ";}else{ $query .= " WHERE u.is_seller != 'approved'"; }
         if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
@@ -313,14 +313,16 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_object
      */
     function get_orders( $id = ''){
-        $query = "SELECT o.order_code,b.first_name,b.last_name, b.phone, b.address, ar.name area, st.name state, o.seller_id, o.qty,o.amount, o.order_date, o.status, p.product_name, s.legal_company_name FROM orders o
+        $query = "SELECT o.id, o.product_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
+          o.order_date, o.status, p.product_name, s.legal_company_name, u.email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
         LEFT JOIN sellers s ON (o.seller_id = s.uid)
         LEFT JOIN billing_address b ON (o.billing_address_id = b.id )
-        INNER JOIN states st ON (b.sid = st.id)
-        INNER JOIN area ar ON (b.aid = ar.id)";
+        LEFT JOIN states st ON (b.sid = st.id)
+        LEFT JOIN area ar ON (b.aid = ar.id)
+        LEFT JOIN users u ON (o.buyer_id = u.id)";
         if( $id != '' ) {
-            $query .= " WHERE o.order_code = $id GROUP BY o.product_id";
+            $query .= " WHERE o.order_code = '{$id}' OR o.id = '{$id}' GROUP BY o.product_id";
         }else{
             $query .= " GROUP BY o.order_code";
         }
