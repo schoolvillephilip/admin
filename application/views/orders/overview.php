@@ -32,7 +32,7 @@
 							<h3 class="panel-title">A list of all orders in the Database</h3>
 						</div>
 						<div class="panel-body">
-							<table id="order-table" class="table table-striped table-bordered" cellspacing="0"
+							<table id="demo-dt-selection" class="table table-striped table-bordered" cellspacing="0"
 								   width="100%">
 								<thead>
 								<tr>
@@ -105,14 +105,16 @@
 </div>
 <?php $this->load->view('templates/scripts'); ?>
 <script>
-    $('#order-table').dataTable({
-        "responsive": true,
-        "language": {
-            "paginate": {
-                "previous": '<i class="demo-psi-arrow-left"></i>',
-                "next": '<i class="demo-psi-arrow-right"></i>'
+    $(document).ready(function () {
+        $("#demo-dt-selection").dataTable({
+            "responsive": true,
+            "language": {
+                "paginate": {
+                    "previous": '<i class="demo-psi-arrow-left"></i>',
+                    "next": '<i class="demo-psi-arrow-right"></i>'
+                }
             }
-        }
+        });
     });
 </script>
 </body>

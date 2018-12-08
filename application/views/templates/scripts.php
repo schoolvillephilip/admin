@@ -1,4 +1,4 @@
-<script src="<?= base_url('assets/js/jquery.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/jquery.js'); ?>"></script>
 <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/nifty.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/demo/nifty-demo.min.js'); ?>"></script>
@@ -18,7 +18,10 @@
 <?php if (in_array($pg_name, array('manage_product', 'select_category,', 'sellers', 'product', 'orders', 'dashboard'))) : ?>
     <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
     <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
-    <script src="<?= base_url('assets/plugins/datatables/extensions/responsive/js/dataTables.responsive.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/morris-js/morris.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/morris-js/raphael-js/raphael.min.js'); ?>"></script>
+
 <?php endif; ?>
 
 <?php if (in_array($pg_name, array('dashboard'))) : ?>
