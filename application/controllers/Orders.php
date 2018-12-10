@@ -28,6 +28,7 @@ class Orders extends CI_Controller{
     }
 
     public function detail(){
+
         $id = cleanit( $this->uri->segment(3));
 		$page_data['page_title'] = 'Orders Detail';
 		$page_data['pg_name'] = 'orders';

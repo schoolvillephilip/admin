@@ -66,6 +66,10 @@
                                                             <td><a class="btn-link" href="<?= base_url('sellers/detail/'. $order->seller_id); ?>"><?= ucwords($order->legal_company_name); ?></a></td>
                                                         </tr>
                                                         <tr>
+                                                            <td class="text-semibold">Seller's Email</td>
+                                                            <td><?= $order->seller_email; ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <td class="text-semibold">Quantity</td>
                                                             <td><?= $order->qty; ?></td>
                                                         </tr>

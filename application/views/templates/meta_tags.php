@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?= $page_title; ?></title>
+    <title><?= $page_title; ?> - <?= lang('app_name'); ?></title>
     <link rel="shortcut icon" href="<?= base_url('assets/img/favicon.png'); ?>" type="image/png">
     <link rel="icon" href="<?= base_url('assets/img/favicon.png'); ?>" type="image/png">
     <link rel="canonical" href="<?= current_url(); ?>"/>
@@ -13,6 +13,7 @@
     <link href="<?= base_url('assets/css/nifty.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/demo/nifty-demo-icons.min.css') ?>" rel="stylesheet">
+
     <?php if (in_array($pg_name, array('product', 'template', 'settings', 'select_category', 'category', 'sub_category'))) : ?>
         <link href="<?= base_url('assets/plugins/bootstrap-validator/bootstrapValidator.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/dropzone/dropzone.min.html') ?>" rel="stylesheet">
@@ -34,18 +35,10 @@
     <?php endif; ?>
     <link href="<?= base_url('assets/plugins/morris-js/morris.min.css'); ?>" rel="stylesheet">
     <style>
-        #demo-nifty-settings {
-            display: none;
-        }
+        #demo-nifty-settings {display: none; }
 
-        .panel-title {
-            color: #fff;
-            background: #425865 !important;
-        }
+        .panel-title { color: #fff; background: #425865 !important; }
 
-        .panel-title:hover {
-            background: #1ca28b !important;
-            color: #fff;
-        }
+        .panel-title:hover { background: #1ca28b !important; color: #fff; }
     </style>
 
