@@ -27,3 +27,9 @@
     <script src="<?= base_url('assets/js/demo/morris-js.js'); ?>"></script>
 <?php endif; ?>
 
+<?php if($pg_name='report'):?>
+    <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/datatables/extensions/responsive/js/dataTables.responsive.min.js'); ?>"></script>
+<?php endif?>
+

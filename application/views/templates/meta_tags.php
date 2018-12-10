@@ -28,6 +28,10 @@
         <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>"
               rel="stylesheet">
     <?php endif; ?>
+    <?php if($pg_name='report'):?>
+        <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
+        <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>" rel="stylesheet">
+    <?php endif; ?>
     <link href="<?= base_url('assets/plugins/morris-js/morris.min.css'); ?>" rel="stylesheet">
     <style>
         #demo-nifty-settings {
