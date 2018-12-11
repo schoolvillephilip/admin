@@ -16,33 +16,26 @@
                 </ol>
             </div>
             <div id="page-content">
-                <div class="panel">
+                <div id="om-panel-order" class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Sales Report</h3>
+                        <h3 class="panel-title">Total Order Count</h3>
+                        <?php if (!$order_chart) : ?>
+                            <h3 class="text-danger text-center">No Data Available!</h3>
+                        <?php endif; ?>
                     </div>
                     <div class="panel-body">
-                        <div id="om-panel-order" class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Total Order Count</h3>
-                                <?php if (!$order_chart) : ?>
-                                    <h3 class="text-danger text-center">No Data Available!</h3>
-                                <?php endif; ?>
-                            </div>
-                            <div class="panel-body">
-                                <div id="sellersaleschart" style="height: 350px; margin-bottom: 40px;"></div>
-                            </div>
-                        </div>
-                        <div id="om-panel-gross" class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Gross Sales Sum</h3>
-                                <?php if (!$gross_chart) : ?>
-                                    <h3 class="text-danger text-center">No Data Available!</h3>
-                                <?php endif; ?>
-                            </div>
-                            <div class="panel-body">
-                                <div id="sellergrosschart" style="height: 350px; margin-bottom: 40px;"></div>
-                            </div>
-                        </div>
+                        <div id="sellersaleschart" style="height: 350px; margin-bottom: 40px;"></div>
+                    </div>
+                </div>
+                <div id="om-panel-gross" class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Gross Sales Sum</h3>
+                        <?php if (!$gross_chart) : ?>
+                            <h3 class="text-danger text-center">No Data Available!</h3>
+                        <?php endif; ?>
+                    </div>
+                    <div class="panel-body">
+                        <div id="sellergrosschart" style="height: 350px; margin-bottom: 40px;"></div>
                     </div>
                 </div>
             </div>

@@ -4,53 +4,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Settings extends CI_Controller
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->model('admin_model', 'admin');
-		if (!$this->session->userdata('logged_in')) {
-			// Ursher the person to where he is coming from
-			$from = $this->session->userdata('referred_from');
-			if (!empty($from)) redirect($from);
-			redirect('login');
-		}
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('admin_model', 'admin');
+        if (!$this->session->userdata('logged_in')) {
+            // Ursher the person to where he is coming from
+            $from = $this->session->userdata('referred_from');
+            if (!empty($from)) redirect($from);
+            redirect('login');
+        }
+    }
 
-	public function index(){
-        if( $this->input->post() ){
+    public function index()
+    {
+        if ($this->input->post()) {
             $data = array();
-            foreach( $_POST as $key => $value ){
-                $data[$key] = cleanit( $value );
+            foreach ($_POST as $key => $value) {
+                $data[$key] = cleanit($value);
             }
             $update = $this->input->post('update');
-            if( !empty($update) ) {
+            if (!empty($update)) {
                 $id = $data['update'];
                 unset($data['update']);
-                if( $this->admin->update_data( $id, $data, 'general_settings') ){
+                if ($this->admin->update_data($id, $data, 'general_settings')) {
                     $this->session->set_flashdata('success_msg', 'General settings updated successfully.');
-                }else{
+                } else {
                     $this->session->set_flashdata('error_msg', 'There was an error updating the general settings.');
                 }
-            }else{
+            } else {
                 unset($data['update']);
-                if( $this->admin->insert_data( 'general_settings', $data ) ){
+                if ($this->admin->insert_data('general_settings', $data)) {
                     $this->session->set_flashdata('success_msg', 'General settings saved.');
-                }else{
+                } else {
                     $this->session->set_flashdata('error_msg', 'There was an error saving the general settings.');
                 }
             }
             redirect('settings');
-        }else {
-    		$page_data['page_title'] = 'General Settings';
-    		$page_data['pg_name'] = 'settings';
-    		$page_data['sub_name'] = 'gen_set';
+        } else {
+            $page_data['page_title'] = 'General Settings';
+            $page_data['pg_name'] = 'settings';
+            $page_data['sub_name'] = 'gen_set';
             $page_data['least_sub'] = '';
-    		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-    			'first_name,last_name,email,profile_pic');
+            $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+                'first_name,last_name,email,profile_pic');
             $page_data['settings'] = $this->admin->get_row('general_settings');
-    		$this->load->view('settings/general', $page_data);
+            $this->load->view('settings/general', $page_data);
         }
-	}
+    }
 
     public function mail()
     {
@@ -130,6 +131,7 @@ class Settings extends CI_Controller
             'first_name,last_name,email,profile_pic');
         $this->load->view('settings/payment', $page_data);
     }
+
     public function store_status()
     {
         $page_data['page_title'] = 'Store Online/Offline';
@@ -142,27 +144,57 @@ class Settings extends CI_Controller
     }
 
 
-
-
-
-
-	/*
+    /*
      * Pages Settings controller
-	 * - Home Page
-	 * - Category
-	 * - Checkout
-	 * - Single Product
+     * - Home Page
+     * - Category
+     * - Checkout
+     * - Single Product
      * */
 
-	public function home()
-		//Home Page
-	{
-		$page_data['page_title'] = 'Homepage Settings';
-		$page_data['pg_name'] = 'store_settings';
-		$page_data['sub_name'] = 'page_settings';
-		$page_data['least_sub'] = 'homepage';
-		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-			'first_name,last_name,email,profile_pic');
-		$this->load->view('settings/pages/home', $page_data);
-	}
+    public function home()
+        //Home Page
+    {
+        $page_data['page_title'] = 'Homepage Settings';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'page_settings';
+        $page_data['least_sub'] = 'homepage';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/pages/home', $page_data);
+    }
+
+    public function privacy()
+        //Privacy policy Settings
+    {
+        $page_data['page_title'] = 'Privacy Policy Settings';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'page_settings';
+        $page_data['least_sub'] = 'privacy';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/pages/privacy', $page_data);
+    }
+    public function terms()
+        //Terms and Conditions Settings
+    {
+        $page_data['page_title'] = 'Terms &amp; Conditions Settings';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'page_settings';
+        $page_data['least_sub'] = 'terms';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/pages/terms', $page_data);
+    }
+    public function agreement()
+        //Privacy policy Settings
+    {
+        $page_data['page_title'] = 'Agreement Settings';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'page_settings';
+        $page_data['least_sub'] = 'agreement';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $this->load->view('settings/pages/agreement', $page_data);
+    }
 }
