@@ -41,6 +41,15 @@ class Account extends CI_Controller
         $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
         $this->load->view('account/report', $page_data);
     }
+    public function payout()
+    {
+        $page_data['pg_name'] = 'report';
+        $page_data['page_title'] = "Payout Requests";
+        $page_data['sub_name'] = "payout";
+        $page_data['least_sub'] = '';
+        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
+        $this->load->view('account/payout', $page_data);
+    }
 
     public function txn_overview()
     {
