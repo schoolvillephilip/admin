@@ -1,11 +1,6 @@
 <nav id="mainnav-container">
     <div id="mainnav">
         <div class="mainnav-brand">
-            <a href="<?= base_url(); ?>" class="brand">
-                <div class="brand-title">
-                    <span class="brand-text"><?= lang('app_name') ?>.com</span>
-                </div>
-            </a>
             <a href="#" class="mainnav-toggle"><i class="pci-cross pci-circle icon-lg"></i></a>
         </div>
         <div id="mainnav-menu-wrap">
