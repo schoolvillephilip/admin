@@ -46,7 +46,7 @@ class Login extends CI_Controller{
                     redirect('login');
                 }else{  
                     if( $user->groups < 1 ) {
-                        // header('Location : ' . lang('site_domain'));
+                        // Not in admin group
                         redirect( lang('site_domain'));
                     }else{
                         $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );

@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Register extends CI_Controller{
 
     public function __construct(){
-        // @todo
         // Check if the user is already logged in
         // Also check where the user is coming from
         // $this->session->set_userdata('referred_from', current_url());
@@ -12,7 +11,8 @@ class Register extends CI_Controller{
         $this->load->model('seller_model', 'seller');
         if( $this->session->userdata('logged_in') ){
             // Ursher the person to where he is coming from
-            if( !empty($this->session->userdata('referred_from')) ) redirect($this->session->userdata('referred_from'));
+            $from = $this->session->userdata('referred_from');
+            if( !empty( $from ) ) redirect($from);
             redirect(base_url());
         }        
     }
@@ -62,12 +62,6 @@ class Register extends CI_Controller{
                 $this->session->set_flashdata('error_msg','Sorry! There was an error creating your account.' . $user_id);
                 redirect($_SERVER['HTTP_REFERER']);
             }else{
-                // @TODO
-                // Congrats we have a new registered user
-                // Add user session
-                // Send a Welcoming Mail to the user
-                // Check if he was trying to check out and usher them there
-                // Any other action to perform. 
                 $data = array(
                     'email' => $this->input->post('email'),
                     'password' => $this->input->post('password')

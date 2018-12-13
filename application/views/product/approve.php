@@ -49,7 +49,7 @@
 								<tbody>
 									<?php foreach( $products as $product ): ?>
 										<tr>
-											<td><a href="<?= base_url('product/detail/' . $product->id); ?>"><?= $product->product_name;?></a></td>
+											<td><a class="btn-link" href="<?= base_url('product/detail/' . $product->id); ?>"><?= $product->product_name;?></a></td>
 											<?php $category = $this->admin->get_single_category( $product->category_id ); ?>
 											<td><?= !empty($category->name) ? $category->name : ''; ?></td>
 											<td><a href="<?= base_url('sellers/detail/'. $product->seller_id); ?>"><?= ucwords($product->first_name . ' ' . $product->last_name); ?></a></td>

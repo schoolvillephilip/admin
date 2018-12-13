@@ -163,3 +163,23 @@ function urlify($string, $id =''){
     	return $new_string;  
     }
 }
+
+/*
+ * Check if the logged in adin has the specific priviledge
+ * Return bool */
+if( !function_exists('has_permission')){
+    function has_permission( $key){
+        $CI =& get_instance();
+        $group_id = $this->session->userdata('group_id');
+        $result = $CI->db->query("SELECT permissions FROM admin_groups WHERE id = ? ", array($group_id))->row();
+        if( $result ){
+            $permission = json_decode( $result->permissions, true);
+            $key = trim($key);
+            if( $permission[$key] == true){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+}

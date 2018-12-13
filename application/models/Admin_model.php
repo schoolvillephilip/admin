@@ -314,7 +314,7 @@ Class Admin_model extends CI_Model{
      */
     function get_orders( $id = ''){
         $query = "SELECT o.id, o.product_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
-          o.order_date, o.status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
+          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
         LEFT JOIN sellers s ON (o.seller_id = s.uid)
         LEFT JOIN users su ON (o.seller_id = su.id)
