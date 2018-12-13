@@ -64,7 +64,7 @@
                                 <a href="javascript:;" onclick="trigger('#his_trig');">
                                     <div class="panel panel-bordered-purple panel-colorful">
                                         <div class="pad-all text-center">
-                                            <span class="text-2x text-thin">&#8358; 0</span>
+                                            <span class="text-2x text-thin">&#8358; 123,000</span>
                                             <p>PAYOUT HISTORY</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
