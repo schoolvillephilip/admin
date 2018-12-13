@@ -74,8 +74,21 @@
                                                             <td><?= $order->qty; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="text-semibold">Status</td>
-                                                            <td><span class="label label-success"><?= $order->status; ?></span>
+                                                            <td class="text-semibold">Present Status</td>
+                                                            <td><span class="label label-success"><?= $order->active_status; ?></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-semibold">Status Flow</td>
+                                                            <td>
+                                                                <ul class="list-group">
+                                                                <?php $status = json_decode($order->status, true);
+                                                                    foreach( $status as $s => $key ):
+                                                                ?>
+                                                                        <li class="list-group-item"><strong>Status :</strong> <?= $key['msg']; ?> :
+                                                                            <strong>Time :</strong> <?= $key['datetime']; ?></li>
+                                                                <?php endforeach;?>
+                                                                </ul>
                                                             </td>
                                                         </tr>
                                                         <tr>

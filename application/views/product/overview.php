@@ -50,7 +50,7 @@
                                     ?>
                                     <tr>
                                         <td>
-                                            <a href="<?= base_url('product/detail/' . $product->id); ?> "> <?= $product->product_name ?></a>
+                                            <a class="btn-link" href="<?= base_url('product/detail/' . $product->id); ?> "> <?= $product->product_name ?></a>
                                         </td>
                                         <td>
                                             <?= !empty($category->name) ? $category->name : 'Category Does not exist'; ?>
@@ -62,7 +62,7 @@
                                             <?= productStatus($product->product_status); ?>
                                         </td>
                                         <td>
-                                            <a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>">
+                                            <a class="btn-link" href="<?= base_url('sellers/detail/' . $product->seller_id); ?>">
                                                 <?= ucwords($product->first_name . ' ' . $product->last_name); ?></a>
                                         </td>
                                     </tr>

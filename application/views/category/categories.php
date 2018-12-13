@@ -10,12 +10,11 @@
         <div id="content-container">
             <div id="page-head">
                 <div id="page-title">
-                    <h1 class="page-header text-overflow">Root Category</h1>
+                    <h1 class="page-header text-overflow">Category</h1>
                 </div>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="demo-pli-home"></i></a></li>
-                    <li><a href="#">Root Categories</a></li>
-                    <li class="active">Root Categories List</li>
+                    <li><a href="#">All categories</a></li>
                 </ol>
             </div>
             <div id="page-content">
@@ -24,7 +23,7 @@
                     <div class="panel-heading">
                         <div class="panel-title">
                             <a class="btn btn-danger" style="color: #fff;" href="<?= base_url('categories/add') ?>">Add
-                                New Root Category</a>
+                                New Category</a>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -48,7 +47,7 @@
                                              width="40" height="40px">
                                     </td>
                                     <td class="text-center">
-                                        <a href="<?= base_url('categories/detail/' . $category->id); ?>"><?= ucwords($category->name) ?></a>
+                                        <a class="btn-link" href="<?= base_url('categories/edit/' . $category->id); ?>"><?= ucwords($category->name) ?></a>
                                     </td>
                                     <td>
                                         <?php if ($category->pid != 0) :

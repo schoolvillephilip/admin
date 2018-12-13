@@ -41,7 +41,7 @@
                             <?php foreach ($brands->result() as $brand) : ?>
                                 <tr>
                                     <td class="text-center">
-                                        <a href="<?= base_url('brands/detail/' . $brand->id); ?>"><?= ucwords($brand->brand_name) ?></a>
+                                        <a class="btn-link" href="<?= base_url('brands/detail/' . $brand->id); ?>"><?= ucwords($brand->brand_name) ?></a>
                                     </td>
                                     <td class="text-center">
                                         <?= $brand->description; ?>
