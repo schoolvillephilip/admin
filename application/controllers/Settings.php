@@ -153,7 +153,6 @@ class Settings extends CI_Controller
      * */
 
     public function home()
-        //Home Page
     {
         $page_data['page_title'] = 'Homepage Settings';
         $page_data['pg_name'] = 'store_settings';
@@ -165,7 +164,6 @@ class Settings extends CI_Controller
     }
 
     public function privacy()
-        //Privacy policy Settings
     {
         $page_data['page_title'] = 'Privacy Policy Settings';
         $page_data['pg_name'] = 'store_settings';
@@ -176,7 +174,6 @@ class Settings extends CI_Controller
         $this->load->view('settings/pages/privacy', $page_data);
     }
     public function terms()
-        //Terms and Conditions Settings
     {
         $page_data['page_title'] = 'Terms &amp; Conditions Settings';
         $page_data['pg_name'] = 'store_settings';
@@ -196,5 +193,44 @@ class Settings extends CI_Controller
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $this->load->view('settings/pages/agreement', $page_data);
+    }
+
+    function process(){
+        if( $_POST || $_FILES ){
+            switch ($this->input->post('process_type')) {
+                case 'upload_slider_image':
+                    $url = $this->input->post('url');
+                    $image = $this->input->post('slider_image', true);
+                    break;
+                case 'call_to_action':
+                    $url = $this->input->post('url');
+                    $image = $this->input->post('cta_image', true);
+                    $position = $this->input->post('position', true);
+
+                case 'modal':
+                    $design_type = $this->input->post('design_type');
+                    $modal_text = $this->input->post('modal_text');
+                    $image = $this->input->post('modal_image');
+                    $btn_type = $this->input->post('button_type');
+                    $slider_bg_colour = $this->input->post('background_colour');
+                    $btn_text = $this->input->post('btn_text');
+
+            }
+        }
+    }
+
+
+    function do_upload($file, $id){
+        $config['upload_path'] = './data/sellers/' . $id . '/';
+        $config['allowed_types'] = 'gif|jpg|png|JPEG|jpeg|bmp|pdf|doc|docx';
+        $config['max_size'] = 10048;
+        $config['overwrite'] = true;
+        $config['encrypt_name'] = TRUE;
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload($file)) {
+            return 'There was an error';
+        } else {
+            return $this->upload->data('file_name');
+        }
     }
 }

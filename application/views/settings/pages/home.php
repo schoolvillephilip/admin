@@ -16,126 +16,49 @@
                     <li class="active">Homepage</li>
                 </ol>
             </div>
+            <?php $this->load->view('msg_view'); ?>
             <div id="page-content">
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Slider Settings</div>
                     </div>
                     <div class="panel-body">
-                        <?= form_open('', 'class="form-horizontal"'); ?>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Product ID</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control" required
-                                       placeholder="Enter a product ID"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Slider Text</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control" required
-                                       placeholder="Enter slider text"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Slider button background color</label>
-                            <div class="col-lg-7">
-                                <select name="root_category" required class="selectpicker rootcat"
-                                        title="Choose Color..."
-                                        data-width="100%">
-                                    <option value="">-- Choose color--</option>
-                                    <option>Red</option>
-                                    <option>Green</option>
-                                    <option>White</option>
-                                    <option>Yellow</option>
-                                    <option>Black</option>
-                                    <option>Cyan</option>
-                                    <option>Orange</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Slider button color</label>
-                            <div class="col-lg-7">
-                                <select name="root_category" required class="selectpicker rootcat"
-                                        title="Choose Color..."
-                                        data-width="100%">
-                                    <option value="">-- Choose color--</option>
-                                    <option>Red</option>
-                                    <option>Green</option>
-                                    <option>White</option>
-                                    <option>Yellow</option>
-                                    <option>Black</option>
-                                    <option>Cyan</option>
-                                    <option>Orange</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Slider Images</label>
-                            <div class="col-lg-7">
-                                <div class="dz-max-files-reached"></div>
-                                <div class="bord-top pad-ver">
-									<span class="btn btn-success fileinput-button dz-clickable">
-                                                                    <i class="fa fa-plus"></i>
-                                                                    <span>Add files...</span>
-                                                                </span>
-                                    <div class="btn-group pull-right">
-                                        <button id="dz-remove-btn" class="btn btn-danger cancel"
-                                                type="reset" disabled="">
-                                            <i class="demo-psi-trash"></i>
-                                        </button>
-                                    </div>
+                        <?= form_open_multipart('', 'class="form-horizontal"'); ?>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Where to be linked to</label>
+                                <div class="col-lg-7">
+                                    <input type="text" name="url" class="form-control" required placeholder="Enter the Url for the slider">
                                 </div>
-                                <div id="dz-previews">
-                                    <div id="dz-template" class="pad-top bord-top">
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <div class="media-block">
-                                                    <div class="media-left">
-                                                        <img class="dz-img" data-dz-thumbnail>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <p class="text-main text-bold mar-no text-overflow"
-                                                           data-dz-name></p>
-                                                        <span
-                                                                class="dz-error text-danger text-sm"
-                                                                data-dz-errormessage></span>
-                                                        <p class="text-sm" data-dz-size></p>
-                                                        <div id="dz-total-progress"
-                                                             style="opacity:0">
-                                                            <div
-                                                                    class="progress progress-xs active"
-                                                                    role="progressbar"
-                                                                    aria-valuemin="0"
-                                                                    aria-valuemax="100"
-                                                                    aria-valuenow="0">
-                                                                <div
-                                                                        class="progress-bar progress-bar-success"
-                                                                        style="width:0%;"
-                                                                        data-dz-uploadprogress></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="media-right">
-                                                <button data-dz-remove
-                                                        class="btn btn-xs btn-danger dz-cancel">
-                                                    <i class="demo-psi-trash"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
                             </div>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Save</button>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Slider Image</label>
+                                <div class="col-lg-7">
+                                    <input type="file" name="slider_image" class="" required />
+                                </div>
+                            </div>
+                            <input type="hidden" name="process_type" value="upload_slider_image">
+                            <div class="panel-footer text-center">
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
                         <?= form_close(); ?>
-
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Slider Position</th>
+                                            <th>Slider URL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>4</td>
+                                            <td><a class="btn-link">hjsjsjss</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="panel">
@@ -145,7 +68,7 @@
                     <div class="panel-body">
                         <?= form_open('', 'class="form-horizontal"'); ?>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Product ID</label>
+                            <label class="col-lg-3 control-label" >Product ID</label>
                             <div class="col-lg-7">
                                 <input type="text" name="icon" class="form-control" required
                                        placeholder="Enter a product ID"/>
@@ -153,14 +76,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Text</label>
+                            <label class="col-lg-3 control-label" >Text</label>
                             <div class="col-lg-7">
                                 <input type="text" name="icon" class="form-control" required
                                        placeholder="Enter slider text"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Featured Image</label>
+                            <label class="col-lg-3 control-label" >Featured Image</label>
                             <div class="col-lg-7">
                                 <input type="file" name="image"/>
                                 <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
@@ -178,60 +101,46 @@
                         <div class="panel-title">Call To Action (CTA)</div>
                     </div>
                     <div class="panel-body">
-                        <?= form_open('', 'class="form-horizontal"'); ?>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Position</label>
-                            <div class="col-lg-7">
-                                <select name="root_category" required class="selectpicker rootcat"
-                                        title="Select Position on Page"
-                                        data-width="100%">
-                                    <option value="">-- Select Position on Page --</option>
-                                    <option>Top</option>
-                                    <option>Top Fixed</option>
-                                    <option>Bottom</option>
-                                    <option>Bottom Fixed</option>
-                                    <option>Left</option>
-                                    <option>Right</option>
-                                </select>
+                        <?= form_open_multipart('settings/process', 'class="form-horizontal"'); ?>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Position</label>
+                                <div class="col-lg-7">
+                                    <select name="position" required class="selectpicker rootcat"
+                                            title="Select Position on Page"
+                                            data-width="100%">
+                                        <option value="">-- Select Position on Page --</option>
+                                        <option value="top">Top</option>
+                                        <option value="top_fixed">Top Fixed</option>
+                                        <option value="bottom">Bottom</option>
+                                        <option value="bottom_fixed">Bottom Fixed</option>
+                                        <option value="left">Left</option>
+                                        <option value="right">Right</option>
+                                        <option value="first_banner">First Banner</option>
+                                        <option value="second_banner">Second Banner</option>
+                                        <option value="third_banner">Third Banner</option>
+                                        <option value="fourth_banner">Fourth Banner</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Product ID</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control"
-                                       placeholder="Enter a product ID"/>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Url</label>
+                                <div class="col-lg-7">
+                                    <input type="text" name="icon" class="form-control"
+                                           placeholder="Enter Url"/>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Url</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control"
-                                       placeholder="Enter Url"/>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" >Featured Image</label>
+                                <div class="col-lg-7">
+                                    <input type="file" name="cta_image" required/>
+                                    <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Text</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control" required
-                                       placeholder="Enter slider text"/>
+                            <input type="hidden" name="process_type" value="call_to_action"
+                            <div class="panel-footer text-center">
+                                <button class="btn btn-primary" type="submit">Save</button>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Featured Image</label>
-                            <div class="col-lg-7">
-                                <input type="file" name="image"/>
-                                <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
-                            </div>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Save</button>
-                        </div>
                         <?= form_close(); ?>
-
                     </div>
                 </div>
                 <div class="panel">
@@ -239,34 +148,32 @@
                         <div class="panel-title">Modals</div>
                     </div>
                     <div class="panel-body">
-                        <?= form_open('', 'class="form-horizontal"'); ?>
+                        <?= form_open_multipart('settings/process', 'class="form-horizontal"'); ?>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Design Type</label>
                             <div class="col-lg-7">
-                                <select name="root_category" required class="selectpicker rootcat"
+                                <select name="design_type" required class="selectpicker rootcat"
                                         title="Select Position on Page"
                                         data-width="100%">
                                     <option value="">-- Design Type --</option>
-                                    <option>Simple</option>
-                                    <option>Single Spit</option>
-                                    <option>Multiple</option>
+                                    <option value="simple">Simple</option>
+                                    <option value="single_split"> Single Spit</option>
+                                    <option value="multiple">Multiple</option>
                                 </select>
                             </div>
                         </div>
-
-
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Text</label>
+                            <label class="col-lg-3 control-label" >Text</label>
                             <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control" required
-                                       placeholder="Enter slider text"/>
+                                <input type="text" name="modal_text" class="form-control" required
+                                       placeholder="Enter Modal text"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Featured Image</label>
+                            <label class="col-lg-3 control-label" >Featured Image</label>
                             <div class="col-lg-7">
-                                <input type="file" name="image"/>
+                                <input type="file" name="modal_image" />
                                 <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
                             </div>
                         </div>
@@ -278,8 +185,8 @@
                                         title="Button Type"
                                         data-width="100%">
                                     <option value="">-- Button Type --</option>
-                                    <option>Rounded</option>
-                                    <option>Boxed</option>
+                                    <option value="rounded">Rounded</option>
+                                    <option value="boxed">Boxed</option>
                                 </select>
                             </div>
                         </div>
@@ -287,23 +194,23 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Slider button background color</label>
                             <div class="col-lg-7">
-                                <select name="root_category" required class="selectpicker rootcat"
+                                <select name="background_colour" required class="selectpicker rootcat"
                                         title="Choose Color..."
                                         data-width="100%">
                                     <option value="">-- Choose color--</option>
-                                    <option>Red</option>
-                                    <option>Green</option>
-                                    <option>White</option>
-                                    <option>Yellow</option>
-                                    <option>Black</option>
-                                    <option>Cyan</option>
-                                    <option>Orange</option>
+                                    <option value="red">Red</option>
+                                    <option value="green">Green</option>
+                                    <option value="white">White</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="black">Black</option>
+                                    <option value="cyan">Cyan</option>
+                                    <option value="orange">Orange</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Button Text</label>
+                            <label class="col-lg-3 control-label" >Button Text</label>
                             <div class="col-lg-7">
                                 <input type="text" name="btn_text" class="form-control"
                                        placeholder="Button Text"/>
@@ -311,7 +218,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" for="">Button Url</label>
+                            <label class="col-lg-3 control-label" >Button Url</label>
                             <div class="col-lg-7">
                                 <input type="text" name="btn_url" class="form-control"
                                        placeholder="Enter Url"/>
@@ -336,5 +243,7 @@
     </button>
 </div>
 <?php $this->load->view('templates/scripts'); ?>
+<script>
+</script>
 </body>
 </html>
