@@ -171,6 +171,11 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = 'privacy';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
+        if( $this->input->post() ){
+            $privacy = $this->input->post('privacy', true);
+//            function insert_data($table = 'users', $data = array())
+//            $this->admin->insert_data('page_content', )
+        }
         $this->load->view('settings/pages/privacy', $page_data);
     }
     public function terms()

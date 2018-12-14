@@ -77,34 +77,25 @@
                         <label class="col-md-3 control-label">Store Enabled</label>
                         <div class="col-md-9">
                             <div class="radio">
-                                <input id="enable_radio" class="magic-radio" type="radio" name="enabled_radio" checked>
-                                <label for="enable_radio">Yes</label>
-                                <input id="enable_radio-2" class="magic-radio" type="radio" name="enabled_radio">
-                                <label for="enable_radio-2">No</label>
+                                <input id="is_live" class="magic-radio" type="radio" name="is_live"  value="1" <?php if($settings->is_live == 1) echo 'checked'; ?>>
+                                <label for="is_live">Yes</label>
+                                <input id="not_live" class="magic-radio" type="radio" name="is_live" value="0" <?php if($settings->is_live ==0 ) echo 'checked'?> >
+                                <label for="not_live">No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="stat_name">Date to Enable</label>
-                        <div class="col-md-9">
-                            <input type="date" id="stat_name" class="form-control">
-                            <small class="help-block">Select date to bring store back online</small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="stat_phones">If Disabled, Enable for IP
+                        <label class="col-md-3 control-label" for="enabled_ips">If Disabled, Enable for IP
                             Address(es)</label>
                         <div class="col-md-9">
-                            <input type="text" id="stat_phones" class="form-control" placeholder="0.0.0.0">
+                            <input type="text" id="enabled_ips" name="enabled_ips" value="<?= $settings->enabled_ips; ?>" class="form-control" placeholder="Enter Ip address separated with comma(,)">
                             <small class="help-block">Enter the IP Addresses to allow separated by a comma(,)</small>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="stat_mails">Reason Offline</label>
+                        <label class="col-md-3 control-label" >Reason Offline</label>
                         <div class="col-md-9">
-                                    <textarea class="form-control" rows="5">
-
-                                    </textarea>
+                            <textarea class="form-control" name="maintenance_text" rows="5"><?= $settings->maintenance_text; ?></textarea>
                         </div>
                     </div>
                     <input type="hidden" name="update" value="<?= !empty($settings->id) ? $settings->id : ''; ?>">
