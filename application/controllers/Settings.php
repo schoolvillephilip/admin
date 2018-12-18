@@ -160,6 +160,9 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = 'homepage';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
+        $page_data['homepage_category'] = $this->admin->run_sql("SELECT h.*, c.name FROM homepage_setting h LEFT JOIN categories c ON (h.category_id = c.id)")->result();
+        $page_data['lists'] = $this->admin->get_results('homepage_setting')->result();
+        $page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )")->result();
         $this->load->view('settings/pages/home', $page_data);
     }
 
@@ -189,7 +192,6 @@ class Settings extends CI_Controller
         $this->load->view('settings/pages/terms', $page_data);
     }
     public function agreement()
-        //Privacy policy Settings
     {
         $page_data['page_title'] = 'Agreement Settings';
         $page_data['pg_name'] = 'store_settings';
@@ -211,7 +213,7 @@ class Settings extends CI_Controller
                     $url = $this->input->post('url');
                     $image = $this->input->post('cta_image', true);
                     $position = $this->input->post('position', true);
-
+                    break;
                 case 'modal':
                     $design_type = $this->input->post('design_type');
                     $modal_text = $this->input->post('modal_text');
@@ -219,23 +221,110 @@ class Settings extends CI_Controller
                     $btn_type = $this->input->post('button_type');
                     $slider_bg_colour = $this->input->post('background_colour');
                     $btn_text = $this->input->post('btn_text');
+                    break;
+                case 'main_category':
+                    // A big shot coming through
+                    $error = 0;
 
+                    if( isset($_FILES) ){
+                        $counts = sizeof($_FILES['image']['tmp_name']);
+                        $files = $_FILES;
+                        $content_array = array();
+                        for ($x = 0; $x < $counts; $x++) {
+                            $old_name = $files['image']['name'][$x];
+                            $_FILES['image']['name'] = $files['image']['name'][$x];
+                            $_FILES['image']['type'] = $files['image']['type'][$x];
+                            $_FILES['image']['tmp_name'] = $files['image']['tmp_name'][$x];
+                            $_FILES['image']['error'] = $files['image']['error'][$x];
+                            $_FILES['image']['size'] = $files['image']['size'][$x];
+                            $upload_result = $this->upload_image($_FILES['image']['name']);
+                            $new_name = str_replace('.','_',$old_name);
+                            if ($upload_result){
+                                // cool lets attach its respective link
+//                                die( $old_name );
+                                $image_position = $this->input->post($new_name.'_position');
+                                $link = $this->input->post($new_name.'_url');
+                                $json_array = array(
+                                    'img' => $upload_result,
+                                    'position' => $image_position,
+                                    'link'  => $link
+                                );
+                                array_push( $content_array, $json_array);
+                            } else {
+                                $error++;
+                            }
+                        }// end of for loop
+                        $content= json_encode( $content_array  );
+                        $data = array(
+                            'category_id' => $this->input->post('category_id'),
+                            'position' => $this->input->post('position'),
+                            'content' => $content
+                        );
+                        $insert_id = $this->admin->insert_data('homepage_setting', $data);
+                        if( !$insert_id || !is_int($insert_id)){
+                            $this->session->set_flashdata('error_msg', $insert_id);
+                        }else{
+                            $this->session->set_flashdata('success_msg', 'Homepage category has been saved. Need to publish...');
+                        }
+                    }
+                    echo '';
+                    break;
             }
+        }
+        else{
+            redirect($_SERVER['HTTP_REFERER']);
         }
     }
 
 
-    function do_upload($file, $id){
-        $config['upload_path'] = './data/sellers/' . $id . '/';
-        $config['allowed_types'] = 'gif|jpg|png|JPEG|jpeg|bmp|pdf|doc|docx';
-        $config['max_size'] = 10048;
+    function action( $id, $action){
+        $id = cleanit( $id );
+        switch ( $action ) {
+            case 'deactivate':
+            case 'activate':
+                if( $this->admin->homepage_action($id, $action)){
+                    $this->session->set_flashdata('success_msg',' Action successful.');
+                }else{
+                    $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+                }
+                break;
+            case 'delete':
+                if( $this->admin->homepage_action($id, 'delete')){
+                    $this->session->set_flashdata('success_msg',' Action successful.');
+                }else{
+                    $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+                }
+                break;
+            default:
+                $this->session->set_flashdata('error_msg', 'The action you are trying to perform is not define');
+                break;
+        }
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    function upload_image($file){
+        $config['upload_path'] = CATEGORY_HOMEPAGE_DIR ;
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = 10000;
         $config['overwrite'] = true;
-        $config['encrypt_name'] = TRUE;
+        $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
-        if (!$this->upload->do_upload($file)) {
-            return 'There was an error';
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload('image')) {
+            $this->session->set_flashdata('error_msg',$this->upload->display_errors());
+            return false;
         } else {
+//            $config['allowed_types'] = 'gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp';
+//            $config['image_library'] = 'gd2';
+//            $config['source_image'] = $_SERVER['DOCUMENT_ROOT'] .'/contents/home/' . $this->upload->data('file_mame');
+//            $config['create_thumb'] = TRUE;
+//            $config['maintain_ratio'] = TRUE;
+//            $config['width']         = 75;
+//            $config['height']       = 50;
+//            $this->load->library('image_lib', $config);
+//            $this->image_lib->resize();
             return $this->upload->data('file_name');
+
         }
     }
 }

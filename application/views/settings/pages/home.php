@@ -16,8 +16,10 @@
                     <li class="active">Homepage</li>
                 </ol>
             </div>
-            <?php $this->load->view('msg_view'); ?>
+
             <div id="page-content">
+                <?php $this->load->view('msg_view'); ?>
+<!--                Slider setting panel-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Slider Settings</div>
@@ -41,201 +43,151 @@
                                 <button class="btn btn-primary" type="submit">Save</button>
                             </div>
                         <?= form_close(); ?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Slider Position</th>
-                                            <th>Slider URL</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>4</td>
-                                            <td><a class="btn-link">hjsjsjss</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
+<!--                Homepage Categories settings panel-->
                 <div class="panel">
                     <div class="panel-heading">
-                        <div class="panel-title">Featured Images</div>
+                        <div class="panel-title">Homepage Main Body Settings</div>
                     </div>
                     <div class="panel-body">
-                        <?= form_open('', 'class="form-horizontal"'); ?>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Product ID</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control" required
-                                       placeholder="Enter a product ID"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Text</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="icon" class="form-control" required
-                                       placeholder="Enter slider text"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Featured Image</label>
-                            <div class="col-lg-7">
-                                <input type="file" name="image"/>
-                                <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
-                            </div>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Save</button>
-                        </div>
-                        <?= form_close(); ?>
-
-                    </div>
-                </div>
-                <div class="panel">
-                    <div class="panel-heading">
-                        <div class="panel-title">Call To Action (CTA)</div>
-                    </div>
-                    <div class="panel-body">
-                        <?= form_open_multipart('settings/process', 'class="form-horizontal"'); ?>
+                        <form method="post" action="" class="form-horizontal" id="homepage_category" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Position</label>
+                                <label class="col-lg-3 control-label">Please select category</label>
                                 <div class="col-lg-7">
-                                    <select name="position" required class="selectpicker rootcat"
-                                            title="Select Position on Page"
-                                            data-width="100%">
-                                        <option value="">-- Select Position on Page --</option>
-                                        <option value="top">Top</option>
-                                        <option value="top_fixed">Top Fixed</option>
-                                        <option value="bottom">Bottom</option>
-                                        <option value="bottom_fixed">Bottom Fixed</option>
-                                        <option value="left">Left</option>
-                                        <option value="right">Right</option>
-                                        <option value="first_banner">First Banner</option>
-                                        <option value="second_banner">Second Banner</option>
-                                        <option value="third_banner">Third Banner</option>
-                                        <option value="fourth_banner">Fourth Banner</option>
+                                    <select class="form-control" name="category_id" required>
+                                        <option value="">-- Please Select Category--</option>
+                                        <?php foreach( $categories as $category ) :?>
+                                            <option value="<?= $category->id?>"><?= ucwords($category->name); ?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Url</label>
+                                <label class="col-lg-3 control-label">Post Position</label>
                                 <div class="col-lg-7">
-                                    <input type="text" name="icon" class="form-control"
-                                           placeholder="Enter Url"/>
+                                    <select class="form-control" name="position" required>
+                                        <option value="">-- Select position which it should display --</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" >Featured Image</label>
-                                <div class="col-lg-7">
-                                    <input type="file" name="cta_image" required/>
-                                    <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
+                            <p>While selecting the images, you need to add the respective link and position</p>
+                            <div class="dz-max-files-reached"></div>
+                            <div class="bord-top pad-ver">
+                                <span class="btn btn-success fileinput-button dz-clickable">
+                                        <i class="fa fa-plus"></i>
+                                        <span>Add files...</span>
+                                    </span>
+                                <div class="btn-group pull-right">
+                                    <button id="dz-remove-btn" class="btn btn-danger cancel"
+                                            type="reset" disabled="">
+                                        <i class="demo-psi-trash"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <input type="hidden" name="process_type" value="call_to_action"
+                            <div id="dz-previews">
+                                <div id="dz-template" class="pad-top bord-top">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div class="media-block">
+                                                <div class="media-left">
+                                                    <img class="dz-img" data-dz-thumbnail>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="text-main text-bold mar-no text-overflow"
+                                                       data-dz-name></p>
+                                                    <span
+                                                            class="dz-error text-danger text-sm"
+                                                            data-dz-errormessage></span>
+                                                    <p class="text-sm" data-dz-size></p>
+                                                    <div id="dz-total-progress"
+                                                         style="opacity:0">
+                                                        <div
+                                                                class="progress progress-xs active"
+                                                                role="progressbar"
+                                                                aria-valuemin="0"
+                                                                aria-valuemax="100"
+                                                                aria-valuenow="0">
+                                                            <div
+                                                                    class="progress-bar progress-bar-success"
+                                                                    style="width:0%;"
+                                                                    data-dz-uploadprogress></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media-right">
+                                            <button data-dz-remove
+                                                    class="btn btn-xs btn-danger dz-cancel">
+                                                <i class="demo-psi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="process_type" value="main_category">
                             <div class="panel-footer text-center">
-                                <button class="btn btn-primary" type="submit">Save</button>
+                                <button class="btn btn-primary category_save" type="submit">Save</button>
                             </div>
-                        <?= form_close(); ?>
+                        </form>
                     </div>
-                </div>
-                <div class="panel">
-                    <div class="panel-heading">
-                        <div class="panel-title">Modals</div>
-                    </div>
+
                     <div class="panel-body">
-                        <?= form_open_multipart('settings/process', 'class="form-horizontal"'); ?>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Design Type</label>
-                            <div class="col-lg-7">
-                                <select name="design_type" required class="selectpicker rootcat"
-                                        title="Select Position on Page"
-                                        data-width="100%">
-                                    <option value="">-- Design Type --</option>
-                                    <option value="simple">Simple</option>
-                                    <option value="single_split"> Single Spit</option>
-                                    <option value="multiple">Multiple</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Text</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="modal_text" class="form-control" required
-                                       placeholder="Enter Modal text"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Featured Image</label>
-                            <div class="col-lg-7">
-                                <input type="file" name="modal_image" />
-                                <span style="margin-top:3px;" class="text-dark">Image should be a PNG, with at most 500 X 300px</span>
-                            </div>
-                        </div>
-                        <h5 class="text-center " style="margin: 20px">Modal Buttons</h5>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Slider button type</label>
-                            <div class="col-lg-7">
-                                <select name="button_type" required class="selectpicker rootcat"
-                                        title="Button Type"
-                                        data-width="100%">
-                                    <option value="">-- Button Type --</option>
-                                    <option value="rounded">Rounded</option>
-                                    <option value="boxed">Boxed</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Slider button background color</label>
-                            <div class="col-lg-7">
-                                <select name="background_colour" required class="selectpicker rootcat"
-                                        title="Choose Color..."
-                                        data-width="100%">
-                                    <option value="">-- Choose color--</option>
-                                    <option value="red">Red</option>
-                                    <option value="green">Green</option>
-                                    <option value="white">White</option>
-                                    <option value="yellow">Yellow</option>
-                                    <option value="black">Black</option>
-                                    <option value="cyan">Cyan</option>
-                                    <option value="orange">Orange</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Button Text</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="btn_text" class="form-control"
-                                       placeholder="Button Text"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" >Button Url</label>
-                            <div class="col-lg-7">
-                                <input type="text" name="btn_url" class="form-control"
-                                       placeholder="Enter Url"/>
-                            </div>
-                        </div>
-
-                        <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Save</button>
-                        </div>
-                        <?= form_close(); ?>
-
+                        <table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Position</th>
+                                <th>Image / Link</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($homepage_category as $category ): ?>
+                                    <tr>
+                                        <th><?= $category->name; ?></th>
+                                        <th><?= $category->position; ?></th>
+                                        <th>
+                                            <ul class="list-group-striped">
+                                                <?php
+                                                    $decodes = json_decode( $category->content);
+                                                    foreach( $decodes as $decode ):
+                                                ?>
+                                                        <li>
+                                                            <strong>Position :</strong> <?= $decode->position?> <br />
+                                                            <strong>Image URL :</strong>
+                                                                <a class="btn-link" target="_blank" href="<?= CATEGORY_HOMEPAGE_DIR . $decode->img; ?>"><?= $decode->img; ?></a>
+                                                            <br />
+                                                            <strong>Image Link :</strong>
+                                                                <a class="btn-link" target="_blank" href="<?= $decode->link; ?>" title="<?= $decode->link; ?>">Linked To</a><br />
+                                                        </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </th>
+                                        <th>
+                                            <?php if( $category->status == 'inactive' ): ?>
+                                                <a class="btn btn-success" href="<?= base_url('settings/action/' . $category->id.'/activate/'); ?>">Make Active</a>
+                                            <?php else : ?>
+                                                <a class="btn btn-danger" href="<?= base_url('settings/action/' . $category->id.'/deactivate/'); ?>">Deactivate</a>
+                                            <?php endif; ?>
+                                        </th>
+                                        <th><a class="btn btn-danger" href="<?= base_url('settings/action/' . $category->id.'/delete/'); ?>">Delete</a></th>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div>
         <?php $this->load->view('templates/menu'); ?>
-
     </div>
     <?php $this->load->view('templates/footer'); ?>
     <button class="scroll-top btn">
@@ -244,6 +196,115 @@
 </div>
 <?php $this->load->view('templates/scripts'); ?>
 <script>
+    $(document).on('nifty.ready', function () {
+        Dropzone.autoDiscover = false;
+        let previewNode = document.querySelector("#dz-template");
+        previewNode.id = "";
+        let previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+        let uplodaBtn = $('.category_save');
+        let removeBtn = $('#dz-remove-btn');
+        let maxImageWidth = 2000,
+            maxImageHeight = 2000,
+            minImageWidth = 500,
+            minImageHeight = 500;
+        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+            url: base_url + "settings/process", // Set the url
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoDiscover: false,
+            paramName: 'image',
+            thumbnailWidth: 70,
+            thumbnailHeight: 70,
+            maxFilesize: 20000,
+            previewTemplate: previewTemplate,
+            previewsContainer: "#dz-previews", // Define the container to display the previews
+            clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+            acceptedFiles: "image/*",
+            uploadMultiple: true,
+            parallelUploads: 100,
+            accept: function (file, done) {
+                file.acceptDimensions = done;
+                file.rejectDimensions = function () {
+                    done(`Invalid file dimension, atleast 500 X 500 and maximum of 2000 X 2000. But image is having ${file.width} X ${file.height}. File won't be uploaded.`);
+                };
+            }
+        });
+        myDropzone.on("addedfile", function (file) {
+            // Hookup the button
+            uplodaBtn.prop('disabled', false);
+            removeBtn.prop('disabled', false);
+            file._captionBox = Dropzone.createElement( create_position_element(file.name) );
+            file._captionBox2 = Dropzone.createElement( create_link_element(file.name) );
+            file.previewElement.appendChild(file._captionBox);
+            file.previewElement.appendChild(file._captionBox2);
+        });
+
+        myDropzone.on("sendingmultiple", function (file, xhr, formData) {
+            // Show the total progress bar when upload starts
+            let formDataArray = $('#homepage_category').serializeArray();
+            for (let i = 0; i < formDataArray.length; i++) {
+                let formDataItem = formDataArray[i];
+                formData.append(formDataItem.name, formDataItem.value);
+            }
+        });
+
+        uplodaBtn.on('click', function (e) {
+            $('#processing').show();
+            e.preventDefault();
+            if (myDropzone.getQueuedFiles().length > 0) {
+                myDropzone.processQueue();
+            } else {
+                $('#processing').hide();
+                alert('Please select an image');
+            }
+        });
+
+        myDropzone.on("successmultiple", function (files, response) {
+            window.location.href = base_url + 'settings/home';
+        });
+        myDropzone.on("errormultiple", function (files, response) {
+            // Gets triggered when there was an error sending the files.
+            $('#processing').hide();
+            alert('There was an error sending the images' + response);
+        });
+
+        myDropzone.on('thumbnail', function (file) {
+            if ((file.width > maxImageWidth || file.height > maxImageHeight) || (minImageWidth > file.width || minImageHeight > file.height)) {
+                file.rejectDimensions();
+            } else {
+                file.acceptDimensions();
+            }
+        });
+        removeBtn.on('click', function () {
+            myDropzone.removeAllFiles(true);
+            uplodaBtn.prop('disabled', true);
+            removeBtn.prop('disabled', true);
+        });
+
+        function create_position_element( filename ){
+            let element = `<div class="form-group"><label class="col-lg-3 control-label">Select position</label><div class="col-lg-7"><select name="${filename}_position" required class="form-control"><option value="top1">Top 1</option><option value="top">Top 2</option><option value="bottom1">Bottom 1</option><option value="bottom2">Bottom 2</option><option value="left1">Left Slide 1</option>
+        <option value="left2">Left Slide2</option><option value="left3">Left Slide 3</option><option value="left4">Left Slide 4 (Optional)</option>
+        <option value="bottom_banner">Bottom Banner</option></select></div>
+        </div>`;
+            return element;
+        }
+        function create_link_element( filename){
+            return `<div class="form-group"><label class="col-lg-3 control-label">Please enter the URL</label><div class="col-lg-7"><input type="text" class="form-control" required name="${filename}_url"></div></div>`;
+        }
+
+    });
+</script>
+<script>
+    $('#demo-dt-basic').dataTable({
+        "responsive": true,
+        "language": {
+            "paginate": {
+                "previous": '<i class="demo-psi-arrow-left"></i>',
+                "next": '<i class="demo-psi-arrow-right"></i>'
+            }
+        }
+    });
 </script>
 </body>
 </html>

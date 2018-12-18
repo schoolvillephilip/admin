@@ -576,5 +576,29 @@ Class Admin_model extends CI_Model{
         }
     }
 
+    /*
+     * Delete, Activate or deactivate the homapge category Section board
+     * */
+    function homepage_action($id , $action){
+        if( $action != 'delete'){
+            $this->db->where('id', $id);
+            if($action == 'deactivate'){
+                $this->db->set('status', 'inactive');
+            }else{
+                $this->db->set('status', 'active');
+            }
+            return $this->db->update('homepage_setting');
+        }else{
+            return $this->db->delete('homepage_setting', array('id' => $id));
+        }
+    }
+
+
+    function set_field( $table, $field, $set, $where ){
+        $this->db->where($where);
+        $this->db->set($field, $set, false);
+        $this->db->update($table);
+    }
+
 
 }
