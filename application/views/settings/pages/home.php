@@ -25,7 +25,7 @@
                         <div class="panel-title">Slider Settings</div>
                     </div>
                     <div class="panel-body">
-                        <?= form_open_multipart('', 'class="form-horizontal"'); ?>
+                        <?= form_open_multipart('settings/process', 'class="form-horizontal"'); ?>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Where to be linked to</label>
                                 <div class="col-lg-7">
@@ -43,6 +43,36 @@
                                 <button class="btn btn-primary" type="submit">Save</button>
                             </div>
                         <?= form_close(); ?>
+
+                        <div class="panel-body">
+                            <table id="" class="table table-striped table-bordered" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Image Link</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($homepage_slider as $slider ): ?>
+                                    <tr>
+                                        <th><img src="<?= HOMEPAGE_SLIDER . $slider->image?>" alt="No image found" /></th>
+                                        <th><a class="btn-linkn" href="<?= $slider->img_link; ?>"><?= $slider->img_link; ?></a></th>
+                                        <th>
+                                            <?php if( $slider->status == 'inactive' ): ?>
+                                                <a class="btn btn-success" href="<?= base_url('settings/action/' . $slider->id.'/activate/homepage_slider'); ?>">Make Active</a>
+                                            <?php else : ?>
+                                                <a class="btn btn-danger" href="<?= base_url('settings/action/' . $slider->id.'/deactivate/homepage_slider'); ?>">Deactivate</a>
+                                            <?php endif; ?>
+                                        </th>
+                                        <th><a class="btn btn-danger" href="<?= base_url('settings/action/' . $slider->id.'/delete/homepage_slider'); ?>">Delete</a></th>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 <!--                Homepage Categories settings panel-->
@@ -137,7 +167,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
+                        <table class="table table-striped table-bordered" cellspacing="0"
                                width="100%">
                             <thead>
                             <tr>
@@ -172,12 +202,12 @@
                                         </th>
                                         <th>
                                             <?php if( $category->status == 'inactive' ): ?>
-                                                <a class="btn btn-success" href="<?= base_url('settings/action/' . $category->id.'/activate/'); ?>">Make Active</a>
+                                                <a class="btn btn-success" href="<?= base_url('settings/action/' . $category->id.'/activate/homepage_category/'); ?>">Make Active</a>
                                             <?php else : ?>
-                                                <a class="btn btn-danger" href="<?= base_url('settings/action/' . $category->id.'/deactivate/'); ?>">Deactivate</a>
+                                                <a class="btn btn-danger" href="<?= base_url('settings/action/' . $category->id.'/deactivate/homepage_category/'); ?>">Deactivate</a>
                                             <?php endif; ?>
                                         </th>
-                                        <th><a class="btn btn-danger" href="<?= base_url('settings/action/' . $category->id.'/delete/'); ?>">Delete</a></th>
+                                        <th><a class="btn btn-danger" href="<?= base_url('settings/action/' . $category->id.'/delete/homepage_category/'); ?>">Delete</a></th>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -206,8 +236,8 @@
         let removeBtn = $('#dz-remove-btn');
         let maxImageWidth = 2000,
             maxImageHeight = 2000,
-            minImageWidth = 500,
-            minImageHeight = 500;
+            minImageWidth = 250,
+            minImageHeight = 250;
         var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
             url: base_url + "settings/process", // Set the url
             autoProcessQueue: false,
@@ -223,12 +253,12 @@
             acceptedFiles: "image/*",
             uploadMultiple: true,
             parallelUploads: 100,
-            accept: function (file, done) {
-                file.acceptDimensions = done;
-                file.rejectDimensions = function () {
-                    done(`Invalid file dimension, atleast 500 X 500 and maximum of 2000 X 2000. But image is having ${file.width} X ${file.height}. File won't be uploaded.`);
-                };
-            }
+            // accept: function (file, done) {
+            //     file.acceptDimensions = done;
+            //     file.rejectDimensions = function () {
+            //         done(`Invalid file dimension, atleast 500 X 500 and maximum of 2000 X 2000. But image is having ${file.width} X ${file.height}. File won't be uploaded.`);
+            //     };
+            // }
         });
         myDropzone.on("addedfile", function (file) {
             // Hookup the button
@@ -270,11 +300,11 @@
         });
 
         myDropzone.on('thumbnail', function (file) {
-            if ((file.width > maxImageWidth || file.height > maxImageHeight) || (minImageWidth > file.width || minImageHeight > file.height)) {
-                file.rejectDimensions();
-            } else {
-                file.acceptDimensions();
-            }
+            // if ((file.width > maxImageWidth || file.height > maxImageHeight) || (minImageWidth > file.width || minImageHeight > file.height)) {
+            //     file.rejectDimensions();
+            // } else {
+            //     file.acceptDimensions();
+            // }
         });
         removeBtn.on('click', function () {
             myDropzone.removeAllFiles(true);
@@ -283,7 +313,7 @@
         });
 
         function create_position_element( filename ){
-            let element = `<div class="form-group"><label class="col-lg-3 control-label">Select position</label><div class="col-lg-7"><select name="${filename}_position" required class="form-control"><option value="top1">Top 1</option><option value="top">Top 2</option><option value="bottom1">Bottom 1</option><option value="bottom2">Bottom 2</option><option value="left1">Left Slide 1</option>
+            let element = `<div class="form-group"><label class="col-lg-3 control-label">Select position</label><div class="col-lg-7"><select name="${filename}_position" required class="form-control"><option value="top1">Top 1</option><option value="top">Top 2</option><option value="bottom1">Bottom 1</option><option value="bottom2">Bottom 2</option><option value="bottom3">Bottom 3</option><option value="left1">Left Slide 1</option>
         <option value="left2">Left Slide2</option><option value="left3">Left Slide 3</option><option value="left4">Left Slide 4 (Optional)</option>
         <option value="bottom_banner">Bottom Banner</option></select></div>
         </div>`;
@@ -296,7 +326,7 @@
     });
 </script>
 <script>
-    $('#demo-dt-basic').dataTable({
+    $('.table').dataTable({
         "responsive": true,
         "language": {
             "paginate": {

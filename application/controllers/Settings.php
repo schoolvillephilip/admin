@@ -161,7 +161,7 @@ class Settings extends CI_Controller
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $page_data['homepage_category'] = $this->admin->run_sql("SELECT h.*, c.name FROM homepage_setting h LEFT JOIN categories c ON (h.category_id = c.id)")->result();
-        $page_data['lists'] = $this->admin->get_results('homepage_setting')->result();
+        $page_data['homepage_slider'] = $this->admin->get_results('sliders')->result();
         $page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )")->result();
         $this->load->view('settings/pages/home', $page_data);
     }
@@ -207,7 +207,19 @@ class Settings extends CI_Controller
             switch ($this->input->post('process_type')) {
                 case 'upload_slider_image':
                     $url = $this->input->post('url');
-                    $image = $this->input->post('slider_image', true);
+                    if( isset($_FILES)){
+                        $upload_result = $this->upload_image('slider_image', HOMEPAGE_SLIDER);
+                        if( $upload_result ){
+                            $data = array('image' => $upload_result, 'img_link' => $url );
+                            $insert_id = $this->admin->insert_data('sliders', $data);
+                            if( is_int( $insert_id )){
+                                $this->session->set_flashdata('success_msg', 'The image has been added to the slider gallery');
+                                redirect($_SERVER['HTTP_REFERER']);
+                            }
+                        }
+                        $this->session->set_flashdata('error_msg', 'There was an error performing that action');
+                        redirect($_SERVER['HTTP_REFERER']);
+                    }
                     break;
                 case 'call_to_action':
                     $url = $this->input->post('url');
@@ -224,8 +236,6 @@ class Settings extends CI_Controller
                     break;
                 case 'main_category':
                     // A big shot coming through
-                    $error = 0;
-
                     if( isset($_FILES) ){
                         $counts = sizeof($_FILES['image']['tmp_name']);
                         $files = $_FILES;
@@ -237,11 +247,9 @@ class Settings extends CI_Controller
                             $_FILES['image']['tmp_name'] = $files['image']['tmp_name'][$x];
                             $_FILES['image']['error'] = $files['image']['error'][$x];
                             $_FILES['image']['size'] = $files['image']['size'][$x];
-                            $upload_result = $this->upload_image($_FILES['image']['name']);
+                            $upload_result = $this->upload_image('image');
                             $new_name = str_replace('.','_',$old_name);
                             if ($upload_result){
-                                // cool lets attach its respective link
-//                                die( $old_name );
                                 $image_position = $this->input->post($new_name.'_position');
                                 $link = $this->input->post($new_name.'_url');
                                 $json_array = array(
@@ -250,8 +258,7 @@ class Settings extends CI_Controller
                                     'link'  => $link
                                 );
                                 array_push( $content_array, $json_array);
-                            } else {
-                                $error++;
+                                unset($json_array);
                             }
                         }// end of for loop
                         $content= json_encode( $content_array  );
@@ -277,40 +284,72 @@ class Settings extends CI_Controller
     }
 
 
-    function action( $id, $action){
+    function action( $id, $action, $module ){
         $id = cleanit( $id );
-        switch ( $action ) {
-            case 'deactivate':
-            case 'activate':
-                if( $this->admin->homepage_action($id, $action)){
-                    $this->session->set_flashdata('success_msg',' Action successful.');
-                }else{
-                    $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+        switch ( $module ) {
+            case 'homepage_category':
+                $table = 'homepage_setting';
+                switch ( $action ) {
+                    case 'deactivate':
+                    case 'activate':
+                        if( $this->admin->action($id, $action, $table)){
+                            $this->session->set_flashdata('success_msg',' Action successful.');
+                        }else{
+                            $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+                        }
+                        break;
+                    case 'delete':
+                        if( $this->admin->action($id, 'delete', $table)){
+                            $this->session->set_flashdata('success_msg',' Action successful.');
+                        }else{
+                            $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+                        }
+                        break;
+                    default:
+                        $this->session->set_flashdata('error_msg', 'The action you are trying to perform is not define');
+                        break;
                 }
                 break;
-            case 'delete':
-                if( $this->admin->homepage_action($id, 'delete')){
-                    $this->session->set_flashdata('success_msg',' Action successful.');
-                }else{
-                    $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+            case 'homepage_slider':
+                $table = 'sliders';
+                switch ( $action ) {
+                    case 'deactivate':
+                    case 'activate':
+                        if( $this->admin->action($id, $action, $table)){
+                            $this->session->set_flashdata('success_msg',' Action successful.');
+                        }else{
+                            $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+                        }
+                        break;
+                    case 'delete':
+                        if( $this->admin->action($id, 'delete', $table)){
+                            $this->session->set_flashdata('success_msg',' Action successful.');
+                        }else{
+                            $this->session->set_flashdata('error_msg', 'There was an error performing the action');
+                        }
+                        break;
+                    default:
+                        $this->session->set_flashdata('error_msg', 'The action you are trying to perform is not define');
+                        break;
                 }
                 break;
             default:
-                $this->session->set_flashdata('error_msg', 'The action you are trying to perform is not define');
+                $this->sesion->set_flashdata('error_msg', 'Oops! Seems you are lost :( ');
                 break;
         }
+
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    function upload_image($file){
-        $config['upload_path'] = CATEGORY_HOMEPAGE_DIR ;
-        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+    function upload_image($field, $path = CATEGORY_HOMEPAGE_DIR ){
+        $config['upload_path'] = $path;
+        $config['allowed_types'] = 'gif|jpg|jpeg|png|JPG';
         $config['max_size'] = 10000;
         $config['overwrite'] = true;
         $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
-        if (!$this->upload->do_upload('image')) {
+        if (!$this->upload->do_upload($field)) {
             $this->session->set_flashdata('error_msg',$this->upload->display_errors());
             return false;
         } else {

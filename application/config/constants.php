@@ -87,3 +87,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 // My Constants
 defined('CATEGORY_HOMEPAGE_DIR') OR define('CATEGORY_HOMEPAGE_DIR', $_SERVER['DOCUMENT_ROOT'] .'/contents/home/');
+defined('HOMEPAGE_SLIDER') OR define('HOMEPAGE_SLIDER', $_SERVER['DOCUMENT_ROOT'] .'/contents/home/sliders/');

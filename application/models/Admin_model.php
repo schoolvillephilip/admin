@@ -579,7 +579,7 @@ Class Admin_model extends CI_Model{
     /*
      * Delete, Activate or deactivate the homapge category Section board
      * */
-    function homepage_action($id , $action){
+    function action($id , $action, $table ){
         if( $action != 'delete'){
             $this->db->where('id', $id);
             if($action == 'deactivate'){
@@ -587,9 +587,9 @@ Class Admin_model extends CI_Model{
             }else{
                 $this->db->set('status', 'active');
             }
-            return $this->db->update('homepage_setting');
+            return $this->db->update($table);
         }else{
-            return $this->db->delete('homepage_setting', array('id' => $id));
+            return $this->db->delete($table, array('id' => $id));
         }
     }
 
