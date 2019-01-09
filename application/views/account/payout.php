@@ -187,12 +187,14 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <button class="btn btn-danger btn-rounded btn-labeled">
-                                                    <i class="btn-label demo-psi-cross"></i>Decline
-                                                </button>
-                                                <button class="btn btn-primary btn-rounded btn-labeled">
-                                                    <i class="btn-label demo-psi-credit-card-2"></i>Pay
-                                                </button>
+                                                <form id="payment-made" method="POST"
+                                                      action="<?= base_url('action/payment_made'); ?>">
+                                                    <input type="hidden" name="pid" id="pid" value="">
+                                                    <button class="btn btn-primary btn-rounded btn-labeled"
+                                                            id="payout_btn" style="display:none;">
+                                                        <i class="btn-label demo-psi-credit-card-2"></i>Make Payment
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -210,8 +212,23 @@
         <i class="pci-chevron chevron-up"></i>
     </button>
 </div>
+
+
 <?php $this->load->view('templates/scripts'); ?>
 <script>
+    $('#payout_btn').on('click', function (e) {
+        e.preventDefault();
+        let cname = $('#company_name').val();
+        let aname = $('#account_name').val();
+        let bname = $('#bank_name').val();
+        let anum = $('#account_number').val();
+        let atype = $('#account_type').val();
+        let amount = $('#payout_amount').val();
+        var pay = confirm("Do you want to proceed with payment?");
+        if (pay) {
+            $('#payment-made').submit();
+        }
+    });
     $('.payout_detail').on('click', function () {
         $('.payout_detail').removeClass('activePayout');
         let self = $(this);
@@ -230,6 +247,8 @@
                 $('#account_number').val(d.account_number);
                 $('#account_type').val(d.account_type);
                 $('#payout_amount').val(d.amount);
+                $('#pid').val(d.id);
+                $('#payout_btn').show();
             }
         });
     });
