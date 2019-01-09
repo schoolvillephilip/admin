@@ -118,9 +118,15 @@
                                     <td>
                                         <?php
                                         $selected = json_decode($address->available_area);
-                                        foreach ($areas->result() as $area):
-                                            if (in_array($area->id, $selected)) echo ucwords($area->name) . ','; ?>
-                                        <?php endforeach; ?>
+                                            if( $selected ):
+                                            foreach ($areas->result() as $area):
+                                                if (in_array($area->id, $selected)) echo ucwords($area->name) . ','; ?>
+                                            <?php
+                                            endforeach;
+                                        else:
+                                            echo 'No Area Was Set';
+                                        endif;
+                                        ?>
                                     </td>
                                     <td><?= ($address->enable == 1) ? 'Enabled' : 'Disabled'; ?></td>
                                 </tr>

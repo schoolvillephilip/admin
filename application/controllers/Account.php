@@ -43,11 +43,13 @@ class Account extends CI_Controller
     }
     public function payout()
     {
+        $uid = $this->session->userdata('logged_id');
         $page_data['pg_name'] = 'report';
         $page_data['page_title'] = "Payout Requests";
         $page_data['sub_name'] = "payout";
         $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
+        $page_data['profile'] = $this->admin->get_profile($uid);
+        $page_data['requests'] = $this->admin->get_payment_request();
         $this->load->view('account/payout', $page_data);
     }
 

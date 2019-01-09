@@ -93,7 +93,7 @@
                             <label class="col-lg-3 control-label" for="specification">Specifications</label>
                             <div class="col-lg-7">
                                 <span class="text-dark" style="margin: 4px; padding-bottom: 5px;"><a
-                                            href="<?= base_url('categories/specification/add'); ?>">Click to create new specification, if not found below.</a> </span><br/><br/>
+                                            href="<?= base_url('categories/specification/add'); ?>" class="btn-link">Click to create new specification, if not found below.</a> </span><br/><br/>
                                 <?php foreach ($specifications->result() as $specification) :
                                     $specs = json_decode($category->specifications);
                                     $checked = (!is_null($specs) && in_array($specification->id, $specs)) ? 'checked' : '';

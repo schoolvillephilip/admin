@@ -601,4 +601,16 @@ Class Admin_model extends CI_Model{
     }
 
 
+    function get_payment_request( $id = ''){
+        $query = "SELECT p.amount,s.legal_company_name, s.bank_name, s.account_name, s.account_number,s.account_type, s.balance 
+          FROM payouts p JOIN sellers s ON(s.uid = p.user_id)";
+        if( $id != '' ) {
+            $query .= " WHERE p.user_id = {$id} AND p.status = 'processing' ";
+        }else{
+            $query .= " WHERE p.status = 'processing' ORDER BY 'date_requested' DESC";
+        }
+        return $this->run_sql( $query )->result();
+    }
+
+
 }

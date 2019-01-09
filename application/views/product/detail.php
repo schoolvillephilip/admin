@@ -23,7 +23,7 @@
                     <div class="col-md-3">
                         <p>
                             <img class="product-img"
-                                 src="<?= base_url('data/products/' . $product->id . '/' . $product->image_name); ?>"
+                                 src="<?= PRODUCTS_IMAGE_PATH . $product->image_name; ?>"
                                  alt="<?= $product->product_name; ?>"
                                  title="<?= $product->product_name; ?>" style="max-width: 330px;">
                         </p>
