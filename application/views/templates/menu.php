@@ -111,6 +111,9 @@
                             <li <?php if ($sub_name == 'payout') echo 'class="active-link"' ?>><a
                                         href="<?= base_url('account/payout'); ?>">
                                     <i class="demo-pli-star"></i>Payout Requests</a></li>
+                            <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
+                                        href="<?= base_url('account/history'); ?>">
+                                    <i class="demo-pli-star"></i>Payout History</a></li>
                             </ul>
                         </li>
                         <li class="list-divider"></li>
