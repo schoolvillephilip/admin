@@ -102,7 +102,7 @@
                                                      style="height:290px;margin-top:10px;">
                                                     <div class="list-group nano-content">
                                                         <?php if($requests) : foreach( $requests as $request) : ?>
-                                                        <a href="javascript:;" class="list-group-item" id="<?= $request->id; ?>">
+                                                        <a href="javascript:;" class="list-group-item payout_detail" id="<?= $request->id; ?>">
                                                             <h5 class="list-group-item-text"><?= ucwords( $request->legal_company_name);?></h5>
                                                             <p class="list-group-item-heading"><?= ngn($request->amount); ?></p>
                                                         </a>
@@ -138,7 +138,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="text-center">
-                                    <h3>PAY AWOYAYA AKINYELE</h3>
+                                    <h3 id="payment_name">PAY SELLER</h3>
                                     <div id="acc_det" class="tab-pane" style="margin-top:20px;border:1px solid #35bbae;height:fit-content;padding:30px 0;">
                                         <h4>Payout Details</h4>
                                         <div class="row">
@@ -235,6 +235,10 @@
 </div>
 <?php $this->load->view('templates/scripts'); ?>
 <script>
+    $('.payout_detail').on('click', function(){
+        let self = $(this);
+        alert(self.id)
+    });
     function trigger(e) {
         $(e).click();
     }
