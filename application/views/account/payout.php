@@ -218,12 +218,6 @@
 <script>
     $('#payout_btn').on('click', function (e) {
         e.preventDefault();
-        let cname = $('#company_name').val();
-        let aname = $('#account_name').val();
-        let bname = $('#bank_name').val();
-        let anum = $('#account_number').val();
-        let atype = $('#account_type').val();
-        let amount = $('#payout_amount').val();
         var pay = confirm("Do you want to proceed with payment?");
         if (pay) {
             $('#payment-made').submit();
