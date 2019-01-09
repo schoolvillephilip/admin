@@ -31,8 +31,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row" style="padding:10px;">
-                            <div class="table-responsive" style="margin-top:20px;">
-                                <h3 class="text-center">Payout History</h3>
+                            <div class="table-responsive">
                                 <table id="history_table" class="table table-striped table-bordered" cellspacing="0"
                                        width="100%">
                                     <thead>
