@@ -59,6 +59,36 @@ class Account extends CI_Controller
             exit; 
         }
     }
+    function payment_made(){
+        $pid = $this->input->post('pid', true);
+        $uid = $this->input->post('uid', true);
+        $amount = $this->input->post('amount', true);
+        $bank_details = $this->input->post('bank_detail', true);
+        $payment_id = $this->input->post('txn_code', true);
+        if( $pid && $uid ){
+            try {
+                $approved_by = $this->session->userdata('logged_id');
+                $updatedata = array('status' => 'completed', 'date_approved' => get_now(), 'approved_by' => $approved_by);
+                $this->admin->update_data($pid, $updatedata, 'payouts');
+                $user = $this->admin->get_profile($uid);
+                $recipent = 'Dear '. $user->legal_company_name;
+                $email_array = array(
+                    'email' => $user->email,
+                    'recipent' => $recipent,
+                    'amount'   => $amount,
+                    'bank_details' => $bank_details,
+                    'payment_id'    => $payment_id
+                );
+                $this->load->model('email_model', 'email');
+                $this->admin->payment_made_to_seller( $email_array );
+                $this->session->set_flashdata('success_msg', 'Payment has been marked completed...');
+
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error_msg', "Error : " . $e);
+            }
+            redirect('accounts/payout');
+        }
+    }
     // Payment History in the system
     public function history()
     {
