@@ -7,6 +7,10 @@
     td p {
         margin: 12px;
     }
+
+    .activePayout {
+        border-left: 2px solid #35bbae !important;
+    }
 </style>
 </head>
 <body>
@@ -53,7 +57,7 @@
                                 <div class="panel panel-bordered-pink panel-colorful">
                                     <a href="javascript:;" onclick="trigger('#inc_trig');">
                                         <div class="pad-all text-center">
-                                            <span class="text-2x text-thin"><?= count($requests)?></span>
+                                            <span class="text-2x text-thin"><?= count($requests) ?></span>
                                             <p>UNCLEARED TRANSACTIONS</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
@@ -61,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <a href="<?=base_url('account/history')?>">
+                                <a href="<?= base_url('account/history') ?>">
                                     <div class="panel panel-bordered-purple panel-colorful">
                                         <div class="pad-all text-center">
                                             <span class="text-2x text-thin">&#8358; 123,000</span>
@@ -101,34 +105,16 @@
                                                 <div class="txn nano has-scrollbar"
                                                      style="height:290px;margin-top:10px;">
                                                     <div class="list-group nano-content">
-                                                        <?php if($requests) : foreach( $requests as $request) : ?>
-                                                        <a href="javascript:;" class="list-group-item payout_detail" id="<?= $request->id; ?>">
-                                                            <h5 class="list-group-item-text"><?= ucwords( $request->legal_company_name);?></h5>
-                                                            <p class="list-group-item-heading"><?= ngn($request->amount); ?></p>
-                                                        </a>
-                                                        <?php endforeach; else :?>
-                                                            <p class="list-group-item-heading">No payment Request In The System Yet</p>
+                                                        <?php if ($requests) : foreach ($requests as $request) : ?>
+                                                            <a href="javascript:;" class="list-group-item payout_detail"
+                                                               id="<?= $request->id; ?>">
+                                                                <h5 class="list-group-item-text"><?= ucwords($request->legal_company_name); ?></h5>
+                                                                <p class="list-group-item-heading"><?= ngn($request->amount); ?></p>
+                                                            </a>
+                                                        <?php endforeach; else : ?>
+                                                            <p class="list-group-item-heading">No payment Request In The
+                                                                System Yet</p>
                                                         <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="demo-tabs2-box-2" class="tab-pane fade">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <i class="demo-pli-thunder text-main icon-3x"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <p class="text-main text-lg mar-no">History</p>
-                                                        All Payments History
-                                                    </div>
-                                                </div>
-                                                <div class="txn nano has-scrollbar"
-                                                     style="height:290px;margin-top:10px;">
-                                                    <div class="list-group nano-content">
-                                                        <a href="#" class="list-group-item">
-                                                            <h5 class="list-group-item-text">Awoyaya Akinyele</h5>
-                                                            <p class="list-group-item-heading">&#8358; 123,000</p>
-                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,21 +125,24 @@
                             <div class="col-md-7">
                                 <div class="text-center">
                                     <h3 id="payment_name">PAY SELLER</h3>
-                                    <div id="acc_det" class="tab-pane" style="margin-top:20px;border:1px solid #35bbae;height:fit-content;padding:30px 0;">
+                                    <div id="acc_det" class="tab-pane"
+                                         style="margin-top:20px;border:1px solid #35bbae;height:fit-content;padding:30px 0;">
                                         <h4>Payout Details</h4>
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label class="col-lg-4 control-label">First Name</label>
+                                                <label class="col-lg-4 control-label">Company</label>
                                                 <div class="col-lg-7">
-                                                    <input type="text" class="form-control" name="first_name" id="first_name"
-                                                           placeholder="First Name" required disabled>
+                                                    <input type="text" class="form-control" name="company_name"
+                                                           id="company_name"
+                                                           placeholder="Company Name" required disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label class="col-lg-4 control-label">Last Name</label>
+                                                <label class="col-lg-4 control-label">Account Name</label>
                                                 <div class="col-lg-7">
-                                                    <input type="text" class="form-control" name="last_name" id="last_name"
-                                                           placeholder="Last Name" required disabled>
+                                                    <input type="text" class="form-control" name="account_name"
+                                                           id="account_name"
+                                                           placeholder="Account Name" required disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,48 +150,36 @@
                                             <div class="form-group col-md-6">
                                                 <label class="col-lg-4 control-label">Bank Name</label>
                                                 <div class="col-lg-7">
-                                                    <select name="required" class="form-control" disabled>
-                                                        <option value="">-- Select Bank Name--</option>
-                                                        <?php $banks = explode(',', lang('banks'));
-                                                        foreach ($banks as $bank) :
-                                                            ?>
-                                                            <option value="<?= trim($bank); ?>"><?= trim($bank); ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
+                                                    <input type="text" class="form-control" name="bank_name"
+                                                           id="bank_name"
+                                                           placeholder="Bank Name" required disabled>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="col-lg-4 control-label">Account Name</label>
-                                                <div class="col-lg-7">
-                                                    <input type="text" class="form-control" name="account_name"
-                                                           placeholder="Account Name" required disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label class="col-lg-4 control-label">Account Number</label>
                                                 <div class="col-lg-7">
                                                     <input type="text" class="form-control" name="account_number"
+                                                           id="account_number"
                                                            placeholder="XXXXXXXXXX"
                                                            required disabled>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="col-lg-4 control-label" for="account_type">Account Type</label>
-                                                <div class="col-lg-7">
-                                                    <select class="form-control" name="account_type" required disabled>
-                                                        <option value="current">Current</option>
-                                                        <option value="savings">Savings</option>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-6">
+                                                <label class="col-lg-4 control-label" for="account_type">Account
+                                                    Type</label>
+                                                <div class="col-lg-7">
+                                                    <input type="text" id="account_type" class="form-control"
+                                                           placeholder="Account Type"
+                                                           name="account_type" id="account_type" required disabled/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
                                                 <label class="col-lg-4 control-label">Amount &#8358;</label>
                                                 <div class="col-lg-7">
                                                     <input type="number" class="form-control" name="payout_amount"
+                                                           id="payout_amount"
                                                            placeholder="0.00"
                                                            required disabled>
                                                 </div>
@@ -235,10 +212,28 @@
 </div>
 <?php $this->load->view('templates/scripts'); ?>
 <script>
-    $('.payout_detail').on('click', function(){
+    $('.payout_detail').on('click', function () {
+        $('.payout_detail').removeClass('activePayout');
         let self = $(this);
-        alert(self.id)
+        self.addClass('activePayout');
+        let id = self.attr('id');
+        $.ajax({
+            url: base_url + 'account/payment_request',
+            method: 'post',
+            data: {id: id},
+            dataType: 'json',
+            success: function (d) {
+                $('#payment_name').text('PAY ' + d.legal_company_name.toUpperCase());
+                $('#company_name').val(d.legal_company_name);
+                $('#account_name').val(d.account_name);
+                $('#bank_name').val(d.bank_name);
+                $('#account_number').val(d.account_number);
+                $('#account_type').val(d.account_type);
+                $('#payout_amount').val(d.amount);
+            }
+        });
     });
+
     function trigger(e) {
         $(e).click();
     }
