@@ -600,9 +600,14 @@ Class Admin_model extends CI_Model{
         $this->db->update($table);
     }
 
-
-    function get_payment_request( $id = ''){
-        $query = "SELECT p.id, p.amount,s.legal_company_name, s.bank_name, s.account_name, s.account_number,s.account_type, s.balance 
+    // Get payment request,
+    // single or result
+    /**
+     * @param string $id
+     * @return mixed
+     */
+    function get_payment_request($id = ''){
+        $query = "SELECT p.id, p.transaction_code, p.amount,s.legal_company_name, s.bank_name, s.account_name, s.account_number,s.account_type, s.balance 
           FROM payouts p JOIN sellers s ON(s.uid = p.user_id)";
         if( $id != '' ) {
             $query .= " WHERE p.id = {$id} AND p.status = 'processing' ";
@@ -613,6 +618,7 @@ Class Admin_model extends CI_Model{
         }
     }
 
+    // Get payment history for Admin to rack
     function payment_history( $status = ''){
         $query = "SELECT p.*, s.legal_company_name, s.uid FROM payouts p JOIN sellers s ON (s.uid = p.user_id) ORDER BY p.id";
         if( $status != '' ) {
@@ -620,6 +626,5 @@ Class Admin_model extends CI_Model{
         }
         return $this->run_sql( $query )->result();
     }
-
 
 }
