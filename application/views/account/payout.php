@@ -53,7 +53,7 @@
                                 <div class="panel panel-bordered-pink panel-colorful">
                                     <a href="javascript:;" onclick="trigger('#inc_trig');">
                                         <div class="pad-all text-center">
-                                            <span class="text-2x text-thin">4</span>
+                                            <span class="text-2x text-thin"><?= count($requests)?></span>
                                             <p>UNCLEARED TRANSACTIONS</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
@@ -82,10 +82,6 @@
                                                     <a data-toggle="tab" href="#demo-tabs2-box-1" id="inc_trig">Uncleared
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a data-toggle="tab" href="#demo-tabs2-box-2" id="his_trig">History
-                                                    </a>
-                                                </li>
                                             </ul>
                                         </div>
                                         <h3 class="panel-title"></h3>
@@ -105,22 +101,14 @@
                                                 <div class="txn nano has-scrollbar"
                                                      style="height:290px;margin-top:10px;">
                                                     <div class="list-group nano-content">
+                                                        <?php if($requests) : foreach( $requests as $request) : ?>
                                                         <a href="#" class="list-group-item">
-                                                            <h5 class="list-group-item-text">Awoyaya Akinyele</h5>
-                                                            <p class="list-group-item-heading">&#8358; 12,000</p>
+                                                            <h5 class="list-group-item-text"><?= ucwords( $request->legal_company_name);?></h5>
+                                                            <p class="list-group-item-heading"><?= ngn($request->amount); ?></p>
                                                         </a>
-                                                        <a href="#" class="list-group-item">
-                                                            <h5 class="list-group-item-text">Awoyaya Akinyele</h5>
-                                                            <p class="list-group-item-heading">&#8358; 12,000</p>
-                                                        </a>
-                                                        <a href="#" class="list-group-item">
-                                                            <h5 class="list-group-item-text">Awoyaya Akinyele</h5>
-                                                            <p class="list-group-item-heading">&#8358; 12,000</p>
-                                                        </a>
-                                                        <a href="#" class="list-group-item">
-                                                            <h5 class="list-group-item-text">Awoyaya Akinyele</h5>
-                                                            <p class="list-group-item-heading">&#8358; 12,000</p>
-                                                        </a>
+                                                        <?php endforeach; else :?>
+                                                            <p class="list-group-item-heading">No payment Request In The System Yet</p>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </div>

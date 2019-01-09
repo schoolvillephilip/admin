@@ -86,5 +86,8 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 // My Constants
+
+// Image Directory
 defined('CATEGORY_HOMEPAGE_DIR') OR define('CATEGORY_HOMEPAGE_DIR', $_SERVER['DOCUMENT_ROOT'] .'/contents/home/');
 defined('HOMEPAGE_SLIDER') OR define('HOMEPAGE_SLIDER', $_SERVER['DOCUMENT_ROOT'] .'/contents/home/sliders/');
+defined('PRODUCTS_IMAGE_PATH') OR define('PRODUCTS_IMAGE_PATH', "https://res.cloudinary.com/de9lpikx3/image/upload/");

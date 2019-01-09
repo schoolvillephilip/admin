@@ -49,7 +49,7 @@
                                 <?php foreach ($sellers as $seller) : ?>
                                     <tr>
                                         <td>
-                                            <a href="<?= base_url('sellers/detail/' . $seller->uid); ?>"> <?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></a>
+                                            <a class="btn-link" href="<?= base_url('sellers/detail/' . $seller->uid); ?>"> <?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></a>
                                         </td>
                                         <td><?= $seller->email; ?></td>
                                         <td><?= $seller->legal_company_name; ?></td>
