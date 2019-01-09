@@ -188,8 +188,12 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <form id="payment-made" method="POST"
-                                                      action="<?= base_url('action/payment_made'); ?>">
+                                                      action="<?= base_url('account/payment_made'); ?>">
                                                     <input type="hidden" name="pid" id="pid" value="">
+                                                    <input type="hidden" name="uid" id="uid" value="">
+                                                    <input type="hidden" name="bank_details" id="bank_details" value="">
+                                                    <input type="hidden" name="amount" id="amount" value="">
+                                                    <input type="hidden" name="txn_code" id="txn_code" value="">
                                                     <button class="btn btn-primary btn-rounded btn-labeled"
                                                             id="payout_btn" style="display:none;">
                                                         <i class="btn-label demo-psi-credit-card-2"></i>Make Payment
@@ -241,7 +245,11 @@
                 $('#account_number').val(d.account_number);
                 $('#account_type').val(d.account_type);
                 $('#payout_amount').val(d.amount);
+                $('#amount').val(d.amount);
+                $('#txn_code').val(d.transaction_code);
                 $('#pid').val(d.id);
+                $('#uid').val(d.uid);
+                $('#bank_details').val(d.bank_name + ' ' + d.account_name + ' (' + d.account_number + ')');
                 $('#payout_btn').show();
             }
         });

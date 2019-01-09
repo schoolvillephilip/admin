@@ -607,7 +607,7 @@ Class Admin_model extends CI_Model{
      * @return mixed
      */
     function get_payment_request($id = ''){
-        $query = "SELECT p.id, p.transaction_code, p.amount,s.legal_company_name, s.bank_name, s.account_name, s.account_number,s.account_type, s.balance 
+        $query = "SELECT p.id, p.transaction_code, p.amount,s.legal_company_name, s.uid, s.bank_name, s.account_name, s.account_number,s.account_type, s.balance 
           FROM payouts p JOIN sellers s ON(s.uid = p.user_id)";
         if( $id != '' ) {
             $query .= " WHERE p.id = {$id} AND p.status = 'processing' ";

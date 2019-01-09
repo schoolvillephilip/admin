@@ -191,7 +191,7 @@ if (!function_exists('paymentStatus')) {
             case 'pending':
                 return '<label class="label label-table label-info" title="Payment is yet to be validated by seller">' . ucfirst($status) . '</label>';
                 break;
-            case 'approved':
+            case 'completed':
                 return '<label class="label label-table label-success">' . ucfirst($status) . '</label>';
                 break;
             case 'processing':
