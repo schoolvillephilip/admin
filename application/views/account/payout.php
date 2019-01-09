@@ -102,7 +102,7 @@
                                                      style="height:290px;margin-top:10px;">
                                                     <div class="list-group nano-content">
                                                         <?php if($requests) : foreach( $requests as $request) : ?>
-                                                        <a href="#" class="list-group-item">
+                                                        <a href="javascript:;" class="list-group-item" id="<?= $request->id; ?>">
                                                             <h5 class="list-group-item-text"><?= ucwords( $request->legal_company_name);?></h5>
                                                             <p class="list-group-item-heading"><?= ngn($request->amount); ?></p>
                                                         </a>

@@ -52,6 +52,13 @@ class Account extends CI_Controller
         $page_data['requests'] = $this->admin->get_payment_request();
         $this->load->view('account/payout', $page_data);
     }
+    function payment_request(){
+        if( $this->input->is_ajax_request() && $this->input->post()){
+            $id = $this->input->post('id');
+            echo json_encode( $this->admin->get_payment_request( $id ));
+            exit; 
+        }
+    }
 
     public function txn_overview()
     {
