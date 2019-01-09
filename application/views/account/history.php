@@ -39,19 +39,29 @@
                                     <tr>
                                         <th>Date Initiated</th>
                                         <th>Payout ID</th>
+                                        <th>Seller</th>
                                         <th class="min-tablet">Amount</th>
                                         <th class="min-desktop">Date Reconciled</th>
                                         <th class="min-desktop">Payment Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <?php foreach($histories as $history ): ?>
                                     <tr>
-                                        <td>20/12/2018</td>
-                                        <td>PTX1234</td>
-                                        <td>&#8358; 200,000</td>
-                                        <td>28/12/2018</td>
-                                        <td>Paid</td>
+                                        <td><?= date('Y/m/d h:i:s', strtotime( $history->date_requested)); ?></td>
+                                        <td>PY-<?= $history->id; ?></td>
+                                        <td><a class="btn-link" href="<?= base_url('sellers/detail/' . $history->uid); ?>"><?= ucwords($history->legal_company_name); ?></a></td>
+                                        <td><?= ngn($history->amount); ?></td>
+                                        <td>
+                                            <?php if ($history->date_approved) : ?>
+                                                <?= date('l, F d', strtotime($history->date_approved)); ?>
+                                            <?php else : ?>
+                                                <span class="text-info">No action yet.</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= paymentStatus( $history->status); ?></td>
                                     </tr>
+                                    <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>

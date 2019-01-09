@@ -183,3 +183,23 @@ if( !function_exists('has_permission')){
         return false;
     }
 }
+
+if (!function_exists('paymentStatus')) {
+    function paymentStatus($status)
+    {
+        switch ($status) {
+            case 'pending':
+                return '<label class="label label-table label-info" title="Payment is yet to be validated by seller">' . ucfirst($status) . '</label>';
+                break;
+            case 'approved':
+                return '<label class="label label-table label-success">' . ucfirst($status) . '</label>';
+                break;
+            case 'processing':
+                return '<label class="label label-table label-warning" title="Payment has been validated, but not yet paid">' . ucfirst($status) . '</label>';
+                break;
+            default:
+                return '<label class="label label-table label-danger">' . ucfirst($status) . '</label>';
+                break;
+        }
+    }
+}

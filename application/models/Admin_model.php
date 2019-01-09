@@ -611,7 +611,14 @@ Class Admin_model extends CI_Model{
             $query .= " WHERE p.status = 'processing' ORDER BY 'date_requested' DESC";
             return $this->run_sql( $query )->result();
         }
+    }
 
+    function payment_history( $status = ''){
+        $query = "SELECT p.*, s.legal_company_name, s.uid FROM payouts p JOIN sellers s ON (s.uid = p.user_id) ORDER BY p.id";
+        if( $status != '' ) {
+            $query .= " WHERE p.status = '" . $status . "'";
+        }
+        return $this->run_sql( $query )->result();
     }
 
 

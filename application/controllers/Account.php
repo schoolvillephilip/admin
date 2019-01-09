@@ -62,11 +62,13 @@ class Account extends CI_Controller
     // Payment History in the system
     public function history()
     {
+        $id = $this->session->userdata('logged_id');
         $page_data['pg_name'] = 'report';
         $page_data['page_title'] = "Payout History";
         $page_data['sub_name'] = "history";
         $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
+        $page_data['profile'] = $this->admin->get_profile( $id );
+        $page_data['histories'] = $this->admin->payment_history();
         $this->load->view('account/history', $page_data);
     }
 
