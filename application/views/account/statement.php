@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5"
+                            <div class="col-md-12"
                                  style="height:550px;padding:20px 10px 0;">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -102,7 +102,7 @@
                                                     </div>
                                                     <div class="media-body">
                                                         <p class="text-main text-lg mar-no">Unpaid</p>
-                                                        All Unpaid Sellers
+                                                        All unpaid sellers this week
                                                     </div>
                                                 </div>
                                                 <div class="txn nano has-scrollbar"
@@ -140,7 +140,7 @@
                                                     </div>
                                                     <div class="media-body">
                                                         <p class="text-main text-lg mar-no">Paid</p>
-                                                        All Paid Sellers This Week
+                                                        All paid sellers this week
                                                     </div>
                                                 </div>
                                                 <div class="txn nano has-scrollbar"
@@ -175,96 +175,96 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7"
-                                 style="height:550px;">
-                                <div class="panel" id="acc_state_table">
-                                    <div class=" row text-center">
-                                        <h6 class="col-md-6">Period<br/>26 Nov 2018 – 02 Dec 2018</h6><h6
-                                            class="col-md-6">Status<br/><i class="demo-pli-thunder"></i>Open</h6>
-                                    </div>
-                                    <div class="panel-body">
-                                        <table class="table table-hover table-vcenter">
-                                            <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span class="text-main text-semibold">Opening Balance</span>
-                                                </td>
-                                                <td>
-                                                    <span class="text-muted">Negative closing balance from previous statements.</span>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span class="text-warning text-semibold">&#8358; 0.00</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="text-main text-semibold">Orders</span>
-                                                </td>
-                                                <td>
-                                                    <p class="text-muted">Sales Revenue</p>
-                                                    <p class="text-muted">Other Revenue</p>
-                                                    <p class="text-muted">Fees</p>
-                                                </td>
-                                                <td class="text-center">
-                                                    <p class="text-success text-semibold">&#8358; 0.00</p>
-                                                    <p class="text-success text-semibold">&#8358; 0.00</p>
-                                                    <p class="text-danger text-semibold">&#8358; 0.00</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="text-main text-semibold">Refunds</span>
-                                                </td>
-                                                <td>
-                                                    <p class="text-muted">Returned or Cancelled Orders</p>
-                                                    <p class="text-muted">Refund on Fees</p>
-                                                </td>
-                                                <td class="text-center">
-                                                    <p class="text-danger text-semibold">&#8358; 0.00</p>
-                                                    <p class="text-success text-semibold">&#8358; 0.00</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="text-main text-semibold">Others</span>
-                                                </td>
-                                                <td>
-                                                    <p class="text-muted">Others</p>
-                                                </td>
-                                                <td class="text-center"><p class="text-success text-semibold">&#8358;
-                                                        0.00</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="text-main text-semibold">Closing Balance</span>
-                                                </td>
-                                                <td>
-                                                    <p class="text-muted">Total Balance</p>
-                                                </td>
-                                                <td class="text-center"><p class="text-success text-semibold">&#8358;
-                                                        0.00</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="text-main text-semibold">Payout</span>
-                                                </td>
-                                                <td>
-                                                </td>
-                                                <td class="text-center"><span class="text-success text-semibold">&#8358; 0.00</span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <button style="margin-top:-30px;"
-                                        class="btn btn-primary btn-rounded btn-labeled pull-right"
-                                        onclick="PrintElem('acc_state_table');"><i
-                                        class="btn-label demo-psi-printer"></i> Print Statement
-                                </button>
-                            </div>
+<!--                            <div class="col-md-7"-->
+<!--                                 style="height:550px;">-->
+<!--                                <div class="panel" id="acc_state_table">-->
+<!--                                    <div class=" row text-center">-->
+<!--                                        <h6 class="col-md-6">Period<br/>26 Nov 2018 – 02 Dec 2018</h6><h6-->
+<!--                                            class="col-md-6">Status<br/><i class="demo-pli-thunder"></i>Open</h6>-->
+<!--                                    </div>-->
+<!--                                    <div class="panel-body">-->
+<!--                                        <table class="table table-hover table-vcenter">-->
+<!--                                            <tbody>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-main text-semibold">Opening Balance</span>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-muted">Negative closing balance from previous statements.</span>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-center">-->
+<!--                                                    <span class="text-warning text-semibold">&#8358; 0.00</span>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-main text-semibold">Orders</span>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <p class="text-muted">Sales Revenue</p>-->
+<!--                                                    <p class="text-muted">Other Revenue</p>-->
+<!--                                                    <p class="text-muted">Fees</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-center">-->
+<!--                                                    <p class="text-success text-semibold">&#8358; 0.00</p>-->
+<!--                                                    <p class="text-success text-semibold">&#8358; 0.00</p>-->
+<!--                                                    <p class="text-danger text-semibold">&#8358; 0.00</p>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-main text-semibold">Refunds</span>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <p class="text-muted">Returned or Cancelled Orders</p>-->
+<!--                                                    <p class="text-muted">Refund on Fees</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-center">-->
+<!--                                                    <p class="text-danger text-semibold">&#8358; 0.00</p>-->
+<!--                                                    <p class="text-success text-semibold">&#8358; 0.00</p>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-main text-semibold">Others</span>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <p class="text-muted">Others</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-center"><p class="text-success text-semibold">&#8358;-->
+<!--                                                        0.00</p>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-main text-semibold">Closing Balance</span>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <p class="text-muted">Total Balance</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-center"><p class="text-success text-semibold">&#8358;-->
+<!--                                                        0.00</p>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <span class="text-main text-semibold">Payout</span>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-center"><span class="text-success text-semibold">&#8358; 0.00</span>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <button style="margin-top:-30px;"-->
+<!--                                        class="btn btn-primary btn-rounded btn-labeled pull-right"-->
+<!--                                        onclick="PrintElem('acc_state_table');"><i-->
+<!--                                        class="btn-label demo-psi-printer"></i> Print Statement-->
+<!--                                </button>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
