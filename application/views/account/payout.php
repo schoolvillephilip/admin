@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <a href="javascript:;" onclick="trigger('#his_trig');">
+                                <a href="<?=base_url('account/history')?>">
                                     <div class="panel panel-bordered-purple panel-colorful">
                                         <div class="pad-all text-center">
                                             <span class="text-2x text-thin">&#8358; 123,000</span>
@@ -222,42 +222,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding:10px;">
-                            <div class="table-responsive" style="margin-top:20px;">
-                                <h3 class="text-center">Payout History</h3>
-                                <table id="history_table" class="table table-striped table-bordered" cellspacing="0"
-                                       width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>TXN Type</th>
-                                        <th class="min-tablet">TXN Number</th>
-                                        <th class="min-tablet">Order Number</th>
-                                        <th class="min-desktop">Details</th>
-                                        <th class="min-desktop">Amount</th>
-                                        <th class="min-desktop">VAT</th>
-                                        <th class="min-desktop">WHT</th>
-                                        <th class="min-desktop">Payment status</th>
-                                        <th class="min-desktop">Statement</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -270,19 +234,6 @@
     </button>
 </div>
 <?php $this->load->view('templates/scripts'); ?>
-<script>
-    $(document).ready(function() {
-        $("#history_table").dataTable({
-            "responsive": true,
-            "language": {
-                "paginate": {
-                    "previous": '<i class="demo-psi-arrow-left"></i>',
-                    "next": '<i class="demo-psi-arrow-right"></i>'
-                }
-            }
-        });
-    });
-</script>
 <script>
     function trigger(e) {
         $(e).click();
