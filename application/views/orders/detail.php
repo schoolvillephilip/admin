@@ -1,4 +1,10 @@
 <?php $this->load->view('templates/meta_tags'); ?>
+<style>
+    .active-status{
+        background-color: #124431 ;
+        color: #FFFFFF;
+    }
+</style>
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -35,12 +41,24 @@
                                                         Action <i class="demo-pli-dot-vertical icon-lg"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right" role="menu" style="">
-                                                        <li><a href="#">Order Received</a></li>
-                                                        <li><a href="#">Order Processed</a></li>
-                                                        <li><a href="#">Order Shipped</a></li>
-                                                        <li><a href="#">Order Delivered</a></li>
-                                                        <li><a href="#">Order Completed</a></li>
-                                                        <li><a href="#">Order Returned</a></li>
+                                                        <li class="<?php if( $order->active_status == 'shipped') echo 'active-status'; ?>" >
+                                                            <a href="">
+                                                                <span class="order-status" data-id="<?= $order->id?>" data-type="shipped">Mark as shipped</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="<?php if( $order->active_status == 'delivered') echo 'active-status'; ?>" >
+                                                            <a href="">
+                                                                <span class="order-status" data-id="<?= $order->id?>" data-type="delivered">Mark as delivered</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="<?php if( $order->active_status == 'completed') echo 'active-status'; ?>" >
+                                                            <a>
+                                                                <span class="order-status" data-id="<?= $order->id?>" data-type="completed">Mark as completed</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="<?php if( $order->active_status == 'returned') echo 'active-status'; ?>" >
+                                                            <span class="order-status" data-id="<?= $order->id?>" data-type="returned"></span>
+                                                        </li>
                                                     </ul>
                                                 </li>
                                             </ul>

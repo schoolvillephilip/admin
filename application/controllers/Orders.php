@@ -39,4 +39,8 @@ class Orders extends CI_Controller{
         $page_data['orders'] = $this->admin->get_orders( $id );
 		$this->load->view('orders/detail', $page_data);
 	}
+
+	function mark_order(){
+
+    }
 }
