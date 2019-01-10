@@ -29,7 +29,7 @@
                                                 <li class="active"><a href="#details-tab-<?= $x; ?>" data-toggle="tab">
                                                         Order Details</a>
                                                 </li>
-                                                <li>
+                                                <li class="active">
                                                     <a class="btn btn-default btn-active-primary dropdown-toggle"
                                                        data-toggle="dropdown" aria-expanded="false">
                                                         Action <i class="demo-pli-dot-vertical icon-lg"></i>
