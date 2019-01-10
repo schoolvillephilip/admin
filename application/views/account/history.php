@@ -48,7 +48,7 @@
                                     <?php foreach($histories as $history ): ?>
                                     <tr>
                                         <td><?= date('Y/m/d h:i:s', strtotime( $history->date_requested)); ?></td>
-                                        <td>PY-<?= $history->id; ?></td>
+                                        <td>PY-<?= $history->transaction_code; ?></td>
                                         <td><a class="btn-link" href="<?= base_url('sellers/detail/' . $history->uid); ?>"><?= ucwords($history->legal_company_name); ?></a></td>
                                         <td><?= ngn($history->amount); ?></td>
                                         <td>

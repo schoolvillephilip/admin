@@ -22,11 +22,12 @@ class Account extends CI_Controller
 
     public function statement()
     {
+        $id = $this->session->userdata('logged_id');
         $page_data['pg_name'] = 'report';
         $page_data['page_title'] = "Account Statement";
         $page_data['sub_name'] = "statement";
         $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
+        $page_data['profile'] = $this->admin->get_profile();
         $this->load->view('account/statement', $page_data);
     }
 
@@ -83,7 +84,6 @@ class Account extends CI_Controller
                 $this->load->model('email_model', 'email');
                 $this->email->payment_made_to_seller( $email_array );
                 $this->session->set_flashdata('success_msg', 'Payment has been marked completed...');
-
             } catch (Exception $e) {
                 $this->session->set_flashdata('error_msg', "Error : " . $e);
             }

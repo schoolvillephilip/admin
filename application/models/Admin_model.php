@@ -135,7 +135,7 @@ Class Admin_model extends CI_Model{
      * @return mixed
      */
     function get_profile($access){
-        $query =  "SELECT * FROM users u LEFT JOIN sellers s ON (s.uid = u.id) where u.id = $access";
+        $query =  "SELECT u.*,s.* FROM users u LEFT JOIN sellers s ON (s.uid = u.id) where u.id = {$access} OR s.uid = {$access}";
         return $this->db->query($query)->row();
     }
 
@@ -620,10 +620,11 @@ Class Admin_model extends CI_Model{
 
     // Get payment history for Admin to rack
     function payment_history( $status = ''){
-        $query = "SELECT p.*, s.legal_company_name, s.uid FROM payouts p JOIN sellers s ON (s.uid = p.user_id) ORDER BY p.id";
+        $query = "SELECT p.*, s.legal_company_name, s.uid FROM payouts p JOIN sellers s ON (s.uid = p.user_id) ";
         if( $status != '' ) {
             $query .= " WHERE p.status = '" . $status . "'";
         }
+        $query .= " ORDER BY p.id DESC";
         return $this->run_sql( $query )->result();
     }
 
