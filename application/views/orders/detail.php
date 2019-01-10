@@ -29,7 +29,7 @@
                                                 <li class="active"><a href="#details-tab-<?= $x; ?>" data-toggle="tab">
                                                         Order Details</a>
                                                 </li>
-                                                <li class="active">
+                                                <li style="opacity: 1;">
                                                     <a class="btn btn-default btn-active-primary dropdown-toggle"
                                                        data-toggle="dropdown" aria-expanded="false">
                                                         Action <i class="demo-pli-dot-vertical icon-lg"></i>
@@ -41,7 +41,6 @@
                                                         <li><a href="#">Order Delivered</a></li>
                                                         <li><a href="#">Order Completed</a></li>
                                                         <li><a href="#">Order Returned</a></li>
-                                                        <li><a href="#">Order Settled</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
