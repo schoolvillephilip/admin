@@ -196,7 +196,7 @@
                                                     <input type="hidden" name="txn_code" id="txn_code" value="">
                                                     <button class="btn btn-primary btn-rounded btn-labeled"
                                                             id="payout_btn" style="display:none;">
-                                                        <i class="btn-label demo-psi-credit-card-2"></i>Make Payment
+                                                        <i class="btn-label demo-psi-credit-card-2"></i>Confirm Payment
                                                     </button>
                                                 </form>
                                             </div>
