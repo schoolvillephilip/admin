@@ -58,7 +58,7 @@
                                     <a href="javascript:;" onclick="trigger('#inc_trig');">
                                         <div class="pad-all text-center">
                                             <span class="text-2x text-thin"><?= count($requests) ?></span>
-                                            <p>UNCLEARED TRANSACTIONS</p>
+                                            <p>COMMISSIONS</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
                                     </a>
@@ -197,7 +197,7 @@
                                                     <input type="hidden" name="txn_code" id="txn_code" value="">
                                                     <button class="btn btn-primary btn-rounded btn-labeled"
                                                             id="payout_btn" style="display:none;">
-                                                        <i class="btn-label demo-psi-credit-card-2"></i>Make Payment
+                                                        <i class="btn-label demo-psi-credit-card-2"></i>Confirm Payment
                                                     </button>
                                                 </form>
                                             </div>
