@@ -58,7 +58,7 @@
                                     <a href="javascript:;" onclick="trigger('#inc_trig');">
                                         <div class="pad-all text-center">
                                             <span class="text-2x text-thin"><?= count($requests) ?></span>
-                                            <p>UNCLEARED TRANSACTIONS</p>
+                                            <p>COMMISSIONS</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
                                     </a>
