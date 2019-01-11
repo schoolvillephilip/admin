@@ -40,7 +40,25 @@ class Orders extends CI_Controller{
 		$this->load->view('orders/detail', $page_data);
 	}
 
+	// Mark order based on status
 	function mark_order(){
-
+        if( $this->input->is_ajax_request() ){
+            $status = $this->input->post('type');
+            $id = $this->input->post('id');
+            $email = $this->input->post('email');
+            if( $this->admin->mark_order( $id , $status) ){
+                // Send Mail
+                try {
+                    $email_array = array('email' => $email);
+                    $this->load->model('email_model', 'email');
+                    $this->email->mark_order($email_array);
+                    echo json_encode(array('status' => 'success'));
+                    exit;
+                } catch (Exception $e) {
+                    echo json_encode(array('status' => 'error' , 'msg' => $e));
+                    exit;
+                }
+            }
+        }
     }
 }

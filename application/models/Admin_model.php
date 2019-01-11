@@ -628,4 +628,17 @@ Class Admin_model extends CI_Model{
         return $this->run_sql( $query )->result();
     }
 
+    /*
+     * Mark order status
+     * {"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}
+     * */
+    function mark_order( $id, $status){
+        $json = $this->run_sql("SELECT active FROM orders WHERE id = {$id}")->row();
+        $json_array = json_decode( $json->status, true );
+        $array = array($status => array('msg' => 'Order was marked as ' + $status, 'datetime' => get_now()));
+        $return = array_push( $json_array, $array);
+        $return = json_encode( $return );
+        return $this->update_data($id,array('status'=> $return, 'active_status' => $status), 'orders');
+    }
+
 }
