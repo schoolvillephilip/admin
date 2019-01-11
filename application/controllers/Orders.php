@@ -37,27 +37,41 @@ class Orders extends CI_Controller{
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
         $page_data['orders'] = $this->admin->get_orders( $id );
+//        var_dump($page_data['orders'] );
 		$this->load->view('orders/detail', $page_data);
 	}
 
 	// Mark order based on status
+    /* When an order is marked as shipped, all the items should be marked as shipped by the order_code
+     * When am order is marked as delivered ,completed, and returned the single Item will be marked as that status
+     * */
 	function mark_order(){
         if( $this->input->is_ajax_request() ){
             $status = $this->input->post('type');
+            $order_code = $this->input->post('order_code');
             $id = $this->input->post('id');
-            $email = $this->input->post('email');
-            if( $this->admin->mark_order( $id , $status) ){
-                // Send Mail
-                try {
-                    $email_array = array('email' => $email);
+
+            if( $this->admin->mark_order($status, $id, $order_code) ){
+                if( $status == 'shipped' ){
+                    // Send Mail to the buyer when the status is 'shipped'
                     $this->load->model('email_model', 'email');
-                    $this->email->mark_order($email_array);
-                    echo json_encode(array('status' => 'success'));
+                    $this->email->shipped_order( $order_code );
+                    $this->session->set_flashdata('success_msg', 'The Order Item(s) has been marked has shipped');
+                    echo '';
                     exit;
-                } catch (Exception $e) {
-                    echo json_encode(array('status' => 'error' , 'msg' => $e));
+                }elseif( $status == 'returned'){
+                    // Send mail to seller and notification
+                    $this->session->set_flashdata('success_msg', 'The order Item has been marked has returned');
+                    echo '';
                     exit;
+                }else{
+                    $this->session->set_flashdata('success_msg', 'The order Item has been marked has ' . $status );
+                    echo exit;
                 }
+            }else{
+                $this->session->set_flashdata('error_msg', 'There was an error performing that action. Contact webmaster');
+                echo '';
+                exit;
             }
         }
     }

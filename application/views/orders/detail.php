@@ -25,6 +25,7 @@
             <?php if ($orders) : ?>
                 <div id="page-content">
                     <div class="row">
+                        <?php $this->load->view('msg_view'); ?>
                         <?php $x = 1;
                         foreach ($orders as $order) : ?>
                             <div class="col-sm-6 clearfix">
@@ -35,6 +36,7 @@
                                                 <li class="active"><a href="#details-tab-<?= $x; ?>" data-toggle="tab">
                                                         Order Details</a>
                                                 </li>
+
                                                 <li style="opacity: 1;">
                                                     <a class="btn btn-default btn-active-primary dropdown-toggle"
                                                        data-toggle="dropdown" aria-expanded="false">
@@ -42,35 +44,38 @@
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right" role="menu" style="">
                                                         <li class="<?php if ($order->active_status == 'shipped') echo 'active-status'; ?>">
-                                                            <a href="javascript:;" class="order-status"
-                                                               data-email="<?= $order->email; ?>"
-                                                               data-id="<?= $order->id ?>" data-type="shipped">
+                                                            <a href="javascript:;" <?php if($order->active_status != 'shipped') : ?> class="order-status"
+                                                               data-oid="<?= $order->id; ?>"
+                                                               data-order-code="<?= $order->order_code?>" data-type="shipped"
+                                                                <?php endif; ?>
+                                                                >
                                                                 Mark as shipped
                                                             </a>
                                                         </li>
                                                         <li class="<?php if ($order->active_status == 'delivered') echo 'active-status'; ?>">
                                                             <a href="javascript:;" class="order-status"
-                                                               data-email="<?= $order->email; ?>"
-                                                               data-id="<?= $order->id ?>" data-type="delivered">
+                                                               data-oid="<?= $order->id; ?>"
+                                                               data-order-code="<?= $order->order_code?>" data-type="delivered">
                                                                 Mark as delivered
                                                             </a>
                                                         </li>
                                                         <li class="<?php if ($order->active_status == 'completed') echo 'active-status'; ?>">
                                                             <a href="javascript:;" class="order-status"
-                                                               data-email="<?= $order->email; ?>"
-                                                               data-id="<?= $order->id ?>" data-type="completed">
+                                                               data-oid="<?= $order->id; ?>"
+                                                               data-order-code="<?= $order->order_code?>" data-type="completed">
                                                                 Mark as completed
                                                             </a>
                                                         </li>
                                                         <li class="<?php if ($order->active_status == 'returned') echo 'active-status'; ?>">
                                                             <a href="javascript:;" class="order-status"
-                                                               data-email="<?= $order->email; ?>"
-                                                               data-id="<?= $order->id ?>" data-type="returned">
+                                                               data-oid="<?= $order->id; ?>"
+                                                               data-order-code="<?= $order->order_code?>" data-type="returned">
                                                                 Returned
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </li>
+
                                             </ul>
                                         </div>
                                         <h3 class="panel-title text-bold">Order Summary ( Item #<?= $x; ?> )</h3>
@@ -183,14 +188,14 @@
             }
         }
     });
-    let action_type, id, email;
+    let action_type, order_code,id;
     $('.order-status').on('click', function () {
         action_type = $(this).data('type');
-        id = $(this).data('id');
-        email = $(this).data('email');
+        order_code = $(this).data('order-code');
+        id = $(this).data('oid');
         $('#modal_confirm')
             .find('.modal-header > p')
-            .text("Confirm to mark this order as " + action_type).end()
+            .text("Confirm to mark this order as " + action_type ).end()
             .modal('show');
     });
 
@@ -198,10 +203,11 @@
         e.preventDefault();
         $.ajax({
             url: base_url + 'orders/mark_order/',
-            data: {'type': action_type, 'id': id, 'email': email},
+            data: {'type': action_type, 'order_code': order_code, 'id':id},
+            type: "POST",
             dataType: 'json',
             success: function (data) {
-
+                window.location.href = base_url + "detail/" +order_code;
             },
             error: function (data) {
                 alert(data);
