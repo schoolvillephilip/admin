@@ -49,6 +49,12 @@ class Login extends CI_Controller{
                         // Not in admin group
                         redirect( lang('site_domain'));
                     }else{
+                        /*
+                         * 1- administrator
+                         * 2- manager
+                         * 3- accountant
+                         * 4- sales
+                         * */
                         $session_data = array('logged_in' => true, 'logged_id' => $user->id , 'group_id' => $user->groups );
                         $this->session->set_userdata($session_data);
                         $this->session->set_flashdata('success_msg','You are now logged in!');
