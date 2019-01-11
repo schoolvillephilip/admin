@@ -43,8 +43,10 @@
                                                         Action <i class="demo-pli-dot-vertical icon-lg"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right" role="menu" style="">
-                                                        <li class="<?php if ($order->active_status == 'shipped') echo 'active-status'; ?>">
-                                                            <a href="javascript:;" <?php if($order->active_status != 'shipped') : ?> class="order-status"
+                                                        <li class="<?php
+                                                        if ($order->active_status == 'shipped'){
+                                                            echo 'active-status';}?>">
+                                                            <a class="<?php if( $order->active_status =='delivered' || 'returned' || 'completed'){echo '';}else{echo 'order-status';}?>" href="javascript:;" <?php if($order->active_status != 'shipped') : ?>
                                                                data-oid="<?= $order->id; ?>"
                                                                data-order-code="<?= $order->order_code?>" data-type="shipped"
                                                                 <?php endif; ?>
@@ -53,14 +55,14 @@
                                                             </a>
                                                         </li>
                                                         <li class="<?php if ($order->active_status == 'delivered') echo 'active-status'; ?>">
-                                                            <a href="javascript:;" class="order-status"
+                                                            <a href="javascript:;" class="<?php if( $order->active_status == 'completed' || 'returned' ){echo '';}else{ echo 'order-status'; }?>"
                                                                data-oid="<?= $order->id; ?>"
                                                                data-order-code="<?= $order->order_code?>" data-type="delivered">
                                                                 Mark as delivered
                                                             </a>
                                                         </li>
                                                         <li class="<?php if ($order->active_status == 'completed') echo 'active-status'; ?>">
-                                                            <a href="javascript:;" class="order-status"
+                                                            <a href="javascript:;" class="<?php if( $order->active_status == 'returned' ){echo '';}else{echo 'order-status'; }?>"
                                                                data-oid="<?= $order->id; ?>"
                                                                data-order-code="<?= $order->order_code?>" data-type="completed">
                                                                 Mark as completed
@@ -207,10 +209,10 @@
             type: "POST",
             dataType: 'json',
             success: function (data) {
-                window.location.href = base_url + "detail/" +order_code;
+                window.location.href = base_url + "orders/detail/" +order_code;
             },
             error: function (data) {
-                alert(data);
+                window.location.href = base_url + "orders/detail/" +order_code;
             }
         });
     });

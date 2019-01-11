@@ -1,15 +1,30 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Email_model extends CI_Model {
-    // Insert data
-    function insert_data($table = 'error_logs', $data = array()){
-        try {
-            $this->db->insert($table, $data);
-            $result = $this->db->insert_id();
-        } catch (Exception $e) {
-            $result = $e->getMessage();
+
+    // Curl function to send
+    function send_now($post){
+        $url = 'https://api.elasticemail.com/v2/email/send';
+        try{
+            $post['from'] = 'philo4u2c@gmail.com';
+            $post['fromName'] = 'Onitshamarket';
+            $post['apikey'] = 'f818fbbb-bb76-4de0-ad47-e458303b0d12';
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => $url,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $post,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HEADER => false,
+                CURLOPT_SSL_VERIFYPEER => false
+            ));
+            $result = curl_exec($ch);
+            curl_close ($ch);
+            return $result;
+        }catch(Exception $ex){
+            $this->session->set_flashdata('error_msg',$ex->getMessage());
+            return false;
         }
-        return $result;
     }
 
     function reset_password( $data ){
@@ -52,43 +67,51 @@ class Email_model extends CI_Model {
         return $this->send_now($post);
     }
 
-
-    function shipped_order( $data ){
+    // Send mail to buyer when order is marked as shipped
+    function shipped_order( $order_code ){
+        $query = "SELECT b.first_name, b.last_name, b.phone, b.address, o.billing_address_id, b.sid,b.aid, u.email, s.name state_name, a.name area_name FROM orders o 
+        LEFT JOIN billing_address b ON(b.id = o.billing_address_id) 
+        LEFT JOIN users u ON (o.buyer_id = u.id) 
+        LEFT JOIN states s ON (s.id = b.sid)
+        LEFT JOIN area a ON (a.id = b.aid)
+        WHERE order_code = {$order_code} GROUP BY order_code LIMIT 1";
+        $result = $this->db->query( $query )->row();
         $post = array(
-            'subject' => 'Payment Made To Your Account',
-            'to' => $data['email'],
-            'template' => 'SellerPaymentCompleted',
-            'merge_amount' => $data['amount'],
-            'merge_bank_details' => $data['bank_detail'],
-            'merge_payment_id' => $data['payment_id'],
-            'merge_timestamp' => get_now(),
+            'subject' => 'Your Onitshamarket Order ' . $order_code . ' - item(s) have been shipped.',
+            'to' => $result->email,
+            'template' => 'OrderShippedBuyer',
+            'merge_recipent' => $result->first_name . ' ' . $result->last_name,
+            'merge_order_code' => $order_code,
+            'merge_address' => $result->address . ' ' . $result->area_name. ', ' . $result->state_name,
+            'merge_phone' => $result->phone,
+            'merge_order_status_link' => "https://www.onitshamarket.com/account/orderstatus/" . $order_code,
             'isTransactional' => false
         );
         return $this->send_now($post);
     }
 
-    // Curl function to send
-    function send_now($post){
-        $url = 'https://api.elasticemail.com/v2/email/send';
-        try{
-            $post['from'] = 'philo4u2c@gmail.com';
-            $post['fromName'] = 'Onitshamarket';
-            $post['apikey'] = 'f818fbbb-bb76-4de0-ad47-e458303b0d12';
-            $ch = curl_init();
-            curl_setopt_array($ch, array(
-                CURLOPT_URL => $url,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => $post,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_HEADER => false,
-                CURLOPT_SSL_VERIFYPEER => false
-            ));
-            $result = curl_exec($ch);
-            curl_close ($ch);
-            return $result;
-        }catch(Exception $ex){
-            $this->session->set_flashdata('error_msg',$ex->getMessage());
-            return false;
-        }
+    // Send mail to seller when order is marked as returned
+    function returned_order( $order_code ){
+        $query = "SELECT b.first_name, b.last_name, b.phone, b.address, o.billing_address_id, b.sid,b.aid, u.email, s.name state_name, a.name area_name FROM orders o 
+        LEFT JOIN billing_address b ON(b.id = o.billing_address_id) 
+        LEFT JOIN users u ON (o.buyer_id = u.id) 
+        LEFT JOIN states s ON (s.id = b.sid)
+        LEFT JOIN area a ON (a.id = b.aid)
+        WHERE order_code = {$order_code} GROUP BY order_code LIMIT 1";
+        $result = $this->db->query( $query )->row();
+        $post = array(
+            'subject' => 'Your Onitshamarket Order ' . $order_code . ' - item(s) have been shipped.',
+            'to' => $result->email,
+            'template' => 'OrderShippedBuyer',
+            'merge_recipent' => $result->first_name . ' ' . $result->last_name,
+            'merge_order_code' => $order_code,
+            'merge_address' => $result->address . ' ' . $result->area_name. ', ' . $result->state_name,
+            'merge_phone' => $result->phone,
+            'merge_order_status_link' => "https://www.onitshamarket.com/account/orderstatus/" . $order_code,
+            'isTransactional' => false
+        );
+        return $this->send_now($post);
     }
+
+
 }
