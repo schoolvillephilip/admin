@@ -17,7 +17,24 @@
                                             <span class="pull-right dropdown-toggle">
                                                 <i class="dropdown-caret"></i>
                                             </span>
-                                <p class="mnp-name"><?= ucwords($profile->first_name . ' ' . $profile->last_name); ?></p>
+                                <p class="mnp-name">
+                                    <?php
+                                    switch ($group) {
+                                        case '1':
+                                            echo 'Administrator';
+                                            break;
+                                        case '2':
+                                            echo 'Manager';
+                                            break;
+                                        case '3':
+                                            echo 'Accountant';
+                                            break;
+                                        case '4':
+                                            echo 'Sales Rep';
+                                            break;
+                                    };
+                                    ?>
+                                </p>
                                 <span class="mnp-desc"><?= $profile->email; ?></span>
                             </a>
                         </div>
@@ -40,7 +57,7 @@
                                 <span class="menu-title">Dashboard</span>
                             </a>
                         </li>
-                        <?php if (in_array($group, array('1', '2', '4'))) : ?>
+                        <?php if (in_array($group, array('1', '2'))) : ?>
                             <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-list-view"></i>
@@ -100,27 +117,29 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <li <?php if ($pg_name == 'report') echo 'class="active"' ?>>
-                            <a href="javascript:;">
-                                <i class="demo-pli-bar-chart"></i>
-                                <span class="menu-title">Reports</span>
-                                <i class="arrow"></i>
-                            </a>
-                            <ul class="collapse <?php if ($pg_name == 'report') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'sales_report') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('account/sales_report'); ?>">
-                                        <i class="demo-pli-star"></i>Sales Report</a></li>
-                                <li <?php if ($sub_name == 'statement') echo 'class="active"' ?>><a
-                                            href="<?= base_url('account/statement'); ?>">
-                                        <i class="demo-pli-star"></i>Account Statement</a></li>
-                                <li <?php if ($sub_name == 'payout') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('account/payout'); ?>">
-                                        <i class="demo-pli-star"></i>Payout Requests</a></li>
-                                <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('account/history'); ?>">
-                                        <i class="demo-pli-star"></i>Payout History</a></li>
-                            </ul>
-                        </li>
+                        <?php if (in_array($group, array('1', '2', '3'))) : ?>
+                            <li <?php if ($pg_name == 'report') echo 'class="active"' ?>>
+                                <a href="javascript:;">
+                                    <i class="demo-pli-bar-chart"></i>
+                                    <span class="menu-title">Reports</span>
+                                    <i class="arrow"></i>
+                                </a>
+                                <ul class="collapse <?php if ($pg_name == 'report') echo 'in'; ?>">
+                                    <li <?php if ($sub_name == 'sales_report') echo 'class="active-link"' ?>><a
+                                                href="<?= base_url('account/sales_report'); ?>">
+                                            <i class="demo-pli-star"></i>Sales Report</a></li>
+                                    <li <?php if ($sub_name == 'statement') echo 'class="active"' ?>><a
+                                                href="<?= base_url('account/statement'); ?>">
+                                            <i class="demo-pli-star"></i>Account Statement</a></li>
+                                    <li <?php if ($sub_name == 'payout') echo 'class="active-link"' ?>><a
+                                                href="<?= base_url('account/payout'); ?>">
+                                            <i class="demo-pli-star"></i>Payout Requests</a></li>
+                                    <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
+                                                href="<?= base_url('account/history'); ?>">
+                                            <i class="demo-pli-star"></i>Payout History</a></li>
+                                </ul>
+                            </li>
+                        <?php endif ?>
                         <li class="list-divider"></li>
                         <?php if ($group == '1') : ?>
                             <li <?php if ($pg_name == 'settings') echo 'class="active"' ?>>
