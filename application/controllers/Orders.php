@@ -41,52 +41,37 @@ class Orders extends CI_Controller{
 		$this->load->view('orders/detail', $page_data);
 	}
 
-
-	/*
-	 * public 'id' => string '11' (length=2)
-      public 'product_id' => string '2' (length=1)
-      public 'order_code' => string '14782539' (length=8)
-      public 'first_name' => string 'Jonathan' (length=8)
-      public 'last_name' => string 'Griffin' (length=7)
-      public 'phone' => string '080142445414' (length=12)
-      public 'phone2' => string '' (length=0)
-      public 'address' => string 'Planet Estate Viciao' (length=20)
-      public 'area' => string 'ukwuano' (length=7)
-      public 'state' => string 'Abia State' (length=10)
-      public 'seller_id' => string '3' (length=1)
-      public 'qty' => string '1' (length=1)
-      public 'amount' => string '300000' (length=6)
-      public 'order_date' => string '2018-12-10 16:20:58' (length=19)
-      public 'status' => string '{"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}' (length=90)
-      public 'active_status' => string 'pending' (length=7)
-      public 'product_name' => string 'Samsung Galaxy J6 - Purple' (length=26)
-      public 'legal_company_name' => string 'Schoolville Limited' (length=19)
-      public 'email' => string 'philipsokoya@gmail.com' (length=22)
-      public 'seller_email' => string 'philipsokoya@gmail.com' (length=22)*/
-
 	// Mark order based on status
+    /* When an order is marked as shipped, all the items should be marked as shipped by the order_code
+     * When am order is marked as delivered ,completed, and returned the single Item will be marked as that status
+     * */
 	function mark_order(){
         if( $this->input->is_ajax_request() ){
             $status = $this->input->post('type');
+            $order_code = $this->input->post('order_code');
             $id = $this->input->post('id');
-            $email = $this->input->post('email');
-            $name = $this->input->post('name');
-            $address = $this->input->post('address');
 
-            if( $this->admin->mark_order( $id , $status) ){
-                // Send Mail to the buyer when the status is 'shipped'
-                try {
-                    if( $status == 'shipped') {
-                        $email_array = array('email' => $email, 'recipent' => $name, 'address' => $address);
-                        $this->load->model('email_model', 'email');
-                        $this->email->mark_order($email_array);
-                    }
-                    echo json_encode(array('status' => 'success'));
+            if( $this->admin->mark_order($status, $id, $order_code) ){
+                if( $status == 'shipped' ){
+                    // Send Mail to the buyer when the status is 'shipped'
+                    $this->load->model('email_model', 'email');
+                    $this->email->shipped_order( $order_code );
+                    $this->session->set_flashdata('success_msg', 'The Order Item(s) has been marked has shipped');
+                    echo '';
                     exit;
-                } catch (Exception $e) {
-                    echo json_encode(array('status' => 'error' , 'msg' => $e));
+                }elseif( $status == 'returned'){
+                    // Send mail to seller and notification
+                    $this->session->set_flashdata('success_msg', 'The order Item has been marked has returned');
+                    echo '';
                     exit;
+                }else{
+                    $this->session->set_flashdata('success_msg', 'The order Item has been marked has ' . $status );
+                    echo exit;
                 }
+            }else{
+                $this->session->set_flashdata('error_msg', 'There was an error performing that action. Contact webmaster');
+                echo '';
+                exit;
             }
         }
     }

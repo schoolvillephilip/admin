@@ -632,13 +632,36 @@ Class Admin_model extends CI_Model{
      * Mark order status
      * {"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}
      * */
-    function mark_order( $id, $status){
-        $json = $this->run_sql("SELECT active FROM orders WHERE id = {$id}")->row();
-        $json_array = json_decode( $json->status, true );
-        $array = array($status => array('msg' => 'Order was marked as ' + $status, 'datetime' => get_now()));
-        $return = array_push( $json_array, $array);
-        $return = json_encode( $return );
-        return $this->update_data($id,array('status'=> $return, 'active_status' => $status), 'orders');
+//$status, $id, $order_code
+    function mark_order( $status, $id, $order_code = ''){
+//        $status, $id, $order_code
+        $query = "SELECT status FROM orders";
+        if( $status == 'shipped' ){
+            $query .= " WHERE order_code = {$order_code}";
+            $json = $this->run_sql( $query )->row();
+            $json_array = json_decode( $json->status, true );
+            $array = array($status => array('msg' => 'Order was marked as ' + $status, 'datetime' => get_now()));
+            $return = array_push( $json_array, $array);
+            try {
+                $this->run_sql("UPDATE orders SET `status` = $return, `active_status` = {$status} WHERE `order_code` = {$order_code}");
+                return true;
+            } catch (Exception $e) {
+                return false;
+            }
+        }else{
+            $query .= " WHERE id = {$id}";
+            $json = $this->run_sql( $query )->row();
+            $json_array = json_decode( $json->status, true );
+            $array = array($status => array('msg' => 'Order was marked as ' + $status, 'datetime' => get_now()));
+            $return = array_push( $json_array, $array);
+            try {
+                $this->run_sql("UPDATE orders SET `status` = $return, `active_status` = {$status} WHERE `id` = {$id}");
+                return true;
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+
     }
 
 }

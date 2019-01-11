@@ -27,7 +27,7 @@ class Account extends CI_Controller
         $page_data['page_title'] = "Account Statement";
         $page_data['sub_name'] = "statement";
         $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile( $id );
+        $page_data['profile'] = $this->admin->get_profile($id);
         $this->load->view('account/statement', $page_data);
     }
 

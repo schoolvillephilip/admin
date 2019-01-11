@@ -53,7 +53,7 @@ class Email_model extends CI_Model {
     }
 
 
-    function mark_order( $data ){
+    function shipped_order( $data ){
         $post = array(
             'subject' => 'Payment Made To Your Account',
             'to' => $data['email'],
