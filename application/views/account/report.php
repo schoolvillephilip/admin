@@ -68,9 +68,10 @@
                                     <thead>
                                     <tr>
                                         <th width="10%">S/N</th>
-                                        <th width="20%"></th>
-                                        <th width="50%" class="min-tablet">Product</th>
-                                        <th width="20%" class="min-tablet">Orders Completed</th>
+                                        <th width="10%"></th>
+                                        <th width="40%" class="min-tablet">Product</th>
+                                        <th width="20%" class="min-tablet">Category</th>
+                                        <th width="20%" class="min-desktop">Orders Completed</th>
                                     </tr>
                                     </thead>
                                     <tbody>
