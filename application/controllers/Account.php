@@ -27,7 +27,7 @@ class Account extends CI_Controller
         $page_data['page_title'] = "Account Statement";
         $page_data['sub_name'] = "statement";
         $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile();
+        $page_data['profile'] = $this->admin->get_profile( $id );
         $this->load->view('account/statement', $page_data);
     }
 
@@ -105,12 +105,13 @@ class Account extends CI_Controller
 
     public function txn_overview()
     {
+
         $page_data['pg_name'] = 'report';
         $page_data['page_title'] = "Transaction Overview";
         $page_data['sub_name'] = "statement";
         $page_data['least_sub'] = '';
         $page_data['txn_chart'] = "";
-        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
+        $page_data['profile'] = $this->admin->get_profile();
         $this->load->view('account/txn_overview', $page_data);
     }
 }
