@@ -218,15 +218,46 @@
     </button>
 </div>
 
+<div class="modal fade" id="modalConfirmPayment" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center bg-primary">
+                <p class="heading">Are you sure you want to make payment?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <i class="fa fa-check fa-4x text-primary"></i>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <a href="javascript:;" class="btn  btn-primary" id="confirm_payment">Yes</a>
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
 
 <?php $this->load->view('templates/scripts'); ?>
 <script>
     $('#payout_btn').on('click', function (e) {
         e.preventDefault();
-        var pay = confirm("Do you want to proceed with payment?");
+        $('#modalConfirmPayment').modal('show');
+        // var pay = confirm("Do you want to proceed with payment?");
         if (pay) {
             $('#payment-made').submit();
         }
+    });
+    $('#confirm_payment').on('click', function (e) {
+        e.preventDefault();
+        $('#payment-made').submit();
     });
     $('.payout_detail').on('click', function () {
         $('.payout_detail').removeClass('activePayout');
