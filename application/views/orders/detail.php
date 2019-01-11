@@ -178,7 +178,7 @@
         var action_type = $(this).data('type');
         var id = $(this).data('id');
         var email = $(this).data('email');
-        let state = confirm('Confirm to mark this item as ' + action_type );
+        let state = confirm('Confirm to mark this item as <b>' + action_type+ '<b>' );
         if( state ){
             $.ajax({
                 url: base_url + 'orders/mark_order/',
