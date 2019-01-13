@@ -39,6 +39,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Administrator</th>
+                                    <th>Role</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,6 +50,36 @@
                                             <a href="<?= base_url('sellers/detail/' . $user->id); ?>"><?= ucwords($user->first_name . ' ' . $user->last_name); ?></a>
                                         </td>
                                         <td><?= $user->email; ?></td>
+                                        <td>
+                                            <?php
+                                            if ($user->is_admin == 1):
+                                                echo "Yes";
+                                            else:
+                                                echo "No";
+                                            endif
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            switch ($user->groups):
+                                                case "1" :
+                                                    echo "Administrator";
+                                                    break;
+                                                case "2" :
+                                                    echo "Manager";
+                                                    break;
+                                                case "3" :
+                                                    echo "Accountant";
+                                                    break;
+                                                case "4" :
+                                                    echo "Sales Representative";
+                                                    break;
+                                                default:
+                                                    echo "User";
+                                                    break;
+                                            endswitch;
+                                            ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
