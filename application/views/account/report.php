@@ -2,7 +2,7 @@
 <style>
     #sales_chart {
         height: 450px;
-        border: 1px solid red;
+        border: 1px solid #dadada;
     }
 
     @media screen and (max-width: 991px) {
