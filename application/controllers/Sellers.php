@@ -142,4 +142,20 @@ class Sellers extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
+    function update_user_role(){
+        if( $this->input->is_ajax_request() ){
+            $update_type = $this->input->post('update_type');
+            $update_value = $this->input->post('update_value');
+            $update_id = $this->input->post('update_id');
+
+            if( $this->admin->update_role($update_type, $update_value, $update_id) ){
+                echo json_encode(array('status' => 1));
+            }else{
+                $this->session->set_flashdata('error_msg', 'There was an error performing that action. Contact webmaster');
+                echo json_encode(array('status' => 0));
+                exit;
+            }
+        }
+    }
+
 }

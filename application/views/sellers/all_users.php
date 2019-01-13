@@ -92,7 +92,11 @@
                                                         echo "Sales Representative";
                                                         break;
                                                     default:
-                                                        echo "User";
+                                                        if($user->is_seller == "approved"){
+                                                            echo "Seller";
+                                                        }else{
+                                                            echo "User";
+                                                        }
                                                         break;
                                                 endswitch;
                                                 ?>
@@ -172,7 +176,7 @@
     $('#confirm_true').on('click', function (e) {
         e.preventDefault();
         $.ajax({
-            url: base_url + 'users/update_role/',
+            url: base_url + 'sellers/update_user_role/',
             data: {'update_type': update_type, 'update_value': update_value, 'update_id':update_id},
             type: "POST",
             dataType: 'json',
@@ -180,7 +184,8 @@
                 window.location.href = base_url + "sellers/all_users/";
             },
             error: function (data) {
-                window.location.href = base_url + "sellers/all_users/";
+                alert(data.error)
+                //window.location.href = base_url + "sellers/all_users/";
             }
         });
     });
