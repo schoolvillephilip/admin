@@ -38,8 +38,8 @@ class Sellers extends CI_Controller
         $config["num_links"] = 5;
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links();
-		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page);
-		// var_dump($page_data['sellers']);
+		$page_data['sellers'] = $this->admin->get_seller_lists( $q, (string)$config['per_page'], $page, 'approved');
+//		 var_dump($page_data['sellers']);
 		$this->load->view('sellers/overview', $page_data);
 	}
 
