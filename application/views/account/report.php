@@ -6,7 +6,7 @@
     }
 
     @media screen and (max-width: 991px) {
-        #sellersaleschart {
+        #sales_chart {
             margin: 10px 0 10px;
         }
     }

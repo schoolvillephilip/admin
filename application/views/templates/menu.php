@@ -231,14 +231,12 @@
                                 <i class="arrow"></i>
                             </a>
                             <ul class="collapse <?php if ($pg_name == 'pro_settings') echo 'in'; ?>">
-                                <li <?php if ($sub_name == 'profile') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('profile') ?>">Profile Settings</a></li>
-                                <li <?php if ($sub_name == 'change_password') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('profile/change_password'); ?>">Change
-                                        Password</a></li>
-                                <li <?php if ($sub_name == 'notification') echo 'class="active-link"' ?>><a
-                                            href="<?= base_url('profile/notification'); ?>">Notification
-                                        Setting</a>
+                                <li <?php if ($sub_name == 'profile') echo 'class="active-link"' ?>>
+                                    <a href="<?= base_url('profile') ?>">Profile Settings</a>
+                                </li>
+                                <li <?php if ($sub_name == 'change_password') echo 'class="active-link"' ?>>
+                                    <a href="<?= base_url('profile/change_password'); ?>">Change
+                                        Password</a>
                                 </li>
                             </ul>
                         </li>
