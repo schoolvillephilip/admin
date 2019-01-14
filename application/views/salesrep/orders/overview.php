@@ -20,7 +20,7 @@
                     <?php $this->load->view('msg_view'); ?>
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">A list of all orders in the Database</h3>
+							<h3 class="panel-title">A list of all orders associated to you.</h3>
 						</div>
 						<div class="panel-body">
 							<table id="order-datatable" class="table table-striped table-bordered" cellspacing="0"
@@ -33,9 +33,6 @@
 									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Total Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
-                                    <?php if($profile->groups != 4 ):?>
-									<th class="min-desktop">Assigned To</th>
-                                    <?php endif; ?>
 								</tr>
 								</thead>
 								<tbody>
@@ -49,31 +46,6 @@
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount); ?></td>
 											<td><?= neatDate($order->order_date); ?></td>
-                                            <?php if($profile->groups != 4 ):?>
-											    <td>
-                                                <?php if($order->agent == 0 ) :?>
-                                                <form class="form-inline" id="<?= $order->order_code; ?>" >
-                                                    <div class="form-group-sm">
-                                                        <select class="form-control" required name="agent_id">
-                                                            <option value="">Select Agent</option>
-                                                            <?php
-                                                            $agents = $this->admin->get_agent();
-                                                            foreach($agents as $agent):?>
-                                                                <option value="<?= $agent->id?>"><?= ucwords($agent->first_name . ' ' . $agent->last_name);?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
-                                                    <input type="hidden" name="order_code" value="<?= $order->order_code; ?>">
-                                                    <button type="button" class="btn btn-danger btn-sm assign-agent" data-id="<?= $order->order_code; ?>">Assign</button>
-                                                </form>
-                                                <?php else :
-                                                    $u = $this->admin->get_agent($order->agent);
-                                                    $user = $u->first_name .' '.$u->last_name;
-                                                    ?>
-                                                    <span class="text text-semibold"><?= ucwords($user); ?></span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <?php endif; ?>
 										</tr>
 									<?php endforeach; ?>
 								</tbody>
@@ -124,31 +96,6 @@
                 "next": '<i class="demo-psi-arrow-right"></i>'
             }
         }
-    });
-
-    let order_code;
-    $('.assign-agent').on('click', function () {
-        order_code = $(this).data('id');
-        $('#modal_confirm')
-            .find('.modal-header > p')
-            .text(`Confirm to mark this agent to follow up on this order #${order_code} item(s).`).end()
-            .modal('show');
-    });
-
-    $('#confirm_true').on('click', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: base_url + 'orders/assign_agent/',
-            data: $(`#${order_code}`).serialize(),
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-                window.location.href = base_url + "orders/";
-            },
-            error: function (data) {
-                window.location.href = base_url + "orders/";
-            }
-        });
     });
 </script>
 </body>

@@ -66,7 +66,6 @@ class Account extends MY_Controller
         $amount = $this->input->post('amount', true);
         $bank_details = $this->input->post('bank_details', true);
         $payment_id = $this->input->post('txn_code', true);
-//        var_dump( $_POST); exit;
         if( $pid && $uid ){
             try {
                 $approved_by = $this->session->userdata('logged_id');
@@ -84,6 +83,13 @@ class Account extends MY_Controller
                 $this->load->model('email_model', 'email');
                 $this->email->payment_made_to_seller( $email_array );
                 $this->session->set_flashdata('success_msg', 'Payment has been marked completed...');
+                $activity_log = array('uid' => $this->session->userdata('logged_id'),'context' => "An amount of ".ngn($amount)." was just made to {$recipent} ( {$user->email} )"
+                    );
+                $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $activity_log);
+                $seller = array('seller_id' => $uid,'title' => 'Payment Made',
+                    'content' => "A payment was just made to your bank details ({$bank_details}). Thanks for partnering with us."
+                );
+                $this->admin->insert_data(TABLE_SELLER_NOTIFICATION_MESSAGE, $seller );
             } catch (Exception $e) {
                 $this->session->set_flashdata('error_msg', "Error : " . $e);
             }

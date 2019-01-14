@@ -20,25 +20,33 @@ class Orders extends CI_Controller{
         $page_data['pg_name'] = 'orders';
         $page_data['sub_name'] = 'orders_overview';
         $page_data['least_sub'] = '';
-        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-            'first_name,last_name,email,profile_pic');
-        $page_data['orders'] = $this->admin->get_orders();
-
-        $this->load->view('orders/overview', $page_data);
+        $id = $this->session->userdata('logged_id');
+        $page_data['profile'] = $this->admin->get_profile_details( $id,
+            'first_name,last_name,email,profile_pic, groups');
+        if( $this->session->userdata('group_id') == 4 ) { # Sales Rep
+            $page_data['orders'] = $this->admin->get_orders_for_salesrep($id, $this->session->userdata('group_id'));
+            $this->load->view('salesrep/orders/overview', $page_data);
+        }else{
+            $page_data['orders'] = $this->admin->get_orders();
+            $this->load->view('orders/overview', $page_data);
+        }
     }
 
     public function detail(){
-
         $id = cleanit( $this->uri->segment(3));
 		$page_data['page_title'] = 'Orders Detail';
 		$page_data['pg_name'] = 'orders';
 		$page_data['sub_name'] = 'orders_detail';
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
-			'first_name,last_name,email,profile_pic');
-        $page_data['orders'] = $this->admin->get_orders( $id );
-//        var_dump($page_data['orders'] );
-		$this->load->view('orders/detail', $page_data);
+			'first_name,last_name,email,profile_pic,groups');
+        if( $this->session->userdata('group_id') == 4 ){ # Sales Rep
+            $page_data['orders'] = $this->admin->get_orders_for_salesrep( $id, $this->session->userdata('group_id') );
+            $this->load->view('salesrep/orders/detail', $page_data);
+        }else{
+            $page_data['orders'] = $this->admin->get_orders( $id );
+            $this->load->view('orders/detail', $page_data);
+        }
 	}
 
 	// Mark order based on status
@@ -84,11 +92,36 @@ class Orders extends CI_Controller{
                     echo json_encode(array('status' => 1));
                     exit;
                 }
+                // The logged in user that perform the action
+                $action = array(
+                    'uid' => $this->session->userdata('logged_id'),
+                    'context' => "The %s marked the item(s) has {$status}. Having Order #{$order_code} - {$id}"
+                );
+                $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $action);
             }else{
                 $this->session->set_flashdata('error_msg', 'There was an error performing that action. Contact webmaster');
                 echo json_encode(array('status' => 0));
                 exit;
             }
         }
+    }
+
+    /*
+     * Assign an agent to an order items
+     * */
+    function assign_agent(){
+	    $order_code = $this->input->post('order_code');
+	    $agent_id = $this->input->post('agent_id');
+        try {
+            $this->admin->update_data($order_code, array('agent' => $agent_id),TABLE_ORDERS,  'order_code');
+            // Mail the agent
+            $this->session->set_flashdata('success_msg','The Order Items has been assigned to the agent');
+            echo json_encode(array('status' => 1));
+            exit;
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_msg','There was an error performing the action.');
+        }
+        echo json_encode(array('status' => 0));
+        exit;
     }
 }

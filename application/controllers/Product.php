@@ -67,9 +67,15 @@ class Product extends CI_Controller
 	}
 
 	public function action($action, $pid = '', $sid =''){
-		$id = cleanit($pid);
+		$pid = cleanit($pid);
+		$sid = cleanit( $sid);
 		if( $this->admin->product_listing_action($action, $pid, $sid) ){
 			$this->session->set_flashdata('success_msg', 'The product has been ' . $action . 'ed successfully.');
+            // Track the action
+            $activity_log = array('uid' => $this->session->userdata('logged_id'),
+                'context' => "The product with the Id (" . $pid . ") was " . $action. "ed"
+            );
+            $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $activity_log);
 			redirect($_SERVER['HTTP_REFERER']);
 		}else{
 			$this->session->set_flashdata('error_msg', 'Oops! There was error processing the action');
