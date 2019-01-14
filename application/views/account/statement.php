@@ -36,7 +36,7 @@
                                     <div class="panel panel-bordered-dark panel-colorful">
                                         <div class="pad-all text-center">
                                             <span class="text-3x text-thin">&#8358; 0</span>
-                                            <p>DUE AND UNPAID</p>
+                                            <p>MONEY IN SYSTEM</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                     <div class="panel panel-bordered-primary panel-colorful">
                                         <div class="pad-all text-center">
                                             <span class="text-3x text-thin">&#8358; 0</span>
-                                            <p>PAID THIS WEEK</p>
+                                            <p>PAID THIS MONTH</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                 <div class="panel panel-bordered-pink panel-colorful">
                                     <div class="pad-all text-center">
                                         <span class="text-3x text-thin">&#8358; 0</span>
-                                        <p>CASH BALANCE</p>
+                                        <p>ONITSHAMARKET'S BALANCE</p>
                                         <i class="demo-pli-credit-card-2 icon-lg"></i>
                                     </div>
                                 </div>
@@ -66,8 +66,8 @@
                                 <a href="<?=base_url('account/txn_overview')?>">
                                     <div class="panel panel-bordered-purple panel-colorful">
                                         <div class="pad-all text-center">
-                                            <span class="text-3x text-thin">10</span>
-                                            <p>ALL TRANSACTIONS</p>
+                                            <span class="text-3x text-thin">&#8358; 0</span>
+                                            <p>SELLERS BALANCE</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@
                                                     </div>
                                                     <div class="media-body">
                                                         <p class="text-main text-lg mar-no">Unpaid</p>
-                                                        All unpaid sellers this week
+                                                        All unpaid sellers this month
                                                     </div>
                                                 </div>
                                                 <div class="txn nano has-scrollbar"
@@ -112,20 +112,38 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>
+                                                                    S/N
+                                                                </th>
+                                                                <th>
                                                                     Seller Name
                                                                 </th>
                                                                 <th>
-                                                                    Amount &#8358;
+                                                                    Sales Amount &#8358;
+                                                                </th>
+                                                                <th>
+                                                                    Fee &#8358;
+                                                                </th>
+                                                                <th>
+                                                                    Paid Amount &#8358;
                                                                 </th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
                                                             <tr>
                                                                 <td>
+                                                                    1
+                                                                </td>
+                                                                <td>
                                                                     Bakare Israel
                                                                 </td>
                                                                 <td>
-                                                                    23,220
+                                                                    30,000
+                                                                </td>
+                                                                <td>
+                                                                    4,000
+                                                                </td>
+                                                                <td>
+                                                                    26,000
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -140,7 +158,7 @@
                                                     </div>
                                                     <div class="media-body">
                                                         <p class="text-main text-lg mar-no">Paid</p>
-                                                        All paid sellers this week
+                                                        All paid sellers this month
                                                     </div>
                                                 </div>
                                                 <div class="txn nano has-scrollbar"
@@ -150,20 +168,38 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>
+                                                                    S/N
+                                                                </th>
+                                                                <th>
                                                                     Seller Name
                                                                 </th>
                                                                 <th>
-                                                                    Amount &#8358;
+                                                                    Sales Amount &#8358;
+                                                                </th>
+                                                                <th>
+                                                                    Fee &#8358;
+                                                                </th>
+                                                                <th>
+                                                                    Paid Amount &#8358;
                                                                 </th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
                                                             <tr>
                                                                 <td>
-                                                                    Monday Jahid
+                                                                    1
                                                                 </td>
                                                                 <td>
-                                                                    33,820
+                                                                    Bakare Israel
+                                                                </td>
+                                                                <td>
+                                                                    30,000
+                                                                </td>
+                                                                <td>
+                                                                    4,000
+                                                                </td>
+                                                                <td>
+                                                                    26,000
                                                                 </td>
                                                             </tr>
                                                             </tbody>
