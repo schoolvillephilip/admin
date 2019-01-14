@@ -1,7 +1,7 @@
 <?php $this->load->view('templates/meta_tags'); ?>
 <style>
     #sales_chart {
-        height: 450px;
+        height: 410px;
         border: 1px solid #dadada;
     }
 
@@ -57,6 +57,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <h4 class="text-center">Orders Chart</h4>
                                 <div id="sales_chart"></div>
                             </div>
                             <div class="col-md-3 text-center">
