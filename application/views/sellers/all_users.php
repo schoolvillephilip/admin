@@ -1,11 +1,11 @@
 <?php $this->load->view('templates/meta_tags'); ?>
 <style>
     .set_admin:hover, .change_group:hover {
-        color: #35bbae;
+        color: #bb5103;
     }
 
     .set_admin, .change_group {
-        color: #fe390d;
+        color: #198f50;
         font-weight: bold;
     }
 </style>
@@ -43,7 +43,7 @@
                             <h3 class="panel-title">A list of all users in the Database</h3>
                         </div>
                         <div class="panel-body">
-                            <table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
+                            <table id="all_users" class="table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
                                 <tr>
@@ -60,7 +60,9 @@
                                             <?= ucwords($user->first_name . ' ' . $user->last_name); ?>
                                         </td>
                                         <td><?= $user->email; ?></td>
-                                        <td>
+                                        <td style="cursor: pointer;" class="set_admin" data-id="<?= $user->id; ?>"
+                                            data-name="<?= ucwords($user->first_name . ' ' . $user->last_name); ?>"
+                                            data-email="<?= $user->email; ?>">
                                             <a class="set_admin" href="javascript:;" data-id="<?= $user->id; ?>"
                                                data-name="<?= ucwords($user->first_name . ' ' . $user->last_name); ?>"
                                                data-email="<?= $user->email; ?>">
@@ -73,7 +75,9 @@
                                                 ?>
                                             </a>
                                         </td>
-                                        <td>
+                                        <td style="cursor: pointer;" class="change_group" data-id="<?= $user->id; ?>"
+                                            data-name="<?= ucwords($user->first_name . ' ' . $user->last_name); ?>"
+                                            data-email="<?= $user->email; ?>">
                                             <a class="change_group" href="javascript:;" data-id="<?= $user->id; ?>"
                                                data-name="<?= ucwords($user->first_name . ' ' . $user->last_name); ?>"
                                                data-email="<?= $user->email; ?>">
@@ -160,8 +164,9 @@
     let setHtml, changeHtml, update_id, update_type, update_value;
     setHtml = '<select class="form-control update_value"><option value="">--select--</option><option value="1">Yes</option><option value="0">No</option></select>';
     changeHtml = '<select class="form-control update_value"><option value="">--select--</option><option value="1">Administrator</option><option value="2">Manager</option><option value="3">Accountant</option><option value="4">Sales Rep</option><option value="0">User</option></select>';
-    $('#demo-dt-basic').dataTable({
+    $('#all_users').dataTable({
         "responsive": true,
+        "pageLength": 100,
         "language": {
             "paginate": {
                 "previous": '<i class="demo-psi-arrow-left"></i>',
