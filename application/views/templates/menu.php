@@ -82,7 +82,7 @@
                         <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
                             <a href="<?= base_url('orders') ?>">
                                 <i class="demo-pli-shopping-basket"></i>
-                                <span class="menu-title">Sales &amp; Orders</span> <span class="label label-default"><?php if(count($sales_count)) echo '('.$sales_count.')'; ?></span>
+                                <span class="menu-title">Sales &amp; Orders</span><?php if($sales_count) echo ' <span class="label label-default"> '.$sales_count. '</span>'; ?>
                             </a>
                         </li>
                         <?php if (in_array($group, array('1', '2'))) : ?>
@@ -138,9 +138,9 @@
                                     <li <?php if ($sub_name == 'statement') echo 'class="active"' ?>><a
                                                 href="<?= base_url('account/statement'); ?>">
                                             <i class="demo-pli-star"></i>Account Statement</a></li>
-                                    <li <?php if ($sub_name == 'payout') echo 'class="active-link"' ?>><a
+                                    <li <?php if ($sub_name == 'payout') echo 'class="active"' ?>><a
                                                 href="<?= base_url('account/payout'); ?>">
-                                            <i class="demo-pli-star"></i>Payout Requests<span class="label label-default"><?php if(count($payout_request_count)) echo '('.$payout_request_count.')'; ?></span></a></li>
+                                            <i class="demo-pli-star"></i>Payout Requests<?php if($payout_request_count) echo'<span class="label label-default">'. '('.$payout_request_count.')</span></a></li>'; ?>
                                     <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('account/history'); ?>">
                                             <i class="demo-pli-star"></i>Payout History</a></li>
