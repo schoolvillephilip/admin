@@ -4,6 +4,16 @@
             <a href="#" class="mainnav-toggle"><i class="pci-cross pci-circle icon-lg"></i></a>
         </div>
         <?php $group = $this->session->userdata('group_id'); ?>
+        <?php
+        //   A query for menu count
+        if( $group == 4){
+            $sales_count = $this->admin->run_sql("SELECT * FROM orders WHERE active_status = 'processing' AND agent ={$group} ")->num_rows();
+        }else{
+            $sales_count = $this->admin->run_sql("SELECT * FROM orders WHERE active_status = 'processing' ")->num_rows();
+        }
+
+        $payout_request_count = $this->admin->run_sql("SELECT * FROM payouts WHERE status = 'processing' ")->num_rows();
+        ?>
         <div id="mainnav-menu-wrap">
             <div class="nano">
                 <div class="nano-content">
@@ -54,7 +64,7 @@
                                 <span class="menu-title">Dashboard</span>
                             </a>
                         </li>
-                        <?php if (in_array($group, array('1', '2'))) : ?>
+                        <?php if (in_array($group, array('1', '2', '4'))) : ?>
                             <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-list-view"></i>
@@ -72,7 +82,7 @@
                         <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
                             <a href="<?= base_url('orders') ?>">
                                 <i class="demo-pli-shopping-basket"></i>
-                                <span class="menu-title">Sales &amp; Orders</span>
+                                <span class="menu-title">Sales &amp; Orders</span> <span class="label label-default"><?php if(count($sales_count)) echo '('.$sales_count.')'; ?></span>
                             </a>
                         </li>
                         <?php if (in_array($group, array('1', '2'))) : ?>
@@ -130,7 +140,7 @@
                                             <i class="demo-pli-star"></i>Account Statement</a></li>
                                     <li <?php if ($sub_name == 'payout') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('account/payout'); ?>">
-                                            <i class="demo-pli-star"></i>Payout Requests</a></li>
+                                            <i class="demo-pli-star"></i>Payout Requests<span class="label label-default"><?php if(count($payout_request_count)) echo '('.$payout_request_count.')'; ?></span></a></li>
                                     <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('account/history'); ?>">
                                             <i class="demo-pli-star"></i>Payout History</a></li>

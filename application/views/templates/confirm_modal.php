@@ -8,14 +8,10 @@
             <div class="modal-header d-flex justify-content-center bg-primary">
                 <p class="heading">Are you sure you want to make payment?</p>
             </div>
-
             <!--Body-->
             <div class="modal-body">
-
                 <i class="fa fa-check fa-4x text-primary"></i>
-
             </div>
-
             <!--Footer-->
             <div class="modal-footer flex-center">
                 <a href="javascript:;" class="btn  btn-primary" id="confirm_true">Yes</a>
