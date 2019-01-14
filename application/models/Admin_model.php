@@ -1,21 +1,11 @@
 <?php
 
-Class Admin_model extends CI_Model{
+Class Admin_model extends CI_Model
+{
 
     // Insert data
-    function insert_data($table = 'users', $data = array())
+    function login($data = array(), $table_name = 'users')
     {
-        try {
-            $this->db->insert($table, $data);
-            $result = $this->db->insert_id();
-        } catch (Exception $e) {
-            $result = $e->getMessage();
-        }
-        return $result;
-    }
-
-    // Login 
-    function login($data = array(), $table_name = 'users'){
         if (!empty($data)) {
             $email = cleanit($data['email']);
             $this->db->where('is_admin', 1);
@@ -41,14 +31,16 @@ Class Admin_model extends CI_Model{
         }
     }
 
-    // Check user Persmission
-    function hasPermission( $group_id, $key ){
+    // Login 
+
+    function hasPermission($group_id, $key)
+    {
         $this->db->select('permissions');
         $this->db->where('id', $group_id);
-        $group = $this->db->get('groups');    
-        if($group){
-            $permission = json_decode($group->permissions,true);
-            if($permission[$key] == true ){
+        $group = $this->db->get('groups');
+        if ($group) {
+            $permission = json_decode($group->permissions, true);
+            if ($permission[$key] == true) {
                 return true;
             }
 
@@ -56,7 +48,7 @@ Class Admin_model extends CI_Model{
         }
     }
 
-    // Create An Account for user
+    // Check user Persmission
 
     function create_account($data = array(), $table_name = 'users')
     {
@@ -72,18 +64,7 @@ Class Admin_model extends CI_Model{
         return $result;
     }
 
-    // Update table
-    function update_data($access = '', $data = array(), $table_name = 'users', $label = '')
-    {
-        if ($label != '') {
-            $this->db->where($label, $access);
-        } else {
-            $this->db->where('id', $access);
-        }
-        return $this->db->update($table_name, $data);
-    }
-
-    // check if the password is correct
+    // Create An Account for user
 
     function cur_pass_match($password = null, $access = '', $table = 'users')
     {
@@ -103,7 +84,8 @@ Class Admin_model extends CI_Model{
         }
     }
 
-    // Change Password
+    // Update table
+
     function change_password($password, $access = '', $table = 'users')
     {
         if ($access == '') $access = $this->session->userdata('logged_id');
@@ -117,6 +99,8 @@ Class Admin_model extends CI_Model{
         return $this->db->update($table, $data);
     }
 
+    // check if the password is correct
+
     /**
      * @param $access : id
      * @param $details : string of data you only want to retrieve
@@ -129,13 +113,16 @@ Class Admin_model extends CI_Model{
         return $this->db->get('users')->row();
     }
 
+    // Change Password
+
     /**
      * @param $access : id
      * @param $details : Get all login user  profile details
      * @return mixed
      */
-    function get_profile($access){
-        $query =  "SELECT u.*,s.* FROM users u LEFT JOIN sellers s ON (s.uid = u.id) where u.id = {$access} OR s.uid = {$access}";
+    function get_profile($access)
+    {
+        $query = "SELECT u.*,s.* FROM users u LEFT JOIN sellers s ON (s.uid = u.id) where u.id = {$access} OR s.uid = {$access}";
         return $this->db->query($query)->row();
     }
 
@@ -143,8 +130,9 @@ Class Admin_model extends CI_Model{
      * @param string $id
      * @return CI_DB_row
      */
-    function get_single_category( $id ){
-        $this->db->where('id', $id );
+    function get_single_category($id)
+    {
+        $this->db->where('id', $id);
         return $this->db->get('categories')->row();
     }
 
@@ -153,7 +141,8 @@ Class Admin_model extends CI_Model{
      * @param string $id
      * @return CI_DB_result
      */
-    function get_children_categories($pid = ''){
+    function get_children_categories($pid = '')
+    {
         if ($id != '') $this->db->where('pid', $pid);
         return $this->db->get('categories')->result_array();
     }
@@ -162,27 +151,25 @@ Class Admin_model extends CI_Model{
      * @param string $slug
      * @return CI_DB_row
      */
-    function check_slug( $slug ){
+    function check_slug($slug)
+    {
         do {
             $slug = $slug;
-            $count = 0; 
-            $this->db->where( 'slug', $slug);
+            $count = 0;
+            $this->db->where('slug', $slug);
             $this->db->from('categories');
-            if( $this->db->count_all_results() >= 1 ){
+            if ($this->db->count_all_results() >= 1) {
                 $number = random_string('nozero', 6);
-                $slug = $slug.'-'.$number;
+                $slug = $slug . '-' . $number;
                 $this->db->where('slug', $slug);
                 $this->db->from('categories');
                 $count = $this->db->count_all_results();
-            }else{
+            } else {
                 $count = 0;
             }
         } while ($count >= 1);
-            return $slug;
+        return $slug;
     }
-
-
-
 
     /**
      * @param string $id
@@ -203,8 +190,6 @@ Class Admin_model extends CI_Model{
             return $this->db->get();
         }
     }
-
-    
 
     /**
      * @param string $id
@@ -239,64 +224,73 @@ Class Admin_model extends CI_Model{
     }
 
     /**
-     * @param $type = 
+     * @param $type =
      * @return CI_DB_result
      */
-    function get_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved'){
+    function get_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved')
+    {
 
         $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login, u.is_seller FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
-        if( $search != '' ) $query .= " WHERE (first_name LIKE '%$search%') OR (last_name LIKE '%$search%') OR (email LIKE '%$search%')";
-        if( $search != '' && $type != '' ) { $query .= " AND u.is_seller != 'approved' ";}else{ $query .= " WHERE u.is_seller != 'approved'"; }
-        if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
+        if ($search != '') $query .= " WHERE (first_name LIKE '%$search%') OR (last_name LIKE '%$search%') OR (email LIKE '%$search%')";
+        if ($search != '' && $type != '') {
+            $query .= " AND u.is_seller != 'approved' ";
+        } else {
+            $query .= " WHERE u.is_seller != 'approved'";
+        }
+        if (!empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
 //        die( $query );
         return $this->db->query($query)->result();
     }
 
-
-    function get_user_lists($search = '', $limit = '', $offset = ''){
+    function get_user_lists($search = '', $limit = '', $offset = '')
+    {
         $query = "SELECT * FROM users";
 
-        if( $search != '' ) $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
-        if( !empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
+        if ($search != '') $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
+        if (!empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
         return $this->db->query($query)->result();
     }
 
     /**
-     * @param $id, $type( product_status) 
+     * @param $id , $type( product_status)
      * @return CI_DB_result
      */
-    function get_product_list($id = '', $product_status = '', $args = array() ){
+    function get_product_list($id = '', $product_status = '', $args = array())
+    {
         $query = "SELECT p.id, p.product_status,p.sku, o.sold, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
-        if( $id != '' ){
+        if ($id != '') {
             $query .= " WHERE p.seller_id = $id";
         }
-        if( $product_status != '' ){
+        if ($product_status != '') {
             $query .= " AND p.product_status != 'approved'";
         }
         $query .= " GROUP BY p.id";
         return $this->db->query($query)->result();
     }
 
-    function get_unapprove_product($id = ''){
+    function get_unapprove_product($id = '')
+    {
         $query = "SELECT p.id, p.product_status,p.sku, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )";
-        
-            $query .= " WHERE p.product_status != 'approved'";
-            if( $id != ''){ $query .= " AND p.seller_id = {$id} ";}
+
+        $query .= " WHERE p.product_status != 'approved'";
+        if ($id != '') {
+            $query .= " AND p.seller_id = {$id} ";
+        }
 
         $query .= " GROUP BY p.id";
         return $this->db->query($query)->result();
     }
-
 
     /**
      * @param $id
      * @return CI_DB_row
      */
 
-    function get_single_product_detail($id){
+    function get_single_product_detail($id)
+    {
         $query = "SELECT p.*, g.image_name, o.amount, o.quantity_sold, v.variation_qty, s.id as seller_id, s.first_name, s.last_name, s.email FROM products AS p
                     LEFT JOIN (SELECT ga.image_name, ga.seller_id FROM product_gallery ga WHERE ga.featured_image = 1 AND ga.product_id = $id LIMIT 1) g ON (p.seller_id = g.seller_id )
                     LEFT JOIN (SELECT SUM(ord.amount) as amount, ord.product_id, SUM(ord.qty) quantity_sold FROM orders AS ord GROUP BY ord.product_id ) AS o
@@ -312,7 +306,8 @@ Class Admin_model extends CI_Model{
      * @param $id
      * @return CI_DB_object
      */
-    function get_orders( $id = ''){
+    function get_orders($id = '')
+    {
         $query = "SELECT o.id, o.product_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
           o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
@@ -322,9 +317,9 @@ Class Admin_model extends CI_Model{
         LEFT JOIN states st ON (b.sid = st.id)
         LEFT JOIN area ar ON (b.aid = ar.id)
         LEFT JOIN users u ON (o.buyer_id = u.id)";
-        if( $id != '' ) {
+        if ($id != '') {
             $query .= " WHERE o.order_code = '{$id}' OR o.id = '{$id}' GROUP BY o.product_id";
-        }else{
+        } else {
             $query .= " GROUP BY o.order_code";
         }
         return $this->db->query($query)->result();
@@ -335,7 +330,8 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_row
      */
 
-    function product_sold_count($id){
+    function product_sold_count($id)
+    {
         $query = "SELECT COUNT(qty) as sold FROM orders WHERE seller_id = $id AND status = 'completed'";
         return $this->db->query($query)->row();
     }
@@ -345,30 +341,10 @@ Class Admin_model extends CI_Model{
      * @return CI_DB_result
      */
 
-    function product_count($id){
+    function product_count($id)
+    {
         $query = "SELECT COUNT(*) as prod FROM products WHERE seller_id = $id";
         return $this->db->query($query)->row();
-    }
-
-    
-
-    /**
-     * @param $sellerid, $title, $content
-     * @return boolean
-     */
-    function notify_seller($seller_id, $title, $content){
-        $data = array(
-            'seller_id' => $seller_id,
-            'title'     => $title,
-            'content'   => $content,
-            'created_on' => get_now()
-        );
-        try {
-            $this->insert_data('sellers_notification_message', $data);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
     }
 
     /**
@@ -376,33 +352,34 @@ Class Admin_model extends CI_Model{
      * @return boolean
      */
 
-    function product_listing_action( $action, $pid,$sid ){
+    function product_listing_action($action, $pid, $sid)
+    {
         $this->db->where('seller_id', $sid);
         $this->db->where('id', $pid);
-        if( $this->db->get('products')->num_rows() < 1 ){
+        if ($this->db->get('products')->num_rows() < 1) {
             return false;
-        }else{
+        } else {
             // @TODO Switch action
             $this->db->select('product_name');
             $this->db->where('id', $pid);
             $product_name = $this->db->get('products')->row()->product_name;
             switch ($action) {
                 case 'suspend':
-                    if( $this->update_data($pid, array('product_status' => 'suspended'), 'products')){
-                        $this->notify_seller($sid, 
+                    if ($this->update_data($pid, array('product_status' => 'suspended'), 'products')) {
+                        $this->notify_seller($sid,
                             'Your product listing has been suspended', "This is to notify you the product with ( $product_name ) has been suspended.  <br /> Contact support if not please with this action.<br /> Regards."
                         );
                         return true;
                     }
                     break;
                 case 'approve':
-                    if( $this->update_data($pid, array('product_status' => 'approved'), 'products')){
-                            $this->notify_seller($sid, 
-                                'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a href='" .lang('site_domain')."/" . urlify($product_name, $pid) ."'>Click here to see.</a><br /> Regards."
-                            );
-                            return true;
-                        }
-                        break;
+                    if ($this->update_data($pid, array('product_status' => 'approved'), 'products')) {
+                        $this->notify_seller($sid,
+                            'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a href='" . lang('site_domain') . "/" . urlify($product_name, $pid) . "'>Click here to see.</a><br /> Regards."
+                        );
+                        return true;
+                    }
+                    break;
                 case 'delete':
                     // product_variation
                     $this->db->where('product_id', $pid);
@@ -417,31 +394,74 @@ Class Admin_model extends CI_Model{
                     $this->db->delete('product');
                     // remove the images
                     // rmdir(base_url())
-                    $this->notify_seller($sid, 
-                            'Your product listing has been deleted', "This is to notify you the product with ( $product_name ) has been deleted.  <br /> Contact support if you are not happy with this action. <br /> Regards."
-                        );
-                    return true; 
+                    $this->notify_seller($sid,
+                        'Your product listing has been deleted', "This is to notify you the product with ( $product_name ) has been deleted.  <br /> Contact support if you are not happy with this action. <br /> Regards."
+                    );
+                    return true;
                     break;
             }
         }
         return false;
     }
+
+    function update_data($access = '', $data = array(), $table_name = 'users', $label = '')
+    {
+        if ($label != '') {
+            $this->db->where($label, $access);
+        } else {
+            $this->db->where('id', $access);
+        }
+        return $this->db->update($table_name, $data);
+    }
+
+    /**
+     * @param $sellerid , $title, $content
+     * @return boolean
+     */
+    function notify_seller($seller_id, $title, $content)
+    {
+        $data = array(
+            'seller_id' => $seller_id,
+            'title' => $title,
+            'content' => $content,
+            'created_on' => get_now()
+        );
+        try {
+            $this->insert_data('sellers_notification_message', $data);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    function insert_data($table = 'users', $data = array())
+    {
+        try {
+            $this->db->insert($table, $data);
+            $result = $this->db->insert_id();
+        } catch (Exception $e) {
+            $result = $e->getMessage();
+        }
+        return $result;
+    }
+
     /**
      * @param $id = product id, $sid = sellerid
      * @return boolean
      */
 
-    function seller_account_action( $action, $sid ){
+    function seller_account_action($action, $sid)
+    {
         $this->db->where('uid', $sid);
-        if( $this->db->get('sellers')->num_rows() < 1 ){
+        if ($this->db->get('sellers')->num_rows() < 1) {
             return false;
-        }else{
+        } else {
             // Note: When an account is not approved, the products should be suspended
             switch ($action) {
                 case 'suspend':
-                    $status = $this->update_data($sid,array('status' => 'suspended'), 'sellers', 'uid');
-                    if( $status ){
-                        $this->notify_seller($sid, 
+                    $status = $this->update_data($sid, array('status' => 'suspended'), 'sellers', 'uid');
+                    if ($status) {
+                        $this->notify_seller($sid,
                             'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
                         );
                     }
@@ -449,19 +469,19 @@ Class Admin_model extends CI_Model{
                     break;
 
                 case 'reject':
-                    $status = $this->update_data($sid,array('status' => 'rejected'), 'sellers', 'uid');
-                    if( $status ){
+                    $status = $this->update_data($sid, array('status' => 'rejected'), 'sellers', 'uid');
+                    if ($status) {
                         // Products to be deleted
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
-                        $this->notify_seller($sid, 
+                        $this->notify_seller($sid,
                             'Your account has been rejected', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
                         );
                     }
                     break;
 
                 case 'approve':
-                    $status = $this->update_data($sid,array('status' => 'approved'), 'sellers', 'uid');
-                    if( $status ){
+                    $status = $this->update_data($sid, array('status' => 'approved'), 'sellers', 'uid');
+                    if ($status) {
                         // Update the user table row
                         $this->update_data($sid, array('is_seller' => 'approved'));
                         // We're suppose to activate all the products, but we still need to carefully check before setting them to approve
@@ -473,8 +493,8 @@ Class Admin_model extends CI_Model{
                     break;
                 case 'delete':
                     $this->db->Where('uid', $sid);
-                    if($this->db->delete('sellers')){
-                         return $this->update_data($sid, array('is_seller' => 'blocked'));
+                    if ($this->db->delete('sellers')) {
+                        return $this->update_data($sid, array('is_seller' => 'blocked'));
                     }
                     break;
                 default:
@@ -485,22 +505,25 @@ Class Admin_model extends CI_Model{
         return false;
     }
 
-    function get_brands($id =''){
-        if( $id != '') $this->db->where('id', $id);
+    function get_brands($id = '')
+    {
+        if ($id != '') $this->db->where('id', $id);
         return $this->db->get('brands');
     }
 
     // The states for shipping price
-    function get_states( $id = '' ){
-        if( $id != '' ) $this->db->where('id', $id);
+    function get_states($id = '')
+    {
+        if ($id != '') $this->db->where('id', $id);
         return $this->db->get('states');
     }
 
     // area price
 
-    function get_address_price( $id = ''){
+    function get_address_price($id = '')
+    {
         $select = "SELECT s.name state_name, a.id,a.name,a.price,a.sid as sid FROM states s INNER JOIN area a ON(a.sid = s.id)";
-        if( $id != '' ) $select .= " WHERE a.id = $id";
+        if ($id != '') $select .= " WHERE a.id = $id";
         return $this->db->query($select);
     }
 
@@ -512,120 +535,133 @@ Class Admin_model extends CI_Model{
      * @param array $or_where
      * @return int
      */
-    function get_num_rows($table, $where = array(), $or_where = array() ){
-        if( !empty($where) ) {
+    function get_num_rows($table, $where = array(), $or_where = array())
+    {
+        if (!empty($where)) {
             $this->db->where($where);
             $this->db->or_where($or_where);
         }
-        return $this->db->get( $table )->num_rows();
+        return $this->db->get($table)->num_rows();
     }
 
 
     // General function to SQL
-    function run_sql( $query ){
-        return $this->db->query( $query );
+
+    function get_row($table_name, $condition = array())
+    {
+        if (!empty($conditionn)) {
+            $this->db->where($condition);
+        }
+        return $this->db->get($table_name)->row();
     }
 
     // Get row
     // Get a row of a paticular table
     // Return CI_row
-    function get_row( $table_name, $condition = array() ){
-        if( !empty( $conditionn ) ){
-            $this->db->where( $condition );
-        }
-        return $this->db->get( $table_name )->row();
-    }
-
 
     /**
      * @param $table_name
      * @param array $condition
      * @return array
      */
-    function get_results($table_name = '', $condition = array() ){
-        if( !empty( $condition) ){
-            $this->db->where( $condition );
+    function get_results($table_name = '', $condition = array())
+    {
+        if (!empty($condition)) {
+            $this->db->where($condition);
         }
-        return $this->db->get( $table_name );
+        return $this->db->get($table_name);
     }
 
     /**
      * @param $variation_name
      * @return int|string
      */
-    function check_variation_option($variation_name ){
+    function check_variation_option($variation_name)
+    {
         $this->db->select('id');
         $this->db->where('name', $variation_name);
         $result = $this->db->get('options');
-        if( $result->num_rows() > 0 ){
+        if ($result->num_rows() > 0) {
             $this->db->select('id');
             $this->db->where('name', $variation_name);
             return $this->db->get('options')->row()->id;
-        }else{
+        } else {
             $this->db->insert('options', array('name' => $variation_name));
             return $this->db->insert_id();
         }
     }
 
-    function get_options_name( $options = array() ){
-        if( !empty( $options ) ) {
-            $query = "SELECT name FROM options WHERE id IN ('".implode("','",$options)."')";
-            return $this->db->query( $query )->result();
-        }else{
+    function get_options_name($options = array())
+    {
+        if (!empty($options)) {
+            $query = "SELECT name FROM options WHERE id IN ('" . implode("','", $options) . "')";
+            return $this->db->query($query)->result();
+        } else {
             return '';
+        }
+    }
+
+    function action($id, $action, $table)
+    {
+        if ($action != 'delete') {
+            $this->db->where('id', $id);
+            if ($action == 'deactivate') {
+                $this->db->set('status', 'inactive');
+            } else {
+                $this->db->set('status', 'active');
+            }
+            return $this->db->update($table);
+        } else {
+            return $this->db->delete($table, array('id' => $id));
         }
     }
 
     /*
      * Delete, Activate or deactivate the homapge category Section board
      * */
-    function action($id , $action, $table ){
-        if( $action != 'delete'){
-            $this->db->where('id', $id);
-            if($action == 'deactivate'){
-                $this->db->set('status', 'inactive');
-            }else{
-                $this->db->set('status', 'active');
-            }
-            return $this->db->update($table);
-        }else{
-            return $this->db->delete($table, array('id' => $id));
-        }
-    }
 
-
-    function set_field( $table, $field, $set, $where ){
+    function set_field($table, $field, $set, $where)
+    {
         $this->db->where($where);
         $this->db->set($field, $set, false);
         $this->db->update($table);
     }
 
-    // Get payment request,
-    // single or result
     /**
      * @param string $id
      * @return mixed
      */
-    function get_payment_request($id = ''){
+    function get_payment_request($id = '')
+    {
         $query = "SELECT p.id, p.transaction_code, p.amount,s.legal_company_name, s.uid, s.bank_name, s.account_name, s.account_number,s.account_type, s.balance 
           FROM payouts p JOIN sellers s ON(s.uid = p.user_id)";
-        if( $id != '' ) {
+        if ($id != '') {
             $query .= " WHERE p.id = {$id} AND p.status = 'processing' ";
-            return $this->run_sql( $query )->row_array();
-        }else{
+            return $this->run_sql($query)->row_array();
+        } else {
             $query .= " WHERE p.status = 'processing' ORDER BY 'date_requested' DESC";
-            return $this->run_sql( $query )->result();
+            return $this->run_sql($query)->result();
         }
     }
 
+    // Get payment request,
+    // single or result
+
+    function run_sql($query)
+    {
+        return $this->db->query($query);
+    }
+
     // Get payment history for Admin to rack
-    function payment_history( $status = ''){
+
+    function payment_history($status = '')
+    {
         $query = "SELECT p.*, s.legal_company_name, s.uid FROM payouts p JOIN sellers s ON (s.uid = p.user_id) ";
-        if( $status != '' ) {
+        if ($status != '') {
             $query .= " WHERE p.status = '" . $status . "'";
         }
         $query .= " ORDER BY p.id DESC";
-        return $this->run_sql( $query )->result();
+        return $this->run_sql($query)->result();
     }
 
     /*
@@ -633,38 +669,65 @@ Class Admin_model extends CI_Model{
      * {"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}
      * */
 //UPDATE orders SET `status` = 2, `active_status` = shipped WHERE `order_code` = 73862195
-    function mark_order( $status, $id, $order_code = ''){
+    function mark_order($status, $id, $order_code = '')
+    {
 //        $status, $id, $order_code
         $query = "SELECT status FROM orders";
 //        $status_array = array();
-        if( $status == 'shipped' ){
+        if ($status == 'shipped') {
             $query .= " WHERE order_code = {$order_code}";
-            $json = $this->run_sql( $query )->row();
-            $json_array = json_decode( $json->status, true );
+            $json = $this->run_sql($query)->row();
+            $json_array = json_decode($json->status, true);
             $array = array("{$status}" => array('msg' => "Order was marked as {$status}", 'datetime' => get_now()));
-            $status_array = array_merge( $json_array, $array);
-            $status_array = json_encode( $status_array);
+            $status_array = array_merge($json_array, $array);
+            $status_array = json_encode($status_array);
             try {
                 $this->run_sql("UPDATE orders SET `status` = '$status_array', `active_status` = '{$status}' WHERE `order_code` = {$order_code}");
                 return true;
             } catch (Exception $e) {
                 return false;
             }
-        }else{
+        } else {
             $query .= " WHERE id = {$id}";
-            $json = $this->run_sql( $query )->row();
-            $json_array = json_decode( $json->status, true );
-            $array = array( "{$status}" => array('msg' => "Order was marked as {$status}", 'datetime' => get_now()) );
-            $status_array= array_merge( $json_array, $array);
+            $json = $this->run_sql($query)->row();
+            $json_array = json_decode($json->status, true);
+            $array = array("{$status}" => array('msg' => "Order was marked as {$status}", 'datetime' => get_now()));
+            $status_array = array_merge($json_array, $array);
 //            var_dump( $status_array );
 //            exit;
-            $status_array = json_encode( $status_array);
+            $status_array = json_encode($status_array);
             try {
                 $this->run_sql("UPDATE orders SET `status` = '$status_array', `active_status` = '{$status}' WHERE `id` = {$id}");
                 return true;
             } catch (Exception $e) {
                 return false;
             }
+        }
+
+    }
+
+    /*
+     * Update user roles
+     *  */
+    function update_role($update_type, $update_value, $update_id)
+    {
+        switch ($update_type):
+            case "admin_right":
+                $action = 'is_admin';
+                break;
+            case "admin_group":
+                $action = 'groups';
+                break;
+            Default:
+                $action = "";
+                break;
+        endswitch;
+        $query = "UPDATE `users` SET " . $action . " = " . $update_value . " WHERE `users`.`id` = $update_id;";
+        try {
+            $this->run_sql($query);
+            return true;
+        } catch (Exception $e) {
+            return false;
         }
 
     }

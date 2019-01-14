@@ -78,27 +78,35 @@
                                                data-name="<?= ucwords($user->first_name . ' ' . $user->last_name); ?>"
                                                data-email="<?= $user->email; ?>">
                                                 <?php
-                                                switch ($user->groups):
-                                                    case "1" :
-                                                        echo "Administrator";
-                                                        break;
-                                                    case "2" :
-                                                        echo "Manager";
-                                                        break;
-                                                    case "3" :
-                                                        echo "Accountant";
-                                                        break;
-                                                    case "4" :
-                                                        echo "Sales Representative";
-                                                        break;
-                                                    default:
-                                                        if($user->is_seller == "approved"){
-                                                            echo "Seller";
-                                                        }else{
-                                                            echo "User";
-                                                        }
-                                                        break;
-                                                endswitch;
+                                                if ($user->is_admin == 1) {
+                                                    switch ($user->groups):
+                                                        case "1" :
+                                                            echo "Administrator";
+                                                            break;
+                                                        case "2" :
+                                                            echo "Manager";
+                                                            break;
+                                                        case "3" :
+                                                            echo "Accountant";
+                                                            break;
+                                                        case "4" :
+                                                            echo "Sales Representative";
+                                                            break;
+                                                        default:
+                                                            if ($user->is_seller == "approved") {
+                                                                echo "Seller";
+                                                            } else {
+                                                                echo "User";
+                                                            }
+                                                            break;
+                                                    endswitch;
+                                                }else{
+                                                    if ($user->is_seller == "approved") {
+                                                        echo "Seller";
+                                                    } else {
+                                                        echo "User";
+                                                    }
+                                                }
                                                 ?>
                                             </a>
                                         </td>
@@ -163,12 +171,12 @@
     });
     $('#role_update').on('click', function () {
         update_value = $('.update_value').val();
-        if(update_value){
+        if (update_value) {
             $('#modal_confirm')
                 .find('.modal-header > p')
                 .text("Continue to change this user role?").end()
                 .modal('show');
-        }else{
+        } else {
             alert('Please select an option');
         }
     });
@@ -177,7 +185,7 @@
         e.preventDefault();
         $.ajax({
             url: base_url + 'sellers/update_user_role/',
-            data: {'update_type': update_type, 'update_value': update_value, 'update_id':update_id},
+            data: {'update_type': update_type, 'update_value': update_value, 'update_id': update_id},
             type: "POST",
             dataType: 'json',
             success: function (data) {
