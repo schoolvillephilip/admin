@@ -31,10 +31,10 @@
                                 <div>
                                     <div class="pad-all">
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold">1200</span> Completed
+                                            <span class="pull-right text-bold"><?= $order_completed_stats; ?></span> Completed Sales
                                         </p>
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold">41</span> Pending
+                                            <span class="pull-right text-bold"><?= $other_stats; ?></span> Other Status Sales
                                         </p>
                                     </div>
                                 </div>
@@ -164,7 +164,9 @@
                                         Sales Total - This Week</h3>
                                 </div>
                                 <div class="panel-body maintotals text-3x">
-                                    <b>&#8358;200,500.00</b>
+                                    <b>
+                                        <a href="<?= base_url('account/sales_report/')?>" class="btn-link"><?= ngn($this_week_sales->amt); ?></a>
+                                    </b>
                                 </div>
                             </div>
                         </div>
@@ -172,10 +174,12 @@
                             <div class="panel">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="demo-psi-credit-card-2"></i>
-                                        New Users - This Week</h3>
+                                        New Buyer(s) - This Week</h3>
                                 </div>
                                 <div class="panel-body maintotals text-3x">
-                                    <b>45</b>
+                                    <b>
+                                        <?= $new_buyer; ?>
+                                    </b>
                                 </div>
                             </div>
                         </div>

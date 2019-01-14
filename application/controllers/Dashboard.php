@@ -32,12 +32,16 @@ class Dashboard extends CI_Controller{
             $page_data['sellers_stats'] = $this->admin->get_num_rows('sellers');
             $page_data['products_approved_stats'] = $this->admin->get_num_rows('products', array('product_status' => 'approved'));
             $page_data['products_pending_stats'] = $this->admin->get_num_rows('products', array('product_status' => 'pending'));
-            $page_data['order_completed_stats'] = $this->admin->get_num_rows('orders', array('status' => 'completed'));
-            $page_data['order_complete_stats'] = $this->admin->get_num_rows('orders', array('status' => 'completed'));
-            $page_data['new_product_count'] = $this->admin->run_sql("SELECT COUNT(*) FROM products WHERE SUBDATE(NOW(), 'INTERVAL 7 DAY')")->num_rows();
-            $page_data['new_user_count'] = $this->admin->run_sql("SELECT COUNT(*) FROM users WHERE SUBDATE(NOW(), 'INTERVAL 7 DAY')")->num_rows();
+            $page_data['order_completed_stats'] = $this->admin->get_num_rows('orders', array('active_status' => 'completed'));
+            $page_data['other_stats'] = $this->admin->get_num_rows('orders', array('active_status != ' => 'completed'));
+            $today = get_now(); $next_monday = date('Y-m-d', strtotime('next monday'));
+            $seven_days = date('Y-m-d', strtotime('7 day ago'));
+            $page_data['new_product_count'] = $this->admin->run_sql("SELECT * FROM products WHERE (DATE(created_on) >= '{$seven_days}')")->num_rows();
+            $page_data['new_user_count'] = $this->admin->run_sql("SELECT * FROM users WHERE SUBDATE(NOW(), 'INTERVAL 7 DAY')")->num_rows();
+            $page_data['this_week_sales'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM orders WHERE (DATE(order_date) >= '{$today}' AND DATE(order_date) < '{$next_monday}' AND active_status = 'completed') ")->row();
+            $page_data['new_buyer'] = $this->admin->run_sql("SELECT * FROM users WHERE (DATE(date_registered) >= '{$seven_days}')")->num_rows();
+
             $this->load->view('dashboard', $page_data);
         }
-
     }
 }
