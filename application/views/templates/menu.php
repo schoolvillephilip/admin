@@ -52,11 +52,8 @@
                             <a href="<?= base_url('profile'); ?>" class="list-group-item">
                                 <i class="demo-pli-male icon-lg icon-fw"></i> View Profile
                             </a>
-                            <a href="<?= base_url('help') ?>" class="list-group-item">
-                                <i class="demo-pli-information icon-lg icon-fw"></i> Help
-                            </a>
                             <a href="<?= base_url('logout') ?>" class="list-group-item">
-                                <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout
+                                <i class="fa fa-key"></i> Logout
                             </a>
                         </div>
                     </div>
@@ -203,7 +200,7 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <?php if (in_array($group, array('1', '2', '3'))) : ?>
+                        <?php if (in_array($group, array('1', '2'))) : ?>
                             <li <?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-medal-2"></i>
@@ -222,8 +219,6 @@
                                     </li>
                                 </ul>
                             </li>
-                        <?php endif ?>
-                        <?php if (in_array($group, array('1', '2'))) : ?>
                             <li <?php if ($pg_name == 'states') echo 'class="active"' ?>>
                                 <a href="<?= base_url('states'); ?>">
                                     <i class="demo-pli-map-2"></i>
@@ -256,12 +251,6 @@
                                         Setting</a>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('help'); ?>">
-                                <i class="demo-pli-information"></i>
-                                <span class="menu-title">Help & Guidelines</span>
-                            </a>
                         </li>
                         <li>
                             <a href="<?= base_url('logout'); ?>">
