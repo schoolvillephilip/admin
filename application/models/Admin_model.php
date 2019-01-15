@@ -763,5 +763,29 @@ Class Admin_model extends CI_Model
         }
 
     }
+    /*
+     * Payment method toggle
+     *  */
+    function toggle_payment_method($op, $id)
+    {
+        switch($op){
+            case "enable":
+                $status = 1;
+                break;
+            case "disable":
+                $status = 0;
+                break;
+            default:
+                $status = 0;
+        }
+        $query = "UPDATE payment_methods SET `status` = '$status' WHERE `id` = $id";
+        try {
+            $this->run_sql($query);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+
+    }
 
 }

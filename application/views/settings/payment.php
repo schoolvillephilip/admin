@@ -22,57 +22,44 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="panel panel-bordered-default">
-                                    <div class="panel-body">
-                                        <b><i class="fa fa-credit-card-alt fa-2x"></i> Interswitch API</b><br><br>
-                                        <div class="row">
-                                            <div id="status" class="col-md-6">
-                                                <i class="fa fa-check fa-fw"></i> Enabled
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <a href="javascript:;" class="payment_settings" data-payment_name="inter_switch">
-                                                    <i class="fa fa-cog fa-fw"></i> Settings
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-bordered-default">
-                                    <div class="panel-body">
-                                        <b><i class="fa fa-hand-grab-o fa-2x"></i> Pay on Delivery</b><br><br>
-                                        <div class="row">
-                                            <div id="status" class="col-md-6">
-                                                <i class="fa fa-check fa-fw"></i> Enabled
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <a href="javascript:;" class="payment_settings" data-payment_name="pay_on_deliver">
-                                                    <i class="fa fa-cog fa-fw"></i> Settings
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-bordered-default">
-                                    <div class="panel-body">
-                                        <b><i class="fa fa-credit-card-alt fa-2x"></i> PayStack API</b><br><br>
-                                        <div class="row">
-                                            <div id="status" class="col-md-6">
-                                                <i class="fa fa-check fa-fw"></i> Enabled
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <a href="javascript:;" class="payment_settings" data-payment_name="pay_stack">
-                                                    <i class="fa fa-cog fa-fw"></i> Settings
-                                                </a>
+                            <?php foreach ($methods as $method): ?>
+                                <div class="col-md-4">
+                                    <div class="panel panel-bordered-default">
+                                        <div class="panel-body">
+                                            <b><i class="fa fa-credit-card-alt fa-2x"></i> <?= $method->name; ?></b><br><br>
+                                            <div class="row">
+                                                <div id="status"
+                                                     class="col-md-6 <?php if ($method->status == 1) echo 'text-success'; else echo 'text-danger'; ?>">
+                                                    <?php if ($method->status == 1): ?>
+                                                        <i class="fa fa-check fa-fw"></i> Enabled
+                                                    <?php else: ?>
+                                                        <i class="fa fa-times fa-fw"></i> Disabled
+                                                    <?php endif ?>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div>
+                                                        <a href="javascript:;" class="payment_settings dropdown-toggle"
+                                                           data-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fa fa-cog fa-fw"></i> Settings
+                                                        </a>
+                                                        <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                                                            style="">
+                                                            <li><a href="javascript:;" data-id="<?= $method->id; ?>"
+                                                                   class="btn btn-default enable_payment" <?php if ($method->status == 1) echo 'disabled="disabled"'; ?>><i
+                                                                            class="fa fa-check fa-fw"></i> Enabled</a>
+                                                            </li>
+                                                            <li><a href="javascript:;" data-id="<?= $method->id; ?>"
+                                                                   class="btn btn-default disable_payment" <?php if ($method->status == 0) echo 'disabled="disabled"'; ?>><i
+                                                                            class="fa fa-times fa-fw"></i> Disabled</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                         <div class="row">
                             <div class="col-md-12" id="payment_settings">
@@ -89,8 +76,59 @@
         <i class="pci-chevron chevron-up"></i>
     </button>
 </div>
+<?php $this->load->view('templates/confirm_modal'); ?>
 <?php $this->load->view('templates/scripts'); ?>
 </body>
 <script>
+    let id, op;
+    $('.disable_payment').on('click', function (e) {
+        e.preventDefault();
+        let self = $(this);
+        if (self.attr('disabled') != "disabled") {
+            id = self.data('id');
+            op = "disable";
+            $('#modal_confirm')
+                .find('.modal-header')
+                .removeClass('bg-primary')
+                .addClass('bg-danger').end()
+                .find('.modal-header > p')
+                .text("Disable Payment Method?").end()
+                .find('.modal-body')
+                .html('<i class="fa fa-times fa-4x text-danger"></i>').end()
+                .modal('show');
+        }
+    });
+    $('.enable_payment').on('click', function (e) {
+        e.preventDefault();
+        let self = $(this);
+        if (self.attr('disabled') != "disabled") {
+            id = self.data('id');
+            op = "enable";
+            $('#modal_confirm')
+                .find('.modal-header')
+                .removeClass('bg-danger')
+                .addClass('bg-primary').end()
+                .find('.modal-header > p')
+                .text("Enable Payment Method?").end()
+                .find('.modal-body')
+                .html('<i class="fa fa-check fa-4x text-primary"></i>').end()
+                .modal('show');
+        }
+    });
+    $('#confirm_true').on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: base_url + 'settings/payment_method_toggle/',
+            data: {'op': op, 'id': id},
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                window.location.href = base_url + "settings/payment/";
+            },
+            error: function (data) {
+                window.location.href = base_url + "settings/payment/";
+            }
+        });
+    });
 </script>
 </html>

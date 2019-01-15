@@ -197,8 +197,7 @@
                 window.location.href = base_url + "sellers/all_users/";
             },
             error: function (data) {
-                alert(data.error)
-                //window.location.href = base_url + "sellers/all_users/";
+                window.location.href = base_url + "sellers/all_users/";
             }
         });
     });

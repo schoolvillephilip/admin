@@ -127,9 +127,24 @@ class Settings extends CI_Controller
         $page_data['pg_name'] = 'store_settings';
         $page_data['sub_name'] = 'payment_set';
         $page_data['least_sub'] = '';
+        $page_data['methods'] = $this->admin->get_results('payment_methods')->result();
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
         $this->load->view('settings/payment', $page_data);
+    }
+    function payment_method_toggle(){
+        if( $this->input->is_ajax_request() ){
+            $op = $this->input->post('op');
+            $id = $this->input->post('id');
+
+            if( $this->admin->toggle_payment_method($op, $id) ){
+                echo json_encode(array('status' => 1));
+            }else{
+                $this->session->set_flashdata('error_msg', 'There was an error performing that action. Contact webmaster');
+                echo json_encode(array('status' => 0));
+                exit;
+            }
+        }
     }
 
     public function store_status()
