@@ -24,7 +24,7 @@ class Analytics extends CI_Controller
     public function overview()
     {
         $page_data['pg_name'] = 'analytics';
-        $page_data['pg_title'] = "Analytics Overview";
+        $page_data['page_title'] = "Analytics Overview";
         $page_data['sub_name'] = "analytics_overview";
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
