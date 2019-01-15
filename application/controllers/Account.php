@@ -62,8 +62,15 @@ class Account extends MY_Controller
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile($uid);
         $page_data['requests'] = $this->admin->get_payment_request();
+        // Queries
+        $next_monday = date('Y-m-d', strtotime('next monday'));
+        $today = get_now();
+        $page_data['this_week'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM payouts WHERE status = 'completed' AND DATE(date_approved) >='{$today}' AND DATE(date_approved) < '{$next_monday}' ")->row();
+        $page_data['payment_history'] = $this->admin->run_sql("SELECT SUM(amount) amount FROM payouts WHERE status = 'completed'")->row();
+
         $this->load->view('account/payout', $page_data);
     }
+
     function payment_request(){
         if( $this->input->is_ajax_request() && $this->input->post()){
             $id = $this->input->post('id');
@@ -71,6 +78,7 @@ class Account extends MY_Controller
             exit; 
         }
     }
+
     function payment_made(){
         $pid = $this->input->post('pid', true);
         $uid = $this->input->post('uid', true);

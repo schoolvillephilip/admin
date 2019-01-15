@@ -47,7 +47,7 @@
                             <div class="col-md-3">
                                 <div class="panel panel-bordered-primary panel-colorful">
                                     <div class="pad-all text-center">
-                                        <span class="text-2x text-thin">&#8358; 123,000</span>
+                                        <span class="text-2x text-thin"><?= ngn($this_week->amt); ?></span>
                                         <p>PAID THIS WEEK</p>
                                         <i class="demo-pli-credit-card-2 icon-lg"></i>
                                     </div>
@@ -68,7 +68,7 @@
                                 <a href="<?= base_url('account/history') ?>">
                                     <div class="panel panel-bordered-purple panel-colorful">
                                         <div class="pad-all text-center">
-                                            <span class="text-2x text-thin">&#8358; 123,000</span>
+                                            <span class="text-2x text-thin"><?= ngn($payment_history->amount); ?></span>
                                             <p>PAYOUT HISTORY</p>
                                             <i class="demo-pli-credit-card-2 icon-lg"></i>
                                         </div>
