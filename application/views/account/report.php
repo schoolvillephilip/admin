@@ -37,22 +37,22 @@
                             <div class="col-md-3 text-center">
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default" style="height: 145px;">
-                                        <h5 style="margin-top:35px;">Total Sales</h5>
-                                        <h2>&#8358; 200,000</h2>
+                                        <h5 style="margin-top:35px;">Total Sales Made</h5>
+                                        <h2><?= ngn($total_sales->amount); ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default"
                                          style="height: 145px;margin-top:7.5px;">
-                                        <h5 style="margin-top:35px;">Total Delivery</h5>
-                                        <h2>&#8358; 20,000</h2>
+                                        <h5 style="margin-top:35px;">Total Delivery Charge Received</h5>
+                                        <h2><?= ngn( $delivery_charge ); ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default"
                                          style="height: 145px;margin-top:7.5px;">
-                                        <h5 style="margin-top:35px;">Total Commission</h5>
-                                        <h2>&#8358; 10,000</h2>
+                                        <h5 style="margin-top:35px;">Total Commission Received</h5>
+                                        <h2><?= ngn( $total_sales->amount );?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -64,14 +64,14 @@
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default" style="height: 220px;">
                                         <h5 style="margin-top:70px;">Total Order Count</h5>
-                                        <h2>200,000</h2>
+                                        <h2><?= ngn( $order_count ); ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default"
                                          style="height: 220px;margin-top:10px;">
                                         <h5 style="margin-top:70px;">Avg Order Per Customer</h5>
-                                        <h2>2.5</h2>
+                                        <h2><?= $avg_order; ?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -85,20 +85,18 @@
                                     <thead>
                                     <tr>
                                         <th width="10%">S/N</th>
-                                        <th width="10%"></th>
-                                        <th width="40%" class="min-tablet">Product</th>
-                                        <th width="20%" class="min-tablet">Category</th>
+                                        <th width="70%" class="min-tablet">Product</th>
                                         <th width="20%" class="min-desktop">Orders Completed</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><img src="me.jpg" alt="Product Image"/></td>
-                                        <td>Samsung Galaxy J5</td>
-                                        <td>Phones &amp; Tablets</td>
-                                        <td>61</td>
-                                    </tr>
+                                    <?php $x = 1;  foreach($top_orders as $order ) :?>
+                                        <tr>
+                                            <td><?= $x; ?></td>
+                                            <td><a class="btn-link" href="<?= base_url('product/detail' . $order->id);?>"><?= word_limiter($order->product_name, 22);?></a></td>
+                                            <td><?= $order->no_of_sales; ?></td>
+                                        </tr>
+                                    <?php $x++; endforeach;?>
                                     </tbody>
                                 </table>
                             </div>
@@ -130,18 +128,18 @@
         Morris.Bar({
             element: 'sales_chart',
             data: [
-                { y: 'Jan', a: 80},
-                { y: 'Feb', a: 100},
-                { y: 'Mar', a: 75},
-                { y: 'Apr', a: 20},
-                { y: 'May', a: 50},
-                { y: 'June', a: 75},
-                { y: 'July', a: 15},
-                { y: 'Aug', a: 70},
-                { y: 'Sept', a: 100},
-                { y: 'Oct', a: 50},
-                { y: 'Nov', a: 20},
-                { y: 'Dec', a: 40}
+                { y: 'Jan', a: <?= (int) $order_chart['Jan']; ?>},
+                { y: 'Feb', a: <?= (int) $order_chart['Feb']; ?>},
+                { y: 'Mar', a: <?= (int) $order_chart['Mar']; ?>},
+                { y: 'Apr', a: <?= (int) $order_chart['Apr']; ?>},
+                { y: 'May', a: <?= (int) $order_chart['May']; ?>},
+                { y: 'June', a: <?= (int) $order_chart['Jun']; ?>},
+                { y: 'July', a: <?= (int) $order_chart['Jul']; ?>},
+                { y: 'Aug', a: <?= (int) $order_chart['Aug']; ?>},
+                { y: 'Sept', a: <?= (int) $order_chart['Sep']; ?>},
+                { y: 'Oct', a: <?= (int) $order_chart['Oct']; ?>},
+                { y: 'Nov', a: <?= (int) $order_chart['Nov']; ?>},
+                { y: 'Dec', a: <?= (int) $order_chart['Dec']; ?>}
             ],
             xkey: 'y',
             ykeys: 'a',
