@@ -33,13 +33,24 @@ class Account extends MY_Controller
 
     public function sales_report()
     {
+        $uid = $this->session->userdata('logged_id');
         $page_data['pg_name'] = 'report';
         $page_data['page_title'] = "Sales Report";
         $page_data['sub_name'] = "sales_report";
         $page_data['least_sub'] = '';
-        $page_data['order_chart'] = "";
+        $page_data['profile'] = $this->admin->get_profile( $uid );
+        // queries
+        $this_year = date('Y', strtotime('this year'));
+        $page_data['total_sales'] = $this->admin->run_sql("SELECT SUM(amount) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}'")->row();
+        $page_data['delivery_charge'] = $this->admin->run_sql("SELECT SUM(delivery_charge) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
+
+        $page_data['commission'] = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
+        $page_data['order_count'] = $this->admin->run_sql("SELECT SUM(qty) total FROM orders WHERE active_status = 'completed' AND YEAR(order_date) ='{$this_year}' GROUP BY order_code")->row();
+        $avg = $this->admin->run_sql("SELECT SUM(qty) qty, COUNT(DISTINCT(buyer_id)) buyers FROM orders WHERE active_status='completed'")->row();
+        $page_data['avg_order'] = $avg->qty/$avg->buyers;
+        $page_data['top_orders'] = $this->admin->top_20_sales();
+        $page_data['order_chart'] = $this->admin->order_chart();
         $page_data['gross_chart'] = "";
-        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
         $this->load->view('account/report', $page_data);
     }
     public function payout()
