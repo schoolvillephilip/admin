@@ -134,16 +134,28 @@
                                 <ul class="collapse <?php if ($pg_name == 'report') echo 'in'; ?>">
                                     <li <?php if ($sub_name == 'sales_report') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('account/sales_report'); ?>">
-                                            <i class="demo-pli-star"></i>Sales Report</a></li>
+                                            Sales Report</a></li>
                                     <li <?php if ($sub_name == 'statement') echo 'class="active"' ?>><a
                                                 href="<?= base_url('account/statement'); ?>">
-                                            <i class="demo-pli-star"></i>Account Statement</a></li>
+                                            Account Statement</a></li>
                                     <li <?php if ($sub_name == 'payout') echo 'class="active"' ?>><a
                                                 href="<?= base_url('account/payout'); ?>">
-                                            <i class="demo-pli-star"></i>Payout Requests<?php if($payout_request_count) echo'<span class="label label-default">'. '('.$payout_request_count.')</span></a></li>'; ?>
+                                            Payout Requests<?php if($payout_request_count) echo'<span class="label label-default">'. '('.$payout_request_count.')</span></a></li>'; ?>
                                     <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('account/history'); ?>">
-                                            <i class="demo-pli-star"></i>Payout History</a></li>
+                                            Payout History</a></li>
+                                </ul>
+                            </li>
+                            <li <?php if ($pg_name == 'report') echo 'class="active"' ?>>
+                                <a href="javascript:;">
+                                    <i class="demo-pli-bar-chart"></i>
+                                    <span class="menu-title">Analytics</span>
+                                    <i class="arrow"></i>
+                                </a>
+                                <ul class="collapse <?php if ($pg_name == 'analytics') echo 'in'; ?>">
+                                    <li <?php if ($sub_name == 'analytics_overview') echo 'class="active-link"' ?>><a
+                                                href="<?= base_url('analytics'); ?>">
+                                           Overview</a></li>
                                 </ul>
                             </li>
                         <?php endif ?>
