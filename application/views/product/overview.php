@@ -18,12 +18,12 @@
             <div id="page-content">
                 <div class="row pad-ver">
                     <?php $this->load->view('msg_view'); ?>
-                    <form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
+                    <form action="<?= base_url('product');?>" method="get" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
                         <div class="input-group mar-btm">
-                            <input type="text" placeholder="Search All Products" class="form-control input-lg">
+                            <input type="search" name="q" placeholder="Search All Products" class="form-control input-lg">
                             <span class="input-group-btn">
-                     <button class="btn btn-primary btn-lg" type="button">Search</button>
-                 </span>
+                                <button class="btn btn-primary btn-lg" type="submit">Search</button>
+                            </span>
                         </div>
                     </form>
                 </div>
@@ -72,6 +72,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <?= $pagination ?>
+                    </div>
+                </div>
+
             </div>
         </div>
         <?php $this->load->view('templates/menu'); ?>

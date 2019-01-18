@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="media-body">
-                                <p class="text-2x mar-no text-semibold">1241</p>
+                                <p class="text-2x mar-no text-semibold"><?= $order_completed_stats + $other_stats; ?></p>
                                 <p class="mar-no">Total Orders</p>
                                 <div>
                                     <div class="pad-all">
@@ -99,7 +99,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div id="demo-morris-line-legend" class="text-center"></div>
-                                    <div id="line-chart" style="height:290px"></div>
+                                    <div id="sales_chart" style="height:290px"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3">
@@ -109,44 +109,44 @@
                                                 <div class="media">
                                                     <div class="media-left">
                                                         <span class="text-3x text-thin text-main"
-                                                              style="font-size:18px;font-weight:bolder;">&#8358; 85,000</span>
+                                                              style="font-size:18px;font-weight:bolder;"><?= ngn($today_sale->amt)?></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="col-xs-12 text-sm" style="margin-top:5px;">
-                                            <p>
-                                                <span>Min Sale</span>
-                                                <span class="pad-lft text-semibold">
-					                                        <span class="text-lg">&#8358;67,000</span>
-					                                        <span class="labellabel-danger mar-lft">
-					                                            <i class="pci-caret-down text-success"></i>
-					                                            <smal>+ &#8358;18,000</smal>
-					                                        </span>
-					                                        </span>
-                                            </p>
-                                            <p>
-                                                <span>Max Sale</span>
-                                                <span class="pad-lft text-semibold">
-					                                        <span class="text-lg">&#8358;152,000</span>
-					                                        <span class="labellabel-success mar-lft">
-					                                            <i class="pci-caret-up text-danger"></i>
-					                                            <smal>- &#8358;67,000</smal>
-					                                        </span>
-					                                        </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <p class="text-uppercase text-semibold text-main">Total Sales</p>
+<!--                                    <div class="col-lg-6">-->
+<!--                                        <div class="col-xs-12 text-sm" style="margin-top:5px;">-->
+<!--                                            <p>-->
+<!--                                                <span>Min Sale</span>-->
+<!--                                                <span class="pad-lft text-semibold">-->
+<!--                                                    <span class="text-lg">&#8358;67,000</span>-->
+<!--                                                    <span class="labellabel-danger mar-lft">-->
+<!--                                                        <i class="pci-caret-down text-success"></i>-->
+<!--                                                        <smal>+ &#8358;18,000</smal>-->
+<!--                                                    </span>-->
+<!--                                                </span>-->
+<!--                                            </p>-->
+<!--                                            <p>-->
+<!--                                                <span>Max Sale</span>-->
+<!--                                                <span class="pad-lft text-semibold">-->
+<!--                                                    <span class="text-lg">&#8358;152,000</span>-->
+<!--                                                    <span class="labellabel-success mar-lft">-->
+<!--                                                        <i class="pci-caret-up text-danger"></i>-->
+<!--                                                        <smal>- &#8358;67,000</smal>-->
+<!--                                                    </span>-->
+<!--                                                </span>-->
+<!--                                            </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="col-lg-3 col-lg-offset-6">
+                                        <p class="text-uppercase text-semibold text-main">Total Sales This Year</p>
                                         <ul class="list-unstyled">
                                             <li>
                                                 <div class="media pad-btm">
                                                     <div class="media-left">
                                                         <span class=" text-thin text-main text-bold"
-                                                              style="font-size: 18px;">&#8358;3,750,000</span>
+                                                              style="font-size: 18px;"><?= $order_chart['total_yearly']; ?></span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -177,9 +177,7 @@
                                         New Buyer(s) - This Week</h3>
                                 </div>
                                 <div class="panel-body maintotals text-3x">
-                                    <b>
-                                        <?= $new_buyer; ?>
-                                    </b>
+                                    <b><a href="<?= base_url('users'); ?>" class="btn-link"><?= $new_buyer; ?></a></b>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +188,7 @@
                                         New products - This Week</h3>
                                 </div>
                                 <div class="panel-body maintotals text-3x">
-                                    <b><?= $new_product_count; ?></b>
+                                    <b><a href="<?= base_url('product/')?>" class="btn-link"><?= $new_product_count; ?></a></b>
                                 </div>
                             </div>
                         </div>
@@ -208,49 +206,32 @@
 <?php $this->load->view('templates/scripts'); ?>
 </body>
 <script>
-    let data = [
-            {y: '2014', a: 50, b: 90},
-            {y: '2015', a: 65, b: 75},
-            {y: '2016', a: 50, b: 50},
-            {y: '2017', a: 75, b: 60},
-            {y: '2018', a: 80, b: 65},
-            {y: '2019', a: 90, b: 70},
-            {y: '2020', a: 100, b: 75},
-            {y: '2021', a: 115, b: 75},
-            {y: '2022', a: 120, b: 85},
-            {y: '2023', a: 145, b: 85},
-            {y: '2024', a: 160, b: 95}
-        ],
-        config = {
-            data: data,
-            xkey: 'y',
-            ykeys: ['a', 'b'],
-            labels: ['Total Income', 'Total Outcome'],
-            fillOpacity: 0.6,
-            hideHover: 'auto',
-            behaveLikeLine: true,
-            resize: true,
-            pointFillColors: ['#ffffff'],
-            pointStrokeColors: ['black'],
-            lineColors: ['gray', 'red']
-        };
-    config.element = 'area-chart';
-    Morris.Area(config);
-    config.element = 'line-chart';
-    Morris.Line(config);
-    config.element = 'bar-chart';
-    Morris.Bar(config);
-    config.element = 'stacked';
-    config.stacked = true;
-    Morris.Bar(config);
-    Morris.Donut({
-        element: 'pie-chart',
+    Morris.Bar({
+        element: 'sales_chart',
         data: [
-            {label: "Friends", value: 30},
-            {label: "Allies", value: 15},
-            {label: "Enemies", value: 45},
-            {label: "Neutral", value: 10}
-        ]
+            { y: 'Jan', a: <?= (int) $order_chart['Jan']; ?>},
+            { y: 'Feb', a: <?= (int) $order_chart['Feb']; ?>},
+            { y: 'Mar', a: <?= (int) $order_chart['Mar']; ?>},
+            { y: 'Apr', a: <?= (int) $order_chart['Apr']; ?>},
+            { y: 'May', a: <?= (int) $order_chart['May']; ?>},
+            { y: 'June', a: <?= (int) $order_chart['Jun']; ?>},
+            { y: 'July', a: <?= (int) $order_chart['Jul']; ?>},
+            { y: 'Aug', a: <?= (int) $order_chart['Aug']; ?>},
+            { y: 'Sept', a: <?= (int) $order_chart['Sep']; ?>},
+            { y: 'Oct', a: <?= (int) $order_chart['Oct']; ?>},
+            { y: 'Nov', a: <?= (int) $order_chart['Nov']; ?>},
+            { y: 'Dec', a: <?= (int) $order_chart['Dec']; ?>}
+        ],
+        xkey: 'y',
+        ykeys: 'a',
+        labels: ['Total Order'],
+        gridEnabled: true,
+        gridLineColor: 'rgba(0,0,0,.1)',
+        gridTextColor: '#6b7880',
+        gridTextSize: '11px',
+        barColors: ['#179278'],
+        resize:true,
+        hideHover: 'auto'
     });
 </script>
 </html>

@@ -53,6 +53,7 @@ class Account extends MY_Controller
         $page_data['gross_chart'] = "";
         $this->load->view('account/report', $page_data);
     }
+
     public function payout()
     {
         $uid = $this->session->userdata('logged_id');

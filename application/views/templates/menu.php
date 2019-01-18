@@ -116,7 +116,7 @@
                                 </a>
                                 <ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
                                     <li <?php if ($sub_name == 'users') echo 'class="active-link"' ?>><a
-                                                href="<?= base_url('sellers/all_users') ?>">All Users</a></li>
+                                                href="<?= base_url('users') ?>">All Users</a></li>
                                     <li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('sellers') ?>">Sellers</a></li>
                                     <li <?php if ($sub_name == 'approve_sellers') echo 'class="active-link"' ?>><a

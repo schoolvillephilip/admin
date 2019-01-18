@@ -23,23 +23,26 @@ class Product extends CI_Controller
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-		// $q = '';
-		// if( isset($_GET['q']) ) $q = cleanit( $q );
-		// $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
 
-  //       if( $page > 1 ) $page -= 1;
-  //       $lists = (array) $this->admin->get_product_list();
-  //       $count = count( $lists );
-		// $this->load->library('pagination');
-  //       $this->config->load('pagination'); // Load d config
-  //       $config = $this->config->item('pagination');
-  //       $config['base_url'] = current_url() ;
-  //       $config['total_rows'] = $count; 
-  //       $config['per_page'] = 100; 
-  //       $config["num_links"] = 5;
-  //       $this->pagination->initialize($config);
-        // $page_data['pagination'] = $this->pagination->create_links(); 
-		$page_data['products'] = $this->admin->get_product_list();
+        $str = cleanit($this->input->get('q'));
+        $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
+        if ($page > 1) $page -= 1;
+        $array = array('str' => $str, 'is_limit' => false);
+        $x = (array)$this->admin->get_product_list('','',$array);
+        $count = (count($x));
+        $this->load->library('pagination');
+        $this->config->load('pagination');
+        $config = $this->config->item('pagination');
+        $config['base_url'] = current_url();
+        $config['total_rows'] = $count;
+        $config['per_page'] = 20;
+        $config["num_links"] = 5;
+        $this->pagination->initialize($config);
+        $array['limit'] = $config['per_page'];
+        $array['offset'] = $page;
+        $array['is_limit'] = true;
+        $page_data['pagination'] = $this->pagination->create_links();
+		$page_data['products'] = $this->admin->get_product_list( '','',$array );
 		$this->load->view('product/overview', $page_data);
 	}
 

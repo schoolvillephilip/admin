@@ -121,8 +121,7 @@ class Settings extends CI_Controller
      * Store Status
      * */
 
-    public function payment()
-    {
+    public function payment(){
         $page_data['page_title'] = 'Payment Methods';
         $page_data['pg_name'] = 'store_settings';
         $page_data['sub_name'] = 'payment_set';
@@ -130,8 +129,34 @@ class Settings extends CI_Controller
         $page_data['methods'] = $this->admin->get_results('payment_methods')->result();
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('settings/payment', $page_data);
+        if( $this->input->post() ){
+            $settings = '';
+            $settings = trim($this->input->post('settings'));
+
+            if( $settings ) {
+                $settings = explode(',' , $settings);
+                $settings = json_encode( $settings );
+            }
+//            $slug = trim(strtolower($this->input->post('name')));
+//            $slug = preg_replace("/[^A-Za-z0-9\-]/", $slug);
+            $data_array = array(
+                'name' => $this->input->post('name', true),
+                'settings'  => $settings,
+                'notes'     => htmlentities($this->input->post('notes'), ENT_QUOTES,"UTF-8")
+            );
+            if( $this->admin->insert_data('payment_methods', $data_array) ) {
+                $this->session->set_flashdata('success_msg', 'The Payment Method has been added successfully.');
+            }else{
+                $this->session->set_flashdata('error_msg', 'There was an error inserting the data.');
+            }
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $this->load->view('settings/payment', $page_data);
+        }
     }
+
+
+
     function payment_method_toggle(){
         if( $this->input->is_ajax_request() ){
             $op = $this->input->post('op');

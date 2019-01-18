@@ -21,19 +21,19 @@
                 </div>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="demo-pli-home"></i></a></li>
-                    <li><a href="#">User Management</a></li>
+                    <li><a href="<?= base_url('users'); ?>">User Management</a></li>
                     <li class="active">All Users</li>
                 </ol>
             </div>
             <div id="page-content">
                 <div class="row pad-ver">
-                    <form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
+                    <form action="<?= base_url('sellers/all_users/'); ?>" method="get" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
                         <div class="input-group mar-btm">
-                            <input type="text" placeholder="Search seller with name or email"
+                            <input type="search" name="q" placeholder="Search user with name or email"
                                    class="form-control input-lg">
                             <span class="input-group-btn">
-                     <button class="btn btn-primary btn-lg" type="button">Search</button>
-                 </span>
+                                 <button class="btn btn-primary btn-lg" type="submit">Search</button>
+                            </span>
                         </div>
                     </form>
                 </div>
@@ -119,6 +119,10 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
                         <?= $pagination ?>
                     </div>
                 </div>

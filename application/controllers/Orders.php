@@ -23,11 +23,32 @@ class Orders extends CI_Controller{
         $id = $this->session->userdata('logged_id');
         $page_data['profile'] = $this->admin->get_profile_details( $id,
             'first_name,last_name,email,profile_pic, groups');
+
         if( $this->session->userdata('group_id') == 4 ) { # Sales Rep
             $page_data['orders'] = $this->admin->get_orders_for_salesrep($id, $this->session->userdata('group_id'));
             $this->load->view('salesrep/orders/overview', $page_data);
         }else{
-            $page_data['orders'] = $this->admin->get_orders();
+            // Site Administrator // Manager
+            $order_code = $this->input->get('order_code', true);
+            if( !$order_code) $order_code = '';
+            $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
+            if ($page > 1) $page -= 1;
+            $array = array('is_limit' => false);
+            $x = (array)$this->admin->get_orders( $order_code,$array);
+            $count = (count($x));
+            $this->load->library('pagination');
+            $this->config->load('pagination');
+            $config = $this->config->item('pagination');
+            $config['base_url'] = current_url();
+            $config['total_rows'] = $count;
+            $config['per_page'] = 20;
+            $config["num_links"] = 5;
+            $this->pagination->initialize($config);
+            $array['limit'] = $config['per_page'];
+            $array['offset'] = $page;
+            $array['is_limit'] = true;
+            $page_data['pagination'] = $this->pagination->create_links();
+            $page_data['orders'] = $this->admin->get_orders( $order_code, $array );
             $this->load->view('orders/overview', $page_data);
         }
     }
@@ -44,7 +65,7 @@ class Orders extends CI_Controller{
             $page_data['orders'] = $this->admin->get_orders_for_salesrep( $id, $this->session->userdata('group_id') );
             $this->load->view('salesrep/orders/detail', $page_data);
         }else{
-            $page_data['orders'] = $this->admin->get_orders( $id );
+            $page_data['orders'] = $this->admin->get_orders( $id , array('is_limit' => false));
             $this->load->view('orders/detail', $page_data);
         }
 	}

@@ -245,8 +245,7 @@ Class Admin_model extends CI_Model
     function get_user_lists($search = '', $limit = '', $offset = '')
     {
         $query = "SELECT * FROM users";
-
-        if ($search != '') $query .= " WHERE (first_name LIKE %$search%) OR (last_name LIKE %$search%) OR (email LIKE %$search%)";
+        if ($search != '') $query .= " WHERE (first_name LIKE '%$search%') OR (last_name LIKE '%$search%') OR (email LIKE '%$search%')";
         if (!empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
         return $this->db->query($query)->result();
     }
@@ -266,7 +265,16 @@ Class Admin_model extends CI_Model
         if ($product_status != '') {
             $query .= " AND p.product_status != 'approved'";
         }
-        $query .= " GROUP BY p.id";
+        if( !empty( $args ) && !empty($args['str'])){
+            $str = $args['str'];
+            $query .= " AND p.product_name LIKE '%{$str}%'";
+        }
+        $limit = $args['is_limit'];
+        if( $limit == true ){
+            $query .=" GROUP BY p.id LIMIT " .$args['offset']. "," .$args['limit'];
+        }else{
+            $query .= " GROUP BY p.id";
+        }
         return $this->db->query($query)->result();
     }
 
@@ -307,7 +315,7 @@ Class Admin_model extends CI_Model
      * @return CI_DB_object
      */
     
-    function get_orders( $id = ''){
+    function get_orders( $id = '', $args = array()){
         $query = "SELECT o.id,o.agent, o.product_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
           o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
@@ -319,8 +327,10 @@ Class Admin_model extends CI_Model
         LEFT JOIN users u ON (o.buyer_id = u.id)";
         if ($id != '') {
             $query .= " WHERE o.order_code = '{$id}' OR o.id = '{$id}' GROUP BY o.product_id";
-        } else {
-            $query .= " GROUP BY o.order_code";
+        }
+        $limit = $args['is_limit'];
+        if( $limit == true ){
+            $query .=" GROUP BY o.order_code LIMIT " .$args['offset']. "," .$args['limit'];
         }
         return $this->db->query($query)->result();
     }
@@ -793,7 +803,7 @@ Class Admin_model extends CI_Model
             FROM orders
             WHERE order_date <= NOW() and order_date >= Date_add(Now(),interval - 12 month)
             AND active_status = 'completed'
-            GROUP BY DATE_FORMAT(order_date, '%m-%Y')) as sub";
+            GROUP BY order_code, DATE_FORMAT(order_date, '%m-%Y')) as sub";
         return $this->run_sql( $query)->row_array();
     }
     /*
@@ -818,7 +828,8 @@ Class Admin_model extends CI_Model
         } catch (Exception $e) {
             return false;
         }
-
     }
+
+
 
 }

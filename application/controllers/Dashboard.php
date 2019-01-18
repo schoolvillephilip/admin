@@ -40,7 +40,8 @@ class Dashboard extends CI_Controller{
             $page_data['new_user_count'] = $this->admin->run_sql("SELECT * FROM users WHERE SUBDATE(NOW(), 'INTERVAL 7 DAY')")->num_rows();
             $page_data['this_week_sales'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM orders WHERE (DATE(order_date) >= '{$today}' AND DATE(order_date) < '{$next_monday}' AND active_status = 'completed') ")->row();
             $page_data['new_buyer'] = $this->admin->run_sql("SELECT * FROM users WHERE (DATE(date_registered) >= '{$seven_days}')")->num_rows();
-
+            $page_data['order_chart'] = $this->admin->order_chart();
+            $page_data['today_sale'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM orders WHERE DATE(order_date) = '{$today}'")->row();
             $this->load->view('dashboard', $page_data);
         }
     }

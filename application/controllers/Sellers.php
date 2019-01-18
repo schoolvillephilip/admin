@@ -62,12 +62,11 @@ class Sellers extends CI_Controller
         $config = $this->config->item('pagination');
         $config['base_url'] = current_url() ;
         $config['total_rows'] = $count;
-        $config['per_page'] = 100;
+        $config['per_page'] = 10;
         $config["num_links"] = 5;
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links();
         $page_data['users'] = $this->admin->get_user_lists( $q, (string)$config['per_page'], $page);
-        // var_dump($page_data['sellers']);
         $this->load->view('sellers/all_users', $page_data);
     }
 
@@ -87,7 +86,8 @@ class Sellers extends CI_Controller
 		}
 		$page_data['sold_count'] = $this->admin->product_sold_count($id );
 		$page_data['product_count'] = $this->admin->product_count($id );
-		$page_data['products'] = $this->admin->get_product_list($id);
+
+		$page_data['products'] = $this->admin->get_product_list($id,'',array('is_limit' => false));
 		$this->load->view('sellers/detail', $page_data);
 	}
 
@@ -149,6 +149,10 @@ class Sellers extends CI_Controller
             $update_id = $this->input->post('update_id');
 
             if( $this->admin->update_role($update_type, $update_value, $update_id) ){
+                $activity_log = array('uid' => $this->session->userdata('logged_id'),
+                    'context' => "The user with {$update_id} has been updated to {$update_type}"
+                );
+                $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $activity_log);
                 echo json_encode(array('status' => 1));
             }else{
                 $this->session->set_flashdata('error_msg', 'There was an error performing that action. Contact webmaster');

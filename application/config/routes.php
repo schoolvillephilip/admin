@@ -54,3 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
  $route['manage/(:any)'] = "manage/index";
+ $route['users'] = "sellers/all_users";
