@@ -222,6 +222,17 @@ Class Admin_model extends CI_Model
         WHERE sub_category_id =  ? ', $id)->row();
         return $output;
     }
+    /**
+     * @param $type =
+     * @return CI_DB_result
+     */
+    function get_all_seller_lists($search = '', $limit = '', $offset = '', $type = 'approved')
+    {
+        $query = "SELECT s.*, u.first_name, u.last_name,u.email,u.last_login, u.is_seller FROM sellers s LEFT JOIN users u ON (u.id = s.uid)";
+        if (!empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
+        return $this->db->query($query)->result();
+    }
+
 
     /**
      * @param $type =
