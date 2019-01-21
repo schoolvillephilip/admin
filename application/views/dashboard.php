@@ -115,30 +115,6 @@
                                             </div>
                                         </div>
                                     </div>
-<!--                                    <div class="col-lg-6">-->
-<!--                                        <div class="col-xs-12 text-sm" style="margin-top:5px;">-->
-<!--                                            <p>-->
-<!--                                                <span>Min Sale</span>-->
-<!--                                                <span class="pad-lft text-semibold">-->
-<!--                                                    <span class="text-lg">&#8358;67,000</span>-->
-<!--                                                    <span class="labellabel-danger mar-lft">-->
-<!--                                                        <i class="pci-caret-down text-success"></i>-->
-<!--                                                        <smal>+ &#8358;18,000</smal>-->
-<!--                                                    </span>-->
-<!--                                                </span>-->
-<!--                                            </p>-->
-<!--                                            <p>-->
-<!--                                                <span>Max Sale</span>-->
-<!--                                                <span class="pad-lft text-semibold">-->
-<!--                                                    <span class="text-lg">&#8358;152,000</span>-->
-<!--                                                    <span class="labellabel-success mar-lft">-->
-<!--                                                        <i class="pci-caret-up text-danger"></i>-->
-<!--                                                        <smal>- &#8358;67,000</smal>-->
-<!--                                                    </span>-->
-<!--                                                </span>-->
-<!--                                            </p>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
                                     <div class="col-lg-3 col-lg-offset-6">
                                         <p class="text-uppercase text-semibold text-main">Total Sales This Year</p>
                                         <ul class="list-unstyled">
