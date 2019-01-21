@@ -19,7 +19,6 @@
 
             <div id="page-content">
                 <?php $this->load->view('msg_view'); ?>
-<!--                Slider setting panel-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Slider Settings</div>
@@ -75,7 +74,6 @@
                         </div>
                     </div>
                 </div>
-<!--                Homepage Categories settings panel-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Homepage Main Body Settings</div>
@@ -253,12 +251,6 @@
             acceptedFiles: "image/*",
             uploadMultiple: true,
             parallelUploads: 100,
-            // accept: function (file, done) {
-            //     file.acceptDimensions = done;
-            //     file.rejectDimensions = function () {
-            //         done(`Invalid file dimension, atleast 500 X 500 and maximum of 2000 X 2000. But image is having ${file.width} X ${file.height}. File won't be uploaded.`);
-            //     };
-            // }
         });
         myDropzone.on("addedfile", function (file) {
             // Hookup the button
@@ -300,11 +292,7 @@
         });
 
         myDropzone.on('thumbnail', function (file) {
-            // if ((file.width > maxImageWidth || file.height > maxImageHeight) || (minImageWidth > file.width || minImageHeight > file.height)) {
-            //     file.rejectDimensions();
-            // } else {
-            //     file.acceptDimensions();
-            // }
+
         });
         removeBtn.on('click', function () {
             myDropzone.removeAllFiles(true);

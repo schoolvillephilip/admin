@@ -90,33 +90,14 @@
                     </div>
                 </div>
 			</div>
-			<!--===================================================-->
-			<!--End page content-->
-
 		</div>
-		<!--===================================================-->
-		<!--END CONTENT CONTAINER-->
-
-		<!--MAIN NAVIGATION-->
-		<!--===================================================-->
 		<?php $this->load->view('templates/menu'); ?>
-		<!--===================================================-->
-		<!--END MAIN NAVIGATION-->
 
 	</div>
-	<!-- FOOTER -->
-	<!--===================================================-->
 	<?php $this->load->view('templates/footer'); ?>
-	<!--===================================================-->
-	<!-- END FOOTER -->
-
-
-	<!-- SCROLL PAGE BUTTON -->
-	<!--===================================================-->
 	<button class="scroll-top btn">
 		<i class="pci-chevron chevron-up"></i>
 	</button>
-	<!--===================================================-->
 </div>
 <?php $this->load->view('templates/confirm_modal'); ?>
 <?php $this->load->view('templates/scripts'); ?>

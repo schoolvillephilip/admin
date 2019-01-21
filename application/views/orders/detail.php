@@ -1,10 +1,4 @@
 <?php $this->load->view('templates/meta_tags'); ?>
-<style>
-    .active-status {
-        background-color: #124431;
-        color: #FFFFFF;
-    }
-</style>
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">

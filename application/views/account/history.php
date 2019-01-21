@@ -1,9 +1,5 @@
 <?php $this->load->view('templates/meta_tags'); ?>
 <style>
-    .list-group-item {
-        border: 0 !important;
-    }
-
     td p {
         margin: 12px;
     }

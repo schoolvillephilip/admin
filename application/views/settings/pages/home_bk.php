@@ -18,7 +18,6 @@
             </div>
             <?php $this->load->view('msg_view'); ?>
             <div id="page-content">
-<!--                Slider setting panel-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Slider Settings</div>
@@ -44,7 +43,6 @@
                         <?= form_close(); ?>
                     </div>
                 </div>
-<!--                Homepage Categories settings panel-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Homepage Main Body Settings</div>
@@ -147,7 +145,6 @@
                         <?= form_close(); ?>
                     </div>
                 </div>
-<!--                Featured Image-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Featured Images</div>
@@ -183,7 +180,6 @@
 
                     </div>
                 </div>
-<!--                Call to action panel-->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Call To Action (CTA)</div>
@@ -231,7 +227,6 @@
                         <?= form_close(); ?>
                     </div>
                 </div>
-<!--                Modals -->
                 <div class="panel">
                     <div class="panel-heading">
                         <div class="panel-title">Modals</div>

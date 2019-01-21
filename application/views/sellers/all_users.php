@@ -139,27 +139,20 @@
 <div class="modal fade text-left" id="modal_role" tabindex="-1" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog modal-sm modal-notify" role="document">
-        <!--Content-->
         <div class="modal-content text-center">
-            <!--Header-->
             <div class="modal-header d-flex justify-content-center bg-default">
                 <p class="heading">Change Role</p>
             </div>
-
-            <!--Body-->
             <div class="modal-body">
                 <p class="user_name"></p>
                 <p class="user_email"></p>
                 <div class="option_here"></div>
             </div>
-
-            <!--Footer-->
             <div class="modal-footer flex-center">
                 <a href="javascript:;" class="btn  btn-primary" id="role_update">Done</a>
                 <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Cancel</a>
             </div>
         </div>
-        <!--/.Content-->
     </div>
 </div>
 <?php $this->load->view('templates/confirm_modal'); ?>
