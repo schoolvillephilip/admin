@@ -54,7 +54,9 @@
                                 <div>
                                     <div class="pad-all">
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold"><?= $sellers_stats; ?></span> Sellers
+                                            <a href="<?= base_url('sellers')?>" class="btn-link">
+                                                <span class="pull-right text-bold"><?= $sellers_stats; ?></span> Sellers
+                                            </a>
                                         </p>
                                         <p class="mar-no">
                                             <span class="pull-right text-bold"><?= $buyers_stats; ?></span> Buyers
@@ -77,12 +79,13 @@
                                 <div>
                                     <div class="pad-all">
                                         <p class="mar-no">
+                                            <a href="<?= base_url('product/'); ?>" class="btn-link">
                                             <span class="pull-right text-bold"><?= $products_approved_stats; ?></span>
-                                            Approved
+                                            Approved</a>
                                         </p>
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold"><?= $products_pending_stats; ?></span>
-                                            Pending
+                                            <a href="<?= base_url('product/approve'); ?>" class="btn-link"><span class="pull-right text-bold"><?= $products_pending_stats; ?></span>
+                                            Pending</a>
                                         </p>
                                     </div>
                                 </div>

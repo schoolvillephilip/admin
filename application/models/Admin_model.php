@@ -274,7 +274,7 @@ Class Admin_model extends CI_Model
             $query .= " WHERE p.seller_id = $id";
         }
         if ($product_status != '') {
-            $query .= " AND p.product_status != 'approved'";
+            $query .= " AND p.product_status != '{$product_status}'";
         }
         if( !empty( $args ) && !empty($args['str'])){
             $str = $args['str'];
@@ -282,9 +282,9 @@ Class Admin_model extends CI_Model
         }
         $limit = $args['is_limit'];
         if( $limit == true ){
-            $query .=" GROUP BY p.id LIMIT " .$args['offset']. "," .$args['limit'];
+            $query .=" GROUP BY p.id ORDER BY p.created_on DESC LIMIT " .$args['offset']. "," .$args['limit'];
         }else{
-            $query .= " GROUP BY p.id";
+            $query .= " GROUP BY p.id ORDER BY p.created_on DESC";
         }
         return $this->db->query($query)->result();
     }
@@ -299,7 +299,7 @@ Class Admin_model extends CI_Model
             $query .= " AND p.seller_id = {$id} ";
         }
 
-        $query .= " GROUP BY p.id";
+        $query .= " GROUP BY p.id ORDER BY p.created_on DESC ";
         return $this->db->query($query)->result();
     }
 
@@ -424,23 +424,26 @@ Class Admin_model extends CI_Model
                     break;
                 case 'delete':
                     // product_variation
-                    $this->db->where('product_id', $pid);
-                    $this->db->delete('product_variation');
+                    try {
+                        $this->db->where('product_id', $pid);
+                        $this->db->delete('product_variation');
 
-                    // product gallery
-                    $this->db->where('product_id', $pid);
-                    $this->db->delete('product_gallery');
+                        // product gallery
+                        $this->db->where('product_id', $pid);
+                        $this->db->delete('product_gallery');
 
-                    // main product
-                    $this->db->where('id', $pid);
-                    $this->db->delete('product');
-                    // remove the images
-                    // rmdir(base_url())
-                    $this->notify_seller($sid,
-                        'Your product listing has been deleted', "This is to notify you the product with ( $product_name ) has been deleted.  <br /> Contact support if you are not happy with this action. <br /> Regards."
-                    );
-                    return true;
-                    break;
+                        // main product
+                        $this->db->where('id', $pid);
+                        $this->db->delete('products');
+                        // remove the images
+                        // rmdir(base_url())
+                        $this->notify_seller($sid,
+                            'Your product listing has been deleted', "This is to notify you the product with ( $product_name ) has been deleted.  <br /> Contact support if you are not happy with this action. <br /> Regards."
+                        );
+                        return true;
+                        break;
+                    } catch (Exception $e ) {
+                    }
             }
         }
         return false;

@@ -42,7 +42,7 @@ class Account extends MY_Controller
         // queries
         $this_year = date('Y', strtotime('this year'));
         $page_data['total_sales'] = $this->admin->run_sql("SELECT SUM(amount) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}'")->row();
-        $page_data['delivery_charge'] = $this->admin->run_sql("SELECT SUM(delivery_charge) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
+        $page_data['delivery_charge'] = $this->admin->run_sql("SELECT SUM(distinct(delivery_charge)) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
 
         $page_data['commission'] = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
         $page_data['order_count'] = $this->admin->run_sql("SELECT SUM(qty) total FROM orders WHERE active_status = 'completed' AND YEAR(order_date) ='{$this_year}' GROUP BY order_code")->row();
@@ -68,7 +68,6 @@ class Account extends MY_Controller
         $today = get_now();
         $page_data['this_week'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM payouts WHERE status = 'completed' AND DATE(date_approved) >='{$today}' AND DATE(date_approved) < '{$next_monday}' ")->row();
         $page_data['payment_history'] = $this->admin->run_sql("SELECT SUM(amount) amount FROM payouts WHERE status = 'completed'")->row();
-
         $this->load->view('account/payout', $page_data);
     }
 

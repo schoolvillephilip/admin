@@ -41,7 +41,7 @@ class Orders extends CI_Controller{
             $config = $this->config->item('pagination');
             $config['base_url'] = current_url();
             $config['total_rows'] = $count;
-            $config['per_page'] = 20;
+            $config['per_page'] = 100;
             $config["num_links"] = 5;
             $this->pagination->initialize($config);
             $array['limit'] = $config['per_page'];

@@ -33,7 +33,8 @@
 									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Total Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
-                                    <?php if($profile->groups != 4 ):?>
+                                    <?php if($profile->groups != 4 ): #This conditioon has already been checked from the server though
+                                        ?>
 									<th class="min-desktop">Assigned To</th>
                                     <?php endif; ?>
 								</tr>
@@ -47,11 +48,11 @@
                                             </td>
                                             <td><?= $order->state . ' ('. $order->area. ')'; ?></td>
 											<td class="text-center"><?= $order->qty; ?></td>
-											<td><?= ngn($order->amount); ?></td>
+											<td><?= ngn($order->amount * $order->qty); ?></td>
 											<td><?= neatDate($order->order_date); ?></td>
-                                            <?php if($profile->groups != 4 ):?>
+                                            <?php if($profile->groups != 4 ): # if not sales rep  ?>
 											    <td>
-                                                <?php if($order->agent == 0 ) :?>
+                                                <?php if($order->agent == 0 ) : #No agent has been assigned yet  ?>
                                                 <form class="form-inline" id="<?= $order->order_code; ?>" >
                                                     <div class="form-group-sm">
                                                         <select class="form-control" required name="agent_id">

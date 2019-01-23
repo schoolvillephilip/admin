@@ -35,7 +35,7 @@ class Product extends CI_Controller
         $config = $this->config->item('pagination');
         $config['base_url'] = current_url();
         $config['total_rows'] = $count;
-        $config['per_page'] = 20;
+        $config['per_page'] = 100;
         $config["num_links"] = 5;
         $this->pagination->initialize($config);
         $array['limit'] = $config['per_page'];
@@ -79,10 +79,10 @@ class Product extends CI_Controller
                 'context' => "The product with the Id (" . $pid . ") was " . $action. "ed"
             );
             $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $activity_log);
-			redirect($_SERVER['HTTP_REFERER']);
+			redirect('product');
 		}else{
 			$this->session->set_flashdata('error_msg', 'Oops! There was error processing the action');
-			redirect($_SERVER['HTTP_REFERER']);
+			redirect('product');
 		}
 	}
 }

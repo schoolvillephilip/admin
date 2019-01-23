@@ -17,7 +17,7 @@
             </div>
             <div id="page-content">
                 <div class="row pad-ver">
-                    <?php $this->load->view('msg_view'); ?>
+
                     <form action="<?= base_url('product');?>" method="get" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor">
                         <div class="input-group mar-btm">
                             <input type="search" name="q" placeholder="Search All Products" class="form-control input-lg">
@@ -27,6 +27,7 @@
                         </div>
                     </form>
                 </div>
+                <?php $this->load->view('msg_view'); ?>
                 <div class="row">
                     <div class="panel">
                         <div class="panel-heading">
