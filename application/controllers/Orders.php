@@ -90,10 +90,13 @@ class Orders extends MY_Controller{
                 }elseif( $status == 'returned'){
                     // Send mail to seller and notification
                     // Also do necessary calculation base on the status
-                    $this->session->set_flashdata('success_msg', 'The order Item has been marked has returned');
                     try {
                         $this->email->returned_order( $order_code );
-                        $this->session->set_flashdata('success_msg', 'The Order Item(s) has been marked has shipped');
+                        $this->session->set_flashdata('success_msg', 'The order Item has been marked has returned');
+                        $seller = $this->admin->get_order_seller($id);
+                        $this->admin->notify_seller( $seller->seller_id, 'Product Returned',
+                            "Notifying you that the product ( " . $seller->product_name ." ) was just returned, and the product money has been refunded.");
+                        //Do we still need to send the SMS or email
                         echo json_encode(array('status' => 1));
                         exit;
                     } catch (Exception $e) {

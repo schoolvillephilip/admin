@@ -46,14 +46,14 @@
                                     <div class="col-md-12 panel-bordered-default"
                                          style="height: 145px;margin-top:7.5px;">
                                         <h5 style="margin-top:35px;">Total Delivery Charge Received</h5>
-                                        <h2><?= ngn( $delivery_charge->amount ); ?></h2>
+                                        <h2><?= ($delivery_charge !== null) ? ngn( $delivery_charge->amount ) : 0.00; ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default"
                                          style="height: 145px;margin-top:7.5px;">
                                         <h5 style="margin-top:35px;">Total Commission Received</h5>
-                                        <h2><?= ngn( $commission->amount );?></h2>
+                                        <h2><?= ($commission !== null ) ? ngn( $commission->amount ) : 0.00;?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default" style="height: 220px;">
                                         <h5 style="margin-top:70px;">Total Order Count</h5>
-                                        <h2><?= $order_count->total; ?></h2>
+                                        <h2><?= ($order_count !== null ) ? $order_count->total : 0.00; ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">

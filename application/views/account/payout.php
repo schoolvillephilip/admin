@@ -38,7 +38,7 @@
                             <div class="col-md-3">
                                 <div class="panel panel-bordered-dark panel-colorful">
                                     <div class="pad-all text-center">
-                                        <span class="text-2x text-thin">&#8358; 1,222,220</span>
+                                        <span class="text-2x text-thin">&#8358; Not Calculated Yet</span>
                                         <p>AVAILABLE BALANCE</p>
                                         <i class="demo-pli-credit-card-2 icon-lg"></i>
                                     </div>

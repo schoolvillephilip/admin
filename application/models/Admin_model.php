@@ -424,7 +424,7 @@ Class Admin_model extends CI_Model
                 case 'approve':
                     if ($this->update_data($pid, array('product_status' => 'approved'), 'products')) {
                         $this->notify_seller($sid,
-                            'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a href='" . lang('site_domain') . "/" . urlify($product_name, $pid) . "'>Click here to see.</a><br /> Regards."
+                            'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a class='btn-link' href='" . lang('site_domain') . '/product/' . urlify($product_name, $pid) . "/'>Click here to see it live.</a><br /> Regards."
                         );
                         return true;
                     }
@@ -511,7 +511,7 @@ Class Admin_model extends CI_Model
             // Note: When an account is not approved, the products should be suspended
             switch ($action) {
                 case 'suspend':
-                    $status = $this->update_data($sid, array('status' => 'suspended'), 'sellers', 'uid');
+                    $status = $this->update_data($sid, array('is_seller' => 'suspended'), 'users');
                     if ($status) {
                         $this->notify_seller($sid,
                             'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
@@ -521,7 +521,7 @@ Class Admin_model extends CI_Model
                     break;
 
                 case 'reject':
-                    $status = $this->update_data($sid, array('status' => 'rejected'), 'sellers', 'uid');
+                    $status = $this->update_data($sid, array('is_seller' => 'rejected'), 'users' );
                     if ($status) {
                         // Products to be deleted
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
@@ -532,7 +532,7 @@ Class Admin_model extends CI_Model
                     break;
 
                 case 'approve':
-                    $status = $this->update_data($sid, array('status' => 'approved'), 'sellers', 'uid');
+                    $status = $this->update_data($sid, array('is_seller' => 'approved'), 'users');
                     if ($status) {
                         // Update the user table row
                         $this->update_data($sid, array('is_seller' => 'approved'));
@@ -745,8 +745,6 @@ Class Admin_model extends CI_Model
             $json_array = json_decode($json->status, true);
             $array = array("{$status}" => array('msg' => "Order was marked as {$status}", 'datetime' => get_now()));
             $status_array = array_merge($json_array, $array);
-//            var_dump( $status_array );
-//            exit;
             $status_array = json_encode($status_array);
             try {
                 $this->run_sql("UPDATE orders SET `status` = '$status_array', `active_status` = '{$status}' WHERE `id` = {$id}");
@@ -849,6 +847,13 @@ Class Admin_model extends CI_Model
         } catch (Exception $e) {
             return false;
         }
+    }
+
+    /*
+     * */
+    function get_order_seller( $id ){
+        $query = "SELECT o.seller_id, p.product_name FROM orders o LEFT JOIN p ON(p.id = o.product_id) WHERE o.id = ?";
+        return $this->db->get('orders', array($id))->row();
     }
 
 
