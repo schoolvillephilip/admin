@@ -1,18 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Sellers extends CI_Controller
+class Sellers extends MY_Controller
 {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('admin_model', 'admin');
-		if (!$this->session->userdata('logged_in')) {
-			// Ursher the person to where he is coming from
-			$from = $this->session->userdata('referred_from');
-			if (!empty($from)) redirect($from);
-			redirect('login');
-		}
 	}
 
 	public function index(){
@@ -62,7 +55,7 @@ class Sellers extends CI_Controller
         $config = $this->config->item('pagination');
         $config['base_url'] = current_url() ;
         $config['total_rows'] = $count;
-        $config['per_page'] = 10;
+        $config['per_page'] = 100;
         $config["num_links"] = 5;
         $this->pagination->initialize($config);
         $page_data['pagination'] = $this->pagination->create_links();

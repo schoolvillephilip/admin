@@ -78,7 +78,7 @@
                             <div class="col-lg-7">
                                 <?php if (!empty($category->image)): ?>
                                     <span class="">
-                                        <img src="<?= base_url('data/settings/categories/' . $category->image); ?>"
+                                        <img src="<?= CATEGORY_IMAGE_PATH . $category->image; ?>"
                                              width="40" height="40">
                                     </span>
                                 <?php endif; ?>

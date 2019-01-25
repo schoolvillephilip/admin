@@ -32,6 +32,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Reports for January 2018 to December 2018</h3>
                     </div>
+                    <?php $this->load->view('msg_view'); ?>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-3 text-center">
@@ -93,7 +94,7 @@
                                     <?php $x = 1;  foreach($top_orders as $order ) :?>
                                         <tr>
                                             <td><?= $x; ?></td>
-                                            <td><a class="btn-link" href="<?= base_url('product/detail' . $order->id);?>"><?= word_limiter($order->product_name, 22);?></a></td>
+                                            <td><a class="btn-link" href="<?= base_url('product/detail/' . $order->id);?>"><?= word_limiter($order->product_name, 22);?></a></td>
                                             <td><?= $order->no_of_sales; ?></td>
                                         </tr>
                                     <?php $x++; endforeach;?>

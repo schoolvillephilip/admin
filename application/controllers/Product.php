@@ -1,19 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Product extends CI_Controller
+class Product extends MY_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin_model', 'admin');
-		if (!$this->session->userdata('logged_in')) {
-			// Usher the person to where he is coming from
-			$from = $this->session->userdata('referred_from');
-			if (!empty($from)) redirect($from);
-			redirect('login');
-		}
 	}
 
 	public function index(){

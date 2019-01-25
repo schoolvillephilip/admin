@@ -10,12 +10,13 @@ class Profile extends MY_Controller
 
     public function index()
     {
-        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
-        $page_data['page_title'] = 'Profile Setting';
-        $page_data['pg_name'] = 'settings';
-        $page_data['sub_name'] = 'profile';
-        $page_data['categories'] = $this->admin->get_results('categories', "id, name", "( pid = 0 )");
-        $this->load->view('settings', $page_data);
+//        $page_data['profile'] = $this->admin->get_profile($this->session->userdata('logged_id'));
+//        $page_data['page_title'] = 'Profile Setting';
+//        $page_data['pg_name'] = 'settings';
+//        $page_data['sub_name'] = 'profile';
+//        $page_data['categories'] = $this->admin->get_results('categories', "id, name", "( pid = 0 )");
+//        $this->load->view('settings', $page_data);
+        redirect('profile/change_password/');
     }
 
     public function process()
@@ -116,10 +117,10 @@ class Profile extends MY_Controller
             $this->form_validation->set_rules('new_password', 'New Password', 'trim|required|xss_clean');
             $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[new_password]');
             if ($this->form_validation->run() == false) {
-                $this->session->set_flashdata('error_msg', 'Error: please fix the following error.' . validation_errors());
+                $this->session->set_flashdata('error_msg', 'Error: Please fix the following error.' . validation_errors());
             } else {
                 if (!$this->admin->cur_pass_match($this->input->post('current_password'), $id)) {
-                    $this->session->set_flashdata('error_msg', 'Error: the current password does not match');
+                    $this->session->set_flashdata('error_msg', 'Error: The current password does not match');
                 } else {
                     $this->admin->change_password($this->input->post('new_password'), $id);
                     $this->session->set_flashdata('success_msg', 'Success: Password changed.');

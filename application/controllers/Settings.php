@@ -245,10 +245,11 @@ class Settings extends CI_Controller
     function process(){
         if( $_POST || $_FILES ){
             switch ($this->input->post('process_type')) {
+
                 case 'upload_slider_image':
                     $url = $this->input->post('url');
                     if( isset($_FILES)){
-                        $upload_result = $this->upload_image('slider_image', HOMEPAGE_SLIDER);
+                        $upload_result = $this->upload_image('slider_image', SLIDER_IMAGE_PATH);
                         if( $upload_result ){
                             $data = array('image' => $upload_result, 'img_link' => $url );
                             $insert_id = $this->admin->insert_data('sliders', $data);
@@ -287,7 +288,7 @@ class Settings extends CI_Controller
                             $_FILES['image']['tmp_name'] = $files['image']['tmp_name'][$x];
                             $_FILES['image']['error'] = $files['image']['error'][$x];
                             $_FILES['image']['size'] = $files['image']['size'][$x];
-                            $upload_result = $this->upload_image('image');
+                            $upload_result = $this->upload_image('image', CATEGORY_HOME_IMAGE_PATH);
                             $new_name = str_replace('.','_',$old_name);
                             if ($upload_result){
                                 $image_position = $this->input->post($new_name.'_position');
@@ -381,7 +382,8 @@ class Settings extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    function upload_image($field, $path = CATEGORY_HOMEPAGE_DIR ){
+    function upload_image($field, $path = SLIDER_IMAGE_PATH ){
+        if( !file_exists( $path ) ) mkdir( $path, '0777');
         $config['upload_path'] = $path;
         $config['allowed_types'] = 'gif|jpg|jpeg|png|JPG';
         $config['max_size'] = 10000;

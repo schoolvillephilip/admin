@@ -1,4 +1,10 @@
 <?php $this->load->view('templates/meta_tags'); ?>
+<style>
+    .active-status{
+        background-color: #124431 ;
+        color: #FFFFFF;
+    }
+</style>
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -91,6 +97,25 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr>
+                                                            <td class="text-semibold">Order Unique ID</td>
+                                                            <td>
+                                                                <?= $order->id; ?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-semibold">Order Assigned To</td>
+                                                            <td>
+                                                                <?php
+                                                                    if( $order->agent == 0 ){
+                                                                        echo 'Not yet Assigned to';
+                                                                    }else{
+                                                                        $user = $this->admin->get_row('users', array('id' => $order->agent ));
+                                                                        echo '<a class="btn-link" href="#"> ' .$user->first_name .' '.$user->last_name  . ' </a>';
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
                                                             <td class="text-semibold">Product Name</td>
                                                             <td><a class="btn-link"
                                                                    href="<?= base_url('product/detail/' . $order->product_id); ?>"><?= $order->product_name; ?></a>
@@ -123,9 +148,25 @@
                                                             <td><?= $order->qty; ?></td>
                                                         </tr>
                                                         <tr>
+                                                            <td class="text-semibold">Delivery Channel</td>
+                                                            <td>
+                                                                <?php
+                                                                    $delivery = '';
+                                                                    if( $order->pickup_location_id != 0 ) {
+                                                                        // Get the delivery address
+                                                                        $result = $this->admin->get_pickup_address( $order->pickup_location_id );
+                                                                        $delivery = '<strong>To Pickup At : </strong>' .$result->title . ' - '. $result->phones.', '. $result->address .' '. $result->emails;
+                                                                    }else{
+                                                                        $delivery = '<b>Deliveing To : Name </b>' . $order->first_name . ' ' . $order->last_name . '; <b> Phone :</b> ' . $order->phone . '; <b>Address: </b>' .$order->address;
+                                                                    }
+                                                                    echo $delivery;
+                                                                ?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
                                                             <td class="text-semibold">Present Status</td>
                                                             <td>
-                                                                <span class="label label-success"><?= $order->active_status; ?></span>
+                                                                <span class="label label-success"><?= ucfirst($order->active_status); ?></span>
                                                             </td>
                                                         </tr>
                                                         <tr>

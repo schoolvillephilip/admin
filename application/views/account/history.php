@@ -27,6 +27,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row" style="padding:10px;">
+                            <?php $this->load->view('msg_view'); ?>
                             <div class="table-responsive">
                                 <table id="history_table" class="table table-striped table-bordered" cellspacing="0"
                                        width="100%">

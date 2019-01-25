@@ -17,6 +17,7 @@
             </div>
             <p></p>
             <div id="page-content">
+                <?php $this->load->view('msg_view'); ?>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="panel panel-bordered-default panel-colorful media middle pad-all">

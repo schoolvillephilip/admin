@@ -327,7 +327,7 @@ Class Admin_model extends CI_Model
      */
     
     function get_orders( $id = '', $args = array()){
-        $query = "SELECT o.id,o.agent, o.product_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
+        $query = "SELECT o.id,o.agent, o.product_id,o.billing_address_id, o.pickup_location_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
           o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
         LEFT JOIN sellers s ON (o.seller_id = s.uid)
@@ -349,8 +349,8 @@ Class Admin_model extends CI_Model
     /*
      * Get orders for Sales Representative
      * */
-    function get_orders_for_salesrep( $id, $uid = '' ){
-        $query = "SELECT o.id,o.agent, o.product_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
+    function get_orders_for_salesrep( $order_code, $uid ){
+        $query = "SELECT o.id, o.agent, o.product_id,o.billing_address_id,o.pickup_location_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
           o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
         LEFT JOIN sellers s ON (o.seller_id = s.uid)
@@ -360,11 +360,18 @@ Class Admin_model extends CI_Model
         LEFT JOIN area ar ON (b.aid = ar.id)
         LEFT JOIN users u ON (o.buyer_id = u.id)";
         $query .= " WHERE o.agent = {$uid} AND o.active_status != 'completed'";
-        if( $id != ''){
-            $query .= " AND o.order_code = {$id} OR o.id = {$id}";
+        if( $order_code != ''){
+            $query .= " AND o.order_code = {$order_code}";
         }
         $query.= " GROUP BY o.order_code";
         return $this->db->query($query)->result();
+    }
+
+    /*
+     * */
+    function get_pickup_address( $id ) {
+        $this->db->where('id', $id );
+        return $this->db->get('pickup_address')->row();
     }
 
     /**

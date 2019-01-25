@@ -1,21 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Orders extends CI_Controller{
+class Orders extends MY_Controller{
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('admin_model', 'admin');
-        if (!$this->session->userdata('logged_in')) {
-            // Ursher the person to where he is coming from
-            $from = $this->session->userdata('referred_from');
-            if (!empty($from)) redirect($from);
-            redirect('login');
-        }
     }
 
     public function index(){
+        $order_code = $this->input->get('order_code', true);
         $page_data['page_title'] = 'Orders Overview';
         $page_data['pg_name'] = 'orders';
         $page_data['sub_name'] = 'orders_overview';
@@ -25,11 +19,10 @@ class Orders extends CI_Controller{
             'first_name,last_name,email,profile_pic, groups');
 
         if( $this->session->userdata('group_id') == 4 ) { # Sales Rep
-            $page_data['orders'] = $this->admin->get_orders_for_salesrep($id, $this->session->userdata('group_id'));
+            $page_data['orders'] = $this->admin->get_orders_for_salesrep( $order_code, $id);
             $this->load->view('salesrep/orders/overview', $page_data);
         }else{
             // Site Administrator // Manager
-            $order_code = $this->input->get('order_code', true);
             if( !$order_code) $order_code = '';
             $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
             if ($page > 1) $page -= 1;
@@ -54,18 +47,19 @@ class Orders extends CI_Controller{
     }
 
     public function detail(){
-        $id = cleanit( $this->uri->segment(3));
+        $order_code = cleanit( $this->uri->segment(3));
+        $uid = $this->session->userdata('logged_id');
 		$page_data['page_title'] = 'Orders Detail';
 		$page_data['pg_name'] = 'orders';
 		$page_data['sub_name'] = 'orders_detail';
         $page_data['least_sub'] = '';
-		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+		$page_data['profile'] = $this->admin->get_profile_details( $uid,
 			'first_name,last_name,email,profile_pic,groups');
         if( $this->session->userdata('group_id') == 4 ){ # Sales Rep
-            $page_data['orders'] = $this->admin->get_orders_for_salesrep( $id, $this->session->userdata('group_id') );
+            $page_data['orders'] = $this->admin->get_orders_for_salesrep( $order_code, $uid );
             $this->load->view('salesrep/orders/detail', $page_data);
         }else{
-            $page_data['orders'] = $this->admin->get_orders( $id , array('is_limit' => false));
+            $page_data['orders'] = $this->admin->get_orders( $order_code , array('is_limit' => false));
             $this->load->view('orders/detail', $page_data);
         }
 	}

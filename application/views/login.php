@@ -26,12 +26,12 @@
             <div class="panel-body">
                 <div class="mar-ver pad-btm">
                     <h1 class="h3 text-2x">Login</h1>
-                    <p class="text-semibold">Sign In to your admin account</p>
+                    <p class="text-semibold">Sign in to your account</p>
                     <?php $this->load->view('msg_view'); ?>
                 </div>
                 <?= form_open('login/process'); ?>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Username" name="email" autofocus>
+                    <input type="email" class="form-control" placeholder="Email" name="email" autofocus>
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Password">

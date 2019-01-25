@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Where to be linked to</label>
                                 <div class="col-lg-7">
-                                    <input type="text" name="url" class="form-control" required placeholder="Enter the Url for the slider">
+                                    <input type="text" name="url" class="form-control" required placeholder="Enter the Url the slider should link to. Eg: https://www.onitshamarket.com/pages/contact/">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,7 +57,7 @@
                                 <tbody>
                                 <?php foreach ($homepage_slider as $slider ): ?>
                                     <tr>
-                                        <th><img src="<?= HOMEPAGE_SLIDER . $slider->image?>" alt="No image found" /></th>
+                                        <th><img src="<?= SLIDER_IMAGE_PATH . $slider->image; ?>" alt="No image found" /></th>
                                         <th><a class="btn-linkn" href="<?= $slider->img_link; ?>"><?= $slider->img_link; ?></a></th>
                                         <th>
                                             <?php if( $slider->status == 'inactive' ): ?>
@@ -190,7 +190,7 @@
                                                         <li>
                                                             <strong>Position :</strong> <?= $decode->position?> <br />
                                                             <strong>Image URL :</strong>
-                                                                <a class="btn-link" target="_blank" href="<?= CATEGORY_HOMEPAGE_DIR . $decode->img; ?>"><?= $decode->img; ?></a>
+                                                                <a class="btn-link" target="_blank" href="<?= CATEGORY_HOME_IMAGE_PATH . $decode->img; ?>"><?= $decode->img; ?></a>
                                                             <br />
                                                             <strong>Image Link :</strong>
                                                                 <a class="btn-link" target="_blank" href="<?= $decode->link; ?>" title="<?= $decode->link; ?>">Linked To</a><br />

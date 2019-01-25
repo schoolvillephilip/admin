@@ -7,21 +7,19 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
         // Security Checks here
-        $pages = array('dashboard', 'product', 'orders', 'brands', 'categories', 'sellers', 'account', 'settings', 'states', 'profile_settings', 'help', 'logout');
+        //  Are you logged in ?
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }elseif($this->session->userdata('logged_in') && in_array($this->session->userdata('group_id'), array_keys(USER_ROLES))){
+            // Logged in and in group
+            $group = $this->session->userdata('group_id');
+            $controller = trim($this->uri->segment(1));
+            if( !in_array( $controller, USER_ROLES[$group]) ){
+                $this->session->set_flashdata('error_msg', "Sorry, you don't have the priviledge to access that page.");
+                redirect( $_SERVER['HTTP_REFERER']);
+            }
+        }else{
+            redirect('https://www.onitshamarket.com');
+        }
     }
-
-//switch ($group) {
-//case '1':
-//echo 'Administrator';
-//break;
-//case '2':
-//echo 'Manager';
-//break;
-//case '3':
-//echo 'Accountant';
-//break;
-//case '4':
-//echo 'Sales Rep';
-//break;
-//};
 }

@@ -1,5 +1,9 @@
 <?php $this->load->view('templates/meta_tags'); ?>
-<link href="<?= base_url('assets/plugins/unitegallery/css/unitegallery.min.css'); ?>" rel="stylesheet">
+<style>
+    .product-img{
+        background-color: #FFFFFF;
+    }
+</style>
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -44,7 +48,7 @@
                                         <tr>
                                             <td><strong>Seller:</strong></td>
                                             <td>
-                                                <a href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
+                                                <a class="btn-link" href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
                                                 <button data-target="#demo-modal-wo-anim" data-toggle="modal"
                                                         class="btn btn-primary btn-sm" style="float: right"><i
                                                             class="demo-pli-lock-user icon-fw"></i>Message

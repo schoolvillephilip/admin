@@ -1,19 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categories extends CI_Controller
+class Categories extends MY_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin_model', 'admin');
-		if (!$this->session->userdata('logged_in')) {
-			// Ursher the person to where he is coming from
-			$from = $this->session->userdata('referred_from');
-			if (!empty($from)) redirect($from);
-			redirect('login');
-		}
 	}
 
 	// View All categories
@@ -63,7 +55,7 @@ class Categories extends CI_Controller
 				'title' => cleanit( $this->input->post('title')),
 				'name' => cleanit($this->input->post('name')),
 				'icon' => $this->input->post('icon'),
-				'commission' => !empty( $commission) ? $commission : 0,
+				'commission' => !empty( $commission) ? $commission : 3,
 				'specifications' => $specs,
 				'variation_name' => $variation_name,
 				'variation_options' => $opt,
@@ -246,13 +238,17 @@ class Categories extends CI_Controller
 	// upload function
 	function do_upload($file)
 	{
-		$config['upload_path'] = './data/settings/categories/';
+
+        $upload_path = CATEGORY_IMAGE_PATH;
+
+        if( !file_exists( $upload_path) ) mkdir( $upload_path, 0777, TRUE);
+		$config['upload_path'] = $upload_path;
 		$config['allowed_types'] = 'gif|jpg|png|JPEG|jpeg|bmp';
 		$config['max_size'] = 10048;
 		$config['max_width'] = 2000;
 		$config['max_height'] = 2000;
 		$config['overwrite'] = false;
-		$config['encrypt_name'] = true;
+//		$config['encrypt_name'] = true;
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload($file)) {
 			// could append the file name...

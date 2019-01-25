@@ -40,7 +40,17 @@
 										<tr>
 											<td><a class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code); ?>"><?= $order->order_code; ?></a></td>
 											<td class="text-center">
-                                                <?= '<b>Name </b>' . $order->first_name . ' ' . $order->last_name . '; <b> Phone :</b> ' . $order->phone . '; <b>Address: </b>' .$order->address; ?>
+                                                <?php
+                                                $delivery = '';
+                                                if( $order->pickup_location_id != 0 ) {
+                                                    // Get the delivery address
+                                                    $result = $this->admin->get_pickup_address( $order->pickup_location_id );
+                                                    $delivery = '<strong>To Pickup At :</strong>' .$result->title . ' - '. $result->phones.', '. $result->address .' '. $result->emails;
+                                                }else{
+                                                    $delivery = '<b>Delivering To :</b><b>Name </b>' . $order->first_name . ' ' . $order->last_name . '; <b> Phone :</b> ' . $order->phone . '; <b>Address: </b>' .$order->address;
+                                                }
+                                                echo $delivery;
+                                                ?>
                                             </td>
                                             <td><?= $order->state . ' ('. $order->area. ')'; ?></td>
 											<td class="text-center"><?= $order->qty; ?></td>

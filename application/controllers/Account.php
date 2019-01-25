@@ -6,12 +6,6 @@ class Account extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('admin_model', 'admin');
-        if (!$this->session->userdata('logged_in')) {
-            $from = $this->session->userdata('referred_from');
-            if (!empty($from)) redirect($from);
-            redirect('login');
-        }
     }
 
     //FAQ
@@ -136,7 +130,7 @@ class Account extends MY_Controller
         $page_data['sub_name'] = "statement";
         $page_data['least_sub'] = '';
         $page_data['txn_chart'] = "";
-        $page_data['profile'] = $this->admin->get_profile();
+        $page_data['profile'] = $this->admin->get_profile( $this->session->userdata('logged_id'));
         $this->load->view('account/txn_overview', $page_data);
     }
 }
