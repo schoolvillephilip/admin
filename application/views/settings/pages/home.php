@@ -49,7 +49,7 @@
                                 <thead>
                                 <tr>
                                     <th>Image</th>
-                                    <th>Image Link</th>
+                                    <th>Image Linked To</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -192,7 +192,7 @@
                                                             <strong>Image URL :</strong>
                                                                 <a class="btn-link" target="_blank" href="<?= CATEGORY_HOME_IMAGE_PATH . $decode->img; ?>"><?= $decode->img; ?></a>
                                                             <br />
-                                                            <strong>Image Link :</strong>
+                                                            <strong>Image Linked To :</strong>
                                                                 <a class="btn-link" target="_blank" href="<?= $decode->link; ?>" title="<?= $decode->link; ?>">Linked To</a><br />
                                                         </li>
                                                 <?php endforeach; ?>

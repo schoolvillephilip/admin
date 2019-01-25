@@ -4,7 +4,8 @@ $lang['site_state'] = 'development';
 $lang['app_name'] = 'Onitshamarket';
 $lang['app_email'] = '';
 $lang['notify_email'] = '';
-$lang['site_domain'] = 'http://onitshamarket.com';
+$lang['site_domain'] = 'https://www.onitshamarket.com';
+$lang['copyright'] = "&copy; 2015 -  " . date('Y') ." Internet Onitshamarketing Limited All rights reserved";
 
 
 

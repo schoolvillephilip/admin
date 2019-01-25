@@ -185,16 +185,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <p>Uh oh, Onitshamarket.com couldn't find the page you are trying to access.</p>
 </div>
 <div id="ripple-control"></div>
-<img id="fish" src="http://localhost/admin/assets/img/fish-404.png" style="top: -9999px; left: -9999px;">
+<img id="fish" src="./assets/img/fish-404.png" style="top: -9999px; left: -9999px;">
 
 
 <div id="cloud1" style="left: 955px;"></div>
 <div id="cloud2" style="left: 488px;"></div>
-<img id="gull" src="http://localhost/admin/assets/img/gulls-404.png" style="top: -9999px; left: -9999px;">
+<img id="gull" src="./assets/img/gulls-404.png" style="top: -9999px; left: -9999px;">
 
 <ul class="bottomLinkList">
-    <li><a href="http://localhost/project001">Home</a></li>
-    <li class="copy">© <span class="year">2018</span> onitshamarket.com <span class="tm">TM</span></li>
+    <li></li><a href="javascript:history.go(-1)" title="Return to the previous page">&laquo; Go back</a</li>
+    <li class="copy">&copy; 2015 -  2019 Internet Onitshamarketing Limited All rights reserved</li>
 </ul>
 
 
