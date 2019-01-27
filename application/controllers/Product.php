@@ -48,6 +48,7 @@ class Product extends MY_Controller
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$page_data['product'] = $this->admin->get_single_product_detail( $id );
+//		var_dump( $page_data['product']  ); exit;
 		$this->load->view('product/detail', $page_data);
 	}
 

@@ -81,6 +81,7 @@ class Sellers extends MY_Controller
 		$page_data['product_count'] = $this->admin->product_count($id );
 
 		$page_data['products'] = $this->admin->get_product_list($id,'',array('is_limit' => false));
+
 		$this->load->view('sellers/detail', $page_data);
 	}
 

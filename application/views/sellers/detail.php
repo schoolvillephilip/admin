@@ -119,9 +119,8 @@
                                     <p class="text-main text-semibold">Account Status</p>
                                     <p>
                                         <button
-                                                class="btn btn-<?= ($seller->account_status == 'approved' || $seller->account_status == 'verified') ? 'success' : 'danger' ?> btn-rounded"><?= ucwords($seller->account_status); ?></button>
+                                                class="btn btn-<?= ($seller->account_status == 'approved' || $seller->account_status == 'verified') ? 'success' : 'danger' ?> btn-rounded"><?= ucwords($seller->is_seller); ?></button>
                                     </p>
-                                    <p><strong><?= accountStatus($seller->account_status); ?></strong></p>
                                     <p class="text-main text-semibold">Date Registered</p>
                                     <p><?= neatDate($seller->date_registered); ?></p>
                                     <p class="text-main text-semibold">Last Login</p>
