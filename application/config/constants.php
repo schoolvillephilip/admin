@@ -88,13 +88,13 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 // My Constants
 defined('USER_ROLES') OR define('USER_ROLES', array(
     # Administrator
-    1 => array('dashboard', 'product', 'orders', 'brands', 'users','sellers', 'categories', 'sellers', 'account', 'settings', 'states', 'profile_settings', 'help', 'profile' ),
+    1 => array('dashboard', 'product', 'orders', 'brands', 'users','sellers', 'categories', 'sellers', 'account', 'settings', 'states', 'profile_settings', 'help', 'profile', 'questions' ),
     # Manager
     2 => array('dashboard', 'product', 'brands', 'categories', 'settings', 'states' , 'brands', 'profile'),
     # Accountant
     3 => array('dashboard', 'sales', 'account', 'profile', 'help', 'logout'),
     # Sales Rep.
-    4 => array('dashboard', 'orders', 'profile', 'help', 'logout')
+    4 => array('dashboard', 'orders', 'profile', 'help', 'logout', 'questions' )
 ));
 
 //FCPATH .'uploads'.DIRECTORY_SEPARATOR.'stores';

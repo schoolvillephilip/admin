@@ -150,6 +150,12 @@
                                 </ul>
                             </li>
                         <?php endif ?>
+                        <li class="<?php if ($pg_name == 'questions') echo 'active' ?>">
+                            <a href="<?= base_url('questions'); ?>">
+                                <i class="demo-pli-question"></i>
+                                <span class="menu-title">Questions <?//= $questions_count < 1 ? '' : '(' . $questions_count . ' new)'; ?></span>
+                            </a>
+                        </li>
                         <li class="list-divider"></li>
                         <?php if ( in_array('settings', USER_ROLES[$group]) ) : ?>
                             <li <?php if ($pg_name == 'settings') echo 'class="active"' ?>>
