@@ -103,20 +103,6 @@ Class Admin_model extends CI_Model
 
     /**
      * @param $access : id
-     * @param $details : string of data you only want to retrieve
-     * @return mixed
-     */
-    function get_profile_details($access, $details)
-    {
-        $this->db->select($details);
-        $this->db->where('id', $access);
-        return $this->db->get('users')->row();
-    }
-
-    // Change Password
-
-    /**
-     * @param $access : id
      * @param $details : Get all login user  profile details
      * @return mixed
      */
@@ -125,6 +111,8 @@ Class Admin_model extends CI_Model
         $query = "SELECT u.*,s.* FROM users u LEFT JOIN sellers s ON (s.uid = u.id) where u.id = {$access} OR s.uid = {$access}";
         return $this->db->query($query)->row();
     }
+
+    // Change Password
 
     /**
      * @param string $id
@@ -222,6 +210,7 @@ Class Admin_model extends CI_Model
         WHERE sub_category_id =  ? ', $id)->row();
         return $output;
     }
+
     /**
      * @param $type =
      * @return CI_DB_result
@@ -232,7 +221,6 @@ Class Admin_model extends CI_Model
         if (!empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
         return $this->db->query($query)->result();
     }
-
 
     /**
      * @param $type =
@@ -276,14 +264,14 @@ Class Admin_model extends CI_Model
         if ($product_status != '') {
             $query .= " AND p.product_status != '{$product_status}'";
         }
-        if( !empty( $args ) && !empty($args['str'])){
+        if (!empty($args) && !empty($args['str'])) {
             $str = $args['str'];
             $query .= " AND p.product_name LIKE '%{$str}%'";
         }
         $limit = $args['is_limit'];
-        if( $limit == true ){
-            $query .=" GROUP BY p.id ORDER BY p.created_on DESC LIMIT " .$args['offset']. "," .$args['limit'];
-        }else{
+        if ($limit == true) {
+            $query .= " GROUP BY p.id ORDER BY p.created_on DESC LIMIT " . $args['offset'] . "," . $args['limit'];
+        } else {
             $query .= " GROUP BY p.id ORDER BY p.created_on DESC";
         }
         return $this->db->query($query)->result();
@@ -325,8 +313,9 @@ Class Admin_model extends CI_Model
      * @param $id
      * @return CI_DB_object
      */
-    
-    function get_orders( $id = '', $args = array()){
+
+    function get_orders($id = '', $args = array())
+    {
         $query = "SELECT o.id,o.agent, o.product_id,o.billing_address_id, o.pickup_location_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
           o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
@@ -340,16 +329,14 @@ Class Admin_model extends CI_Model
             $query .= " WHERE o.order_code = '{$id}' OR o.id = '{$id}' GROUP BY o.product_id";
         }
         $limit = $args['is_limit'];
-        if( $limit == true ){
-            $query .=" GROUP BY o.order_code LIMIT " .$args['offset']. "," .$args['limit'];
+        if ($limit == true) {
+            $query .= " GROUP BY o.order_code LIMIT " . $args['offset'] . "," . $args['limit'];
         }
         return $this->db->query($query)->result();
     }
 
-    /*
-     * Get orders for Sales Representative
-     * */
-    function get_orders_for_salesrep( $order_code, $uid ){
+    function get_orders_for_salesrep($order_code, $uid)
+    {
         $query = "SELECT o.id, o.agent, o.product_id,o.billing_address_id,o.pickup_location_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
           o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
@@ -360,19 +347,25 @@ Class Admin_model extends CI_Model
         LEFT JOIN area ar ON (b.aid = ar.id)
         LEFT JOIN users u ON (o.buyer_id = u.id)";
         $query .= " WHERE o.agent = {$uid} AND o.active_status != 'completed'";
-        if( $order_code != ''){
+        if ($order_code != '') {
             $query .= " AND o.order_code = {$order_code}";
         }
-        $query.= " GROUP BY o.order_code";
+        $query .= " GROUP BY o.order_code";
         return $this->db->query($query)->result();
     }
 
     /*
+     * Get orders for Sales Representative
      * */
-    function get_pickup_address( $id ) {
-        $this->db->where('id', $id );
+
+    function get_pickup_address($id)
+    {
+        $this->db->where('id', $id);
         return $this->db->get('pickup_address')->row();
     }
+
+    /*
+     * */
 
     /**
      * @param $id
@@ -449,7 +442,7 @@ Class Admin_model extends CI_Model
                         );
                         return true;
                         break;
-                    } catch (Exception $e ) {
+                    } catch (Exception $e) {
                     }
             }
         }
@@ -521,7 +514,7 @@ Class Admin_model extends CI_Model
                     break;
 
                 case 'reject':
-                    $status = $this->update_data($sid, array('is_seller' => 'rejected'), 'users' );
+                    $status = $this->update_data($sid, array('is_seller' => 'rejected'), 'users');
                     if ($status) {
                         // Products to be deleted
                         $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
@@ -563,14 +556,13 @@ Class Admin_model extends CI_Model
         return $this->db->get('brands');
     }
 
-    // The states for shipping price
     function get_states($id = '')
     {
         if ($id != '') $this->db->where('id', $id);
         return $this->db->get('states');
     }
 
-    // area price
+    // The states for shipping price
 
     function get_address_price($id = '')
     {
@@ -579,6 +571,7 @@ Class Admin_model extends CI_Model
         return $this->db->query($select);
     }
 
+    // area price
 
     /**
      * Return the num of rows of a table with certain conditions if found
@@ -596,9 +589,6 @@ Class Admin_model extends CI_Model
         return $this->db->get($table)->num_rows();
     }
 
-
-    // General function to SQL
-
     function get_row($table_name, $condition = array())
     {
         if (!empty($conditionn)) {
@@ -606,6 +596,41 @@ Class Admin_model extends CI_Model
         }
         return $this->db->get($table_name)->row();
     }
+
+
+    // General function to SQL
+
+    function get_question_product($pid = '')
+    {
+        $query = "SELECT p.*, u.first_name, u.last_name FROM products AS p LEFT JOIN users AS u ON (p.seller_id = u.id) WHERE p.id = '$pid' ";
+        return $this->db->query($query)->row();
+    }
+
+
+    //Question Approval Page Data
+
+    function get_question_product_img($pid = '')
+    {
+        $query = "SELECT image_name FROM product_gallery WHERE (product_id ='$pid' AND featured_image = 1)";
+        return $this->db->query($query)->row();
+    }
+
+    function approve_question($qid = "")
+    {
+        $query = "UPDATE qna SET status = 'approved' WHERE id = '$qid'";
+        try {
+            $this->run_sql($query);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    function run_sql($query)
+    {
+        return $this->db->query($query);
+    }
+    //End Question Approval Page Data
 
     // Get row
     // Get a row of a paticular table
@@ -616,6 +641,8 @@ Class Admin_model extends CI_Model
      * @param array $condition
      * @return array
      */
+
+
     function get_results($table_name = '', $condition = array())
     {
         if (!empty($condition)) {
@@ -699,13 +726,6 @@ Class Admin_model extends CI_Model
     // Get payment request,
     // single or result
 
-    function run_sql($query)
-    {
-        return $this->db->query($query);
-    }
-
-    // Get payment history for Admin to rack
-
     function payment_history($status = '')
     {
         $query = "SELECT p.*, s.legal_company_name, s.uid FROM payouts p JOIN sellers s ON (s.uid = p.user_id) ";
@@ -716,11 +736,8 @@ Class Admin_model extends CI_Model
         return $this->run_sql($query)->result();
     }
 
-    /*
-     * Mark order status
-     * {"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}
-     * */
-//UPDATE orders SET `status` = 2, `active_status` = shipped WHERE `order_code` = 73862195
+    // Get payment history for Admin to rack
+
     function mark_order($status, $id, $order_code = '')
     {
 //        $status, $id, $order_code
@@ -756,20 +773,41 @@ Class Admin_model extends CI_Model
     }
 
     /*
-     * Get agent by id or all agents
+     * Mark order status
+     * {"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}
      * */
-    function get_agent( $id = '' ){
-        if( $id != '' ){
+//UPDATE orders SET `status` = 2, `active_status` = shipped WHERE `order_code` = 73862195
+
+    function get_agent($id = '')
+    {
+        if ($id != '') {
             return $this->get_profile_details($id, 'email,first_name,last_name,phone,gender');
-        }else{
+        } else {
             $this->db->where('groups', 4);
             return $this->db->get('users')->result();
         }
     }
 
     /*
+     * Get agent by id or all agents
+     * */
+
+    /**
+     * @param $access : id
+     * @param $details : string of data you only want to retrieve
+     * @return mixed
+     */
+    function get_profile_details($access, $details)
+    {
+        $this->db->select($details);
+        $this->db->where('id', $access);
+        return $this->db->get('users')->row();
+    }
+
+    /*
      * Update user roles
      *  */
+
     function update_role($update_type, $update_value, $update_id)
     {
         switch ($update_type):
@@ -795,14 +833,16 @@ Class Admin_model extends CI_Model
     /*
      * Get top 20 sales
      * */
-    function top_20_sales(){
+    function top_20_sales()
+    {
         $query = "SELECT p.product_name, p.id, SUM(o.qty) no_of_sales FROM orders o LEFT JOIN products p ON (p.id = o.product_id) 
         WHERE active_status = 'completed' GROUP BY o.product_id ORDER BY o.qty";
-        return $this->run_sql( $query )->result();
+        return $this->run_sql($query)->result();
     }
 
     /* Get order chart for sales*/
-    function order_chart(){
+    function order_chart()
+    {
         $query = "SELECT
                 SUM(IF(month = 'Jan', total, 0)) AS 'Jan',
                 SUM(IF(month = 'Feb', total, 0)) AS 'Feb',
@@ -823,14 +863,15 @@ Class Admin_model extends CI_Model
             WHERE order_date <= NOW() and order_date >= Date_add(Now(),interval - 12 month)
             AND active_status = 'completed'
             GROUP BY order_code, DATE_FORMAT(order_date, '%m-%Y')) as sub";
-        return $this->run_sql( $query)->row_array();
+        return $this->run_sql($query)->row_array();
     }
+
     /*
      * Payment method toggle
      *  */
     function toggle_payment_method($op, $id)
     {
-        switch($op){
+        switch ($op) {
             case "enable":
                 $status = 1;
                 break;
@@ -851,11 +892,11 @@ Class Admin_model extends CI_Model
 
     /*
      * */
-    function get_order_seller( $id ){
+    function get_order_seller($id)
+    {
         $query = "SELECT o.seller_id, p.product_name FROM orders o LEFT JOIN p ON(p.id = o.product_id) WHERE o.id = ?";
         return $this->db->get('orders', array($id))->row();
     }
-
 
 
 }
