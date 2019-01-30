@@ -30,7 +30,7 @@
                                 <table id="all-question-col-exp" class="table toggle-circle">
                                     <thead>
                                     <tr>
-                                        <th data-toggle="true">Product Image</th>
+                                        <th data-toggle="true" width="10">Product Image</th>
                                         <th>Product Name</th>
                                         <th>Product Details</th>
                                         <th data-hide="all">Seller</th>
@@ -52,7 +52,7 @@
                                             <td><img src="<?= PRODUCTS_IMAGE_PATH . $product_img->image_name; ?>"
                                                      alt="<?= $product->product_name; ?>"/></td>
                                             <td><?= $product->product_name; ?></td>
-                                            <td><?= $product->product_description; ?></td>
+                                            <td><?= character_limiter($product->product_description, 3); ?></td>
                                             <td><?= ucwords($product->first_name . ' ' . $product->last_name); ?></td>
                                             <td><?= $question->display_name; ?></td>
                                             <td><i class="fa fa-question-circle-o"></i>
