@@ -7,13 +7,14 @@
         $group = $this->session->userdata('group_id');
         $controller = trim($this->uri->segment(1));
         //   A query for menu count
-        if( $group == 4){
-            $sales_count = $this->admin->run_sql("SELECT * FROM orders WHERE active_status = 'processing' AND agent ={$group} ")->num_rows();
-        }else{
-            $sales_count = $this->admin->run_sql("SELECT * FROM orders WHERE active_status = 'processing' ")->num_rows();
+        if ($group == 4) {
+            $id = $this->session->userdata('logged_id');
+            $sales_count = $this->admin->get_results('orders', "(active_status = 'proccessing' AND agent = '$id')")->num_rows();
+        } else {
+            $sales_count = $this->admin->get_results('orders', "(active_status = 'processing')")->num_rows();
         }
-
-        $payout_request_count = $this->admin->run_sql("SELECT * FROM payouts WHERE status = 'processing' ")->num_rows();
+        $payout_request_count = $this->admin->get_results('payouts', "(status = 'processing')")->num_rows();
+        $questions_count = $this->admin->get_results('qna', "( status != 'approved')")->num_rows();
         ?>
         <div id="mainnav-menu-wrap">
             <div class="nano">
@@ -65,7 +66,7 @@
                                 <span class="menu-title">Dashboard</span>
                             </a>
                         </li>
-                        <?php if ( in_array('sellers', USER_ROLES[$group]) ) : ?>
+                        <?php if (in_array('sellers', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-list-view"></i>
@@ -80,15 +81,15 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <?php if ( in_array( 'orders', USER_ROLES[$group])) : ?>
+                        <?php if (in_array('orders', USER_ROLES[$group])) : ?>
                             <li class="<?php if ($pg_name == 'orders') echo 'active' ?>">
                                 <a href="<?= base_url('orders/') ?>">
                                     <i class="demo-pli-shopping-basket"></i>
-                                    <span class="menu-title">Sales &amp; Orders</span><?php if($sales_count) echo ' <span class="label label-default"> '.$sales_count. '</span>'; ?>
+                                    <span class="menu-title">Sales &amp; Orders</span><?php if ($sales_count) echo ' <span class="label label-default"> ' . $sales_count . '</span>'; ?>
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if ( in_array( 'categories', USER_ROLES[$group])  || in_array( 'brand', USER_ROLES[$group])) : ?>
+                        <?php if (in_array('categories', USER_ROLES[$group]) || in_array('brand', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'select_category') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-split-vertical-2"></i>
@@ -110,7 +111,7 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <?php if ( in_array('sellers', USER_ROLES[$group]) ) : ?>
+                        <?php if (in_array('sellers', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-find-user"></i>
@@ -127,7 +128,7 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <?php if (in_array('account', USER_ROLES[$group]) ) : ?>
+                        <?php if (in_array('account', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'report') echo 'class="active"' ?>>
                                 <a href="javascript:;">
                                     <i class="demo-pli-bar-chart"></i>
@@ -143,7 +144,8 @@
                                             Account Statement</a></li>
                                     <li <?php if ($sub_name == 'payout') echo 'class="active"' ?>><a
                                                 href="<?= base_url('account/payout'); ?>">
-                                            Payout Requests<?php if($payout_request_count) echo'<span class="label label-default">'. '('.$payout_request_count.')</span></a></li>'; ?>
+                                            Payout
+                                            Requests<?php if ($payout_request_count) echo '<span class="label label-default">' . '(' . $payout_request_count . ')</span></a></li>'; ?>
                                     <li <?php if ($sub_name == 'history') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('account/history'); ?>">
                                             Payout History</a></li>
@@ -153,11 +155,11 @@
                         <li class="<?php if ($pg_name == 'questions') echo 'active' ?>">
                             <a href="<?= base_url('questions'); ?>">
                                 <i class="demo-pli-question"></i>
-                                <span class="menu-title">Questions <?//= $questions_count < 1 ? '' : '(' . $questions_count . ' new)'; ?></span>
+                                <span class="menu-title">Questions <?= $questions_count < 1 ? '' : '(' . $questions_count . ' new)'; ?></span>
                             </a>
                         </li>
                         <li class="list-divider"></li>
-                        <?php if ( in_array('settings', USER_ROLES[$group]) ) : ?>
+                        <?php if (in_array('settings', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'settings') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-gear"></i>
@@ -208,7 +210,7 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <?php if ( in_array('settings', USER_ROLES[$group]) ) : ?>
+                        <?php if (in_array('settings', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-medal-2"></i>

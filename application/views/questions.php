@@ -30,7 +30,7 @@
                                 <table id="all-question-col-exp" class="table toggle-circle">
                                     <thead>
                                     <tr>
-                                        <th data-toggle="true" width="10">Product Image</th>
+                                        <th data-toggle="true">Product Image</th>
                                         <th>Product Name</th>
                                         <th>Product Details</th>
                                         <th data-hide="all">Seller</th>
@@ -50,13 +50,15 @@
                                         ?>
                                         <tr>
                                             <td><img src="<?= PRODUCTS_IMAGE_PATH . $product_img->image_name; ?>"
-                                                     alt="<?= $product->product_name; ?>"/></td>
-                                            <td><?= $product->product_name; ?></td>
-                                            <td><?= character_limiter($product->product_description, 3); ?></td>
+                                                     alt="<?= word_limiter($product->product_name, 3); ?>"/></td>
+                                            <td><?= word_limiter($product->product_name, 3); ?></td>
+                                            <td><?= word_limiter($product->product_description, 9); ?></td>
                                             <td><?= ucwords($product->first_name . ' ' . $product->last_name); ?></td>
                                             <td><?= $question->display_name; ?></td>
-                                            <td><i class="fa fa-question-circle-o"></i>
-                                                &nbsp;<?= $question->question; ?>
+                                            <td>
+                                                <span style="font-weight:800 !important;">
+                                                    <i class="fa fa-question-circle-o"></i>&nbsp;<?= $question->question; ?>
+                                                </span>
                                             </td>
                                             <td><?= date('l, F d', strtotime($question->qtimestamp)); ?></td>
                                             <td><span class="label-warning label">Not Answered Yet</span></td>
