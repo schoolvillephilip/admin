@@ -424,7 +424,7 @@ Class Admin_model extends CI_Model
                 case 'approve':
                     if ($this->update_data($pid, array('product_status' => 'approved'), 'products')) {
                         $this->notify_seller($sid,
-                            'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a class='btn-link' href='" . lang('site_domain') . '/product/' . urlify($product_name, $pid) . "'>Click here to see it live.</a><br /> Regards."
+                            'Your product listing has been approved', "This is to notify you the product with ( $product_name ) has been " . $action . "ed  <br /> Check your listing <a class='btn-link' href='" . lang('site_domain') . '/product/' . urlify($product_name, $pid) . "/'>Click here to see it live.</a><br /> Regards."
                         );
                         return true;
                     }
