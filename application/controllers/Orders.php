@@ -90,6 +90,7 @@ class Orders extends MY_Controller{
                 }elseif( $status == 'returned'){
                     // Send mail to seller and notification
                     // Also do necessary calculation base on the status
+                    // @TODO : Credit the buyer' to receive his money into wallet
                     try {
                         $this->email->returned_order( $order_code );
                         $this->session->set_flashdata('success_msg', 'The order Item has been marked has returned');

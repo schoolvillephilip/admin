@@ -1,19 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Settings extends CI_Controller
+class Settings extends MY_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('admin_model', 'admin');
-        if (!$this->session->userdata('logged_in')) {
-            // Ursher the person to where he is coming from
-            $from = $this->session->userdata('referred_from');
-            if (!empty($from)) redirect($from);
-            redirect('login');
-        }
     }
 
     public function index()
@@ -383,7 +376,7 @@ class Settings extends CI_Controller
     }
 
     function upload_image($field, $path = SLIDER_IMAGE_PATH ){
-        if( !file_exists( $path ) ) mkdir( $path, '0777');
+        if( !is_dir( $path ) ) mkdir( $path, '777', true);
         $config['upload_path'] = $path;
         $config['allowed_types'] = 'gif|jpg|jpeg|png|JPG';
         $config['max_size'] = 10000;

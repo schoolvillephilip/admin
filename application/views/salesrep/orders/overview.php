@@ -42,7 +42,7 @@
 											<td class="text-center">
                                                 <?php
                                                 $delivery = '';
-                                                if( $order->pickup_location_id != 0 ) {
+                                                if( $order->pickup_location_id != '' ) {
                                                     // Get the delivery address
                                                     $result = $this->admin->get_pickup_address( $order->pickup_location_id );
                                                     $delivery = '<strong>To Pickup At :</strong>' .$result->title . ' - '. $result->phones.', '. $result->address .' '. $result->emails;
