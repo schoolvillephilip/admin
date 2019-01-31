@@ -27,7 +27,16 @@
                                 <h3 class="">Approve / Decline Questions</h3>
                             </div>
                             <div class="panel-body">
-                                <table id="all-question-col-exp" class="table toggle-circle">
+                                <label class="form-inline">Show
+                                    <select id="q-show-entries" class="form-control input-sm">
+                                        <option value="5">5</option>
+                                        <option value="10" selected>10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    entries
+                                </label>
+                                <table id="all-question-col-exp" class="table toggle-circle" data-page-size="10">
                                     <thead>
                                     <tr>
                                         <th data-toggle="true">Product Image</th>
@@ -74,6 +83,16 @@
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="7">
+                                            <div class="text-right">
+                                                <ul class="pagination"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+
                                 </table>
                             </div>
                         </div>
@@ -96,6 +115,12 @@
     let self, action = "", qid;
     let fooColExp = $('#all-question-col-exp');
     fooColExp.footable().trigger('footable_expand_first_row');
+    $('#q-show-entries').change(function (e) {
+        e.preventDefault();
+        var pageSize = $(this).val();
+        fooColExp.data('page-size', pageSize);
+        fooColExp.trigger('footable_initialized');
+    });
     $('.approve_question').on('click', function () {
         self = $(this);
         action = "approve";
