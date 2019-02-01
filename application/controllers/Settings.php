@@ -247,11 +247,14 @@ class Settings extends CI_Controller
             switch ($this->input->post('process_type')) {
 
                 case 'upload_slider_image':
-                    $url = $this->input->post('url');
+                    $url = trim($this->input->post('url'));
                     if( isset($_FILES)){
-                        $upload_result = $this->upload_image('slider_image', SLIDER_IMAGE_PATH);
+                        $image_name = rand(1000,50000);
+                        $image_name = md5(md5($image_name));
+                        $upload_result = $this->do_upload( $_FILES['slider_image']['tmp_name'], $image_name,SLIDER_IMAGE_FOLDER);
+
                         if( $upload_result ){
-                            $data = array('image' => $upload_result, 'img_link' => $url );
+                            $data = array('image' => $image_name .'.'. $upload_result['format'], 'img_link' => $url );
                             $insert_id = $this->admin->insert_data('sliders', $data);
                             if( is_int( $insert_id )){
                                 $this->session->set_flashdata('success_msg', 'The image has been added to the slider gallery');
@@ -288,19 +291,21 @@ class Settings extends CI_Controller
                             $_FILES['image']['tmp_name'] = $files['image']['tmp_name'][$x];
                             $_FILES['image']['error'] = $files['image']['error'][$x];
                             $_FILES['image']['size'] = $files['image']['size'][$x];
-                            $upload_result = $this->upload_image('image', CATEGORY_HOME_IMAGE_PATH);
+                            $image_name = rand(1000,50000) . '_' .  strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                            $upload_result = $this->do_upload( $_FILES['image']['tmp_name'], $image_name,CATEGORY_IMAGE_FOLDER);
                             $new_name = str_replace('.','_',$old_name);
                             if ($upload_result){
                                 $image_position = $this->input->post($new_name.'_position');
                                 $link = $this->input->post($new_name.'_url');
                                 $json_array = array(
-                                    'img' => $upload_result,
+                                    'img' => $image_name,
                                     'position' => $image_position,
                                     'link'  => $link
                                 );
                                 array_push( $content_array, $json_array);
                                 unset($json_array);
                             }
+                            $old_name = '';
                         }// end of for loop
                         $content= json_encode( $content_array  );
                         $data = array(
@@ -340,7 +345,17 @@ class Settings extends CI_Controller
                         }
                         break;
                     case 'delete':
+                        // Need the image
+
                         if( $this->admin->action($id, 'delete', $table)){
+                            $image = $this->admin->get_row($table, "(id = {$id})")->image;
+                            $explode = explode('.', $image);
+                            $this->load->library('cloudinarylib');
+                            $return = \Cloudinary\Uploader::destroy($explode[0]);
+                            if( $return['result'] != 'ok '){
+                                throw new Exception('There was an error removing the image from Cloudinary... Refresh page.');
+                            }
+
                             $this->session->set_flashdata('success_msg',' Action successful.');
                         }else{
                             $this->session->set_flashdata('error_msg', 'There was an error performing the action');
@@ -382,11 +397,14 @@ class Settings extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
+    /*
+     * Local upload
+     * */
     function upload_image($field, $path = SLIDER_IMAGE_PATH ){
         if( !file_exists( $path ) ) mkdir( $path, '0777');
         $config['upload_path'] = $path;
         $config['allowed_types'] = 'gif|jpg|jpeg|png|JPG';
-        $config['max_size'] = 10000;
+        $config['max_size'] = 1000;
         $config['overwrite'] = true;
         $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
@@ -408,4 +426,23 @@ class Settings extends CI_Controller
 
         }
     }
+
+    /*
+     * Cloudinary Image upload
+     * */
+    function do_upload($filepath, $image_name, $folder)
+    {
+        $this->load->library('cloudinarylib');
+        $return = \Cloudinary\Uploader::upload($filepath,
+            array(
+                "folder" => $folder,
+                "public_id" => $image_name,
+                "resource_type" => "image",
+                "eager_async" => true,
+                "quality" => 60
+            )
+        );
+        return $return;
+    }
+
 }

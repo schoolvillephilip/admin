@@ -41,9 +41,9 @@
                             </thead>
                             <tbody>
                             <?php foreach ($categories as $category) : ?>
-                                <tr>
+                                <tr id="<?= $category->id; ?>">
                                     <td class="text-center">
-                                        <img src="<?= base_url('data/settings/categories/' . $category->image); ?>"
+                                        <img src="<?= STATIC_CATEGORY_PATH . $category->image; ?>"
                                              width="40" height="40px">
                                     </td>
                                     <td class="text-center">
@@ -66,7 +66,7 @@
                                         <div class="btn-group">
                                             <a class="btn btn-mint btn-active-mint"
                                                href="<?= base_url('categories/edit/' . $category->id); ?>">Edit</a>
-                                            <button class="btn btn-danger btn-active-danger">Delete</button>
+                                            <button class="btn btn-danger btn-active-danger delete-category" data-cid="<?= $category->id; ?>">Delete</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -85,6 +85,8 @@
     </button>
 </div>
 <?php $this->load->view('templates/scripts'); ?>
+<script> let base_url = "<?= base_url(); ?>"; </script>
+<?php $this->load->view('templates/confirm_modal'); ?>
 <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
@@ -97,6 +99,33 @@
                     "previous": '<i class="demo-psi-arrow-left"></i>',
                     "next": '<i class="demo-psi-arrow-right"></i>'
                 }
+            }
+        });
+
+        $('.delete-category').on('click', function(){
+            var id = $(this).data('cid');
+            $('#modal_confirm')
+                .find('.modal-header > p')
+                .text('Are you sure about this action? Some products or other categories might be associated to this category.').end()
+                .find('.modal-body')
+                .html('<i class="fa fa-check fa-4x text-primary"></i>').end()
+                .modal('show');
+            if( $('#confirm_true') ){
+                $.ajax({
+                    url : base_url + 'categories/delete',
+                    data: { id : id},
+                    success: function( response ){
+                        if( response ){
+                            alert( 'Category has been deleted successfully.');
+                            $(`#${id}`).fadeOut();
+                        }else{
+                            alert('There was an error deleting this category');
+                        }
+                    },
+                    error: function () {
+                        
+                    }
+                })
             }
         });
     });

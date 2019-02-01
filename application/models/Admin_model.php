@@ -598,33 +598,17 @@ Class Admin_model extends CI_Model
     }
 
 
-    // General function to SQL
-
-    function get_question_product($pid = '')
-    {
-        $query = "SELECT p.*, u.first_name, u.last_name FROM products AS p LEFT JOIN users AS u ON (p.seller_id = u.id) WHERE p.id = '$pid' ";
-        return $this->db->query($query)->row();
+    /*
+     * Get unanswered questions
+     * */
+    function get_questions( $args = ''){
+        $query = "SELECT q.id, q.question, q.qtimestamp,q.display_name, p.id pid, p.product_name, p.product_description, g.image_name, s.legal_company_name FROM qna q 
+          LEFT JOIN products p ON (p.id = q.pid)
+          LEFT JOIN sellers s ON (s.uid = p.seller_id) 
+          LEFT JOIN product_gallery g ON (p.id = g.product_id AND g.featured_image = 1) WHERE q.status = 'pending'";
+        return $this->db->query( $query )->result();
     }
 
-
-    //Question Approval Page Data
-
-    function get_question_product_img($pid = '')
-    {
-        $query = "SELECT image_name FROM product_gallery WHERE (product_id ='$pid' AND featured_image = 1)";
-        return $this->db->query($query)->row();
-    }
-
-    function approve_question($qid = "")
-    {
-        $query = "UPDATE qna SET status = 'approved' WHERE id = '$qid'";
-        try {
-            $this->run_sql($query);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
 
     function run_sql($query)
     {
@@ -679,6 +663,11 @@ Class Admin_model extends CI_Model
             return '';
         }
     }
+
+    /*
+     * Basically used for Homepage settings
+     * On Setting controller
+    */
 
     function action($id, $action, $table)
     {

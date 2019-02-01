@@ -26,7 +26,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="pka_name">Store Title</label>
                             <div class="col-md-9">
-                                <input type="text" id="pka_name" name="title" class="form-control"
+                                <input type="text" id="pka_name" name="title" required class="form-control"
                                        placeholder="Enter Title">
                                 <small class="help-block">Enter the title of the pickup location</small>
                             </div>
@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="pka_phones">Phones of Store Workers</label>
                             <div class="col-md-9">
-                                <input type="text" id="pka_phones" name="phones" class="form-control"
+                                <input type="text" id="pka_phones" name="phones" required class="form-control"
                                        placeholder="Enter Phones">
                                 <small class="help-block">Enter the phone numbers of workers separated by a comma(,)
                                 </small>
@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="pka_add">Store Address</label>
                             <div class="col-md-9">
-                                <input type="text" id="pka_add" name="address" class="form-control"
+                                <input type="text" id="pka_add" name="address" required class="form-control"
                                        placeholder="Enter Address">
                                 <small class="help-block">Enter the pickup location address in full</small>
                             </div>
@@ -86,7 +86,7 @@
                             </div>
                         <?php endif; ?>
                         <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-primary col-md-6 col-md-offset-3" type="submit">Save</button>
                         </div>
                         <?= form_close(); ?>
                     </div>

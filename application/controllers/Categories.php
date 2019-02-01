@@ -63,12 +63,19 @@ class Categories extends MY_Controller
 			);
 
 			if (isset($_FILES) && $_FILES['upload_image']['name'] != '' ) {
-				$filename = $this->do_upload('upload_image');
-				if ($filename !== false) {
-					$data['image'] = $filename;
-				} else {
-					redirect($_SERVER['HTTP_REFERER']);
-				}
+                $upload_array = array(
+                    'folder' => STATIC_CATEGORY_FOLDER,
+                    'filepath' => $_FILES['upload_image']['tmp_name'],
+                );
+                $this->cloudinarylib->upload_image( $upload_array );
+                $return = $this->cloudinarylib->get_result('filename');
+				if($return){
+				    $data['image'] = $return;
+				    unset($upload_array);
+                }else{
+				    $this->session->set_flashdata('error_msg','There was an error with that image');
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
 			}
 			// Slug
 			$slug = urlify( $this->input->post('name') );
@@ -110,19 +117,21 @@ class Categories extends MY_Controller
 				'description' => $this->input->post('description')
 			);
 			if (isset($_FILES) && ($_FILES['image']['name'] != '' )) {
-				$filename = $this->do_upload('image');
-				if ($filename !== false) {
+                $upload_array = array(
+                    'folder' => STATIC_CATEGORY_FOLDER,
+                    'filepath' => $_FILES['image']['tmp_name'],
+                );
+                $this->cloudinarylib->upload_image( $upload_array );
+                $filename = $this->cloudinarylib->get_result('filename');
+				if ($filename) {
 					$img = $this->input->post('img');
-					$md5file = file_get_contents('./data/settings/categories/' . $filename);
-					$md5file2 = file_get_contents('./data/settings/categories/' . $img);
-					if (!empty($img) && (md5($md5file) == md5($md5file2))) {
-						unlink(realpath('./data/settings/categories/' . $filename));
-					} else {
-						// still unlink, if not the same
-						unlink(realpath('./data/settings/categories/' . $img));
-						$data['image'] = $filename;
-					}
-				} else {
+					$name = explode('.', $img);
+					$public_id = STATIC_CATEGORY_FOLDER . $name[0];
+					$this->cloudinarylib->delete_image( $public_id );
+                    $data['image'] = $filename;
+                    unset( $upload_array );
+                } else {
+				    $this->session->set_flashdata('error_msg', ' There was an error updating the category image...');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
@@ -141,7 +150,7 @@ class Categories extends MY_Controller
 				'first_name,last_name,email,profile_pic');
 			$page_data['category'] = $this->admin->get_single_category($id);
 			$page_data['options'] = $this->admin->get_options_name(json_decode($page_data['category']->variation_options));
-			$page_data['categories'] = $this->admin->get_results('categories', "( pid = 0 )")->result();
+			$page_data['categories'] = $this->admin->get_results('categories')->result();
 			if (empty($page_data['category'])) {
 				$this->session->set_flashdata('error_msg', 'The root category you are looking for does not exist...');
 				redirect('categories');
@@ -223,6 +232,14 @@ class Categories extends MY_Controller
 			$this->load->view('category/specification_detail', $page_data);
 		}
 	}
+
+	function delete(){
+	    if( $this->input->is_ajax_request() ){
+	        $id = $this->input->post('id');
+	        echo $this->admin->action($id, 'delete', 'categories');
+	        exit;
+        }
+    }
 	/**
 	 * @param int : root_category_id
 	 * @return:  JSON categories id, name
@@ -236,28 +253,19 @@ class Categories extends MY_Controller
 	}
 
 	// upload function
-	function do_upload($file)
-	{
-
-        $upload_path = CATEGORY_IMAGE_PATH;
-
-        if( !file_exists( $upload_path) ) mkdir( $upload_path, 0777, TRUE);
-		$config['upload_path'] = $upload_path;
-		$config['allowed_types'] = 'gif|jpg|png|JPEG|jpeg|bmp';
-		$config['max_size'] = 10048;
-		$config['max_width'] = 2000;
-		$config['max_height'] = 2000;
-		$config['overwrite'] = false;
-//		$config['encrypt_name'] = true;
-		$this->load->library('upload', $config);
-		if (!$this->upload->do_upload($file)) {
-			// could append the file name...
-			$error = array('error_msg' => $this->upload->display_errors());
-			$this->session->set_flashdata($error);
-			return false;
-		} else {
-			return $this->upload->data('file_name');
-		}
+	function do_upload($filepath, $folder){
+        $this->load->library('cloudinarylib');
+        $return = \Cloudinary\Uploader::upload($filepath,
+            array(
+                "folder" => $folder,
+                "resource_type" => "image",
+                "eager_async" => true,
+                "quality" => 60
+            )
+        );
+        $explode = explode('/', $return['public_id']);
+        $file_name = end( $explode );
+        return $file_name .'.'. $return['format'];
 	}
 
 }

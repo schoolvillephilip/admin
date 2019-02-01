@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                             <div class="panel-footer text-center">
-                                <button class="btn btn-primary" type="submit">Save</button>
+                                <button class="btn btn-primary col-md-6 col-md-offset-3" type="submit">Save</button>
                             </div>
                             <?= form_close(); ?>
                         <?php else : ?>

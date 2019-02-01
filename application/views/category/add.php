@@ -31,7 +31,9 @@
                                         title="Choose Parent Category..."
                                         data-width="100%">
                                     <option value="0" selected="">-- Choose a parent category--</option>
-                                    <?php foreach ($categories as $category) echo '<option value="' . $category->id . '">' . $category->name . ' </option>'; ?>
+                                    <?php foreach ($categories as $category) :?>
+                                        <option value="<?= $category->id; ?>" ><?= $category->name; ?> </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -64,7 +66,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label" for="">Category Commission (%) *</label>
                             <div class="col-lg-7">
-                                <input type="text" name="commission" class="form-control" placeholder="Eg: 10%"
+                                <input type="text" name="commission" class="form-control" placeholder="Eg: 4.5"
                                        required/>
                             </div>
                         </div>

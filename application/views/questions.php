@@ -21,6 +21,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">All Questions</h3>
                     </div>
+                    <?php $this->load->view('msg_view'); ?>
                     <div class="panel-body">
                         <div class="panel">
                             <div class="panel-heading">
@@ -43,17 +44,12 @@
                                     </thead>
                                     <tbody>
                                     <?php foreach ($questions as $question): ?>
-                                        <?php
-                                        $pid = $question->pid;
-                                        $product = $this->admin->get_question_product($pid);
-                                        $product_img = $this->admin->get_question_product_img($pid);
-                                        ?>
                                         <tr>
-                                            <td><img src="<?= PRODUCTS_IMAGE_PATH . $product_img->image_name; ?>"
-                                                     alt="<?= word_limiter($product->product_name, 3); ?>"/></td>
-                                            <td><?= word_limiter($product->product_name, 3); ?></td>
-                                            <td><?= word_limiter($product->product_description, 9); ?></td>
-                                            <td><?= ucwords($product->first_name . ' ' . $product->last_name); ?></td>
+                                            <td><img src="<?= PRODUCTS_IMAGE_PATH . $question->image_name; ?>"
+                                                     alt="<?= $question->product_name; ?>"/></td>
+                                            <td><?= character_limiter($question->product_name, 30); ?></td>
+                                            <td><?= character_limiter($question->product_description, 20); ?></td>
+                                            <td><?= $question->legal_company_name; ?></td>
                                             <td><?= $question->display_name; ?></td>
                                             <td>
                                                 <span style="font-weight:800 !important;">
@@ -64,11 +60,11 @@
                                             <td><span class="label-warning label">Not Answered Yet</span></td>
                                             <td>
                                                 <button class="btn btn-success approve_question" title="Approve"
-                                                        data-qid="<?= $question->id; ?>">
+                                                        data-qid="<?= $question->id; ?>" data-action="approve" data-text="Approve Question?">
                                                     <i class="fa fa-check"></i>
                                                 </button>
                                                 <button class="btn btn-danger mar-lft decline_question" title="Decline"
-                                                        data-qid="<?= $question->id; ?>">
+                                                        data-qid="<?= $question->id; ?>" data-action="decline" data-text="Decline Question?">
                                                     <i class="fa fa-times"></i></button>
                                             </td>
                                         </tr>
@@ -93,58 +89,33 @@
 <?php $this->load->view('templates/scripts'); ?>
 <script src="<?= base_url('assets/plugins/fooTable/dist/footable.all.min.js'); ?>"></script>
 <script>
-    let self, action = "", qid;
+    let self, action = text =  "", qid;
     let fooColExp = $('#all-question-col-exp');
     fooColExp.footable().trigger('footable_expand_first_row');
-    $('.approve_question').on('click', function () {
+    $('.approve_question, .decline_question').on('click', function () {
         self = $(this);
-        action = "approve";
+        action = $(this).data('action');
+        text = $(this).data('text');
         qid = self.data('qid');
         $('#modal_confirm')
-            .find('.modal-header')
-            .removeClass('bg-danger').addClass('bg-primary').end()
             .find('.modal-header > p')
-            .text("Approve Question?").end()
+            .text(text).end()
             .find('.modal-body')
             .html('<i class="fa fa-check fa-4x text-primary"></i>').end()
-            .modal('show');
-    });
-    $('.decline_question').on('click', function () {
-        self = $(this);
-        action = "decline";
-        qid = self.data('qid');
-        $('#modal_confirm')
-            .find('.modal-header')
-            .removeClass('bg-primary').addClass('bg-danger').end()
-            .find('.modal-header > p')
-            .text("Decline Question?").end()
-            .find('.modal-body')
-            .html('<i class="fa fa-times fa-4x text-danger"></i>').end()
             .modal('show');
     });
 
     $('#confirm_true').on('click', function (e) {
         e.preventDefault();
-        let url = "";
-        switch (action) {
-            case 'approve':
-                url = 'questions/approve_question';
-                break;
-            case 'decline':
-                url = 'questions/decline_question';
-                break;
-            default:
-                url = "";
-                break;
-        }
+
         $.ajax({
-            url: base_url + url,
-            data: {'qid': qid,},
+            url: base_url + 'questions/action/',
+            data: {'qid': qid, 'action' : action},
             type: "POST",
             dataType: 'json',
             success: function (d) {
                 window.location.href = base_url + "questions/";
-            },
+                },
             error: function (d) {
                 window.location.href = base_url + "questions/";
             }

@@ -57,7 +57,7 @@
                                 <tbody>
                                 <?php foreach ($homepage_slider as $slider ): ?>
                                     <tr>
-                                        <th><img src="<?= SLIDER_IMAGE_PATH . $slider->image; ?>" alt="No image found" /></th>
+                                        <th class="text-center"><img style="width: 90px;" src="<?= SLIDER_IMAGE_PATH . $slider->image; ?>" alt="<?= $slider->image; ?>" /></th>
                                         <th><a class="btn-linkn" href="<?= $slider->img_link; ?>"><?= $slider->img_link; ?></a></th>
                                         <th>
                                             <?php if( $slider->status == 'inactive' ): ?>
@@ -159,7 +159,7 @@
                             </div>
                             <input type="hidden" name="process_type" value="main_category">
                             <div class="panel-footer text-center">
-                                <button class="btn btn-primary category_save" type="submit">Save</button>
+                                <button class="btn btn-primary col-md-6 col-md-offset-3 category_save" type="submit">Save</button>
                             </div>
                         </form>
                     </div>
@@ -190,7 +190,7 @@
                                                         <li>
                                                             <strong>Position :</strong> <?= $decode->position?> <br />
                                                             <strong>Image URL :</strong>
-                                                                <a class="btn-link" target="_blank" href="<?= CATEGORY_HOME_IMAGE_PATH . $decode->img; ?>"><?= $decode->img; ?></a>
+                                                                <a class="btn-link" target="_blank" href="<?= CATEGORY_IMAGE_PATH . $decode->img; ?>"><?= $decode->img; ?></a>
                                                             <br />
                                                             <strong>Image Linked To :</strong>
                                                                 <a class="btn-link" target="_blank" href="<?= $decode->link; ?>" title="<?= $decode->link; ?>">Linked To</a><br />
@@ -214,6 +214,19 @@
 
                 </div>
             </div>
+
+            <div id="processing"
+                 style="display:none;position: center;top: 0;left: 0;width: auto;height: auto%;background: #f4f4f4;z-index: 99;">
+                <div class="text"
+                     style="position: absolute;top: 35%;left: 0;height: 100%;width: 100%;font-size: 18px;text-align: center;">
+                    <img src="<?= base_url('assets/img/load.gif'); ?>"
+                         alt="Processing...">
+                    Processing the data. Please Wait! <Br>Meanwhile Please <b
+                            style="color: rgba(2.399780888618386%,61.74193548387097%,46.81068368248487%,0.843);">BE
+                        ONLINE</b>
+                </div>
+            </div>
+
         </div>
         <?php $this->load->view('templates/menu'); ?>
     </div>
@@ -301,7 +314,7 @@
         });
 
         function create_position_element( filename ){
-            let element = `<div class="form-group"><label class="col-lg-3 control-label">Select position</label><div class="col-lg-7"><select name="${filename}_position" required class="form-control"><option value="top1">Top 1</option><option value="top">Top 2</option><option value="bottom1">Bottom 1</option><option value="bottom2">Bottom 2</option><option value="bottom3">Bottom 3</option><option value="left1">Left Slide 1</option>
+            let element = `<div class="form-group"><label class="col-lg-3 control-label">Select position</label><div class="col-lg-7"><select name="${filename}_position" required class="form-control"><option value="top1">Top 1</option><option value="top2">Top 2</option><option value="bottom1">Bottom 1</option><option value="bottom2">Bottom 2</option><option value="bottom3">Bottom 3</option><option value="left1">Left Slide 1</option>
         <option value="left2">Left Slide2</option><option value="left3">Left Slide 3</option><option value="left4">Left Slide 4 (Optional)</option>
         <option value="bottom_banner">Bottom Banner</option></select></div>
         </div>`;
