@@ -30,11 +30,11 @@
                             <div class="panel-body">
                                 <label class="form-inline">Show
                                     <select id="q-show-entries" class="form-control input-sm">
-                                        <option value="1">1</option>
                                         <option value="5">5</option>
                                         <option value="10" selected>10</option>
-                                        <option value="15">15</option>
                                         <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
                                     </select>
                                     entries
                                 </label>
@@ -56,9 +56,9 @@
                                     <?php foreach ($questions as $question): ?>
                                         <tr>
                                             <td><img src="<?= PRODUCTS_IMAGE_PATH . $question->image_name; ?>"
-                                                     alt="<?= $question->product_name; ?>"/></td>
-                                            <td><?= character_limiter($question->product_name, 30); ?></td>
-                                            <td><?= character_limiter($question->product_description, 20); ?></td>
+                                                     alt="<?= character_limiter($question->product_name, 10); ?>"/></td>
+                                            <td><?= character_limiter($question->product_name, 60); ?></td>
+                                            <td><?= character_limiter($question->product_description, 60); ?></td>
                                             <td><?= $question->legal_company_name; ?></td>
                                             <td><?= $question->display_name; ?></td>
                                             <td>
@@ -116,6 +116,12 @@
     let self, action = text = "", qid, remClass, addClass, icon;
     let fooColExp = $('#all-question-col-exp');
     fooColExp.footable().trigger('footable_expand_first_row');
+    $('#q-show-entries').change(function (e) {
+        e.preventDefault();
+        var pageSize = $(this).val();
+        fooColExp.data('page-size', pageSize);
+        fooColExp.trigger('footable_initialized');
+    });
     $('.approve_question, .decline_question').on('click', function () {
         self = $(this);
         action = self.data('action');
