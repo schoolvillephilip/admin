@@ -25,8 +25,9 @@
                     <div class="panel-body">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="">Approve / Decline Questions</h3>
+                                <h4 class="">Approve / Decline Questions</h4>
                             </div>
+                            <?php if ($questions): ?>
                             <div class="panel-body">
                                 <label class="form-inline">Show
                                     <select id="q-show-entries" class="form-control input-sm">
@@ -56,7 +57,8 @@
                                     <?php foreach ($questions as $question): ?>
                                         <tr>
                                             <td><img src="<?= PRODUCTS_IMAGE_PATH . $question->image_name; ?>"
-                                                     alt="<?= character_limiter($question->product_name, 10); ?>"/></td>
+                                                     alt="<?= character_limiter($question->product_name, 10); ?>"/>
+                                            </td>
                                             <td><?= character_limiter($question->product_name, 60); ?></td>
                                             <td><?= character_limiter($question->product_description, 60); ?></td>
                                             <td><?= $question->legal_company_name; ?></td>
@@ -75,7 +77,8 @@
                                                         data-rem-class="danger" data-text="Approve Question?">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                <button class="btn btn-danger mar-lft decline_question" title="Decline"
+                                                <button class="btn btn-danger mar-lft decline_question"
+                                                        title="Decline"
                                                         data-qid="<?= $question->id; ?>" data-action="decline"
                                                         data-icon="times" data-add-class="danger"
                                                         data-rem-class="primary" data-text="Decline Question?">
@@ -96,6 +99,9 @@
 
                                 </table>
                             </div>
+                            <?php else: ?>
+                                <h4 class="text-center" style="color:#797979;">No questions left to approve!</h4>
+                            <?php endif; ?>
                         </div>
 
                     </div>
@@ -136,7 +142,7 @@
             .find('.modal-header > p')
             .text(text).end()
             .find('.modal-body')
-            .html('<i class="fa fa-'+ icon + ' fa-4x text-' + addClass + '"></i>').end()
+            .html('<i class="fa fa-' + icon + ' fa-4x text-' + addClass + '"></i>').end()
             .modal('show');
 
     });
