@@ -582,6 +582,7 @@ Class Admin_model extends CI_Model
      */
     function get_num_rows($table, $where = array(), $or_where = array())
     {
+        $this->db->select('*');
         if (!empty($where)) {
             $this->db->where($where);
             $this->db->or_where($or_where);
@@ -591,10 +592,13 @@ Class Admin_model extends CI_Model
 
     function get_row($table_name, $condition = array())
     {
-        if (!empty($conditionn)) {
+
+        if (!empty($condition)) {
             $this->db->where($condition);
+            return $this->db->get($table_name)->row();
+        }else{
+            return $this->db->get($table_name)->row();
         }
-        return $this->db->get($table_name)->row();
     }
 
 
@@ -885,6 +889,77 @@ Class Admin_model extends CI_Model
     {
         $query = "SELECT o.seller_id, p.product_name FROM orders o LEFT JOIN p ON(p.id = o.product_id) WHERE o.id = ?";
         return $this->db->get('orders', array($id))->row();
+    }
+
+
+    /*
+    *Function to get the parent category of a particular category
+    *Called the parent_recurssive
+    */
+
+    function get_parent_details($id)
+    {
+        $array = $this->parent_slug_top($id);
+        return $this->db->query("SELECT name, slug, description, specifications FROM categories WHERE id IN ('" . implode("','", $array) . "')")->result();
+    }
+
+    /*
+        Return an object (name, slug, description, specifications) of all the parent of a category
+    */
+
+    function parent_slug_top($id)
+    {
+        // Select category
+        $GLOBALS['array_variable'] = array();
+        $select_category = "SELECT id, slug FROM categories WHERE id = {$id}";
+        $result = $this->db->query($select_category);
+        if ($result->num_rows() >= 1) {
+            $pid = $result->row()->id;
+            $this->parent_recurssive($pid);
+            $array = array_filter($GLOBALS['array_variable']);
+            $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($array));
+            $new_array = array();
+            foreach ($it as $v) {
+                array_push($new_array, $v);
+            }
+            array_push($new_array, $id); // Lets push its own ID also
+            return $new_array;
+        } else {
+            return $GLOBALS['array_variable'];
+        }
+
+    }
+    /*
+    *Called by the parent_slug top, helps to generate the parent id
+    */
+
+    function parent_recurssive($pid)
+    {
+        $category_pid = $pid;
+        $total_categories = $this->db->get('categories')->result_array();
+        $count = count($total_categories);
+
+        $data = array();
+        for ($i = 0; $i < $count; $i++) {
+            if ($total_categories[$i]['id'] == $category_pid) {
+                array_push($data, $total_categories[$i]['pid']);
+            }
+        }
+        array_push($GLOBALS['array_variable'], $data);
+        foreach ($data as $key => $value) {
+            $this->parent_recurssive($value);
+        }
+    }
+
+    /**
+     * @param $oroduct_id
+     * @return CI_DB_result_array
+     */
+
+    function get_product_gallery($id){
+        $this->db->select('image_name,featured_image');
+        $this->db->where('product_id', $id);
+        return $this->db->get('product_gallery')->result();
     }
 
 

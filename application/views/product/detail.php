@@ -87,22 +87,30 @@
                                     if ($product->product_status == 'approved') :
                                         ?>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <a href="<?= base_url('product/action/suspend/' . $product->id . '/' . $product->seller_id); ?>"
                                                    class="btn btn-block btn-warning">Suspend Product</a>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <a href="<?= base_url('product/edit/' . $product->id . '/'); ?>"
+                                                   class="btn btn-block btn-info">Edit Product</a>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <a href="<?= base_url('product/action/delete/' . $product->id . '/' . $product->seller_id); ?>"
                                                    class="btn btn-block btn-danger">Delete Product</a>
                                             </div>
                                         </div>
                                     <?php else : ?>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <a href="<?= base_url('product/action/approve/' . $product->id . '/' . $product->seller_id); ?>"
                                                    class="btn btn-block btn-primary">Approve Product</a>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <a href="<?= base_url('product/edit/' . $product->id . '/'); ?>"
+                                                   class="btn btn-block btn-info">Edit Product</a>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <a href="<?= base_url('product/action/delete/' . $product->id . '/' . $product->seller_id); ?>"
                                                    class="btn btn-block btn-danger">Delete Product</a>
                                             </div>
