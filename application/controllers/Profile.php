@@ -111,6 +111,7 @@ class Profile extends MY_Controller
             $page_data['page_title'] = "Seller's Profile Setting - " . lang('app_name');
             $page_data['pg_name'] = 'settings';
             $page_data['sub_name'] = 'change_password';
+            $page_data['least_sub'] = 'change_password';
             $this->load->view('change_password', $page_data);
         } else {
             $this->form_validation->set_rules('current_password', 'Current password', 'trim|required|xss_clean');
