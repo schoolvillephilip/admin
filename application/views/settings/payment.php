@@ -1,4 +1,5 @@
 <?php $this->load->view('templates/meta_tags'); ?>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -85,16 +86,15 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-md-3 col-sm-12 col-xs-12 control-label">Payment Settings</label>
                             <div class="col-lg-7 col-md-7 col-sm-11 col-xs-11">
-                                <textarea placeholder="Enter the key,Token if needed EG: secret-key:82ns82292220222hwss, token:7ss4s4s4s11fd5dd11d4d41d4ssshsbncs4sd"
-                                          data-provide="markdown" rows="8"
-                                          name="settings"
-                                          class="form-control"></textarea>
+                                <textarea name="settings" class="summernote form-control" rows="8"
+                                          placeholder="Enter the Key, & Token. eg : secret-key:82ns82292220222hwss, token:7ss4s4s4s11fd5dd11d4d41d4ssshsbncs4sd"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label" for="">Notes</label>
                             <div class="col-lg-7">
-                                <textarea name="notes" data-provide="markdown" class="form-control" required placeholder="Itemize the messages you will like to show on frontpage for the enduser"></textarea>
+                                <textarea name="notes" class="summernote form-control" rows="8"
+                                          placeholder="Itemize the messages you will like to show on frontpage for the enduser"></textarea>
                             </div>
                         </div>
                         <div class="panel-footer text-center">
@@ -114,6 +114,7 @@
 </div>
 <?php $this->load->view('templates/confirm_modal'); ?>
 <?php $this->load->view('templates/scripts'); ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
 </body>
 <script>
     let id, op;
@@ -164,6 +165,20 @@
             error: function (data) {
                 window.location.href = base_url + "settings/payment/";
             }
+        });
+    });
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            placeholder: 'Write here...',
+            height: '150px',
+            focus: true,
+            toolbar: [
+                ["style", ["style"]],
+                ["font", ["bold", "underline"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["view", ["fullscreen"]]
+            ],
         });
     });
 </script>

@@ -36,6 +36,9 @@
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
+<!--                <div id="captcha">-->
+<!--                    --><?//= $this->recaptcha->getWidget(); ?>
+<!--                </div>-->
                 <div class="checkbox pad-btm text-left">
                     <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
                     <label for="demo-form-checkbox">Remember me</label>
@@ -43,14 +46,14 @@
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                 <?= form_close(); ?>
             </div>
-
-            <div class="pad-all">
-                <a href="<?= base_url('reset'); ?>" class="btn-link mar-rgt">Forgot password ?</a>
-            </div>
+<!--            <div class="pad-all">-->
+<!--                <a href="--><?//= base_url('reset'); ?><!--" class="btn-link mar-rgt">Forgot password ?</a>-->
+<!--            </div>-->
         </div>
     </div>
 
 </div>
 <?php $this->load->view('templates/scripts.php'); ?>
+<?= $this->recaptcha->getScriptTag(); ?>
 </body>
 </html>

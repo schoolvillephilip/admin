@@ -203,3 +203,20 @@ if (!function_exists('paymentStatus')) {
         }
     }
 }
+
+if (!function_exists('paymentMethod')) {
+    function paymentMethod($id)
+    {
+        switch ($id) {
+            case 1:
+                return 'Payment on delivery';
+                break;
+            case 2:
+                return 'Interswitch Webpay';
+                break;
+            default:
+                return 'Payment mehod not understood';
+                break;
+        }
+    }
+}

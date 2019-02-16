@@ -6,9 +6,10 @@ class Email_model extends CI_Model {
     function send_now($post){
         $url = 'https://api.elasticemail.com/v2/email/send';
         try{
-            $post['from'] = 'philo4u2c@gmail.com';
+
+            $post['from'] = (!isset($post['from'])) ? lang('notify_email') : $post['from'] ;
             $post['fromName'] = 'Onitshamarket';
-            $post['apikey'] = 'f818fbbb-bb76-4de0-ad47-e458303b0d12';
+            $post['apikey'] = ELASTIC_EMAIL_API;
             $ch = curl_init();
             curl_setopt_array($ch, array(
                 CURLOPT_URL => $url,
@@ -90,24 +91,17 @@ class Email_model extends CI_Model {
         return $this->send_now($post);
     }
 
-    // Send mail to seller when order is marked as returned
-    function returned_order( $order_code ){
-        $query = "SELECT b.first_name, b.last_name, b.phone, b.address, o.billing_address_id, b.sid,b.aid, u.email, s.name state_name, a.name area_name FROM orders o 
-        LEFT JOIN billing_address b ON(b.id = o.billing_address_id) 
-        LEFT JOIN users u ON (o.buyer_id = u.id) 
-        LEFT JOIN states s ON (s.id = b.sid)
-        LEFT JOIN area a ON (a.id = b.aid)
-        WHERE order_code = {$order_code} GROUP BY order_code LIMIT 1";
-        $result = $this->db->query( $query )->row();
+    /*
+        NOT IN USE NOW
+        Send mail to buyer on returned order
+    */
+    function returned_order( $result ){
         $post = array(
-            'subject' => 'Your Onitshamarket Order ' . $order_code . ' - item(s) have been shipped.',
-            'to' => $result->email,
-            'template' => 'OrderShippedBuyer',
-            'merge_recipent' => $result->first_name . ' ' . $result->last_name,
-            'merge_order_code' => $order_code,
-            'merge_address' => $result->address . ' ' . $result->area_name. ', ' . $result->state_name,
-            'merge_phone' => $result->phone,
-            'merge_order_status_link' => "https://www.onitshamarket.com/account/orderstatus/" . $order_code,
+            'subject' => 'Your Onitshamarket Order item has been confirmed.',
+            'to' => $result['email'],
+            'template' => 'OrderReturnedBuyer',
+            'merge_recipent' => $result['first_name'],
+            'merge_order_status_link' => "https://www.onitshamarket.com/account/orderstatus/" . $result['order_code'],
             'isTransactional' => false
         );
         return $this->send_now($post);

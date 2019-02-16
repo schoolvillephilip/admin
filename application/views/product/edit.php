@@ -1,9 +1,12 @@
 <?php $this->load->view('templates/meta_tags'); ?>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 <style type="text/css">
     img.dz-img {
         max-width: 80px;
+    }
+    .note-group-image-url{
+        display: none;
     }
 </style>
 </head>
@@ -396,7 +399,7 @@
                                                                                 title="Choose warranty type..."
                                                                                 data-width="100%">
                                                                             <?php
-                                                                            $warranty = explode(',', $product->warranty_type);
+                                                                            $warranty = json_decode($product->warranty_type);
                                                                             $types = explode(',', lang('warranty_types'));
                                                                             foreach ($types as $type):
                                                                                 ?>
@@ -647,9 +650,9 @@
         <i class="pci-chevron chevron-up"></i>
     </button>
 </div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
 <script src="<?= base_url('assets/js/nifty.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/demo/nifty-demo.min.js'); ?>"></script>
 <script type="text/javascript"> base_url = '<?= base_url(); ?>';</script>
@@ -929,6 +932,42 @@
         $('#in_the_box').summernote('code', in_the_box);
         $('#product_warranty').summernote('code', product_warranty);
         $('#warranty_address').summernote('code', warranty_address);
+
+        function sendFile(file){
+            data = new FormData();
+            data.append("file", file);
+            $('#product_description_image').css('display', 'block');
+            $('.img_text').text('Please hold on. Image is under processing...');
+            $.ajax({
+                url: base_url + 'product/description_image_upload',
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    var image = $('<img>').attr('src', data);
+                    $('#product_description').summernote("insertNode", image[0]);
+                    $('#product_description_image').css('display', 'none');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus+" "+errorThrown);
+                    $('#product_description_image').css('display', 'none');
+                }
+            });
+        }
+
+        function deleteFile(src) {
+            $.ajax({
+                data: {src : src},
+                type: "POST",
+                url: base_url + "product/decription_image_remove",
+                cache: false,
+                success: function(resp) {
+                    console.log(resp);
+                }
+            });
+        }
     });
 </script>
 </body>

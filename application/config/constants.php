@@ -125,3 +125,21 @@ defined('TABLE_SELLER_NOTIFICATION_MESSAGE') OR define('TABLE_SELLER_NOTIFICATIO
 defined('TABLE_ORDERS') OR define('TABLE_ORDERS', 'orders');
 
 
+defined('PRODUCT_DESCRIPTION_FOLDER') OR define('PRODUCT_DESCRIPTION_FOLDER', "onitshamarket/product/description/");
+defined('PRODUCT_DESCRIPTION_PATH') OR define('PRODUCT_DESCRIPTION_PATH', "https://res.cloudinary.com/onitshamarket/" .PRODUCT_DESCRIPTION_FOLDER );
+
+
+//Elastic Email
+defined('ELASTIC_EMAIL_API') OR define('ELASTIC_EMAIL_API', '5fe25354-f5e7-4bee-8001-ab0080b72c4c');
+
+
+//Google Site Verification
+defined('GOOGLE_SITE_KEY') OR define('GOOGLE_SITE_KEY', '6LcFl5AUAAAAACqH-ZKVU2RDh2Es5b4xeu8RnTav');
+defined('GOOGLE_SECRET_KEY') OR define('GOOGLE_SECRET_KEY', '6LcFl5AUAAAAAHndIjAowN3WLifsyww4kEy3UT20');
+
+//SMS
+defined('SMS_USERNAME') OR define('SMS_USERNAME', 'ArtisansUsers');
+defined('SMS_API') OR define('SMS_API', '2825a7e7a5988803c97852627500f5fc658964550c8cfe5616305acb352f127a');
+defined('SMS_FOR_ORDERS') OR define('SMS_FOR_ORDERS', FALSE);
+
+

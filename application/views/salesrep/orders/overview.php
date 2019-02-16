@@ -22,45 +22,31 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">A list of all orders associated to you.</h3>
 						</div>
-						<div class="panel-body">
-							<table id="order-datatable" class="table table-striped table-bordered" cellspacing="0"
-								   width="100%">
-								<thead>
-								<tr>
-									<th>Order Code</th>
-									<th class="text-center">Customer Name / Billing Address</th>
-                                    <th>Delivering to State (Area)</th>
-									<th class="min-desktop">Total Quantity</th>
-									<th class="min-desktop">Total Amount (&#8358;)</th>
-									<th class="min-desktop">Date Ordered</th>
-								</tr>
-								</thead>
-								<tbody>
-									<?php foreach( $orders as $order ): ?>
-										<tr>
-											<td><a class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code); ?>"><?= $order->order_code; ?></a></td>
-											<td class="text-center">
-                                                <?php
-                                                $delivery = '';
-                                                if( $order->pickup_location_id != 0 ) {
-                                                    // Get the delivery address
-                                                    $result = $this->admin->get_pickup_address( $order->pickup_location_id );
-                                                    $delivery = '<strong>To Pickup At :</strong>' .$result->title . ' - '. $result->phones.', '. $result->address .' '. $result->emails;
-                                                }else{
-                                                    $delivery = '<b>Delivering To :</b><b>Name </b>' . $order->first_name . ' ' . $order->last_name . '; <b> Phone :</b> ' . $order->phone . '; <b>Address: </b>' .$order->address;
-                                                }
-                                                echo $delivery;
-                                                ?>
-                                            </td>
-                                            <td><?= $order->state . ' ('. $order->area. ')'; ?></td>
-											<td class="text-center"><?= $order->qty; ?></td>
-											<td><?= ngn($order->amount); ?></td>
-											<td><?= neatDate($order->order_date); ?></td>
-										</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
-						</div>
+                        <div class="panel-body">
+                            <table id="order-datatable" class="table table-striped table-bordered" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Order Code</th>
+                                    <th class="min-desktop text-center">Payment Method</th>
+                                    <th class="min-desktop">Total Quantity</th>
+                                    <th class="min-desktop">Total Amount (&#8358;)</th>
+                                    <th class="min-desktop">Date Ordered</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach( $orders as $order ): ?>
+                                    <tr>
+                                        <td><a class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code); ?>"><?= $order->order_code; ?></a></td>
+                                        <td class="text-center"><?= paymentMethod( $order->payment_method); ?></td>
+                                        <td class="text-center"><?= $order->qty; ?></td>
+                                        <td><?= ngn($order->amount * $order->qty); ?></td>
+                                        <td><?= neatDate($order->order_date); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
 
 					</div>
 

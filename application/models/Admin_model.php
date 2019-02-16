@@ -131,7 +131,7 @@ Class Admin_model extends CI_Model
      */
     function get_children_categories($pid = '')
     {
-        if ($id != '') $this->db->where('pid', $pid);
+        if ($pid != '') $this->db->where('pid', $pid);
         return $this->db->get('categories')->result_array();
     }
 
@@ -316,14 +316,14 @@ Class Admin_model extends CI_Model
 
     function get_orders($id = '', $args = array())
     {
-        $query = "SELECT o.id,o.agent, o.product_id,o.billing_address_id, o.pickup_location_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
-          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
+        $query = "SELECT o.id,o.agent,o.payment_method, o.product_id,o.billing_address_id, o.pickup_location_id, o.order_code,o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
+          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, 
+          s.seller_phone seller_phone, su.phone seller_phone2, u.email,  su.email seller_email,
+          u.first_name, u.last_name , u.email, u.phone
+          FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
         LEFT JOIN sellers s ON (o.seller_id = s.uid)
         LEFT JOIN users su ON (o.seller_id = su.id)
-        LEFT JOIN billing_address b ON (o.billing_address_id = b.id )
-        LEFT JOIN states st ON (b.sid = st.id)
-        LEFT JOIN area ar ON (b.aid = ar.id)
         LEFT JOIN users u ON (o.buyer_id = u.id)";
         if ($id != '') {
             $query .= " WHERE o.order_code = '{$id}' OR o.id = '{$id}' GROUP BY o.product_id";
@@ -337,14 +337,11 @@ Class Admin_model extends CI_Model
 
     function get_orders_for_salesrep($order_code, $uid)
     {
-        $query = "SELECT o.id, o.agent, o.product_id,o.billing_address_id,o.pickup_location_id, o.order_code,b.first_name,b.last_name, b.phone,b.phone2, b.address, ar.name area, st.name state, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
-          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, u.email,  su.email seller_email FROM orders o
+        $query = "SELECT o.id, o.agent,o.payment_method, o.product_id,o.billing_address_id,o.pickup_location_id, o.order_code, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
+          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, s.seller_phone seller_phone, su.phone seller_phone2, u.email,  su.email seller_email FROM orders o
         LEFT JOIN products p ON (o.product_id = p.id) 
         LEFT JOIN sellers s ON (o.seller_id = s.uid)
         LEFT JOIN users su ON (o.seller_id = su.id)
-        LEFT JOIN billing_address b ON (o.billing_address_id = b.id )
-        LEFT JOIN states st ON (b.sid = st.id)
-        LEFT JOIN area ar ON (b.aid = ar.id)
         LEFT JOIN users u ON (o.buyer_id = u.id)";
         $query .= " WHERE o.agent = {$uid} AND o.active_status != 'completed'";
         if ($order_code != '') {
@@ -352,16 +349,6 @@ Class Admin_model extends CI_Model
         }
         $query .= " GROUP BY o.order_code";
         return $this->db->query($query)->result();
-    }
-
-    /*
-     * Get orders for Sales Representative
-     * */
-
-    function get_pickup_address($id)
-    {
-        $this->db->where('id', $id);
-        return $this->db->get('pickup_address')->row();
     }
 
     /*
@@ -590,9 +577,9 @@ Class Admin_model extends CI_Model
         return $this->db->get($table)->num_rows();
     }
 
-    function get_row($table_name, $condition = array())
+    function get_row($table_name, $condition = array(), $select = '')
     {
-
+        if( $select != '' ) $this->db->select($select);
         if (!empty($condition)) {
             $this->db->where($condition);
             return $this->db->get($table_name)->row();
@@ -956,11 +943,28 @@ Class Admin_model extends CI_Model
      * @return CI_DB_result_array
      */
 
-    function get_product_gallery($id){
-        $this->db->select('image_name,featured_image');
-        $this->db->where('product_id', $id);
-        return $this->db->get('product_gallery')->result();
+    function return_order( $oid ){
+        $query = "SELECT u.first_name, u.email, u.phone, u.wallet, o.buyer_id, o.order_code, o.product_id, o.amount, o.qty FROM orders o 
+        LEFT JOIN users u ON (u.id = o.buyer_id) WHERE o.id = {$oid}";
+        return $this->run_sql( $query)->row_array();
     }
+
+
+    function get_shipping_type( $id , $type = 'pickup'){
+        if( $type  == 'delivery'){
+            $select = "SELECT b.first_name, b.last_name, b.phone, b.phone2, b.address, s.name state, a.name area FROM billing_address b
+            LEFT JOIN states s ON (s.id = b.sid)
+            LEFT JOIN area a ON (a.id = b.aid) WHERE b.id = {$id}";
+            return $this->db->query( $select )->row();
+        }else{
+            // Pickup Location
+            $select = "SELECT title, phones, emails, address FROM pickup_address WHERE id = {$id}";
+            return $this->db->query( $select )->row();
+        }
+    }
+
+
+
 
 
 }

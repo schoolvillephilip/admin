@@ -60,6 +60,7 @@ class Orders extends MY_Controller{
             $this->load->view('salesrep/orders/detail', $page_data);
         }else{
             $page_data['orders'] = $this->admin->get_orders( $order_code , array('is_limit' => false));
+
             $this->load->view('orders/detail', $page_data);
         }
 	}
@@ -73,7 +74,6 @@ class Orders extends MY_Controller{
             $status = $this->input->post('type');
             $order_code = $this->input->post('order_code');
             $id = $this->input->post('id');
-
             if( $this->admin->mark_order($status, $id, $order_code) ){
                 if( $status == 'shipped' ){
                     // Send Mail to the buyer when the status is 'shipped'
@@ -89,9 +89,17 @@ class Orders extends MY_Controller{
                     }
                 }elseif( $status == 'returned'){
                     // Send mail to seller and notification
-                    // Also do necessary calculation base on the status
+                    // lets do some calculation and return the buyers money to his wallet
+                    $response = $this->admin->return_order( $id );
+                    if( $response ) {
+                        // send SMS to the buyer
+                        $buyer_msg = "Hello {$response['first_name']},a refund amount for an item returned has been credited to your waller. Onitshamarket.com";
+                        $sms_array = array($response['phone'] => $buyer_msg);
+                        $this->load->library('AfricaSMS', $sms_array);
+                        $this->africasms->sendsms();
+                    }
                     try {
-                        $this->email->returned_order( $order_code );
+//                        $this->email->returned_order( $response );
                         $this->session->set_flashdata('success_msg', 'The order Item has been marked has returned');
                         $seller = $this->admin->get_order_seller($id);
                         $this->admin->notify_seller( $seller->seller_id, 'Product Returned',
@@ -100,7 +108,7 @@ class Orders extends MY_Controller{
                         echo json_encode(array('status' => 1));
                         exit;
                     } catch (Exception $e) {
-                        $email_error = array( 'error_action' => "Error: When marking an order - {$order_code} ", 'error_message' => $e, 'datetime' => get_now());
+                        $email_error = array( 'error_action' => "Error: When marking an order - {$order_code} ", 'error_message' => "The order unique id - {$id}. Error message {$e}.", 'datetime' => get_now());
                         $this->admin->insert_data('error_logs', $email_error);
                     }
                     echo json_encode(array('status' => 1));

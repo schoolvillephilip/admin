@@ -2,8 +2,8 @@
 // General Site Settings
 $lang['site_state'] = 'development';
 $lang['app_name'] = 'Onitshamarket';
-$lang['app_email'] = '';
-$lang['notify_email'] = '';
+$lang['app_email'] = 'info@onitshamarket.com';
+$lang['notify_email'] = 'noreply@onitshamarket.com';
 $lang['site_domain'] = 'https://www.onitshamarket.com';
 $lang['copyright'] = "&copy; 2015 -  " . date('Y') ." Internet Onitshamarketing Limited All rights reserved";
 

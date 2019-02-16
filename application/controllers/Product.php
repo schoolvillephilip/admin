@@ -345,4 +345,40 @@ class Product extends MY_Controller
 			redirect('product');
 		}
 	}
+
+    /*
+     * Upload  description image
+     * */
+    function description_image_upload(){
+        if( !$this->input->is_ajax_request()) redirect(base_url());
+        if( $_FILES ){
+            $allowed = array('png', 'jpg', 'jpeg', 'gif');
+            $extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+            if( !in_array(strtolower($extension), $allowed)){
+                echo '{"status" : "error"}'; exit;
+            }
+            $data = array(
+                'folder' =>   PRODUCT_DESCRIPTION_FOLDER,
+                'filepath'  => $_FILES['file']['tmp_name'],
+                'eager' => array("width" => 400, "height" => 400, "crop" => "fill")
+            );
+            $this->cloudinarylib->upload_image( $data );
+            echo $this->cloudinarylib->get_result('full_url');
+            exit;
+        }
+    }
+
+    /*
+     * Delete description image
+     * */
+    function decription_image_remove(){
+        if( !$this->input->is_ajax_request()) redirect(base_url());
+        $src = $this->input->post('src');
+        // lets build the public id
+        $explode = explode( '/', $src);
+        $image_name = explode('.', end( $explode));
+        $public_id = PRODUCT_DESCRIPTION_FOLDER . $image_name[0];
+        echo $this->cloudinarylib->delete_image( $public_id );
+        exit;
+    }
 }

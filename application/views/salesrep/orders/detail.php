@@ -44,6 +44,18 @@
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right" role="menu" style="">
                                                         <li class="<?php
+                                                        if ($order->active_status == 'certified'){
+                                                            echo 'active-status';}?>">
+                                                            <a class="<?php if( $order->active_status =='shipped' || $order->active_status =='delivered' || $order->active_status == 'completed' || $order->active_status == 'returned'){echo '';}else{echo 'order-status';}?>"
+                                                               href="javascript:;" <?php if($order->active_status != 'certified') : ?>
+                                                                data-oid="<?= $order->id; ?>"
+                                                                data-order-code="<?= $order->order_code?>" data-type="certified"
+                                                            <?php endif; ?>
+                                                            >
+                                                                Mark as Certified
+                                                            </a>
+                                                        </li>
+                                                        <li class="<?php
                                                         if ($order->active_status == 'shipped'){
                                                             echo 'active-status';}?>">
                                                             <a class="<?php if( $order->active_status =='delivered' || $order->active_status == 'completed' || $order->active_status == 'returned'){echo '';}else{echo 'order-status';}?>"
@@ -103,52 +115,58 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+                                                            <td class="text-semibold">Payment Method</td>
+                                                            <td>
+                                                                <?= paymentMethod( $order->payment_method); ?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
                                                             <td class="text-semibold">Product Name</td>
                                                             <td><a class="btn-link"
                                                                    href="<?= base_url('product/detail/' . $order->product_id); ?>"><?= $order->product_name; ?></a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="text-semibold">Customer Billing Name</td>
-                                                            <td><?= $order->first_name . ' ' . $order->last_name; ?></td>
+                                                            <td class="text-semibold">Buyer's Name</td>
+                                                            <td><?= $order->first_name . ' ' . $order->last_name ; ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="text-semibold">Customer Phone</td>
-                                                            <td><?= $order->phone . ', ' . $order->phone2; ?></td>
+                                                            <td class="text-semibold">Other Email/Phone</td>
+                                                            <td><?= $order->email . ' ' . $order->phone; ?></td>
                                                         </tr>
+                                                        <?php
+                                                        $delivery = '';
+                                                        if( $order->pickup_location_id != 0 ) :
+                                                            // Get the pickup loation
+                                                            $result = $this->admin->get_shipping_type( $order->pickup_location_id );
+                                                            ?>
+                                                            <tr>
+                                                                <td class="text-semibold">Delivery Channel</td>
+                                                                <td>Picking up at our store</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-semibold">Store Details</td>
+                                                                <td><?= $result->title . ' - ' . $result->phones.', '. $result->address .' '. $result->emails; ?></td>
+                                                            </tr>
+                                                        <?php else :
+                                                            $result = $this->admin->get_shipping_type( $order->billing_address_id, 'delivery' );
+                                                            ?>
+                                                            <tr>
+                                                                <td class="text-semibold">Deliveing To</td>
+                                                                <td>Name : <?= $result->first_name  . $result->last_name . ' - ' . $result->phone . ' Address :- ' . $result->address; ?></td>
+                                                            </tr>
+                                                        <?php endif; ?>
                                                         <tr>
-                                                            <td class="text-semibold">Customer Email</td>
-                                                            <td><?= $order->email; ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-semibold">Seller's Name</td>
-                                                            <td><a class="btn-link"
-                                                                   href="<?= base_url('sellers/detail/' . $order->seller_id); ?>"><?= ucwords($order->legal_company_name); ?></a>
+                                                            <td class="text-semibold">Seller's Detail</td>
+                                                            <td>
+                                                                <a class="btn-link"
+                                                                   href="<?= base_url('sellers/detail/' . $order->seller_id); ?>"><?= ucwords($order->legal_company_name); ?></a> |
+                                                                Email : <?= $order->seller_email; ?> | <?= (!empty($order->seller_phone)) ? $order->seller_phone : $order->seller_phone2 ; ?>
                                                             </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-semibold">Seller's Email</td>
-                                                            <td><?= $order->seller_email; ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="text-semibold">Quantity</td>
                                                             <td><?= $order->qty; ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-semibold">Delivery Channel</td>
-                                                            <td>
-                                                                <?php
-                                                                $delivery = '';
-                                                                if( $order->pickup_location_id != 0 ) {
-                                                                    // Get the delivery address
-                                                                    $result = $this->admin->get_pickup_address( $order->pickup_location_id );
-                                                                    $delivery = '<strong>To Pickup At : </strong>' .$result->title . ' - '. $result->phones.', '. $result->address .' '. $result->emails;
-                                                                }else{
-                                                                    $delivery = '<b>Delivering To : Name </b>' . $order->first_name . ' ' . $order->last_name . '; <b> Phone :</b> ' . $order->phone . '; <b>Address: </b>' .$order->address;
-                                                                }
-                                                                echo $delivery;
-                                                                ?>
-                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="text-semibold">Present Status</td>
