@@ -18,6 +18,18 @@
             <div id="page-content">
 				<div class="row">
                     <?php $this->load->view('msg_view'); ?>
+                    <div class="alert alert-info">
+                        <p><b>Hello note the following on Pending Orders</b></p>
+                        <ul>
+                            <li>If the payment method is "Interswitch Webpay", it means it has not yet been validated.</li>
+                            <li>If the payment is on delivery, that means it has not yet been marked delivered, and money has not been received by the delivery person</li>
+                        </ul>
+                        <p>Note the following on Fail Orders</p>
+                        <ul>
+                            <li>You will get this status when order made with Interswitch is not successful.</li>
+                            <li>You may also get the status on payment on delivery method when the delivery person did not mark it as delivered.</li>
+                        </ul>
+                    </div>
 					<div class="panel">
 						<div class="panel-heading">
 							<h3 class="panel-title">A list of all orders associated to you.</h3>
@@ -41,7 +53,7 @@
                                         <td class="text-center"><?= paymentMethod( $order->payment_method); ?></td>
                                         <td class="text-center"><?= $order->qty; ?></td>
                                         <td><?= ngn($order->amount * $order->qty); ?></td>
-                                        <td><?= neatDate($order->order_date); ?></td>
+                                        <td><?= date('h:ia - l, dS F, Y', strtotime($order->order_date)); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>

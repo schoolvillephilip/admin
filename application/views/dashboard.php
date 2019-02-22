@@ -55,7 +55,7 @@
                                 <div>
                                     <div class="pad-all">
                                         <p class="mar-no">
-                                            <a href="<?= base_url('sellers')?>" class="btn-link">
+                                            <a href="<?= base_url('sellers/')?>" class="btn-link">
                                                 <span class="pull-right text-bold"><?= $sellers_stats; ?></span> Sellers
                                             </a>
                                         </p>
@@ -85,7 +85,7 @@
                                             Approved</a>
                                         </p>
                                         <p class="mar-no">
-                                            <a href="<?= base_url('product/approve'); ?>" class="btn-link"><span class="pull-right text-bold"><?= $products_pending_stats; ?></span>
+                                            <a href="<?= base_url('product/approve/'); ?>" class="btn-link"><span class="pull-right text-bold"><?= $products_pending_stats; ?></span>
                                             Pending</a>
                                         </p>
                                     </div>
@@ -113,7 +113,7 @@
                                                 <div class="media">
                                                     <div class="media-left">
                                                         <span class="text-3x text-thin text-main"
-                                                              style="font-size:18px;font-weight:bolder;"><?= ngn($today_sale->amt)?></span>
+                                                              style="font-size:18px;font-weight:bolder;"><?= ngn($today_sales)?></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="panel-body maintotals text-3x">
                                     <b>
-                                        <a href="<?= base_url('account/sales_report/')?>" class="btn-link"><?= ngn($this_week_sales->amt); ?></a>
+                                        <a href="<?= base_url('account/sales_report/')?>" class="btn-link"><?= ngn($this_week_sales); ?></a>
                                     </b>
                                 </div>
                             </div>

@@ -153,7 +153,7 @@
 					                        </span>
                             </div>
                             <div class="media-body">
-                                <p class="text-2x mar-no text-semibold"><?= $product->variation_qty - (is_null($product->quantity_sold) ? 0 : $product->quantity_sold) ?></p>
+                                <p class="text-2x mar-no text-semibold"><?= $product->variation_qty ?></p>
                                 <p class="mar-no">Items Available In Stock</p>
                             </div>
                         </div>

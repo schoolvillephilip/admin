@@ -34,14 +34,17 @@ class Dashboard extends CI_Controller{
             $page_data['products_pending_stats'] = $this->admin->get_num_rows('products', array('product_status' => 'pending'));
             $page_data['order_completed_stats'] = $this->admin->get_num_rows('orders', array('active_status' => 'completed'));
             $page_data['other_stats'] = $this->admin->get_num_rows('orders', array('active_status != ' => 'completed'));
-            $today = get_now(); $next_monday = date('Y-m-d', strtotime('next monday'));
-            $seven_days = date('Y-m-d', strtotime('7 day ago'));
+            $today = get_now(); $next_monday = date('Y-m-d H:i:s', strtotime('next monday'));
+            $this_monday = date('Y-m-d H:i:s', strtotime('last monday'));
+            $seven_days = date('Y-m-d H:i:s', strtotime('7 day ago'));
             $page_data['new_product_count'] = $this->admin->run_sql("SELECT * FROM products WHERE (DATE(created_on) >= '{$seven_days}')")->num_rows();
             $page_data['new_user_count'] = $this->admin->run_sql("SELECT * FROM users WHERE SUBDATE(NOW(), 'INTERVAL 7 DAY')")->num_rows();
-            $page_data['this_week_sales'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM orders WHERE (DATE(order_date) >= '{$today}' AND DATE(order_date) < '{$next_monday}' AND active_status = 'completed') ")->row();
+            $this_week_sales = $this->admin->run_sql("SELECT SUM(amount * qty ) amt FROM orders WHERE (DATE(order_date) >= '{$this_monday}' AND DATE(order_date) < '$next_monday') AND payment_made = 'success' GROUP BY order_code")->result_array();
+            $page_data['this_week_sales'] = array_sum(array_column($this_week_sales, 'amt'));
             $page_data['new_buyer'] = $this->admin->run_sql("SELECT * FROM users WHERE (DATE(date_registered) >= '{$seven_days}')")->num_rows();
             $page_data['order_chart'] = $this->admin->order_chart();
-            $page_data['today_sale'] = $this->admin->run_sql("SELECT SUM(amount) amt FROM orders WHERE DATE(order_date) = '{$today}'")->row();
+            $today_sales = $this->admin->run_sql("SELECT SUM(amount * qty ) amt FROM orders WHERE DATE(order_date) = '{$today}' AND payment_made = 'success' GROUP BY order_code")->result_array();
+            $page_data['today_sales'] = array_sum(array_column($today_sales, 'amt'));
             $this->load->view('dashboard', $page_data);
         }
     }

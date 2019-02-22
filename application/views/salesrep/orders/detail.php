@@ -172,6 +172,7 @@
                                                             <td class="text-semibold">Present Status</td>
                                                             <td>
                                                                 <span class="label label-success"><?= ucfirst($order->active_status); ?></span>
+                                                                <button type="btn" class="btn btn-primary re-query">Click to verify Transactions</button>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -248,6 +249,21 @@
         $.ajax({
             url: base_url + 'orders/mark_order/',
             data: {'type': action_type, 'order_code': order_code, 'id':id},
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                window.location.href = base_url + "orders/detail/" +order_code;
+            },
+            error: function (data) {
+                window.location.href = base_url + "orders/detail/" +order_code;
+            }
+        });
+    });
+    $('.re-query').on('click', function(){
+        order_code = $(this).data('order-code');
+        $.ajax({
+            url: base_url + 'orders/validate_order/',
+            data: {'order_code': order_code},
             type: "POST",
             dataType: 'json',
             success: function (data) {

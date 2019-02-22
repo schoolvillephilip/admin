@@ -18,6 +18,18 @@
             <div id="page-content">
 				<div class="row">
                     <?php $this->load->view('msg_view'); ?>
+                    <div class="alert alert-info">
+                        <p>Note the following on Pending Orders</p>
+                        <ul>
+                            <li>If the payment method is "Interswitch Webpay", it means it has not yet been validated.</li>
+                            <li>If the payment is on delivery, that means it has not yet been marked delivered, and money has not been received by the delivery person</li>
+                        </ul>
+                        <p>Note the following on Fail Orders</p>
+                        <ul>
+                            <li>You will get this status when order made with Interswitch is not successful.</li>
+                            <li>You may also get the status on payment on delivery method when the delivery person did not mark it as delivered.</li>
+                        </ul>
+                    </div>
 					<div class="panel">
 						<div class="panel-heading">
 							<h3 class="panel-title">A list of all orders in the Database</h3>
@@ -41,14 +53,14 @@
 								<tbody>
 									<?php foreach( $orders as $order ): ?>
 										<tr>
-											<td><a class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code); ?>"><?= $order->order_code; ?></a></td>
+											<td><a class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code .'/'); ?>"><?= $order->order_code; ?></a></td>
                                             <td class="text-center"><?= paymentMethod( $order->payment_method); ?></td>
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount * $order->qty); ?></td>
-											<td><?= neatDate($order->order_date); ?></td>
+											<td><?= date('h:ia - l, dS F, Y', strtotime($order->order_date)); ?></td>
                                             <?php if($profile->groups != 4 ): # if not sales rep  ?>
 											    <td>
-                                                <?php if($order->agent == 0 ) : #No agent has been assigned yet  ?>
+                                                <?php if($order->agent == '0' ) : #No agent has been assigned yet  ?>
                                                 <form class="form-inline" id="<?= $order->order_code; ?>" >
                                                     <div class="form-group-sm">
                                                         <select class="form-control" required name="agent_id">
@@ -56,7 +68,7 @@
                                                             <?php
                                                             $agents = $this->admin->get_agent();
                                                             foreach($agents as $agent):?>
-                                                                <option value="<?= $agent->id?>"><?= ucwords($agent->first_name . ' ' . $agent->last_name);?></option>
+                                                                <option value="<?= $agent->id; ?>"><?= ucwords($agent->first_name . ' ' . $agent->last_name);?></option>
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
@@ -83,7 +95,7 @@
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <?= $pagination ?>
+                        <?= $pagination ;?>
                     </div>
                 </div>
 			</div>
@@ -126,10 +138,10 @@
             type: "POST",
             dataType: 'json',
             success: function (data) {
-                window.location.href = base_url + "orders/";
+                // window.location.href = base_url + "orders/";
             },
             error: function (data) {
-                window.location.href = base_url + "orders/";
+                // window.location.href = base_url + "orders/";
             }
         });
     });

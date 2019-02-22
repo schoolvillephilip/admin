@@ -9,7 +9,7 @@ class Orders extends MY_Controller{
     }
 
     public function index(){
-        $order_code = $this->input->get('order_code', true);
+        $type = cleanit( $this->uri->segment(3));
         $page_data['page_title'] = 'Orders Overview';
         $page_data['pg_name'] = 'orders';
         $page_data['sub_name'] = 'orders_overview';
@@ -17,31 +17,29 @@ class Orders extends MY_Controller{
         $id = $this->session->userdata('logged_id');
         $page_data['profile'] = $this->admin->get_profile_details( $id,
             'first_name,last_name,email,profile_pic, groups');
-
+        // Site Administrator // Manager // Sales_rep
+        $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
+        if ($page > 1) $page -= 1;
+        $array = array('is_limit' => false);
+        $x = (array)$this->admin->get_orders_by_type( $type, $array);
+        $count = (count($x));
+        $this->load->library('pagination');
+        $this->config->load('pagination');
+        $config = $this->config->item('pagination');
+        $config['base_url'] = current_url();
+        $config['total_rows'] = $count;
+        $config['per_page'] = 100;
+        $config["num_links"] = 10;
+        $this->pagination->initialize($config);
+        $array['limit'] = $config['per_page'];
+        $array['offset'] = $page;
+        $array['is_limit'] = true;
+        $page_data['pagination'] = $this->pagination->create_links();
+        $page_data['orders'] = $this->admin->get_orders_by_type( $type, $array );
         if( $this->session->userdata('group_id') == 4 ) { # Sales Rep
-            $page_data['orders'] = $this->admin->get_orders_for_salesrep( $order_code, $id);
             $this->load->view('salesrep/orders/overview', $page_data);
         }else{
-            // Site Administrator // Manager
-            if( !$order_code) $order_code = '';
-            $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
-            if ($page > 1) $page -= 1;
-            $array = array('is_limit' => false);
-            $x = (array)$this->admin->get_orders( $order_code,$array);
-            $count = (count($x));
-            $this->load->library('pagination');
-            $this->config->load('pagination');
-            $config = $this->config->item('pagination');
-            $config['base_url'] = current_url();
-            $config['total_rows'] = $count;
-            $config['per_page'] = 100;
-            $config["num_links"] = 5;
-            $this->pagination->initialize($config);
-            $array['limit'] = $config['per_page'];
-            $array['offset'] = $page;
-            $array['is_limit'] = true;
-            $page_data['pagination'] = $this->pagination->create_links();
-            $page_data['orders'] = $this->admin->get_orders( $order_code, $array );
+            $page_data['agents'] = $this->admin->get_agent();
             $this->load->view('orders/overview', $page_data);
         }
     }
@@ -55,12 +53,10 @@ class Orders extends MY_Controller{
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details( $uid,
 			'first_name,last_name,email,profile_pic,groups');
+        $page_data['orders'] = $this->admin->get_order_detail( $order_code, $uid );
         if( $this->session->userdata('group_id') == 4 ){ # Sales Rep
-            $page_data['orders'] = $this->admin->get_orders_for_salesrep( $order_code, $uid );
             $this->load->view('salesrep/orders/detail', $page_data);
         }else{
-            $page_data['orders'] = $this->admin->get_orders( $order_code , array('is_limit' => false));
-
             $this->load->view('orders/detail', $page_data);
         }
 	}
@@ -139,8 +135,8 @@ class Orders extends MY_Controller{
 	    $order_code = $this->input->post('order_code');
 	    $agent_id = $this->input->post('agent_id');
         try {
-            $this->admin->update_data($order_code, array('agent' => $agent_id),TABLE_ORDERS,  'order_code');
             // Mail the agent
+            $this->admin->update_data($order_code, array('agent' => $agent_id), 'orders',  'order_code');
             $this->session->set_flashdata('success_msg','The Order Items has been assigned to the agent');
             echo json_encode(array('status' => 1));
             exit;
@@ -149,5 +145,57 @@ class Orders extends MY_Controller{
         }
         echo json_encode(array('status' => 0));
         exit;
+    }
+
+    function validate_order(){
+        $order_code = $this->input->post('order_code');
+        $row = $this->admin->run_sql("SELECT txnref, SUM(amount) amount, delivery_charge, status,active_status FROM orders WHERE order_code = {$order_code}")->row();
+        $total = $row->amount + $row->delivery_charge;
+        $validate_array = array(
+            'amount' => $total * 100,
+            'txn_ref' => $row->txnref
+        );
+        $this->load->library('sitelib');
+        $response = $this->sitelib->interswitch_curl( $validate_array );
+        if( $response ){
+            $ResponseDescription = (isset($response['ResponseDescription'])) ? $response['ResponseDescription'] : 'Payment was not successful';
+            $PaymentReference = (isset($response['PaymentReference'])) ? $response['PaymentReference'] : null;
+            $RetrievalReferenceNumber = (isset($response['RetrievalReferenceNumber'])) ? $response['RetrievalReferenceNumber'] : null;
+            if($response['ResponseCode'] !== '00') {
+                // Transaction get K-leg
+                $json_array = json_decode($row->status, true);
+                $array = array("cancelled" => array('msg' => "Order was marked as cancelled : {$ResponseDescription}", 'datetime' => get_now()));
+                $status_array = array_merge($json_array, $array);
+                $status_array = json_encode($status_array);
+                $update_array = array(
+                    'status' => $status_array,
+                    'active_status' => 'cancelled',
+                    'payment_made' => 'fail',
+                    'paymentDesc'   => $ResponseDescription,
+                    'payRef'        => $PaymentReference,
+                    'responseCode'  => $response['ResponseCode']
+                );
+                $this->admin->update_data( $order_code, $update_array, 'orders', 'order_code');
+                $this->session->set_flashdata('error_msg', 'Transaction is invalid:' . $ResponseDescription .' and the transaction reference number is:' . $row->txnref);
+                echo '';
+                exit;
+            }else{
+                // Order is successful
+                $update_array = array(
+//                        'status' => $status_array,
+                    'active_status' => 'certified',
+                    'payment_made' => 'success',
+                    'paymentDesc'   => $response['ResponseDescription'],
+                    'payRef'        => $PaymentReference,
+                    'retRef'        => $RetrievalReferenceNumber,
+                    'apprAmt'       => $response['Amount'] / 100,
+                    'responseCode'  => $response['ResponseCode']
+                );
+                $this->admin->update_data( $order_code, $update_array, 'orders', 'order_code');
+                $this->session->set_flashdata('success_msg', 'The payment is valid, and has been marked has valid...');
+                echo '';
+                exit;
+            }
+        }
     }
 }

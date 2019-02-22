@@ -35,12 +35,28 @@ class Account extends MY_Controller
         $page_data['profile'] = $this->admin->get_profile( $uid );
         // queries
         $this_year = date('Y', strtotime('this year'));
-        $page_data['total_sales'] = $this->admin->run_sql("SELECT SUM(amount) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}'")->row();
-        $page_data['delivery_charge'] = $this->admin->run_sql("SELECT SUM(distinct(delivery_charge)) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
-        $page_data['commission'] = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE active_status = 'completed' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->row();
-        $page_data['order_count'] = $this->admin->run_sql("SELECT SUM(qty) total FROM orders WHERE active_status = 'completed' AND YEAR(order_date) ='{$this_year}' GROUP BY order_code")->row();
-        $avg = $this->admin->run_sql("SELECT SUM(qty) qty, COUNT(DISTINCT(buyer_id)) buyers FROM orders WHERE active_status='completed'")->row();
-        $page_data['avg_order'] = ($avg->qty > 0 ) ? $avg->qty /$avg->buyers : 0.00;
+
+        $delivery_charge = $this->admin->run_sql("SELECT SUM(distinct(delivery_charge)) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $page_data['delivery_charge'] = array_sum(array_column($delivery_charge, 'amount'));
+        $commission = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $page_data['commission'] = array_sum(array_column( $commission, 'amount'));
+        $order_count = $this->admin->run_sql("SELECT SUM(qty) total FROM orders WHERE payment_made = 'success' AND YEAR(order_date) ='{$this_year}' GROUP BY order_code")->result_array();
+        $page_data['order_count'] = array_sum(array_column( $order_count, 'total'));
+        $avg = $this->admin->run_sql("SELECT SUM(qty) qty, COUNT(DISTINCT(buyer_id)) buyers FROM orders WHERE payment_made = 'success'")->result_array();
+
+        // Successful Transactions
+        $success_transaction = $this->admin->run_sql("SELECT SUM(amount * qty) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $page_data['success_transaction'] = array_sum(array_column($success_transaction, 'amount'));
+
+        // pending -Incoming payment ; probably payment on delivery
+        $incoming_payment = $this->admin->run_sql("SELECT SUM(amount * qty) amount FROM orders WHERE payment_made = 'pending' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $page_data['incoming_payment'] = array_sum(array_column($incoming_payment, 'amount'));
+
+        // Failed transactions
+        $failed_transaction = $this->admin->run_sql("SELECT SUM(amount * qty ) amount FROM orders WHERE payment_made = 'fail' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $page_data['failed_transaction'] = array_sum(array_column($failed_transaction, 'amount'));
+
+        $page_data['avg_order'] = (array_sum(array_column( $avg, 'qty')) > 0 ) ? array_sum(array_column( $avg, 'qty')) / array_sum(array_column( $avg, 'buyers')) : 0;
         $page_data['top_orders'] = $this->admin->top_20_sales();
         $page_data['order_chart'] = $this->admin->order_chart();
         $page_data['gross_chart'] = "";

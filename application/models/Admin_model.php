@@ -310,44 +310,54 @@ Class Admin_model extends CI_Model
     }
 
     /**
-     * @param $id
-     * @return CI_DB_object
+     * Select all orders
+     * $type = payment_made = pending|success|fail
+     * $user_id = logged in user sales rep or admin
+     * args = pagination or other get query
      */
-
-    function get_orders($id = '', $args = array())
-    {
-        $query = "SELECT o.id,o.agent,o.payment_method, o.product_id,o.billing_address_id, o.pickup_location_id, o.order_code,o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
-          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, 
-          s.seller_phone seller_phone, su.phone seller_phone2, u.email,  su.email seller_email,
-          u.first_name, u.last_name , u.email, u.phone
-          FROM orders o
-        LEFT JOIN products p ON (o.product_id = p.id) 
-        LEFT JOIN sellers s ON (o.seller_id = s.uid)
-        LEFT JOIN users su ON (o.seller_id = su.id)
-        LEFT JOIN users u ON (o.buyer_id = u.id)";
-        if ($id != '') {
-            $query .= " WHERE o.order_code = '{$id}' OR o.id = '{$id}' GROUP BY o.product_id";
+    function get_orders_by_type( $type = '', $args = array()){
+        $query = "SELECT id, product_id, order_code, txnref, agent, payment_method, SUM(qty) qty, SUM(amount) amount, order_date FROM orders";
+        switch ($type) {
+            case 'success':
+                $query .= " WHERE payment_made = 'success'";
+                break;
+            case 'fail':
+                $query .= " WHERE payment_made = 'fail'";
+                break;
+            case 'pending':
+                $query .= " WHERE payment_made = 'pending'";
+                break;
+            default:
+                $query .= " WHERE payment_made IN ('pending', 'fail', 'success')";
+        }
+        if( $this->session->userdata('group_id') == 4 ){
+            $agent_id = $this->session->userdata('logged_id');
+            $query .= " AND agent = {$agent_id}";
         }
         $limit = $args['is_limit'];
-        if ($limit == true) {
-            $query .= " GROUP BY o.order_code LIMIT " . $args['offset'] . "," . $args['limit'];
+        if( $limit ){
+            $query .= " GROUP BY order_code ORDER BY id LIMIT " . $args['offset'] . "," . $args['limit'];
+        }else{
+            $query .= " GROUP BY order_code ORDER BY id ";
         }
-        return $this->db->query($query)->result();
+//        die( $query );
+
+        return $this->db->query( $query )->result();
     }
 
-    function get_orders_for_salesrep($order_code, $uid)
+    function get_order_detail($id = '')
     {
-        $query = "SELECT o.id, o.agent,o.payment_method, o.product_id,o.billing_address_id,o.pickup_location_id, o.order_code, o.seller_id, SUM(o.qty) qty, SUM(o.amount) amount, 
-          o.order_date, o.status,o.active_status, p.product_name, s.legal_company_name, s.seller_phone seller_phone, su.phone seller_phone2, u.email,  su.email seller_email FROM orders o
-        LEFT JOIN products p ON (o.product_id = p.id) 
-        LEFT JOIN sellers s ON (o.seller_id = s.uid)
-        LEFT JOIN users su ON (o.seller_id = su.id)
-        LEFT JOIN users u ON (o.buyer_id = u.id)";
-        $query .= " WHERE o.agent = {$uid} AND o.active_status != 'completed'";
-        if ($order_code != '') {
-            $query .= " AND o.order_code = {$order_code}";
-        }
-        $query .= " GROUP BY o.order_code";
+        $query = "SELECT o.id,o.agent,o.payment_method, o.product_id,o.billing_address_id, o.pickup_location_id, o.order_code,o.seller_id,
+            SUM(o.qty) qty, SUM(o.amount) amount, 
+            o.order_date, o.order_code, o.txnref, o.responseCode, o.paymentDesc, o.status,o.active_status, p.product_name, s.legal_company_name, 
+            s.seller_phone seller_phone, su.phone seller_phone2, u.email,  su.email seller_email,
+            u.first_name, u.last_name , u.email, u.phone
+            FROM orders o
+            LEFT JOIN products p ON (o.product_id = p.id) 
+            LEFT JOIN sellers s ON (o.seller_id = s.uid)
+            LEFT JOIN users su ON (o.seller_id = su.id)
+            LEFT JOIN users u ON (o.buyer_id = u.id)";
+        $query .= " WHERE (o.order_code = '{$id}' OR o.id = '{$id}')  GROUP BY o.product_id";
         return $this->db->query($query)->result();
     }
 
@@ -816,7 +826,7 @@ Class Admin_model extends CI_Model
     function top_20_sales()
     {
         $query = "SELECT p.product_name, p.id, SUM(o.qty) no_of_sales FROM orders o LEFT JOIN products p ON (p.id = o.product_id) 
-        WHERE active_status = 'completed' GROUP BY o.product_id ORDER BY o.qty";
+        WHERE payment_made = 'success' GROUP BY o.product_id ORDER BY o.qty LIMIT 0,20";
         return $this->run_sql($query)->result();
     }
 
@@ -841,7 +851,7 @@ Class Admin_model extends CI_Model
             SELECT DATE_FORMAT(order_date, '%b') AS month, SUM(qty) as total
             FROM orders
             WHERE order_date <= NOW() and order_date >= Date_add(Now(),interval - 12 month)
-            AND active_status = 'completed'
+            AND payment_made = 'success'
             GROUP BY order_code, DATE_FORMAT(order_date, '%m-%Y')) as sub";
         return $this->run_sql($query)->row_array();
     }
@@ -961,6 +971,18 @@ Class Admin_model extends CI_Model
             $select = "SELECT title, phones, emails, address FROM pickup_address WHERE id = {$id}";
             return $this->db->query( $select )->row();
         }
+    }
+
+    /**
+     * @param $oroduct_id
+     * @return CI_DB_result_array
+     */
+
+    function get_product_gallery($id)
+    {
+        $this->db->select('image_name,featured_image');
+        $this->db->where('product_id', $id);
+        return $this->db->get('product_gallery')->result();
     }
 
 

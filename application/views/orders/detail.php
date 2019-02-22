@@ -89,6 +89,13 @@
                                                                 Returned
                                                             </a>
                                                         </li>
+                                                        <li class="<?php if ($order->active_status == 'cancelled') echo 'active-status'; ?>">
+                                                            <a href="javascript:;" class="order-status"
+                                                               data-oid="<?= $order->id; ?>"
+                                                               data-order-code="<?= $order->order_code?>" data-type="cancelled">
+                                                                Cancelled
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </li>
 
@@ -103,8 +110,8 @@
                                                     <div class="alert alert-info">
                                                         <p>Note the following</p>
                                                         <ul>
-                                                            <li>Orders are marked as <b>'certified'</b> automatically when payment method is Interstich webpay and the transaction is successful</li>
-                                                            <li>This order will not be un-available after 2Hrs of initiation if the transaction is not successful. </li>
+                                                            <li>Orders are marked as <b>'certified'</b> automatically when payment method is Interswitch webpay and the transaction is successful</li>
+
                                                         </ul>
                                                     </div>
                                                     <table class="table table-striped">
@@ -116,9 +123,15 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr>
-                                                            <td class="text-semibold">Order Unique ID</td>
+                                                            <td class="text-semibold">Item Unique ID</td>
                                                             <td>
                                                                 <?= $order->id; ?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-semibold">Transaction ID</td>
+                                                            <td>
+                                                                <?= $order->txnref; ?>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -192,6 +205,10 @@
                                                             <td class="text-semibold">Present Status</td>
                                                             <td>
                                                                 <span class="label label-success"><?= ucfirst($order->active_status); ?></span>
+                                                                <?php if ( $order->payment_method == 2 && $order->active_status == 'pending' && $order->responseCode != '00' ) :?>
+                                                                    <button type="button" class="btn btn-primary re-query" data-order-code="<?= $order->order_code; ?>">Click to verify Transactions</button>
+                                                                <span class="label label-danger">Note that the order will be marked as canceled, if the transaction is not valid, or transaction not found.</span>
+                                                                <?php endif; ?>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -263,11 +280,27 @@
             .modal('show');
     });
 
-    $('#confirm_true').on('click', function (e) {
+    $('#confirm_true').on('click', function (e){
         e.preventDefault();
         $.ajax({
             url: base_url + 'orders/mark_order/',
             data: {'type': action_type, 'order_code': order_code, 'id':id},
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                window.location.href = base_url + "orders/detail/" +order_code;
+            },
+            error: function (data) {
+                window.location.href = base_url + "orders/detail/" +order_code;
+            }
+        });
+    });
+
+    $('.re-query').on('click', function(){
+        order_code = $(this).data('order-code');
+        $.ajax({
+            url: base_url + 'orders/validate_order/',
+            data: {'order_code': order_code},
             type: "POST",
             dataType: 'json',
             success: function (data) {

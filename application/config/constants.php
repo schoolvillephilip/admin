@@ -143,3 +143,17 @@ defined('SMS_API') OR define('SMS_API', '2825a7e7a5988803c97852627500f5fc6589645
 defined('SMS_FOR_ORDERS') OR define('SMS_FOR_ORDERS', FALSE);
 
 
+
+
+defined('INTERSWITCH_MAC_KEY') OR define('INTERSWITCH_MAC_KEY', 'D3D1D05AFE42AD50818167EAC73C109168A0F108F32645C8B59E897FA930DA44F9230910DAC9E20641823799A107A02068F7BC0F4CC41D2952E249552255710F');
+defined('INTERSWITCH_PRODUCT_ID') OR define('INTERSWITCH_PRODUCT_ID', '1076');
+defined('INTERSWITCH_PAY_ITEM_ID') OR define('INTERSWITCH_PAY_ITEM_ID', '101');
+defined('INTERSWITCH_RESPONSE_URL') OR define('INTERSWITCH_RESPONSE_URL', 'https://sandbox.interswitchng.com/collections/api/v1/gettransaction.json'); // Live : https://webpay.interswitchng.com/collections/api/v1/gettransaction.json
+//defined('INTERSWITCH_REQUERY_URL') OR define('INTERSWITCH_REQUERY_URL', 'https://sandbox.interswitchng.com/collections/api/v1/gettransaction.json');  //"https://webpay.interswitchng.com/collections/api/v1/gettransaction.json?$ponmo"; // LIVE
+defined('INTERSWITCH_HOST_URL') OR define('INTERSWITCH_HOST_URL', 'sandbox.interswitchng.com'); // webpay.interswitchng.com
+defined('INTERSWITCH_ACTION_URL') OR define('INTERSWITCH_ACTION_URL', 'https://sandbox.interswitchng.com/collections/w/pay'); // Live : https://webpay.interswitchng.com/collections/w/pay
+
+
+
+
+
