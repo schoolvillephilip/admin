@@ -731,7 +731,7 @@ Class Admin_model extends CI_Model
     function mark_order($status, $id, $order_code = '')
     {
 //        $status, $id, $order_code
-        $query = "SELECT status FROM orders";
+        $query = "SELECT status, payment_method FROM orders";
 //        $status_array = array();
         if ($status == 'shipped') {
             $query .= " WHERE order_code = {$order_code}";
@@ -753,8 +753,15 @@ Class Admin_model extends CI_Model
             $array = array("{$status}" => array('msg' => "Order was marked as {$status}", 'datetime' => get_now()));
             $status_array = array_merge($json_array, $array);
             $status_array = json_encode($status_array);
+
             try {
-                $this->run_sql("UPDATE orders SET `status` = '$status_array', `active_status` = '{$status}' WHERE `id` = {$id}");
+
+                if( $json->payment_method == 1 ){ //payment on delivery
+                    $this->run_sql("UPDATE orders SET `status` = '$status_array', `active_status` = '{$status}', `payment_made` = 'success' WHERE `id` = {$id}");
+                }else{
+                    $this->run_sql("UPDATE orders SET `status` = '$status_array', `active_status` = '{$status}' WHERE `id` = {$id}");
+                }
+
                 return true;
             } catch (Exception $e) {
                 return false;
@@ -766,7 +773,7 @@ Class Admin_model extends CI_Model
      * Mark order status
      * {"processing":{"msg":"Your order payment is processing","datetime":"2018-12-10 16:20:58"}}
      * */
-//UPDATE orders SET `status` = 2, `active_status` = shipped WHERE `order_code` = 73862195
+    //UPDATE orders SET `status` = 2, `active_status` = shipped WHERE `order_code` = 73862195
 
     function get_agent($id = '')
     {
