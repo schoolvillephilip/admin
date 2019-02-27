@@ -499,6 +499,8 @@ Class Admin_model extends CI_Model
             return false;
         } else {
             // Note: When an account is not approved, the products should be suspended
+            $this->load->model('email_model', 'email');
+            $seller_detail = $this->run_sql("SELECT u.email, s.legal_company_name FROM users u LEFT JOIN sellers s ON (s.uid = u.id) WHERE u.id = {$sid}")->row();
             switch ($action) {
                 case 'suspend':
                     $status = $this->update_data($sid, array('is_seller' => 'suspended'), 'users');
@@ -506,18 +508,30 @@ Class Admin_model extends CI_Model
                         $this->notify_seller($sid,
                             'Your account has been suspended', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
                         );
+
+                        $email_array = array(
+                            'email'     => $seller_detail->email,
+                            'recipent'  => 'Dear ' . ucwords($seller_detail->legal_company_name).',',
+                            'type'      => 'suspend'
+                        );
+
+                        $this->email->send_seller_account_email($email_array);
                     }
                     return $status;
                     break;
 
                 case 'reject':
+
                     $status = $this->update_data($sid, array('is_seller' => 'rejected'), 'users');
+                    $this->db->where('uid', $sid);
+                    $this->db->delete('sellers');
                     if ($status) {
-                        // Products to be deleted
-                        $this->update_data($sid, array('product_status' => 'suspended'), 'products', 'seller_id');
-                        $this->notify_seller($sid,
-                            'Your account has been rejected', "This is to notify you that your account has been suspended. <br />Contact support<br /> Regards."
+                        $email_array = array(
+                            'email'     => $seller_detail->email,
+                            'recipent'  => 'Dear ' . ucwords($seller_detail->legal_company_name).',',
+                            'type'      => 'reject'
                         );
+                        $this->email->send_seller_account_email($email_array);
                     }
                     break;
 
@@ -528,9 +542,16 @@ Class Admin_model extends CI_Model
                         $this->update_data($sid, array('is_seller' => 'approved'));
                         // We're suppose to activate all the products, but we still need to carefully check before setting them to approve
                         $this->notify_seller($sid,
-                            'Your account has been approved', "Congrats, welcome to your seller dashboard.<br /> Regards."
+                            'Your account has been approved', "Congrats, we are glad to have you on board.<br /> Regards."
                         );
+                        $email_array = array(
+                            'email'     => $seller_detail->email,
+                            'recipent'  => 'Dear ' . ucwords($seller_detail->legal_company_name).',',
+                            'type'      => 'approve'
+                        );
+                        $this->email->send_seller_account_email($email_array);
                     }
+
                     return $status;
                     break;
                 case 'delete':

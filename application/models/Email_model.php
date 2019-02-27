@@ -8,7 +8,7 @@ class Email_model extends CI_Model {
         try{
 
             $post['from'] = (!isset($post['from'])) ? lang('notify_email') : $post['from'] ;
-            $post['fromName'] = 'Onitshamarket';
+            $post['fromName'] = 'Onitshamarket.com';
             $post['apikey'] = ELASTIC_EMAIL_API;
             $ch = curl_init();
             curl_setopt_array($ch, array(
@@ -107,5 +107,74 @@ class Email_model extends CI_Model {
         return $this->send_now($post);
     }
 
+
+    /*
+     * This function is run dynamically from the Admin model.
+     * Called on approval, reject, suspend and verified
+     * */
+    function send_seller_account_email( $data = array() ){
+
+        switch ($data['type']) {
+            case 'suspend':
+                $post = array(
+                    'subject'   => 'Your seller account has been suspended - Onitshamarket.com',
+                    'to'        => $data['email'],
+                    'template'  => 'SuspendSeller',
+                    'merge_recipent' => $data['recipent'],
+                    'isTransactional' => false
+                );
+                return $this->send_now( $post );
+                break;
+            case 'reject':
+                $post = array(
+                    'subject'   => 'Your seller application was rejected - Onitshamarket.com',
+                    'to'        => $data['email'],
+                    'template'  => 'RejectSeller',
+                    'merge_recipent' => $data['recipent'],
+                    'isTransactional' => false
+                );
+                return $this->send_now( $post );
+                break;
+            default :
+                // approve
+                $post = array(
+                    'subject'   => 'Congrats, your seller account has been approved - Onitshamarket.com',
+                    'to'        => $data['email'],
+                    'template'  => 'ApproveSeller',
+                    'merge_recipent' => $data['recipent'],
+                    'isTransactional' => false
+                );
+                return $this->send_now( $post );
+                break;
+        }
+
+    }
+
+
+    //Server email
+    function do_email($msg=NULL, $sub=NULL, $to=NULL, $from=NULL){
+
+        $config = array();
+        $config['useragent']	= "CodeIgniter";
+//        $config['mailpath']		= "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+        $config['protocol']		= "smtp";
+        $config['smtp_host']	= "localhost";
+        $config['smtp_port']	= "25";
+        $config['mailtype']		= 'html';
+        $config['charset']		= 'utf-8';
+        $config['newline']		= "\r\n";
+        $config['wordwrap']		= TRUE;
+        $this->load->library('email');
+        $this->email->clear();
+        $this->email->initialize($config);
+        $system_name	=	lang('app_name');
+        if($from == NULL)
+            $from		=	'noreply@onitshamarket.com';
+        $this->email->from($from, $system_name);
+        $this->email->to($to);
+        $this->email->subject($sub);
+        $this->email->message($msg);
+        if( $this->email->send()){return true;}else{return false;}
+    }
 
 }
