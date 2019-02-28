@@ -29,12 +29,12 @@ class Login extends CI_Controller{
         if(!$_POST){
             redirect('login');
         }else {
-//            $recaptcha = $this->input->post('g-recaptcha-response');
-//            $response = $this->recaptcha->verifyResponse($recaptcha);
-//            if (!isset($response['success']) || $response['success'] !== true) {
-//                $this->session->set_flashdata('error_msg', 'There was an error validating the captcha, please try again.');
-//                redirect('login');
-//            }
+            $recaptcha = $this->input->post('g-recaptcha-response');
+            $response = $this->recaptcha->verifyResponse($recaptcha);
+            if (!isset($response['success']) || $response['success'] !== true) {
+                $this->session->set_flashdata('error_msg', 'There was an error validating the captcha, please try again.');
+                redirect('login');
+            }
             $this->form_validation->set_rules('email', 'Email Address','trim|required|xss_clean|valid_email');
             $this->form_validation->set_rules('password', 'Password','trim|required|xss_clean|min_length[6]|max_length[15]');
             if ($this->form_validation->run() == FALSE) {
