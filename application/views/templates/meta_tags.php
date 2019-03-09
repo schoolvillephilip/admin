@@ -38,9 +38,8 @@
     <link href="<?= base_url('assets/plugins/morris-js/morris.min.css'); ?>" rel="stylesheet">
     <style>
         #demo-nifty-settings {display: none; }
-
         .panel-title { color: #fff; background: #425865 !important; }
-
         .panel-title:hover { background: #1ca28b !important; color: #fff; }
+        #footer { color: #fff; background-color: #2ba27d;}
     </style>
 

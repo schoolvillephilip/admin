@@ -7,7 +7,7 @@ Class Admin_model extends CI_Model
     function login($data = array(), $table_name = 'users')
     {
         if (!empty($data)) {
-            $email = cleanit($data['email']);
+//            $email = cleanit($data['email']);
             $this->db->where('is_admin', 1);
             $this->db->where('email', $data['email']);
             if ($this->db->get($table_name)->row()) {

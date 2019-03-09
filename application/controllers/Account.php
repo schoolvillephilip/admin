@@ -22,6 +22,123 @@ class Account extends MY_Controller
         $page_data['sub_name'] = "statement";
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile($id);
+        if( $this->input->post() ){
+
+            // Lets start
+            $report_type = $period = $status =  $query = '';
+
+            $table_template = '<table id="statement-table" class="table table-striped table-bordered" cellspacing="0" width="100%"><thead><tr><th>Order Code</th>
+                            <th>Product Name</th><th>Qty</th><th>Amount</th><th class="min-tablet">Ordered On</th></tr></thead><tbody></tbody></table>';
+            $report_type = $_POST['report_type'];
+            switch ($report_type){
+                case 'orders':
+                case 'all':
+                    // IF( Country = 'France', Country, null)
+                    $query = "SELECT o.order_code,  o.product_id, p.product_name, o.seller_id seller_id, s.legal_company_name, 
+                              qty, amount, pay.name payment_method,
+                              o.delivery_charge, o.commission,
+                              SUM(amount + delivery_charge) total
+                              FROM orders o 
+                              JOIN products p ON(p.id = o.product_id) 
+                              JOIN payment_methods pay ON(pay.id = o.payment_method) 
+                              JOIN sellers s ON(s.uid = o.seller_id)";
+                    if( $_POST['period'] ){
+                        // If period was set
+                        $period = $_POST['period'];
+                        switch ($period) {
+                            case 'this_month':
+                                $query .= " WHERE MONTH(order_date) = MONTH(CURRENT_DATE) ";
+                                break;
+                            case 'last_month':
+                                $query .= " WHERE order_date > DATE_SUB(NOW(), INTERVAL 1 MONTH) ";
+                                break;
+                            case 'last_3_months':
+                                $query .= " WHERE order_date > DATE_SUB(NOW(), INTERVAL 3 MONTH) ";
+                                break;
+                            case 'this_year':
+                                $query .= " WHERE YEAR(order_date) = YEAR(CURRENT_DATE) ";
+                                break;
+                            case 'last_year':
+                                $last_year = date('Y', strtotime('last year'));
+                                $query .= " WHERE YEAR(order_date) = '{$last_year}' ";
+                                break;
+                            default:
+                                //all period
+                                break;
+                        }
+                    }
+                    if( $_POST['status'] ){
+                        // If status was set
+                        $status = $_POST['status'];
+                        switch ($status) {
+                            case 'success':
+                                $query .= " AND payment_made = 'success'";
+                                break;
+                            case 'fail':
+                                $query .= " AND payment_made = 'fail'";
+                                break;
+                            case 'pending':
+                                $query .= " AND payment_made = 'pending ";
+                                break;
+                            default:
+                                //all status
+                                break;
+                        }
+                    }
+
+                    $query .= " GROUP BY product_id, order_code ORDER BY o.id ASC";
+                    $results = $this->admin->run_sql($query)->result();
+
+                    if( $results ){
+                        $table_template =' <table id="statement-table" class="table table-striped table-bordered" cellspacing="0" width="100%">';
+                        $table_template .= '<thead><tr><th>Order Code</th>
+                            <th>Product Name</th><th>Seller</th><th>Qty</th><th>Payment Method</th><th>Amount</th><th>Delivery Charge</th><th>Commission</th><th>Total</th></tr></thead>';
+                        $table_template .= '<tbody>';
+
+                        foreach ($results as $result ){
+                            $body = '';
+                            $table_template .= '<tr>';
+
+                                $body = '<td><a class="btn-link" href="' .base_url('orders/detail/' . $result->order_code). '">' .$result->order_code. '</a></td>';
+                                $body .= '<td><a class="btn-link" href="' .base_url('product/detail/' . $result->product_id). '">' .$result->product_name. '</a></td>';
+                                $body .= '<td><a class="btn-link" href="' .base_url('sellers/detail/' . $result->seller_id). '">' .$result->legal_company_name. '</a></td>';
+                                $body .= '<td>'. $result->qty. '</td>';
+                                $body .= '<td>'. $result->payment_method. '</td>';
+                                $body .= '<td>'. ngn($result->amount). '</td>';
+                                $body .= '<td>'. ngn($result->delivery_charge). '</td>';
+                                $body .= '<td>'. ngn($result->commission). '</td>';
+                                $body .= '<td>'. ngn($result->total). '</td>';
+
+                            $table_template .= $body;
+                            $table_template .= '</tr>';
+                        }
+
+                        $table_template .= '</tbody>';
+                        $table_template .= '</table>';
+                    }
+                    $period = preg_replace("/[^A-Za-z]/", ' ', $_POST['period']);
+                    $status = $_POST['status'];
+                    $page_data['page_title'] = "Account Statement For {$_POST['report_type']} - Period: {$period} - status: {$status}";
+                    $page_data['statement_table'] = $table_template;
+                    break;
+
+
+                case 'ap':
+                    // Account payable
+
+                    break;
+
+                case 'ar':
+                    // Account Receivable
+                    break;
+
+                default:
+                    // ALL
+                    break;
+
+
+            };
+        }
         $this->load->view('account/statement', $page_data);
     }
 

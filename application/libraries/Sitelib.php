@@ -16,7 +16,7 @@ class Sitelib {
             "transactionreference"  =>  $data['txn_ref'],
             "amount"    =>  $data['amount']
         );
-        $thash = INTERSWITCH_PRODUCT_ID.$data['txn_ref'].INTERSWITCH_MAC_KEY;
+        $thash = hash('SHA512', INTERSWITCH_PRODUCT_ID.$data['txn_ref'].INTERSWITCH_MAC_KEY);
         $ponmo = http_build_query($parameters);
         $url = INTERSWITCH_RESPONSE_URL .'?'. $ponmo; // json
         $host = INTERSWITCH_HOST_URL;

@@ -214,23 +214,55 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = 'privacy';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        if( $this->input->post() ){
-            $privacy = $this->input->post('privacy', true);
-//            function insert_data($table = 'users', $data = array())
-//            $this->admin->insert_data('page_content', )
+        $page_data['privacy'] = $this->admin->get_row('page_contents', array('type' => 'privacy'), 'content');
+        if( $_POST ){
+            $privacy = trim($_POST['privacy']);
+            $check = $this->admin->get_row('page_contents', array('type' => 'privacy'), 'content');
+            if( !$check ){
+
+                $this->admin->insert_data('page_contents', array('content' => $privacy, 'type' => 'privacy') );
+                $this->session->set_flashdata('success_msg', 'Terms and condition posted successfully.');
+                redirect('settings/privacy');
+            }else{
+                //update
+                $this->admin->update_data('privacy', array('content' => $privacy) , 'page_contents', 'type');
+                $this->session->set_flashdata('success_msg', 'Terms and condition updated successfully.');
+                redirect('settings/privacy');
+            }
+        }else{
+            $this->load->view('settings/pages/privacy', $page_data);
         }
-        $this->load->view('settings/pages/privacy', $page_data);
     }
-    public function terms()
-    {
+
+//    Terms page setttings
+    public function terms(){
         $page_data['page_title'] = 'Terms &amp; Conditions Settings';
         $page_data['pg_name'] = 'store_settings';
         $page_data['sub_name'] = 'page_settings';
         $page_data['least_sub'] = 'terms';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('settings/pages/terms', $page_data);
+        $page_data['terms'] = $this->admin->get_row('page_contents', array('type' => 'terms'), 'content');
+        if( $_POST ){
+            $terms = trim($_POST['terms']);
+            $check = $this->admin->get_row('page_contents', array('type' => 'terms'), 'content');
+            if( !$check ){
+
+                $this->admin->insert_data('page_contents', array('content' => $terms, 'type' => 'terms') );
+                $this->session->set_flashdata('success_msg', 'Terms and condition posted successfully.');
+                redirect('settings/terms');
+            }else{
+                //update
+                $this->admin->update_data('terms', array('content' => $terms) , 'page_contents', 'type');
+                $this->session->set_flashdata('success_msg', 'Terms and condition updated successfully.');
+                redirect('settings/terms');
+            }
+        }else{
+            $this->load->view('settings/pages/terms', $page_data);
+        }
     }
+
+
     public function agreement()
     {
         $page_data['page_title'] = 'Agreement Settings';
@@ -239,7 +271,24 @@ class Settings extends CI_Controller
         $page_data['least_sub'] = 'agreement';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $this->load->view('settings/pages/agreement', $page_data);
+        $page_data['agreement'] = $this->admin->get_row('page_contents', array('type' => 'agreement'), 'content');
+        if( $_POST ){
+            $agreement = trim($_POST['agreement']);
+            $check = $this->admin->get_row('page_contents', array('type' => 'agreement'), 'content');
+            if( !$check ){
+
+                $this->admin->insert_data('page_contents', array('content' => $agreement, 'type' => 'agreement') );
+                $this->session->set_flashdata('success_msg', 'Agreement posted successfully.');
+                redirect('settings/agreement');
+            }else{
+                //update
+                $this->admin->update_data('agreement', array('content' => $agreement) , 'page_contents', 'type');
+                $this->session->set_flashdata('success_msg', 'Terms and condition updated successfully.');
+                redirect('settings/agreement');
+            }
+        }else{
+            $this->load->view('settings/pages/agreement', $page_data);
+        }
     }
 
     function process(){
@@ -439,7 +488,8 @@ class Settings extends CI_Controller
                 "public_id" => $image_name,
                 "resource_type" => "image",
                 "eager_async" => true,
-                "quality" => 60
+                "quality" => 60,
+                'eager' => array("width" => 630, "height" => 570, "crop" => "fill")
             )
         );
         return $return;

@@ -119,6 +119,10 @@ defined('CATEGORY_IMAGE_PATH') OR define('CATEGORY_IMAGE_PATH',  'https://res.cl
 defined('STATIC_CATEGORY_FOLDER') OR define('STATIC_CATEGORY_FOLDER',  'onitshamarket/images/static/'); # Category Header Image
 defined('STATIC_CATEGORY_PATH') OR define('STATIC_CATEGORY_PATH',  'https://res.cloudinary.com/onitshamarket/image/upload/q_auto:low/f_auto/' .STATIC_CATEGORY_FOLDER); # Category Header Image
 
+
+defined('BRAND_FOLDER') OR define('BRAND_FOLDER',  'onitshamarket/images/static/'); # Brand Header Image
+defined('BRAND_PATH') OR define('BRAND_PATH',  'https://res.cloudinary.com/onitshamarket/image/upload/q_auto:low/f_auto/' .STATIC_CATEGORY_FOLDER); # Category Header Image
+
 // Database
 defined('TABLE_SYSTEM_ACTIVITIES') OR define('TABLE_SYSTEM_ACTIVITIES', 'system_activities');
 defined('TABLE_SELLER_NOTIFICATION_MESSAGE') OR define('TABLE_SELLER_NOTIFICATION_MESSAGE', 'sellers_notification_message');
@@ -145,15 +149,14 @@ defined('SMS_FOR_ORDERS') OR define('SMS_FOR_ORDERS', FALSE);
 
 
 
-defined('INTERSWITCH_MAC_KEY') OR define('INTERSWITCH_MAC_KEY', 'D3D1D05AFE42AD50818167EAC73C109168A0F108F32645C8B59E897FA930DA44F9230910DAC9E20641823799A107A02068F7BC0F4CC41D2952E249552255710F');
-defined('INTERSWITCH_PRODUCT_ID') OR define('INTERSWITCH_PRODUCT_ID', '1076');
+
+defined('INTERSWITCH_MAC_KEY') OR define('INTERSWITCH_MAC_KEY', 'rW07pyi5c3fTkpv9DpChwEjb2QYsgetrlzZp4EEgYK02IsGXm8pXVuQhY8Z2ZuLShzTZB4ax1ti9LFITqDUpGSXzNAvoILUoNrcUFkrVDeFg4OB8kCCc9kE5ofkGgidn');
+defined('INTERSWITCH_PRODUCT_ID') OR define('INTERSWITCH_PRODUCT_ID', '2244860');
 defined('INTERSWITCH_PAY_ITEM_ID') OR define('INTERSWITCH_PAY_ITEM_ID', '101');
-defined('INTERSWITCH_RESPONSE_URL') OR define('INTERSWITCH_RESPONSE_URL', 'https://sandbox.interswitchng.com/collections/api/v1/gettransaction.json'); // Live : https://webpay.interswitchng.com/collections/api/v1/gettransaction.json
+defined('INTERSWITCH_RESPONSE_URL') OR define('INTERSWITCH_RESPONSE_URL', 'https://webpay.interswitchng.com/collections/api/v1/gettransaction.json'); // Live : https://webpay.interswitchng.com/collections/api/v1/gettransaction.json
 //defined('INTERSWITCH_REQUERY_URL') OR define('INTERSWITCH_REQUERY_URL', 'https://sandbox.interswitchng.com/collections/api/v1/gettransaction.json');  //"https://webpay.interswitchng.com/collections/api/v1/gettransaction.json?$ponmo"; // LIVE
-defined('INTERSWITCH_HOST_URL') OR define('INTERSWITCH_HOST_URL', 'sandbox.interswitchng.com'); // webpay.interswitchng.com
-defined('INTERSWITCH_ACTION_URL') OR define('INTERSWITCH_ACTION_URL', 'https://sandbox.interswitchng.com/collections/w/pay'); // Live : https://webpay.interswitchng.com/collections/w/pay
-
-
+defined('INTERSWITCH_HOST_URL') OR define('INTERSWITCH_HOST_URL', 'webpay.interswitchng.com'); // webpay.interswitchng.com
+defined('INTERSWITCH_ACTION_URL') OR define('INTERSWITCH_ACTION_URL', 'https://webpay.interswitchng.com/collections/w/pay'); // Live : https://webpay.interswitchng.com/collections/w/pay
 
 
 

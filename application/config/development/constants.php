@@ -119,6 +119,11 @@ defined('CATEGORY_IMAGE_PATH') OR define('CATEGORY_IMAGE_PATH',  'https://res.cl
 defined('STATIC_CATEGORY_FOLDER') OR define('STATIC_CATEGORY_FOLDER',  'onitshamarket/images/static/'); # Category Header Image
 defined('STATIC_CATEGORY_PATH') OR define('STATIC_CATEGORY_PATH',  'https://res.cloudinary.com/onitshamarket/image/upload/q_auto:low/f_auto/' .STATIC_CATEGORY_FOLDER); # Category Header Image
 
+
+defined('BRAND_FOLDER') OR define('BRAND_FOLDER',  'onitshamarket/images/static/'); # Brand Header Image
+defined('BRAND_PATH') OR define('BRAND_PATH',  'https://res.cloudinary.com/onitshamarket/image/upload/q_auto:low/f_auto/' .STATIC_CATEGORY_FOLDER); # Category Header Image
+
+
 // Database
 defined('TABLE_SYSTEM_ACTIVITIES') OR define('TABLE_SYSTEM_ACTIVITIES', 'system_activities');
 defined('TABLE_SELLER_NOTIFICATION_MESSAGE') OR define('TABLE_SELLER_NOTIFICATION_MESSAGE', 'sellers_notification_message');

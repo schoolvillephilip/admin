@@ -91,44 +91,34 @@
 <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
 <script>
-    $(document).ready(function (x) {
-        $('#basic').dataTable({
-            "responsive": true,
-            "language": {
-                "paginate": {
-                    "previous": '<i class="demo-psi-arrow-left"></i>',
-                    "next": '<i class="demo-psi-arrow-right"></i>'
-                }
-            }
-        });
 
-        $('.delete-category').on('click', function(){
-            var id = $(this).data('cid');
-            $('#modal_confirm')
-                .find('.modal-header > p')
-                .text('Are you sure about this action? Some products or other categories might be associated to this category.').end()
-                .find('.modal-body')
-                .html('<i class="fa fa-check fa-4x text-primary"></i>').end()
-                .modal('show');
-            if( $('#confirm_true') ){
-                $.ajax({
-                    url : base_url + 'categories/delete',
-                    data: { id : id},
-                    success: function( response ){
-                        if( response ){
-                            alert( 'Category has been deleted successfully.');
-                            $(`#${id}`).fadeOut();
-                        }else{
-                            alert('There was an error deleting this category');
+
+        $(document).ready(function() {
+            var table = $('#basic').DataTable();
+            $('#basic tbody').on('click', 'tr > td:last-child .delete-category', function () {
+                var row_id = $( this ).data('cid');
+                let is_confirm = confirm('Are you sure about this action? Some products or other categories might be associated to this category.');
+                if( is_confirm ){
+                    $.ajax({
+                        url : base_url + 'categories/delete',
+                        data: { id : row_id},
+                        method: "POST",
+                        success: function( response ){
+                            if( response ){
+                                alert( 'Category has been deleted successfully.');
+                                $(`#${row_id}`).fadeOut();
+                            }else{
+                                alert('There was an error deleting this category');
+                            }
+                        },
+                        error: function () {
+
                         }
-                    },
-                    error: function () {
-                        
-                    }
-                })
-            }
+                    })
+                }
+
+            });
         });
-    });
 </script>
 </body>
 </html>

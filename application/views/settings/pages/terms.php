@@ -1,5 +1,5 @@
 <?php $this->load->view('templates/meta_tags'); ?>
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -24,11 +24,17 @@
                     </div>
                     <div class="panel-body">
                         <h4 style="color: #35bbae;">Terms &amp; Conditions</h4>
-                        <div id="om_summer_note">
+                        <?php $this->load->view('msg_view'); ?>
+                        <?= form_open('settings/terms'); ?>
+                        <div class="form-group">
+                            <textarea class="om_summer_note form-control" name="terms" placeholder="Drop text ad format it here" id="terms">
+                                <?= ( $terms ) ? $terms->content : ''; ?>
+                            </textarea>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary">Save</button>
+                            <button class="btn btn-primary" type="submit">Save/Update</button>
                         </div>
+                        <?= form_close(); ?>
                     </div>
                 </div>
 
@@ -47,7 +53,7 @@
 <script src="<?= base_url('assets/js/demo/form-text-editor.js'); ?>"></script>
 <script>
     $(document).ready(function () {
-        $('#om_summer_note').summernote({
+        $('.om_summer_note').summernote({
             placeholder: 'write here...',
             height : '230px',
             focus: true,
@@ -61,6 +67,8 @@
                 ["view", ["fullscreen"]]
             ],
         });
+        var content = `<?= ( $terms ) ? $terms->content : ''; ?>`;
+        $('.om_summer_note').summernote('code', content);
     });
 </script>
 </body>

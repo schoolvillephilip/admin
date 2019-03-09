@@ -45,8 +45,11 @@ class Login extends CI_Controller{
                     'email' => $this->input->post('email'),
                     'password' => $this->input->post('password')
                 );
+
+//                var_dump( $data ); exit;
                 $user = $this->admin->login($data);
                 if( !$user ) {
+
                     $this->session->set_flashdata('error_msg','Sorry! Incorrect username or password.');
                     redirect('login');
                 }else{  

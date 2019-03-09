@@ -32,6 +32,7 @@
                                width="100%">
                             <thead>
                             <tr>
+                                <th class="text-center"></th>
                                 <th class="text-center">Brand name</th>
                                 <th class="min-tablet text-center">Brand description</th>
                                 <th class="min-tablet text-center">Action</th>
@@ -40,6 +41,9 @@
                             <tbody>
                             <?php foreach ($brands->result() as $brand) : ?>
                                 <tr>
+                                    <td class="text-center">
+                                        <img src="<?= BRAND_PATH . $brand->brand_logo ; ?>" style="width: 70px;" alt=" " />
+                                    </td>
                                     <td class="text-center">
                                         <a class="btn-link" href="<?= base_url('brands/detail/' . $brand->id); ?>"><?= ucwords($brand->brand_name) ?></a>
                                     </td>

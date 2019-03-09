@@ -38,6 +38,29 @@ class Brands extends CI_Controller{
                 'brand_name' => trim($this->input->post('brand_name')),
                 'description' => $this->input->post('description')
             );
+            $category_slugs = array();
+            foreach( $_POST['category'] as $category ){
+                array_push( $category_slugs, $category );
+            }
+            $category_slugs = json_encode($category_slugs );
+            $data['category_slug'] = $category_slugs;
+
+            if (isset($_FILES) && $_FILES['brand_image']['name'] != '' ) {
+                $upload_array = array(
+                    'folder' => STATIC_CATEGORY_FOLDER,
+                    'filepath' => $_FILES['brand_image']['tmp_name'],
+                    'eager' => array("width" => 70, "height" => 70, "crop" => "fill")
+                );
+                $this->cloudinarylib->upload_image( $upload_array );
+                $return = $this->cloudinarylib->get_result('filename');
+                if($return){
+                    $data['brand_logo'] = $return;
+                    unset($upload_array);
+                }else{
+                    $this->session->set_flashdata('error_msg','There was an error with that image');
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
+            }
             if( $this->admin->insert_data('brands', $data) ){
                 $this->session->set_flashdata('success_msg', 'The brand name has been added.');                
             }else{
@@ -51,6 +74,7 @@ class Brands extends CI_Controller{
             $page_data['least_sub'] = '';
             $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
                 'first_name,last_name,email,profile_pic');
+            $page_data['categories'] = $this->admin->get_results('categories')->result();
             $this->load->view('brands/add', $page_data);
         }
     }
@@ -64,8 +88,8 @@ class Brands extends CI_Controller{
         $page_data['least_sub'] = '';
         $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
             'first_name,last_name,email,profile_pic');
-        $page_data['brand'] = $this->admin->get_row( 'brands', "( WHERE id = {$id})" );
-        // echo($page_data['brand']->brand_name );
+        $page_data['categories'] = $this->admin->get_results('categories')->result();
+        $page_data['brand'] = $this->admin->get_row( 'brands', "( id = {$id})" );
         $this->load->view('brands/detail', $page_data);
         
     }
@@ -79,10 +103,29 @@ class Brands extends CI_Controller{
             $this->session->set_flashdata('error_msg', 'Please fix the following errors'. validation_errors());
             redirect('brands/add');
         }
+        $categories = $_POST['categories'];
+        $categories_slug = !empty( $categories ) ? json_encode($categories) : '';
         $data = array(
             'brand_name' => trim($this->input->post('brand_name')),
-            'description' => $this->input->post('description')
+            'description' => $this->input->post('description'),
+            'category_slug' => $categories_slug
         );
+        if (isset($_FILES) && $_FILES['brand_image']['name'] != '' ) {
+            $upload_array = array(
+                'folder' => STATIC_CATEGORY_FOLDER,
+                'filepath' => $_FILES['brand_image']['tmp_name'],
+                'eager' => array("width" => 70, "height" => 70, "crop" => "fill_pad", 'gravity' => 'auto', 'background' => 'auto')
+            );
+            $this->cloudinarylib->upload_image( $upload_array );
+            $return = $this->cloudinarylib->get_result('filename');
+            if($return){
+                $data['brand_logo'] = $return;
+                unset($upload_array);
+            }else{
+                $this->session->set_flashdata('error_msg','There was an error with that image');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
         if( $this->admin->update_data($id, $data, 'brands') ){
             $this->session->set_flashdata('success_msg', 'The brand name has been updated.');                
         }else{

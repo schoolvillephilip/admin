@@ -23,193 +23,66 @@
             <div id="page-content">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Account Statement</h3>
+                        <h3 class="panel-title">Generate Report</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="javascript:;" onclick="trigger('#due_trig');">
-                                    <div class="panel panel-bordered-dark panel-colorful">
-                                        <div class="pad-all text-center">
-                                            <span class="text-3x text-thin">&#8358; 0</span>
-                                            <p>MONEY IN SYSTEM</p>
-                                            <i class="demo-pli-credit-card-2 icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;" onclick="trigger('#open_trig');">
-                                    <div class="panel panel-bordered-primary panel-colorful">
-                                        <div class="pad-all text-center">
-                                            <span class="text-3x text-thin">&#8358; 0</span>
-                                            <p>PAID THIS MONTH</p>
-                                            <i class="demo-pli-credit-card-2 icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="panel panel-bordered-pink panel-colorful">
-                                    <div class="pad-all text-center">
-                                        <span class="text-3x text-thin">&#8358; 0</span>
-                                        <p>ONITSHAMARKET'S BALANCE</p>
-                                        <i class="demo-pli-credit-card-2 icon-lg"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="<?= base_url('account/txn_overview') ?>">
-                                    <div class="panel panel-bordered-purple panel-colorful">
-                                        <div class="pad-all text-center">
-                                            <span class="text-3x text-thin">&#8358; 0</span>
-                                            <p>SELLERS BALANCE</p>
-                                            <i class="demo-pli-credit-card-2 icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </a>
+                        <?= form_open('', 'class="form-horizontal"'); ?>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Report Type</label>
+                            <div class="col-lg-7">
+                                <select class="form-control" name="report_type">
+                                    <option value="all" <?php if(isset($_POST['report_type']) && $_POST['report_type'] == 'all') echo 'selected'; ?>>All Report</option>
+                                    <option value="orders" <?php if(isset($_POST['report_type']) && $_POST['report_type'] == 'orders') echo 'selected';?> >Orders</option>
+                                    <option value="ar" <?php if(isset($_POST['report_type']) && $_POST['report_type'] == 'ar') echo 'selected';?> >Accounts Payable</option>
+                                    <option value="ap" <?php if(isset($_POST['report_type']) && $_POST['report_type'] == 'ap') echo 'selected'; ?> >Accounts Receivable</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12"
-                                 style="height:550px;padding:20px 10px 0;">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="panel-control">
-                                            <ul class="nav nav-tabs">
-                                                <li class="active">
-                                                    <a data-toggle="tab" href="#seller_unpaid" id="due_trig">Unpaid
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a data-toggle="tab" href="#seller_paid" id="open_trig">Paid
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <h3 class="panel-title">Statement</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="tab-content">
-                                            <div id="seller_unpaid" class="tab-pane fade in active">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <i class="demo-pli-information text-main icon-3x"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <p class="text-main text-lg mar-no">Unpaid</p>
-                                                        All unpaid sellers this month
-                                                    </div>
-                                                </div>
-                                                <div class="txn nano has-scrollbar"
-                                                     style="height:290px;margin-top:10px;">
-                                                    <div class="list-group nano-content">
-                                                        <table class="table table-bordered table-responsive">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    S/N
-                                                                </th>
-                                                                <th>
-                                                                    Seller Name
-                                                                </th>
-                                                                <th>
-                                                                    Sales Amount &#8358;
-                                                                </th>
-                                                                <th>
-                                                                    Fee &#8358;
-                                                                </th>
-                                                                <th>
-                                                                    Paid Amount &#8358;
-                                                                </th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    1
-                                                                </td>
-                                                                <td>
-                                                                    Bakare Israel
-                                                                </td>
-                                                                <td>
-                                                                    30,000
-                                                                </td>
-                                                                <td>
-                                                                    4,000
-                                                                </td>
-                                                                <td>
-                                                                    26,000
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="seller_paid" class="tab-pane fade">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <i class="demo-pli-credit-card-2 text-main icon-3x"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <p class="text-main text-lg mar-no">Paid</p>
-                                                        All paid sellers this month
-                                                    </div>
-                                                </div>
-                                                <div class="txn nano has-scrollbar"
-                                                     style="height:290px;margin-top:10px;">
-                                                    <div class="list-group nano-content">
-                                                        <table class="table table-bordered table-responsive">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    S/N
-                                                                </th>
-                                                                <th>
-                                                                    Seller Name
-                                                                </th>
-                                                                <th>
-                                                                    Sales Amount &#8358;
-                                                                </th>
-                                                                <th>
-                                                                    Fee &#8358;
-                                                                </th>
-                                                                <th>
-                                                                    Paid Amount &#8358;
-                                                                </th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    1
-                                                                </td>
-                                                                <td>
-                                                                    Bakare Israel
-                                                                </td>
-                                                                <td>
-                                                                    30,000
-                                                                </td>
-                                                                <td>
-                                                                    4,000
-                                                                </td>
-                                                                <td>
-                                                                    26,000
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="">Period</label>
+                            <div class="col-lg-7">
+                                <select class="form-control" name="period">
+                                    <option value="all" <?php if(isset($_POST['period']) && $_POST['period'] == 'all') echo 'selected';?> >All Time</option>
+                                    <option value="this_month" <?php if(isset($_POST['period']) && $_POST['period'] == 'this_month') echo 'selected';?>>This Month</option>
+                                    <option value="last_month" <?php if(isset($_POST['period']) && $_POST['period'] == 'last_month') echo 'selected';?>>Last Month</option>
+                                    <option value="last_3_months" <?php if(isset($_POST['period']) && $_POST['period'] == 'last_3_months') echo 'selected';?>>Last 3 Months</option>
+                                    <option value="this_year" <?php if(isset($_POST['period']) && $_POST['period'] == 'this_year') echo 'selected';?>>This Year</option>
+                                    <option value="last_year" <?php if(isset($_POST['period']) && $_POST['period'] == 'last_year') echo 'selected';?>>Last Year</option>
+                                </select>
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="">Status</label>
+                            <div class="col-lg-7">
+                                <select class="form-control" name="status">
+                                    <option value="all" <?php  if(isset($_POST['status']) && $_POST['status'] == 'all') echo 'selected'; ?> >All</option>
+                                    <option value="success" <?php  if(isset($_POST['status']) && $_POST['status'] == 'success') echo 'selected'; ?> >Success</option>
+                                    <option value="fail" <?php  if(isset($_POST['status']) && $_POST['status'] == 'fail') echo 'selected'; ?> >Fail</option>
+                                    <option value="pending" <?php  if(isset($_POST['status']) && $_POST['status'] == 'pending') echo 'selected'; ?> >Pending</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer text-center">
+                            <button class="btn btn-primary" type="submit">Getnerate Report</button>
+                        </div>
+                        <?= form_close(); ?>
+
                     </div>
                 </div>
+
+                <?php if( isset($statement_table )) : ?>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Account Statement Report For <?= $page_title; ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <?= $statement_table; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
         <?php $this->load->view('templates/menu'); ?>
@@ -221,26 +94,25 @@
 </div>
 <?php $this->load->view('templates/scripts'); ?>
 <script>
-    /**
-     * @return {boolean}
-     */
-    function PrintElem(elem) {
-        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-        mywindow.document.write('<html><head><style>td{border:1px solid #222922;padding:10px;}</style><title>' + document.title + '</title>');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write('<h1 style="text-align:center;">' + document.title + '</h1><div style="padding:20px 0 0 90px;">');
-        mywindow.document.write(document.getElementById(elem).innerHTML);
-        mywindow.document.write('</div></body></html>');
-        mywindow.document.close();
-        mywindow.focus();
-        mywindow.print();
-        mywindow.close();
-        return true;
-    }
+    $(document).ready(function () {
+        $('.table').dataTable( {
+            "responsive": true,
+            "language": {
+                "paginate": {
+                    "previous": '<i class="demo-psi-arrow-left"></i>',
+                    "next": '<i class="demo-psi-arrow-right"></i>'
+                }
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        } );
+    })
 
-    function trigger(e) {
-        $(e).click();
-    }
 </script>
 </body>
 </html>

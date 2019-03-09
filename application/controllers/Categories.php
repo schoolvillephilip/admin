@@ -64,8 +64,9 @@ class Categories extends MY_Controller
 
 			if (isset($_FILES) && $_FILES['upload_image']['name'] != '' ) {
                 $upload_array = array(
-                    'folder' => STATIC_CATEGORY_FOLDER,
+                    'folder' => CATEGORY_IMAGE_FOLDER,
                     'filepath' => $_FILES['upload_image']['tmp_name'],
+                    'eager' => array("width" => 220, "height" => 220, "crop" => "fill_pad", 'gravity' => 'auto', 'background' => 'auto')
                 );
                 $this->cloudinarylib->upload_image( $upload_array );
                 $return = $this->cloudinarylib->get_result('filename');
@@ -118,15 +119,16 @@ class Categories extends MY_Controller
 			);
 			if (isset($_FILES) && ($_FILES['image']['name'] != '' )) {
                 $upload_array = array(
-                    'folder' => STATIC_CATEGORY_FOLDER,
+                    'folder' => CATEGORY_IMAGE_FOLDER,
                     'filepath' => $_FILES['image']['tmp_name'],
+                    'eager' => array("width" => 220, "height" => 220, "crop" => "fill_pad", 'gravity' => 'auto', 'background' => 'auto')
                 );
                 $this->cloudinarylib->upload_image( $upload_array );
                 $filename = $this->cloudinarylib->get_result('filename');
 				if ($filename) {
 					$img = $this->input->post('img');
 					$name = explode('.', $img);
-					$public_id = STATIC_CATEGORY_FOLDER . $name[0];
+					$public_id = CATEGORY_IMAGE_FOLDER . $name[0];
 					$this->cloudinarylib->delete_image( $public_id );
                     $data['image'] = $filename;
                     unset( $upload_array );
@@ -234,18 +236,18 @@ class Categories extends MY_Controller
 	}
 
 	function delete(){
-	    if( $this->input->is_ajax_request() ){
-	        $id = $this->input->post('id');
+//	    if( $this->input->is_ajax_request() ){
+	        $id = $this->input->post_get('id');
 	        echo $this->admin->action($id, 'delete', 'categories');
 	        exit;
-        }
+//        }
     }
 	/**
 	 * @param int : root_category_id
 	 * @return:  JSON categories id, name
 	 */
 	function append_category() {
-		$id = $this->input->post('id');
+		$id = $this->input->post_get('id');
 		if (!is_null($id)) {
 			echo json_encode($this->admin->get_children_categories($id), JSON_UNESCAPED_SLASHES);
 		}

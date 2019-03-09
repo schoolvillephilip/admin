@@ -184,7 +184,6 @@ class Product extends MY_Controller
                     $variation_id['id'] = $variation_id[$i];
                     $variation_data['variation'] = cleanit($variation[$i]);
                     $variation_data['sku'] = cleanit($sku[$i]);
-                    $variation_data['isbn'] = cleanit($isbn[$i]);
                     $variation_data['quantity'] = cleanit($quantity[$i]);
                     $variation_data['sale_price'] = cleanit($sale_price[$i]);
                     $variation_data['discount_price'] = cleanit($discount_price[$i]);

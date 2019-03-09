@@ -2,6 +2,7 @@
 <link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
 <link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>"
       rel="stylesheet">
+<link href="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.css')?>" rel="stylesheet">
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -28,7 +29,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <?= form_open('', 'class="form-horizontal"'); ?>
+                        <?= form_open_multipart('', 'class="form-horizontal"'); ?>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Brand Name</label>
                             <div class="col-lg-7">
@@ -36,6 +37,26 @@
                                        required>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Brand Image</label>
+                            <div class="col-lg-7">
+                                <input type="file" name="brand_image">
+                            </div>
+                        </div>
+
+                        <<div class="form-group">
+                            <label class="col-lg-3 control-label">Parent Category</label>
+                            <div class="col-lg-7">
+                                <select name="category[]" multiple class="selectpicker form-control"
+                                        title="Choose Parent Category..."
+                                        data-width="100%">
+                                    <?php foreach ($categories as $category) :?>
+                                        <option value="<?= $category->slug; ?>" ><?= $category->name; ?> </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-lg-3 control-label" for="">Brand Description</label>
                             <div class="col-lg-7">
@@ -62,6 +83,7 @@
 <script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.js'); ?>"></script>
 <script>
     $(document).ready(function (x) {
         $('#basic').dataTable({
