@@ -1,7 +1,4 @@
 <?php $this->load->view('templates/meta_tags'); ?>
-<link href="<?= base_url('assets/plugins/datatables/media/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
-<link href="<?= base_url('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css'); ?>"
-      rel="stylesheet">
 <link href="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.css')?>" rel="stylesheet">
 </head>
 <body>
@@ -80,22 +77,6 @@
     </button>
 </div>
 <?php $this->load->view('templates/scripts'); ?>
-<script src="<?= base_url('assets/plugins/datatables/media/js/jquery.dataTables.js'); ?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/media/js/dataTables.bootstrap.js'); ?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.js'); ?>"></script>
-<script>
-    $(document).ready(function (x) {
-        $('#basic').dataTable({
-            "responsive": true,
-            "language": {
-                "paginate": {
-                    "previous": '<i class="demo-psi-arrow-left"></i>',
-                    "next": '<i class="demo-psi-arrow-right"></i>'
-                }
-            }
-        });
-    });
-</script>
 </body>
 </html>

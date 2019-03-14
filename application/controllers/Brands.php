@@ -36,7 +36,8 @@ class Brands extends CI_Controller{
             }
             $data = array(
                 'brand_name' => trim($this->input->post('brand_name')),
-                'description' => $this->input->post('description')
+                'description' => $this->input->post('description'),
+                'status' => 1
             );
             $category_slugs = array();
             foreach( $_POST['category'] as $category ){
