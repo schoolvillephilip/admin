@@ -125,6 +125,11 @@
                                             <span class="menu-title">Brands</span>
                                         </a>
                                     </li>
+                                    <li <?php if ($sub_name == 'seller_request_brand') echo 'class="active-link"' ?>>
+                                        <a href="<?= base_url('request/brand'); ?>">
+                                            <span class="menu-title">Brand Requests</span>
+                                        </a>
+                                    </li>
                                     <li <?php if ($sub_name == 'category') echo 'class="active-link"' ?>><a
                                                 href="<?= base_url('categories'); ?>">Categories</a></li>
                                     <li <?php if ($sub_name == 'specification') echo 'class="active-link"' ?>>
