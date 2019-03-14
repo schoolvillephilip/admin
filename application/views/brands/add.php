@@ -41,7 +41,7 @@
                             </div>
                         </div>
 
-                        <<div class="form-group">
+                        <div class="form-group">
                             <label class="col-lg-3 control-label">Parent Category</label>
                             <div class="col-lg-7">
                                 <select name="category[]" multiple class="selectpicker form-control"
