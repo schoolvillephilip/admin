@@ -380,4 +380,18 @@ class Product extends MY_Controller
         echo $this->cloudinarylib->delete_image( $public_id );
         exit;
     }
+
+    function product_image_remove(){
+        if( !$this->input->is_ajax_request()) redirect(base_url());
+        $image_name = $this->input->post('image_name');
+        $explode = explode('.',  $image_name);
+        $public_id = PRODUCT_IMAGE_FOLDER . $explode[0];
+        // delete from DB
+        if( $this->admin->delete(array('image_name' => $image_name), 'product_gallery') ){
+            echo $this->cloudinarylib->delete_image( $public_id );
+            exit;
+        }
+    }
+
+
 }

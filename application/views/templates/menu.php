@@ -225,7 +225,9 @@
                                             <li <?php if ($least_sub == 'terms') echo 'class="active-link"' ?>><a
                                                         href="<?= base_url('settings/terms') ?>">Terms</a></li>
                                             <li <?php if ($least_sub == 'agreement') echo 'class="active-link"' ?>><a
-                                                        href="<?= base_url('settings/agreement') ?>">Agreement</a></li>
+                                                        href="<?= base_url('settings/agreement') ?>">User Agreement</a></li>
+                                            <li <?php if ($least_sub == 'seller_agreement') echo 'class="active-link"' ?>><a
+                                                        href="<?= base_url('settings/seller_agreement') ?>">Seller Agreement</a></li>
                                         </ul>
                                     </li>
                                     <li><a

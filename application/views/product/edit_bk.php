@@ -127,7 +127,7 @@
                                                                                 Others
                                                                             </option>
                                                                         </select>
-                                                                        <span class="text-sm text-dark">Brand of the product. <a href="<?= base_url('brands'); ?>" class="btn-link">Create new brand</a></span>
+                                                                        <span class="text-sm text-dark">Brand of the product. If brand does not exist, please copy https://goo.gl/Hw8vma into your browser and fill accordingly.</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -233,7 +233,7 @@
                                                                                value="<?= $product->youtube_id; ?>"
                                                                                name="youtube_id"
                                                                                placeholder="YouTube ID">
-                                                                        <span class="text-sm text-dark">Example: e.g. http://www.youtube.com/watch?v=abcs it is: abcs</span>
+                                                                        <span class="text-sm text-dark">Example: e.g. http://www.youtube.com/watch?v=htlgaXRAe2k it is: htlgaXRAe2k</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -421,25 +421,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div id="tab3" class="tab-pane">
                                                 <div class="table-responsive">
                                                     <table class="table table-vcenter mar-top pricing_table">
                                                         <thead>
                                                         <tr>
-                                                            <th>SKU *</th>
                                                             <?php if (empty($variation_name)) : ?>
                                                                 <th class="min-w-td">Variation *</th>
                                                             <?php else: ?>
-                                                                <th class="min-w-td"><?= ucfirst($variation_name); ?>
-                                                                    *
+                                                                <th class="min-w-td"><?= ucfirst($variation_name); ?>*
                                                                 </th>
                                                             <?php endif; ?>
-                                                            <th>Quantity *</th>
-                                                            <th>Unit Price *</th>
+                                                            <th>Seller SKU</th>
+                                                            <th>EAN / UPC / ISBN</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price*</th>
                                                             <th>Discounted Price</th>
-                                                            <th>Start Date</th>
-                                                            <th>End Date</th>
+                                                            <th>Start date</th>
+                                                            <th>End date</th>
                                                             <th class="text-center">Actions</th>
                                                         </tr>
                                                         </thead>
@@ -448,17 +447,9 @@
                                                         foreach ($variations as $variation) : ?>
                                                             <tr data-row-id="<?= $x; ?>">
                                                                 <td>
-                                                                    <div class="form-group-sm">
-                                                                        <input type="hidden" name="variation_id[]" value="<?= $variation->id; ?>">
-
-                                                                        <input title="Seller SKU" type="text"
-                                                                               class="form-control" name="sku[]"
-                                                                               value="<?= $variation->sku; ?>"/>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
                                                                     <div class="form-group-sm col-md-12">
-
+                                                                        <input type="hidden" name="variation_id[]"
+                                                                               value="<?= $variation->id; ?>">
                                                                         <?php if (!empty($variation_name) && !empty($variation_options)) : ?>
                                                                             <select class="form-control" required
                                                                                     name="variation[]"
@@ -479,6 +470,23 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="form-group-sm">
+                                                                        <label class="">SKU</label>
+                                                                        <input title="Seller SKU" type="text"
+                                                                               class="form-control" name="sku[]"
+                                                                               value="<?= $variation->sku; ?>"/>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group-sm">
+                                                                        <label class="">ISBN </label>
+                                                                        <input title="EAN / UPC / ISBN" type="text"
+                                                                               class="form-control" name="isbn[]"
+                                                                               value="<?= $variation->isbn; ?>"/>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group-sm">
+                                                                        <label class="">Quantity </label>
                                                                         <input title="Quantity" type="number" min="1"
                                                                                max="100" class="form-control"
                                                                                name="quantity[]"
@@ -487,15 +495,17 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="form-group-sm">
+                                                                        <label class="">Sale Price * </label>
                                                                         <input title="Price" type="text"
-                                                                               class="form-control number amount" name="sale_price[]"
+                                                                               class="form-control" name="sale_price[]"
                                                                                value="<?= $variation->sale_price; ?>"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="form-group">
+                                                                        <label class="">Discount Price </label>
                                                                         <input title="Discounted price" type="text"
-                                                                               class="form-control number amount"
+                                                                               class="form-control"
                                                                                name="discount_price[]"
                                                                                value="<?= $variation->discount_price; ?>"
                                                                         />
@@ -503,6 +513,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="form-group-sm">
+                                                                        <label class="">Discount Start Date</label>
                                                                         <input title="Starting date for this discount"
                                                                                data-provide="datepicker"
                                                                                data-date-format="yyyy/mm/dd"
@@ -514,6 +525,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="form-group-sm">
+                                                                        <label class="">Discount End Date</label>
                                                                         <input title="Ending date for this discount"
                                                                                data-provide="datepicker"
                                                                                data-date-format="yyyy/mm/dd"
@@ -538,15 +550,13 @@
                                                     <hr>
                                                 </div>
                                             </div>
-
-
                                             <div id="tab4" class="tab-pane mar-btm">
                                                 <div class="panel">
                                                     <div class="panel-heading">
                                                         <h3 class="panel-title">Upload Images</h3>
                                                     </div>
                                                     <div class="panel-body">
-                                                        <p>You can upload up-to 6 images</p>
+                                                        <p>You can upload images up-to 8.</p>
                                                         <div class="dz-max-files-reached"></div>
                                                         <div class="bord-top pad-ver">
                                                                     <span class="btn btn-success fileinput-button dz-clickable">
@@ -608,7 +618,7 @@
                                         <div class="box-inline">
                                             <button type="button" class="previous btn btn-primary">Previous</button>
                                             <button type="button" class="next btn btn-primary">Next</button>
-                                            <!-- <button type="button" class="preview btn btn-primary">Preview</button>-->
+                                            <!--                                            <button type="button" class="preview btn btn-primary">Preview</button>-->
                                             <button type="submit" class="finish btn btn-warning">Finish</button>
                                         </div>
                                     </div>
@@ -668,17 +678,18 @@
         let removeBtn = $('#dz-remove-btn');
         let maxImageWidth = 2000,
             maxImageHeight = 2000,
-            minImageWidth = 300,
-            minImageHeight = 300;
+            minImageWidth = 200,
+            minImageHeight = 200;
         let myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
             url: base_url + "/product/edit", // Set the url
             autoProcessQueue: false,
+            addRemoveLinks: true,
             autoDiscover: false,
             paramName: 'file',
             maxFiles: 8,
             thumbnailWidth: 50,
             thumbnailHeight: 50,
-            maxFilesize: 10000,
+            maxFilesize: 20000,
             previewTemplate: previewTemplate,
             previewsContainer: "#dz-previews", // Define the container to display the previews
             clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
@@ -696,7 +707,7 @@
                             // Call the default addedfile event handler
                             myDropzone.emit("addedfile", mockFile);
                             myDropzone.emit("thumbnail", mockFile, v.fileURL);
-                            $('input[type="radio"]').first().prop('checked', true);
+                            $('input[type="radio"]', this).first().prop('checked', true);
                             // Make sure that there is no progress bar, etc...
                             myDropzone.emit("complete", mockFile);
 
@@ -713,13 +724,10 @@
             removeBtn.prop('disabled', false);
             file._captionLabel = Dropzone.createElement("<span class='text-sm text-dark'> &nbsp;&nbsp; Make this the featured Image &nbsp; </span> &nbsp;&nbsp; ");
             file._captionBox = Dropzone.createElement(`<input id="${file.name}" type='radio' name='featured_image' value="${file.name}">`);
-            file._deleteBtn = Dropzone.createElement(`<button type="button" class='btn btn-xs dz-cancel btn-danger btn-delete-image' data-dz-remove="" onclick="deleteImage('${file.name}')"> &nbsp;&nbsp; Delete This Image&nbsp; </button> &nbsp;&nbsp;`);
-            file.previewElement.appendChild(file._deleteBtn);
             file.previewElement.appendChild(file._captionBox);
             file.previewElement.appendChild(file._captionLabel);
             $('input[type="radio"]').first().prop('checked', true);
         });
-
         myDropzone.on("sendingmultiple", function (file, xhr, formData) {
             // Show the total progress bar when upload starts
             let formDataArray = $('.edit_product_form').serializeArray();
@@ -730,16 +738,12 @@
         });
 
         uplodaBtn.on('click', function (e) {
+            $('#processing').show();
             e.preventDefault();
             if (myDropzone.getQueuedFiles().length > 0) {
-                $('#processing').show();
                 myDropzone.processQueue();
             } else {
-                let alert = confirm("Heads up, did you forgot to add image, It won't go live until you edit it by clicking on Manage products > missing images");
-                if( alert ){
-                    $('#processing').show();
-                    $('.edit_product_form').submit();
-                }
+                $('.edit_product_form').submit();
             }
         });
         myDropzone.on("successmultiple", function (files, response) {
@@ -773,8 +777,6 @@
     });
 
 </script>
-
-<!-- Before -->
 <script type="text/javascript">
     $.fn.rowCount = function () {
         return $('tr', $(this).find('tbody')).length;
@@ -810,12 +812,12 @@
 				</td>
 				<td>
 					<div class="form-group-sm">
-							<input title="Price" type="text" class="form-control number amount" required name="sale_price[]" />
+							<input title="Price" type="text" class="form-control" required name="sale_price[]" />
 					</div>
 				</td>
 				<td>
 					<div class="form-group-sm">
-						<input title="Discounted price" type="text" class="form-control number amount" name="discount_price[]" />
+						<input title="Discounted price" type="text" class="form-control" name="discount_price[]" />
 					</div>
 				</td>
 				<td>
@@ -854,8 +856,7 @@
 						<a class="btn btn-sm btn-default btn-hover-danger demo-pli-trash delete_row" href="javascript:void(0);" data-target="${new_id}_field" data-original-title="Delete This Variation" data-container="body"></a>
 					</div>
 				</td>
-                </tr>`);
-
+                            </tr>`);
         $('.delete_row').on('click', function () {
             let target = $(this).data('target');
             $(`#${target}`).remove();
@@ -867,35 +868,9 @@
     $(document).ready(function () {
         $('[data-toggle="popover"]').popover({animation: true});
     });
-    function deleteImage(x){
-        $.ajax({
-            data: {image_name : x},
-            type: "POST",
-            url: base_url + "product/product_image_remove",
-            cache: false,
-            success: function(resp) {
-                $('#dz-previews').load(window.location +  ' #dz-previews');
-                console.log(resp);
-            },
-            error: function(resp){
-                console.log(resp);
-            }
-        });
-    }
 </script>
-
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".number").inputFilter(function (value) {
-            return /^-?\d*$/.test(value);
-        });
-
-        $('.amount').on('keyup', function () {
-            let n = $(this).val();
-            let resp = addCommas(n);
-            $(this).val( resp );
-        });
-
         let product_description = `<?= $product->product_description; ?>`;
         $('#product_description').summernote({
             tabsize: 2,
@@ -994,21 +969,6 @@
             });
         }
     });
-
-    (function($) {
-        $.fn.inputFilter = function(inputFilter) {
-            return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
-                if (inputFilter(this.value)) {
-                    this.oldValue = this.value;
-                    this.oldSelectionStart = this.selectionStart;
-                    this.oldSelectionEnd = this.selectionEnd;
-                } else if (this.hasOwnProperty("oldValue")) {
-                    this.value = this.oldValue;
-                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-                }
-            });
-        };
-    }(jQuery))
 </script>
 </body>
 </html>

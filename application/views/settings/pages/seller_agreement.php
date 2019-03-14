@@ -8,26 +8,26 @@
         <div id="content-container">
             <div id="page-head">
                 <div id="page-title">
-                    <h1 class="page-header text-overflow">Privacy Policy Page Settings</h1>
+                    <h1 class="page-header text-overflow">Seller Agreement Page Settings</h1>
                 </div>
                 <ol class="breadcrumb">
                     <li><i class="demo-pli-home"></i></li>
                     <li>Store Settings</li>
                     <li>Page Settings</li>
-                    <li class="active">Privacy</li>
+                    <li class="active">Seller Agreement</li>
                 </ol>
             </div>
             <div id="page-content">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Privacy Policy Page</h3>
+                        <h3 class="panel-title">Seller Agreement</h3>
                     </div>
                     <div class="panel-body">
                         <?php $this->load->view('msg_view'); ?>
-                        <?= form_open('settings/privacy'); ?>
+                        <?= form_open('settings/seller_agreement'); ?>
                         <div class="form-group">
-                            <textarea class="om_summer_note form-control" name="privacy" placeholder="Drop text ad format it here" id="terms">
-                                <?= ( $privacy ) ? $privacy->content : ''; ?>
+                            <textarea class="om_summer_note form-control" name="agreement" placeholder="Drop text ad format it here" id="terms">
+                                <?= ( $agreement ) ? $agreement->content : ''; ?>
                             </textarea>
                         </div>
                         <div class="text-center">
@@ -64,7 +64,7 @@
                 ["view", ["fullscreen"]]
             ],
         });
-        var content = `<?= ( $privacy ) ? $privacy->content : ''; ?>`;
+        var content = `<?= ( $agreement ) ? $agreement->content : ''; ?>`;
         $('.om_summer_note').summernote('code', content);
     });
 </script>

@@ -706,8 +706,14 @@ Class Admin_model extends CI_Model
         }
     }
 
+
+    function delete( $access, $table){
+        $this->db->where( $access);
+        return $this->db->delete($table);
+    }
+
     /*
-     * Delete, Activate or deactivate the homapge category Section board
+     * Activate or deactivate the homapge category Section board
      * */
 
     function set_field($table, $field, $set, $where)

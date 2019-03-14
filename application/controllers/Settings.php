@@ -219,16 +219,15 @@ class Settings extends CI_Controller
             $privacy = trim($_POST['privacy']);
             $check = $this->admin->get_row('page_contents', array('type' => 'privacy'), 'content');
             if( !$check ){
-
                 $this->admin->insert_data('page_contents', array('content' => $privacy, 'type' => 'privacy') );
                 $this->session->set_flashdata('success_msg', 'Terms and condition posted successfully.');
-                redirect('settings/privacy');
             }else{
                 //update
                 $this->admin->update_data('privacy', array('content' => $privacy) , 'page_contents', 'type');
                 $this->session->set_flashdata('success_msg', 'Terms and condition updated successfully.');
-                redirect('settings/privacy');
+
             }
+            redirect('settings/privacy');
         }else{
             $this->load->view('settings/pages/privacy', $page_data);
         }
@@ -250,13 +249,12 @@ class Settings extends CI_Controller
 
                 $this->admin->insert_data('page_contents', array('content' => $terms, 'type' => 'terms') );
                 $this->session->set_flashdata('success_msg', 'Terms and condition posted successfully.');
-                redirect('settings/terms');
             }else{
                 //update
                 $this->admin->update_data('terms', array('content' => $terms) , 'page_contents', 'type');
                 $this->session->set_flashdata('success_msg', 'Terms and condition updated successfully.');
-                redirect('settings/terms');
             }
+            redirect('settings/terms');
         }else{
             $this->load->view('settings/pages/terms', $page_data);
         }
@@ -279,15 +277,46 @@ class Settings extends CI_Controller
 
                 $this->admin->insert_data('page_contents', array('content' => $agreement, 'type' => 'agreement') );
                 $this->session->set_flashdata('success_msg', 'Agreement posted successfully.');
-                redirect('settings/agreement');
+
             }else{
                 //update
                 $this->admin->update_data('agreement', array('content' => $agreement) , 'page_contents', 'type');
-                $this->session->set_flashdata('success_msg', 'Terms and condition updated successfully.');
+                $this->session->set_flashdata('success_msg', 'Buyer Agreement updated successfully.');
+
+            }
+            redirect('settings/agreement');
+        }else{
+            $this->load->view('settings/pages/agreement', $page_data);
+        }
+    }
+
+    /*
+     * Seller Agreement*/
+    public function seller_agreement()
+    {
+        $page_data['page_title'] = 'Seller Agreement Settings';
+        $page_data['pg_name'] = 'store_settings';
+        $page_data['sub_name'] = 'page_settings';
+        $page_data['least_sub'] = 'seller_agreement';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $page_data['agreement'] = $this->admin->get_row('page_contents', array('type' => 'seller_agreement'), 'content');
+        if( $_POST ){
+            $agreement = trim($_POST['agreement']);
+            $check = $this->admin->get_row('page_contents', array('type' => 'seller_agreement'), 'content');
+            if( !$check ){
+
+                $this->admin->insert_data('page_contents', array('content' => $agreement, 'type' => 'seller_agreement') );
+                $this->session->set_flashdata('success_msg', 'Seller Agreement posted successfully.');
+                redirect('settings/agreement');
+            }else{
+                //update
+                $this->admin->update_data('seller_agreement', array('content' => $agreement) , 'page_contents', 'type');
+                $this->session->set_flashdata('success_msg', 'Seller Agreement updated successfully.');
                 redirect('settings/agreement');
             }
         }else{
-            $this->load->view('settings/pages/agreement', $page_data);
+            $this->load->view('settings/pages/seller_agreement', $page_data);
         }
     }
 
