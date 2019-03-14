@@ -60,7 +60,7 @@
                                             </a>
                                         </p>
                                         <p class="mar-no">
-                                            <span class="pull-right text-bold"><?= $buyers_stats; ?></span> Buyers
+                                            <span class="pull-right text-bold"><?= $buyers_stats; ?></span> Users
                                         </p>
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@
                             <div class="panel">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="demo-psi-credit-card-2"></i>
-                                        New Buyer(s) - This Week</h3>
+                                        New User - This Week</h3>
                                 </div>
                                 <div class="panel-body maintotals text-3x">
                                     <b><a href="<?= base_url('users'); ?>" class="btn-link"><?= $new_buyer; ?></a></b>
