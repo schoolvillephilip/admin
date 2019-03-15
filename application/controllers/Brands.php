@@ -80,6 +80,8 @@ class Brands extends CI_Controller{
         }
     }
 
+
+    
     public function detail( $id = ''){
         $id = $this->uri->segment(3);
         if( !$id )redirect($_SERVER['HTTP_REFERER']);
