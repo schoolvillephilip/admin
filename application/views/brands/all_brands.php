@@ -22,7 +22,7 @@
                 <div class="panel">
                     <?php $this->load->view('msg_view'); ?>
                     <div class="panel-heading">
-                        <div class="panel-titlsse">
+                        <div class="panel-title">
                             <a class="btn btn-danger" style="color: #fff;" href="<?= base_url('brands/add') ?>">Add New
                                 Brand</a>
                         </div>
