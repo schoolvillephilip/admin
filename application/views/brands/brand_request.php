@@ -38,25 +38,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <img src="x.ico" style="width: 70px;" alt=" "/>
-                                </td>
-                                <td class="text-center">
-                                    <a class="btn-link" href="#!">Brand Name</a>
-                                </td>
-                                <td class="text-center">
-                                    Short Description
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-mint btn-active-mint">Approve</button>
-                                        <a class="btn btn-info btn-active-info"
-                                           href="#!">Edit</a>
-                                        <button class="btn btn-danger btn-active-danger">Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php foreach ($brands->result() as $brand) : ?>
+                                <tr>
+                                    <td class="text-center">
+                                        <img src="<?= BRAND_PATH . $brand->brand_logo ; ?>" style="width: 70px;" alt=" " />
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn-link" href="<?= base_url('brands/detail/' . $brand->id); ?>"><?= ucwords($brand->brand_name) ?></a>
+                                    </td>
+                                    <td class="text-center">
+                                        <?= $brand->description; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-mint btn-active-mint" href="<?= base_url('request/approve_brand/' . $brand->id); ?>">Approve</a>
+                                            <a class="btn btn-info btn-active-info"
+                                               href="<?= base_url('brands/detail/' . $brand->id); ?>">Edit</a>
+                                            <button class="btn btn-danger btn-active-danger">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
