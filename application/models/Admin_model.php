@@ -299,7 +299,7 @@ Class Admin_model extends CI_Model
     function get_single_product_detail($id)
     {
         $query = "SELECT p.*, g.image_name, o.amount, o.quantity_sold, v.variation_qty, s.id as seller_id, s.first_name, s.last_name, s.email FROM products AS p
-                    LEFT JOIN (SELECT ga.image_name, ga.seller_id FROM product_gallery ga WHERE ga.featured_image = 1 AND ga.product_id = $id LIMIT 1) g ON (p.seller_id = g.seller_id )
+                    LEFT JOIN (SELECT ga.image_name, ga.seller_id FROM product_gallery ga WHERE ga.featured_image = 1 AND ga.product_id = {$id} LIMIT 1) g ON (p.seller_id = g.seller_id )
                     LEFT JOIN (SELECT SUM(ord.amount) as amount, ord.product_id, SUM(ord.qty) quantity_sold FROM orders AS ord GROUP BY ord.product_id ) AS o
                     ON ( o.product_id = p.id)
                     LEFT JOIN users AS s ON (p.seller_id = s.id )
