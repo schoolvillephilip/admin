@@ -115,7 +115,7 @@
                                                                     <label class="col-lg-3 control-label">Brand Name
                                                                         *</label>
                                                                     <div class="col-lg-7">
-                                                                        <select class="form-control selectpicker"
+                                                                        <select class="select2" style="width:100%;"
                                                                                 name="brand_name"
                                                                                 data-width="100%">
                                                                             <?php foreach ($brands as $brand) : ?>
@@ -144,7 +144,7 @@
                                                                     <label class="col-lg-3 control-label">Main
                                                                         Colour</label>
                                                                     <div class="col-lg-7">
-                                                                        <select name="main_colour" class="selectpicker" title="Choose Main Colour"
+                                                                        <select name="main_colour" class="select2" style="width:100%;" title="Choose Main Colour"
                                                                                 data-width="100%">
                                                                             <option value="">-- Select main colour --</option>
                                                                             <?php
@@ -163,7 +163,7 @@
                                                                         Family</label>
                                                                     <div class="col-lg-7">
                                                                         <select name="colour_family[]"
-                                                                                class="selectpicker" multiple
+                                                                                class="select2" style="width:100%;" multiple
                                                                                 title="Choose colour family..."
                                                                                 data-width="100%">
                                                                             <option value="">-- Select colour family--
@@ -186,7 +186,7 @@
                                                                         Material</label>
                                                                     <div class="col-lg-7">
                                                                         <select name="main_material"
-                                                                                class="selectpicker"
+                                                                                class="select2" style="width:100%;"
                                                                                 title="Choose type..."
                                                                                 data-width="100%">
                                                                             <?php
@@ -312,7 +312,7 @@
                                                                                     <?php if (!empty($specification['spec_options'])) :
                                                                                         $options = json_decode($specification['spec_options']);
                                                                                         ?>
-                                                                                        <select class="selectpicker"
+                                                                                        <select class="select2" style="width:100%;"
                                                                                             <?php if ($specification['multiple_options']) {
                                                                                                 echo 'name="attribute_' . str_replace(' ', '-', $specification["spec_name"]) . '[]"';
                                                                                                 echo ' multiple';
@@ -368,7 +368,7 @@
                                                                     <label class="col-lg-3 control-label">Cerification</label>
                                                                     <div class="col-lg-7">
                                                                         <select name="certifications[]"
-                                                                                class="selectpicker" multiple
+                                                                                class="select2" style="width:100%;" multiple
                                                                                 title="Example: Organic, Suitable for Allergics Fair Trade..."
                                                                                 data-width="100%">
                                                                             <?php
@@ -395,7 +395,7 @@
                                                                         Type</label>
                                                                     <div class="col-lg-7">
                                                                         <select name="warranty_type[]"
-                                                                                class="selectpicker" multiple
+                                                                                class="select2" style="width:100%;" multiple
                                                                                 title="Choose warranty type..."
                                                                                 data-width="100%">
                                                                             <?php
@@ -655,6 +655,12 @@
 <script src="<?= base_url('assets/plugins/bootstrap-select/bootstrap-select.min.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js'); ?>"></script>
 <script src="<?= base_url('assets/plugins/summernote/summernote.min.js'); ?>"></script>
+<script src="<?= base_url('assets/plugins/select2/js/select2.js')?>"></script>
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>
 <script type="text/javascript">
     $(document).on('nifty.ready', function () {
         Dropzone.autoDiscover = false;

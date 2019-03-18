@@ -3,7 +3,12 @@
 <script src="<?= base_url('assets/js/nifty.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/demo/nifty-demo.min.js'); ?>"></script>
 <script type="text/javascript"> base_url = '<?= base_url(); ?>';</script>
-
+<script src="<?= base_url('assets/plugins/select2/js/select2.js')?>"></script>
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>
 <?php if (in_array($pg_name, array('product', 'template', 'settings', 'select_category', 'store_settings', 'sub_category'))) : ?>
     <script src="<?= base_url('assets/plugins/dropzone/dropzone.min.js'); ?>"></script>
     <script src="<?= base_url('assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js'); ?>"></script>

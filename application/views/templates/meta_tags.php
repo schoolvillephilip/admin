@@ -13,6 +13,7 @@
     <link href="<?= base_url('assets/css/nifty.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/demo/nifty-demo-icons.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/plugins/select2/css/select2.min.css')?>" rel="stylesheet" />
     <?php if (in_array($pg_name, array('product', 'template', 'settings', 'select_category', 'category', 'sub_category'))) : ?>
         <link href="<?= base_url('assets/plugins/bootstrap-validator/bootstrapValidator.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('assets/plugins/dropzone/dropzone.min.html') ?>" rel="stylesheet">
