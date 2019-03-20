@@ -66,10 +66,10 @@
                         </div>
 
                         <div class="panel-footer text-center">
-                            <button class="btn btn-primary" type="submit">Getnerate Report</button>
+                            <button class="btn btn-primary" type="submit">Generate Report</button>
+                            <button class="btn btn-danger" type="reset">Reset Form</button>
                         </div>
                         <?= form_close(); ?>
-
                     </div>
                 </div>
 
@@ -80,6 +80,7 @@
                     </div>
                     <div class="panel-body">
                         <?= $statement_table; ?>
+
                     </div>
                 </div>
                 <?php endif; ?>
