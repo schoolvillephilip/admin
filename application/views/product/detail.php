@@ -157,34 +157,39 @@
                                 <p class="mar-no">Items Available In Stock</p>
                             </div>
                         </div>
-                        <p><a class="text-bold text-primary" href="#pr-spec">Product Specification</a></p>
+                        <p><a class="text-bold text-primary" href="#pr-pricing">Product Pricing</a></p>
 
                         <p><a class="text-bold text-primary" href="#pr-spec">Product Specification</a></p>
+
                         <p><a class="text-bold text-primary" href="#pr-detail">Product Details</a></p>
                     </div>
                 </div>
 
                 <div class="panel" id="pr-pricing">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Product Specifications</h3>
+                        <h3 class="panel-title">Product Variation</h3>
                     </div>
                     <div class="panel-body">
                         <table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
                                width="100%">
                             <thead>
                             <tr>
-                                <th>Item</th>
-                                <th>Description</th>
+                                <th>Name</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Discount</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-                            $attributes = json_decode($product->attributes);
-                            foreach ($attributes as $key => $value) :
+
+                            foreach ($variations as $variation) :
                                 ?>
                                 <tr>
-                                    <td><?= $key ?></td>
-                                    <td><?= $value; ?></td>
+                                    <td><?= $variation->variation; ?></td>
+                                    <td><?= $variation->quantity; ?></td>
+                                    <td><?= ngn($variation->sale_price); ?></td>
+                                    <td><?= ngn($variation->discount_price); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -282,29 +287,31 @@
                 <h4 class="modal-title">Message Seller
                     (<?= ucwords($product->first_name . ' ' . $product->last_name); ?>)</h4>
             </div>
-            <div class="modal-body">
-                <form>
+            <?= form_open('product/message_seller/'); ?>
+                <div class="modal-body">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Title</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="title" class="form-control">
                                 </div>
                             </div>
+                            <input type="hidden" name="seller_id" value="<?= $product->seller_id; ?>">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <textarea placeholder="Message" rows="13" class="form-control"></textarea>
+                                    <textarea placeholder="Message" name="message" rows="13" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Discard</button>
-                <button class="btn btn-primary">Send Message</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Discard</button>
+                    <button class="btn btn-primary" type="submit">Send Message</button>
+                </div>
+            <?= form_close(); ?>
         </div>
     </div>
 </div>

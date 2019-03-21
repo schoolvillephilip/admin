@@ -48,6 +48,7 @@ class Product extends MY_Controller
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
 		$page_data['product'] = $this->admin->get_single_product_detail( $id );
+		$page_data['variations'] = $this->admin->get_results('product_variation', "(product_id = {$id})")->result();
 		$this->load->view('product/detail', $page_data);
 	}
 
@@ -391,6 +392,20 @@ class Product extends MY_Controller
             echo $this->cloudinarylib->delete_image( $public_id );
             exit;
         }
+    }
+
+    // Method to send a seller message
+    function message_seller(){
+        $seller_id = $this->input->post('seller_id');
+        $title = $this->input->post('title');
+        $content = $this->input->post('message');
+
+        if ( $this->admin->notify_seller($seller_id, $title, $content) ){
+            $this->session->set_flashdata('success_msg', 'Message has been sent to seller.');
+        }else{
+            $this->session->set_flashdata('error_msg', 'There was an error sending the message to the seller');
+        }
+        redirect( $_SERVER['HTTP_REFERER'] );
     }
 
 
