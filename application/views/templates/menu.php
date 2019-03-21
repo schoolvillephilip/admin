@@ -233,6 +233,8 @@
                                                         href="<?= base_url('settings/agreement') ?>">User Agreement</a></li>
                                             <li <?php if ($least_sub == 'seller_agreement') echo 'class="active-link"' ?>><a
                                                         href="<?= base_url('settings/seller_agreement') ?>">Seller Agreement</a></li>
+                                            <li <?php if ($least_sub == 'social_settings') echo 'class="active-link"' ?>><a
+                                                        href="<?= base_url('settings/social') ?>">Social Responsibility Page</a></li>
                                         </ul>
                                     </li>
                                     <li><a
