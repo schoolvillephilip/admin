@@ -181,10 +181,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-
-                            foreach ($variations as $variation) :
-                                ?>
+                            <?php foreach ($variations as $variation) :?>
                                 <tr>
                                     <td><?= $variation->variation; ?></td>
                                     <td><?= $variation->quantity; ?></td>
