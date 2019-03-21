@@ -161,6 +161,7 @@
                         <p><a class="text-bold text-primary" href="#pr-detail">Product Details</a></p>
                     </div>
                 </div>
+
                 <div class="panel" id="pr-spec">
                     <div class="panel-heading">
                         <h3 class="panel-title">Product Specifications</h3>
@@ -188,6 +189,35 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="panel" id="pr-spec">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Product Specifications</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table id="demo-dt-basic" class="table table-striped table-bordered" cellspacing="0"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $attributes = json_decode($product->attributes);
+                            foreach ($attributes as $key => $value) :
+                                ?>
+                                <tr>
+                                    <td><?= $key ?></td>
+                                    <td><?= $value; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="panel" id="pr-detail">
                     <div class="panel-heading">
                         <div class="panel-control">
