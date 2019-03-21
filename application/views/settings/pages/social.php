@@ -22,8 +22,8 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Social Responsibility Page</h3>
                     </div>
+                    <?php $this->load->view('msg_view'); ?>
                     <div class="panel-body">
-                        <?php $this->load->view('msg_view'); ?>
                         <?= form_open('settings/social'); ?>
                         <div class="form-group">
                             <textarea class="om_summer_note form-control" name="agreement" placeholder="Drop text ad format it here" id="terms">

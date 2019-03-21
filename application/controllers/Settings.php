@@ -302,16 +302,16 @@ class Settings extends CI_Controller
             'first_name,last_name,email,profile_pic');
         $page_data['social'] = $this->admin->get_row('page_contents', array('type' => 'social'), 'content');
         if( $_POST ){
-            $agreement = trim($_POST['social']);
+            $social = trim($_POST['social']);
             $check = $this->admin->get_row('page_contents', array('type' => 'social'), 'content');
             if( !$check ){
 
-                $this->admin->insert_data('page_contents', array('content' => $agreement, 'type' => 'social') );
-                $this->session->set_flashdata('success_msg', 'Social Responsibilty content posted successfully.');
+                $this->admin->insert_data('page_contents', array('content' => $social, 'type' => 'social') );
+                $this->session->set_flashdata('success_msg', 'Social Responsibility content posted successfully.');
 
             }else{
                 //update
-                $this->admin->update_data('agreement', array('content' => $agreement) , 'page_contents', 'type');
+                $this->admin->update_data('social', array('content' => $social) , 'page_contents', 'type');
                 $this->session->set_flashdata('success_msg', 'Social responsibility page updated successfully.');
 
             }
