@@ -290,6 +290,37 @@ class Settings extends CI_Controller
         }
     }
 
+    // Social Responsiblity
+
+    public function social()
+    {
+        $page_data['page_title'] = 'Social Responsibility Page Setting';
+        $page_data['pg_name'] = 'social_settings';
+        $page_data['sub_name'] = 'page_settings';
+        $page_data['least_sub'] = 'social';
+        $page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
+            'first_name,last_name,email,profile_pic');
+        $page_data['social'] = $this->admin->get_row('page_contents', array('type' => 'social'), 'content');
+        if( $_POST ){
+            $agreement = trim($_POST['social']);
+            $check = $this->admin->get_row('page_contents', array('type' => 'social'), 'content');
+            if( !$check ){
+
+                $this->admin->insert_data('page_contents', array('content' => $agreement, 'type' => 'social') );
+                $this->session->set_flashdata('success_msg', 'Social Responsibilty content posted successfully.');
+
+            }else{
+                //update
+                $this->admin->update_data('agreement', array('content' => $agreement) , 'page_contents', 'type');
+                $this->session->set_flashdata('success_msg', 'Social responsibility page updated successfully.');
+
+            }
+            redirect('settings/social');
+        }else{
+            $this->load->view('settings/pages/social', $page_data);
+        }
+    }
+
     /*
      * Seller Agreement*/
     public function seller_agreement()
