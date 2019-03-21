@@ -26,7 +26,7 @@
                     <div class="panel-body">
                         <?= form_open('settings/social'); ?>
                         <div class="form-group">
-                            <textarea class="om_summer_note form-control" name="agreement" placeholder="Drop text ad format it here" id="terms">
+                            <textarea class="om_summer_note form-control" name="social" placeholder="Drop text and format it here" id="terms">
                                 <?= ( $agreement ) ? $agreement->content : ''; ?>
                             </textarea>
                         </div>
