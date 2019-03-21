@@ -226,6 +226,7 @@
                                                         href="#">Single Product</a></li>
                                             <li <?php if ($least_sub == 'privacy') echo 'class="active-link"' ?>><a
                                                         href="<?= base_url('settings/privacy') ?>">Privacy Policy</a>
+
                                             </li>
                                             <li <?php if ($least_sub == 'terms') echo 'class="active-link"' ?>><a
                                                         href="<?= base_url('settings/terms') ?>">Terms</a></li>
