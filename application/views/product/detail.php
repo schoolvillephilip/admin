@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="panel" id="pr-spec">
+                <div class="panel" id="pr-pricing">
                     <div class="panel-heading">
                         <h3 class="panel-title">Product Specifications</h3>
                     </div>
