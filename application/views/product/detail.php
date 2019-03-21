@@ -158,6 +158,8 @@
                             </div>
                         </div>
                         <p><a class="text-bold text-primary" href="#pr-spec">Product Specification</a></p>
+
+                        <p><a class="text-bold text-primary" href="#pr-spec">Product Specification</a></p>
                         <p><a class="text-bold text-primary" href="#pr-detail">Product Details</a></p>
                     </div>
                 </div>
