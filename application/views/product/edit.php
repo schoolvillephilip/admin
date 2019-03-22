@@ -321,8 +321,9 @@
                                                                                             } ?>
                                                                                                 title="<?= $specification['spec_description']; ?>"
                                                                                                 data-width="100%">
+                                                                                            <option value="">--Select--</option>
                                                                                             <?php foreach ($options as $key => $value) : ?>
-                                                                                                <option value="">--Select--</option>
+
                                                                                                 <option
                                                                                                     value="<?= trim($value); ?>"><?= ucwords(trim($value)); ?></option>
                                                                                             <?php endforeach; ?>
