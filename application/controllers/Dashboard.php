@@ -23,9 +23,9 @@ class Dashboard extends CI_Controller{
             'first_name,last_name,email,profile_pic');
         if( $this->session->userdata('group_id') == 4 ){ # Sales Rep
             // Sales Rep Dashboard
-            $page_data['completed_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'active_status' => 'completed'));
-            $page_data['progress_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'active_status != ' => 'completed'));
-            $page_data['dispute_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'active_status = ' => 'returned'));
+            $page_data['completed_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'payment_status' => 'success'));
+            $page_data['progress_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'payment_status != ' => 'completed'));
+            $page_data['dispute_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'active_status = ' => 'returned'), array('active_status' => 'cancelled'));
             $this->load->view('salesrep/dashboard', $page_data);
         }else{
             $page_data['buyers_stats'] = $this->admin->get_num_rows('users');
