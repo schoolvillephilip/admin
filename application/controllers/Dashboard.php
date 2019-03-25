@@ -25,7 +25,7 @@ class Dashboard extends CI_Controller{
             // Sales Rep Dashboard
             $page_data['completed_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'payment_made' => 'success'));
             $page_data['progress_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'payment_made != ' => 'completed'));
-            $page_data['dispute_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'active_status = ' => 'returned'), array('active_status = ' => 'cancelled'));
+            $page_data['dispute_orders'] = $this->admin->get_num_rows('orders', array('agent' => $id, 'active_status = ' => 'cancelled'));
             $this->load->view('salesrep/dashboard', $page_data);
         }else{
             $page_data['buyers_stats'] = $this->admin->get_num_rows('users');
