@@ -72,7 +72,7 @@
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-danger" style="height: 145px;margin-top:7.5px">
                                         <h5 style="margin-top:35px;">Failed / Cancelled Transaction</h5>
-                                        <small></small>
+                                        <small>This can happen incase a user selected Webpay payment but didn't complete the transaction</small>
                                         <h2><?= ($failed_transaction !== null ) ? ngn($failed_transaction) : 0.00; ?></h2>
                                     </div>
                                 </div>
