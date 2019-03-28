@@ -313,7 +313,7 @@ class Account extends MY_Controller
 
         $delivery_charge = $this->admin->run_sql("SELECT SUM(distinct(delivery_charge)) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
         $page_data['delivery_charge'] = array_sum(array_column($delivery_charge, 'amount'));
-        $commission = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $commission = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code, product_id")->result_array();
         $page_data['commission'] = array_sum(array_column( $commission, 'amount'));
         $order_count = $this->admin->run_sql("SELECT SUM(qty) total FROM orders WHERE payment_made = 'success' AND YEAR(order_date) ='{$this_year}' GROUP BY order_code")->result_array();
         $page_data['order_count'] = array_sum(array_column( $order_count, 'total'));

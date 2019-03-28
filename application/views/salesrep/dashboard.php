@@ -53,7 +53,7 @@
                             </div>
                             <div class="media-body">
                                 <p class="text-2x mar-no text-semibold"><?= $dispute_orders; ?></p>
-                                <p class="mar-no">Orders In Dispute</p>
+                                <p class="mar-no">Orders In Dispute, Cancelled</p>
                             </div>
                         </div>
                     </div>

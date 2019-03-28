@@ -22,7 +22,7 @@ $lang['countries'] = 'Afghanistan, Albania, Algeria, American Samoa, Andorra, An
 
 	$lang['warranty_types'] = 'Service Center,Repair by vendor,replacement by vendor';
 
-	$lang['brands'] = 'sony,binatone,itel,samsung,infinix,hp,philips,lenovo,tecno,itel,samsung';
+	$lang['brands'] = 'sony,binatone,itel,samsung,infinix,hp,philips,lenovo,tecno,itel,samsung, apple';
 
 	$lang['colours'] = 'green,red,yellow,black,pink,purple,gold, grey, others';
 
