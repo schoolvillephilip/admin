@@ -329,6 +329,8 @@ class Account extends MY_Controller
 
         // Failed transactions
         $failed_transaction = $this->admin->run_sql("SELECT SUM(amount * qty ) amount FROM orders WHERE payment_made = 'fail' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        var_dump( $failed_transaction );
+        exit;
         $page_data['failed_transaction'] = array_sum(array_column($failed_transaction, 'amount'));
 
         $page_data['avg_order'] = (array_sum(array_column( $avg, 'qty')) > 0 ) ? array_sum(array_column( $avg, 'qty')) / array_sum(array_column( $avg, 'buyers')) : 0;
