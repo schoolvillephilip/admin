@@ -30,23 +30,27 @@
 					                            <label>Message Type</label>
 					                            <select class="form-control">
                                                     <option>--select--</option>
-                                                    <option>Text</option>
                                                     <option>Email</option>
+                                                    <option>SMS</option>
                                                 </select>
 					                        </div>
 					                        <div class="col-md-6 mar-btm">
 					                            <label>Select Reciever Account Type</label>
-					                            <select class="form-control">
+					                            <select class="form-control" id="reciever_type">
                                                     <option>--select--</option>
-                                                    <option>Admin</option>
                                                     <option>Accountant</option>
                                                     <option>Manager</option>
                                                     <option>Sales Rep</option>
                                                     <option>Sellers</option>
                                                     <option>All Users</option>
+                                                    <option value="custom">Custom</option>
                                                 </select>
 					                        </div>
 					                    </div>
+                                        <div style="display:none;" id="custom_reciever">
+                                        <label>Emails / Phone Numbers</label>
+                                        <input type="text" class="form-control mar-btm" placeholder="Separate entrie with a comma(,)">
+                                        </div>
 					                    <textarea placeholder="Message" rows="7" class="form-control"></textarea>
 					                </div>
 					                <div class="panel-footer text-right">
@@ -66,5 +70,15 @@
     </button>
 </div>
 <?php $this->load->view('templates/scripts'); ?>
+<script>
+    $('#reciever_type').on('change',function(){
+        let selected_value = $('#reciever_type').val();
+        if(selected_value == "custom"){
+            $('#custom_reciever').show();
+        }else{
+            $('#custom_reciever').hide();
+        }
+    });
+</script>
 </body>
 </html>
