@@ -60,8 +60,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Delivery Price</label>
-                                    <input type="text" name="price" class="form-control"
-                                           placeholder="Delivery price (Leave empty if not applicable)">
+                                    <textarea name="price" class="form-control" rows="30"></textarea>
                                 </div>
                                 <input type="hidden" name="posting_type" value="areas">
                                 <div class="text-left">
