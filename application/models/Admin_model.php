@@ -64,6 +64,16 @@ Class Admin_model extends CI_Model
         return $result;
     }
 
+    function insert_batch( $table_name = 'area', $data = array() ){
+        if( !empty($data)) {
+            try {
+                return $this->db->insert_batch($table_name, $data);
+            } catch (Exception $e ) {
+                return $e->getMessage();
+            }
+        }
+    }
+
     // Create An Account for user
 
     function cur_pass_match($password = null, $access = '', $table = 'users')

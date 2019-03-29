@@ -55,12 +55,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Area Name*</label>
+                                    <label class="control-label">Local Government Area Name*</label>
                                     <input type="text" name="area" class="form-control" placeholder="Area name">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Delivery Price</label>
-                                    <textarea name="price" class="form-control" rows="10"></textarea>
+                                    <textarea name="price" class="form-control" rows="3"></textarea>
                                 </div>
                                 <input type="hidden" name="posting_type" value="areas">
                                 <div class="text-left">
