@@ -6,7 +6,10 @@
 <script src="<?= base_url('assets/plugins/select2/js/select2.js')?>"></script>
 <script>
     $(document).ready(function () {
+        $('select').css({"width":"100%"});
         $('.select2').select2();
+        $('.selectpicker').select2();
+        $('select').select2();
     });
 </script>
 <?php if (in_array($pg_name, array('product', 'template', 'settings', 'select_category', 'store_settings', 'sub_category'))) : ?>
