@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Delivery Price</label>
-                                    <textarea name="price" class="form-control" rows="3"></textarea>
+                                    <textarea name="price" class="form-control" rows="5"></textarea>
                                 </div>
                                 <input type="hidden" name="posting_type" value="areas">
                                 <div class="text-left">

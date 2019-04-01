@@ -95,7 +95,8 @@ class States extends CI_Controller{
                         if( $explode ) {
                             $res['aid'] = $aid;
                             $res['weight'] = trim($explode[0]);
-                            $res['amount'] = trim($explode[1]);
+                            $amount = preg_replace('/\D/', '', $explode[1]);
+                            $res['amount'] = trim($amount);
                         }
                         array_push( $weight_data, $res );
                     }
