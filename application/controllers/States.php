@@ -62,11 +62,11 @@ class States extends CI_Controller{
                 case 'state':
                     // check if state already esisting
                     $name = $this->input->post('state');
-                    if( $this->admin->get_num_rows('states', array('name' => strtolower($name) ))){
+                    if( $this->admin->get_num_rows('states', array('name' => ucwords($name) ))){
                         $this->session->set_flashdata('error_msg', 'The state is already existing.');
                         redirect($_SERVER['HTTP_REFERER']);
                     }
-                    if( is_int($this->admin->insert_data('states', array('name' => strtolower($name) ))) ){
+                    if( is_int($this->admin->insert_data('states', array('name' => ucwords($name) ))) ){
                         $this->session->set_flashdata('success_msg', 'The state has been added successfully.');
                     }
                     redirect('states');
@@ -86,11 +86,12 @@ class States extends CI_Controller{
                     $aid = $this->admin->insert_data('area', $data);
                     // Lets insert the price
                     $price = trim($this->input->post('price'));
+
                     $area_price = explode('|', $price);
                     $count = count( $area_price );
                     $weight_data = array();
                     for ($x = 0; $x < $count; $x++){
-                        $explode = explode( ':',$area_price[$x] );
+                        $explode = explode( '=',$area_price[$x] );
                         if( $explode ) {
                             $res['aid'] = $aid;
                             $res['weight'] = trim($explode[0]);

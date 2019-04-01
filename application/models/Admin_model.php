@@ -594,7 +594,7 @@ Class Admin_model extends CI_Model
 
     function get_address_price($id = '')
     {
-        $select = "SELECT s.name state_name, a.id,a.name,a.price,a.sid as sid FROM states s INNER JOIN area a ON(a.sid = s.id)";
+        $select = "SELECT s.name state_name, a.id,a.name,a.sid as sid FROM states s INNER JOIN area a ON(a.sid = s.id)";
         if ($id != '') $select .= " WHERE a.id = $id";
         return $this->db->query($select);
     }

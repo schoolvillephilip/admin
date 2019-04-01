@@ -84,7 +84,6 @@
                                 <tr>
                                     <th>State</th>
                                     <th>Area name</th>
-                                    <th>Area Shipping Price</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -93,7 +92,6 @@
                                     <tr>
                                         <td><?= ucwords($area->state_name); ?></td>
                                         <td><?= ucwords($area->name); ?></td>
-                                        <td><?= $area->price; ?></td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Edit</button>
                                             <button type="button" class="btn btn-danger">Delete</button>
