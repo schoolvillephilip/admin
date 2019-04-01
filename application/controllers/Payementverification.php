@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Orders extends MY_Controller{
+class Payementverification extends MY_Controller{
 
     public function __construct()
     {
@@ -182,6 +182,7 @@ class Orders extends MY_Controller{
             }else{
                 // Order is successful
                 $update_array = array(
+//                        'status' => $status_array,
                     'active_status' => 'certified',
                     'payment_made' => 'success',
                     'paymentDesc'   => $response['ResponseDescription'],

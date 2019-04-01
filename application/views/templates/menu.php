@@ -182,6 +182,15 @@
                                 </ul>
                             </li>
                         <?php endif ?>
+
+                        <!-- Payment Verification -->
+                        <li class="<?php if ($pg_name == 'paymentverification') echo 'active' ?>">
+                            <a href="<?= base_url('paymentverification'); ?>">
+                                <i class="demo-pli-credit-card-2"></i>
+                                <span class="menu-title">Payment Verification</span>
+                            </a>
+                        </li>
+                        <!-- /Payment Verification -->
                         <!-- Questions -->
                         <?php if(in_array('questions', USER_ROLES[$group])):?>
                         <li class="<?php if ($pg_name == 'questions') echo 'active' ?>">
