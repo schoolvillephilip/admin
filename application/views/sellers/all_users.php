@@ -166,6 +166,7 @@
     $('#all_users').dataTable({
         "responsive": true,
         "pageLength": 100,
+        "order": [[ 0, "desc" ]]
         "language": {
             "paginate": {
                 "previous": '<i class="demo-psi-arrow-left"></i>',

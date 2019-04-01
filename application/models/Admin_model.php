@@ -346,9 +346,9 @@ Class Admin_model extends CI_Model
         }
         $limit = $args['is_limit'];
         if( $limit ){
-            $query .= " GROUP BY order_code ORDER BY id LIMIT " . $args['offset'] . "," . $args['limit'];
+            $query .= " GROUP BY order_code ORDER BY id DESC LIMIT " . $args['offset'] . "," . $args['limit'];
         }else{
-            $query .= " GROUP BY order_code ORDER BY id ";
+            $query .= " GROUP BY order_code ORDER BY id DESC ";
         }
 //        die( $query );
 

@@ -39,6 +39,7 @@
 								   width="100%">
 								<thead>
 								<tr>
+                                    <th style="display: none;">id</th>
 									<th>Order Code</th>
                                     <th class="min-desktop text-center">Payment Method</th>
 									<th class="min-desktop">Total Quantity</th>
@@ -53,7 +54,8 @@
 								<tbody>
 									<?php foreach( $orders as $order ): ?>
 										<tr>
-											<td><a class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code .'/'); ?>"><?= $order->order_code; ?></a></td>
+                                            <td style="display: none;"><?= $order->id; ?></td>
+											<td><a title="Click to see more details for this order" class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code .'/'); ?>"><?= $order->order_code; ?></a></td>
                                             <td class="text-center"><?= paymentMethod( $order->payment_method); ?></td>
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount * $order->qty); ?></td>
@@ -113,6 +115,7 @@
 <script>
     $('#order-datatable').dataTable({
         "responsive": true,
+        "order": [[ 0, "desc" ]]
         "language": {
             "paginate": {
                 "previous": '<i class="demo-psi-arrow-left"></i>',
