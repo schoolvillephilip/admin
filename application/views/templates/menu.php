@@ -200,8 +200,7 @@
                                 <span class="menu-title">Broadcast</span>
                             </a>
                         </li>
-                        <!-- /Broadcast -->
-
+                        <?php endif; ?>
                         <li class="list-divider"></li>
                         <!-- Settings -->
                         <?php if (in_array('settings', USER_ROLES[$group])) : ?>
@@ -260,8 +259,6 @@
                                 </ul>
                             </li>
                         <?php endif ?>
-                        <!-- /Settungs -->
-                        <?php endif; ?>
                         <?php if (in_array('settings', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>>
                                 <a href="#">
