@@ -277,10 +277,26 @@
                                                                     <label class="col-lg-3 control-label">Weight * (In
                                                                         Kg)</label>
                                                                     <div class="col-lg-7">
-                                                                        <input type="text" required
-                                                                               placeholder="Weight of the product. eg 10"
-                                                                               value="<?= $product->weight; ?>"
-                                                                               name="weight" class="form-control">
+                                                                        <select name="weight" class="form-control" required>
+                                                                                <option value="">-- Select Option --</option>
+                                                                                <option value="0.1KG-2.0KG" <?= ($product->weight == "0.1KG-2.0KG")?"selected":"";?>>0.1KG - 2.0KG</option>
+                                                                                <option value="2.1KG-2.5KG" <?= ($product->weight == "2.1KG-2.5KG")?"selected":"";?>>2.1KG - 2.5KG</option>
+                                                                                <option value="2.6KG-3.0KG" <?= ($product->weight == "2.6KG-3.0KG")?"selected":"";?>>2.6KG - 3.0KG</option>
+                                                                                <option value="3.1KG-3.5KG" <?= ($product->weight == "3.1KG-3.5KG")?"selected":"";?>>3.1KG - 3.5KG</option>
+                                                                                <option value="3.6KG-4.0KG" <?= ($product->weight == "3.6KG-4.0KG")?"selected":"";?>>3.6KG - 4.0KG</option>
+                                                                                <option value="4.1KG-4.5KG" <?= ($product->weight == "4.1KG-4.5KG")?"selected":"";?>>4.1KG - 4.5KG</option>
+                                                                                <option value="4.6KG-5.0KG" <?= ($product->weight == "4.6KG-5.0KG")?"selected":"";?>>4.6KG - 5.0KG</option>
+                                                                                <option value="5.1KG-5.5KG" <?= ($product->weight == "5.1KG-5.5KG")?"selected":"";?>>5.1KG - 5.5KG</option>
+                                                                                <option value="5.6KG-6.0KG" <?= ($product->weight == "5.6KG-6.0KG")?"selected":"";?>>5.6KG - 6.0KG</option>
+                                                                                <option value="6.1KG-6.5KG" <?= ($product->weight == "6.1KG-6.5KG")?"selected":"";?>>6.1KG - 6.5KG</option>
+                                                                                <option value="6.6KG-7.0KG" <?= ($product->weight == "6.6KG-7.0KG")?"selected":"";?>>6.6KG - 7.0KG</option>
+                                                                                <option value="7.1KG-7.5KG" <?= ($product->weight == "7.1KG-7.5KG")?"selected":"";?>>7.1KG - 7.5KG</option>
+                                                                                <option value="7.6KG-8.0KG" <?= ($product->weight == "7.6KG-8.0KG")?"selected":"";?>>7.6KG - 8.0KG</option>
+                                                                                <option value="8.1KG-8.5KG" <?= ($product->weight == "8.1KG-8.5KG")?"selected":"";?>>8.1KG - 8.5KG</option>
+                                                                                <option value="8.6KG-9.0KG" <?= ($product->weight == "8.6KG-9.0KG")?"selected":"";?>>8.6KG - 9.0KG</option>
+                                                                                <option value="9.1KG-9.5KG" <?= ($product->weight == "9.1KG-9.5KG")?"selected":"";?>>9.1KG - 9.5KG</option>
+                                                                                <option value="9.6KG-10.0KG" <?= ($product->weight == "9.6KG-10.0KG")?"selected":"";?>>9.6KG - 10.0KG</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -660,7 +676,10 @@
 <script src="<?= base_url('assets/plugins/select2/js/select2.js')?>"></script>
 <script>
     $(document).ready(function () {
+        $('select').css({"width":"100%"});
         $('.select2').select2();
+        $('.selectpicker').select2();
+        $('select').select2();
     });
 </script>
 <script type="text/javascript">
