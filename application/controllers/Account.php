@@ -313,7 +313,7 @@ class Account extends MY_Controller
 
         $delivery_charge = $this->admin->run_sql("SELECT SUM(distinct(delivery_charge)) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
         $page_data['delivery_charge'] = array_sum(array_column($delivery_charge, 'amount'));
-        $commission = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $commission = $this->admin->run_sql("SELECT SUM(commission) amount FROM orders WHERE payment_made = 'success' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code, product_id")->result_array();
         $page_data['commission'] = array_sum(array_column( $commission, 'amount'));
         $order_count = $this->admin->run_sql("SELECT SUM(qty) total FROM orders WHERE payment_made = 'success' AND YEAR(order_date) ='{$this_year}' GROUP BY order_code")->result_array();
         $page_data['order_count'] = array_sum(array_column( $order_count, 'total'));
@@ -328,7 +328,8 @@ class Account extends MY_Controller
         $page_data['incoming_payment'] = array_sum(array_column($incoming_payment, 'amount'));
 
         // Failed transactions
-        $failed_transaction = $this->admin->run_sql("SELECT SUM(amount * qty ) amount FROM orders WHERE payment_made = 'fail' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+        $failed_transaction = $this->admin->run_sql("SELECT (amount * qty ) amount FROM orders WHERE payment_made = 'fail' AND YEAR(order_date) = '{$this_year}' GROUP BY order_code")->result_array();
+
         $page_data['failed_transaction'] = array_sum(array_column($failed_transaction, 'amount'));
 
         $page_data['avg_order'] = (array_sum(array_column( $avg, 'qty')) > 0 ) ? array_sum(array_column( $avg, 'qty')) / array_sum(array_column( $avg, 'buyers')) : 0;

@@ -55,13 +55,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Area Name*</label>
+                                    <label class="control-label">Local Government Area Name*</label>
                                     <input type="text" name="area" class="form-control" placeholder="Area name">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Delivery Price</label>
-                                    <input type="text" name="price" class="form-control"
-                                           placeholder="Delivery price (Leave empty if not applicable)">
+                                    <textarea name="price" class="form-control" rows="5"></textarea>
                                 </div>
                                 <input type="hidden" name="posting_type" value="areas">
                                 <div class="text-left">
@@ -85,7 +84,6 @@
                                 <tr>
                                     <th>State</th>
                                     <th>Area name</th>
-                                    <th>Area Shipping Price</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -94,7 +92,6 @@
                                     <tr>
                                         <td><?= ucwords($area->state_name); ?></td>
                                         <td><?= ucwords($area->name); ?></td>
-                                        <td><?= $area->price; ?></td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Edit</button>
                                             <button type="button" class="btn btn-danger">Delete</button>

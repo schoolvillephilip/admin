@@ -62,14 +62,14 @@ class States extends CI_Controller{
                 case 'state':
                     // check if state already esisting
                     $name = $this->input->post('state');
-                    if( $this->admin->get_num_rows('states', array('name' => strtolower($name) ))){
+                    if( $this->admin->get_num_rows('states', array('name' => ucwords($name) ))){
                         $this->session->set_flashdata('error_msg', 'The state is already existing.');
                         redirect($_SERVER['HTTP_REFERER']);
                     }
-                    if( is_int($this->admin->insert_data('states', array('name' => strtolower($name) ))) ){
+                    if( is_int($this->admin->insert_data('states', array('name' => ucwords($name) ))) ){
                         $this->session->set_flashdata('success_msg', 'The state has been added successfully.');
                     }
-                    redirect(base_url('states'));
+                    redirect('states');
                     break;  
                 case 'areas':
                     $name = $this->input->post('area');
@@ -79,16 +79,43 @@ class States extends CI_Controller{
                     }
                     $data = array(
                         'sid' => $this->input->post('state'),
-                        'name' => cleanit($this->input->post('area')),
-                        'price' => cleanit($this->input->post('price'))
+                        'name' => cleanit($this->input->post('area'))
                     );
-                    if( is_int($this->admin->insert_data('area', $data) ) ){
-                        $this->session->set_flashdata('success_msg', 'The area address has been added successfully.');
-                    }
-                    redirect(base_url('states'));
+                    $this->db->trans_begin();
 
+                    $aid = $this->admin->insert_data('area', $data);
+                    // Lets insert the price
+                    $price = trim($this->input->post('price'));
+
+                    $area_price = explode('|', $price);
+                    $count = count( $area_price );
+                    $weight_data = array();
+                    for ($x = 0; $x < $count; $x++){
+                        $explode = explode( '=',$area_price[$x] );
+                        if( $explode ) {
+                            $res['aid'] = $aid;
+                            $res['weight'] = trim($explode[0]);
+                            $amount = preg_replace('/\D/', '', $explode[1]);
+                            $res['amount'] = trim($amount);
+                        }
+                        array_push( $weight_data, $res );
+                    }
+                    $this->admin->insert_batch('delivery_amount', $weight_data);
+
+                    if($this->db->trans_status() === FALSE) {
+                        $this->db->trans_rollback();
+                        // error
+                        $this->session->set_flashdata('error_msg', 'There was an error adding the area and its respective price');
+                        redirect('states/');
+
+                    }else{
+                        $this->db->trans_commit();
+                        $this->session->set_flashdata('success_msg', 'The area and price has been added successfully.');
+                        redirect('states/');
+
+                    }
                 default:
-                    redirect(base_url('states'));
+                    redirect('states');
                     break;
             }
         }

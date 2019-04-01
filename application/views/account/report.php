@@ -30,7 +30,7 @@
             <div id="page-content">
                 <div id="om-panel-order" class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Reports for January 2018 to December 2018</h3>
+                        <h3 class="panel-title">Reports for January <?= date('Y')?> to December <?= date('Y'); ?></h3>
                     </div>
                     <?php $this->load->view('msg_view'); ?>
                     <div class="panel-body">
@@ -65,18 +65,21 @@
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-warning" style="height: 145px;margin-top:7.5px">
                                         <h5 style="margin-top:35px;">Incoming Payment</h5>
+                                        <small>This can happen if buyers selected Payment on delivery</small>
                                         <h2><?= ($incoming_payment !== null ) ? ngn($incoming_payment) : 0.00; ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-danger" style="height: 145px;margin-top:7.5px">
-                                        <h5 style="margin-top:35px;">Failed Traansaction</h5>
+                                        <h5 style="margin-top:35px;">Failed / Cancelled Transaction</h5>
+                                        <small>This can happen incase a user selected Webpay payment but didn't complete the transaction</small>
                                         <h2><?= ($failed_transaction !== null ) ? ngn($failed_transaction) : 0.00; ?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 panel-bordered-default" style="height: 145px;margin-top:7.5px">
                                         <h5 style="margin-top:35px;">Total Qty of Item Ordered</h5>
+                                        <small>Total Orders marked as successful i.e completed all flow.</small>
                                         <h2><?= ($order_count !== null ) ? $order_count : 0.00; ?></h2>
                                     </div>
                                 </div>
