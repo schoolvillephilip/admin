@@ -182,13 +182,25 @@
                                 </ul>
                             </li>
                         <?php endif ?>
+                        <!-- Questions -->
+                        <?php if(in_array('questions', USER_ROLES[$group])):?>
                         <li class="<?php if ($pg_name == 'questions') echo 'active' ?>">
                             <a href="<?= base_url('questions'); ?>">
                                 <i class="demo-pli-question"></i>
                                 <span class="menu-title">Questions <?= $questions_count < 1 ? '' : '(' . $questions_count . ' new)'; ?></span>
                             </a>
                         </li>
+                        <?php endif; ?>
+                        <!-- /Questions -->
+                        <?php if(in_array('broadcast', USER_ROLES[$group])):?>
+                        <li class="<?php if ($pg_name == 'broadcast') echo 'active' ?>">
+                            <a href="<?= base_url('broadcast'); ?>">
+                                <i class="demo-pli-mail"></i>
+                                <span class="menu-title">Broadcast</span>
+                            </a>
+                        </li>
                         <li class="list-divider"></li>
+                        <!-- Settings -->
                         <?php if (in_array('settings', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'settings') echo 'class="active"' ?>>
                                 <a href="#">
@@ -245,6 +257,8 @@
                                 </ul>
                             </li>
                         <?php endif ?>
+                        <!-- /Settungs -->
+                        <?php endif; ?>
                         <?php if (in_array('settings', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'disc_opt') echo 'class="active"' ?>>
                                 <a href="#">
