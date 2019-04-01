@@ -46,7 +46,6 @@ class Login extends CI_Controller{
                     'password' => $this->input->post('password')
                 );
 
-//                var_dump( $data ); exit;
                 $user = $this->admin->login($data);
                 if( !$user ) {
 

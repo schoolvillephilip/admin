@@ -44,7 +44,7 @@
 									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Total Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
-                                    <?php if($profile->groups != 4 ): #This conditioon has already been checked from the server though
+                                    <?php if($profile->groups == 1 ):
                                         ?>
 									<th class="min-desktop">Assigned To</th>
                                     <?php endif; ?>
@@ -58,7 +58,7 @@
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount * $order->qty); ?></td>
 											<td><?= date('h:ia - l, dS F, Y', strtotime($order->order_date)); ?></td>
-                                            <?php if($profile->groups != 4 ): # if not sales rep  ?>
+                                            <?php if($profile->groups == 1 ): # if not sales rep  ?>
 											    <td>
                                                 <?php if($order->agent == '0' ) : #No agent has been assigned yet  ?>
                                                 <form class="form-inline" id="<?= $order->order_code; ?>" >

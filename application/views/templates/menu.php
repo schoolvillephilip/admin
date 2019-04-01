@@ -85,7 +85,7 @@
                             <li <?php if ($pg_name == 'orders') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-shopping-basket"></i>
-                                    <span class="menu-title">Sales &amp; Orders</span><?php if ($sales_count) echo ' <span class="label label-danger"> ' . $sales_count . '</span>'; ?>
+                                    <span class="menu-title">Sales &amp; Orders</span><?php if ($sales_count > 1 ) echo ' <span class="label label-danger"> ' . $sales_count . '</span>'; ?>
                                     <i class="arrow"></i>
                                 </a>
                                 <ul class="collapse <?php if ($pg_name == 'orders') echo 'in'; ?>">
@@ -184,12 +184,12 @@
                         <?php endif ?>
 
                         <!-- Payment Verification -->
-                        <li class="<?php if ($pg_name == 'paymentverification') echo 'active' ?>">
-                            <a href="<?= base_url('paymentverification'); ?>">
-                                <i class="demo-pli-credit-card-2"></i>
-                                <span class="menu-title">Payment Verification</span>
-                            </a>
-                        </li>
+<!--                        <li class="--><?php //if ($pg_name == 'paymentverification') echo 'active' ?><!--">-->
+<!--                            <a href="--><?//= base_url('paymentverification'); ?><!--">-->
+<!--                                <i class="demo-pli-credit-card-2"></i>-->
+<!--                                <span class="menu-title">Payment Verification</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
                         <!-- /Payment Verification -->
                         <!-- Questions -->
                         <?php if(in_array('questions', USER_ROLES[$group])):?>

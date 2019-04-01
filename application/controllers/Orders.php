@@ -132,6 +132,13 @@ class Orders extends MY_Controller{
      * Assign an agent to an order items
      * */
     function assign_agent(){
+        // Some crazy checks
+        $group = $this->session->userdata('group_id');
+        if( $group > 2  ){
+            $this->session->set_flashdata('error_msg', "Watch your step... The ground is slippery because you don't have the admin role to do this :(");
+            echo json_decode(array('status' => 0 ));
+            exit;
+        }
 	    $order_code = $this->input->post('order_code');
 	    $agent_id = $this->input->post('agent_id');
         try {
@@ -148,6 +155,12 @@ class Orders extends MY_Controller{
     }
 
     function validate_order(){
+        // Crazy checks as ususl
+        if( !in_array($this->session->userdata('group_id'), array(1,3))){
+            $this->session->set_flashdata('error_msg', "Watch your step... The ground is slippery because you don't have the admin role to do this :(");
+            echo '';
+            exit;
+        }
         $order_code = $this->input->post('order_code');
         $row = $this->admin->run_sql("SELECT txnref, SUM(amount) amount, delivery_charge, status,active_status FROM orders WHERE order_code = {$order_code}")->row();
         $total = $row->amount + $row->delivery_charge;

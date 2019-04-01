@@ -36,8 +36,8 @@
                                                 <li class="active"><a href="#details-tab-<?= $x; ?>" data-toggle="tab">
                                                         Order Details</a>
                                                 </li>
-
-                                                <li style="opacity: 1;">
+                                                <?php if($profile->groups == 1 ) : ?>
+                                                    <li style="opacity: 1;">
                                                     <a class="btn btn-default btn-active-primary dropdown-toggle"
                                                        data-toggle="dropdown" aria-expanded="false">
                                                         Action <i class="demo-pli-dot-vertical icon-lg"></i>
@@ -98,6 +98,7 @@
                                                         </li>
                                                     </ul>
                                                 </li>
+                                                <?php endif; ?>
 
                                             </ul>
                                         </div>
