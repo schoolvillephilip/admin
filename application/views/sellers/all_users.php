@@ -47,6 +47,7 @@
                                    width="100%">
                                 <thead>
                                 <tr>
+                                    <th style="display: none;"></th>
                                     <th width="40%">Name</th>
                                     <th>Email</th>
                                     <th width="10%">Administrator</th>
@@ -56,6 +57,7 @@
                                 <tbody>
                                 <?php foreach ($users as $user) : ?>
                                     <tr>
+                                        <td style="display: none;"><?= $user->id;?></td>
                                         <td>
                                             <?= ucwords($user->first_name . ' ' . $user->last_name); ?>
                                         </td>

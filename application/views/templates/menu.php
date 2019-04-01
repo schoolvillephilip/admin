@@ -192,6 +192,7 @@
                         </li>
                         <?php endif; ?>
                         <!-- /Questions -->
+                        <!-- /Broadcast -->
                         <?php if(in_array('broadcast', USER_ROLES[$group])):?>
                         <li class="<?php if ($pg_name == 'broadcast') echo 'active' ?>">
                             <a href="<?= base_url('broadcast'); ?>">
@@ -199,6 +200,8 @@
                                 <span class="menu-title">Broadcast</span>
                             </a>
                         </li>
+                        <!-- /Broadcast -->
+
                         <li class="list-divider"></li>
                         <!-- Settings -->
                         <?php if (in_array('settings', USER_ROLES[$group])) : ?>
