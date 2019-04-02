@@ -23,7 +23,7 @@
                         <div class="panel">
                             <div class="panel-body text-center">
                                 <img alt="Profile Picture" class="img-md img-circle mar-btm"
-                                     src="/admin/assets/img/profile-photos/1.png">
+                                     src="<?= base_url('assets/img/profile-photos/1.png'); ?>">
                                 <p class="text-lg text-semibold mar-no text-main"><?= ucwords($seller->first_name . ' ' . $seller->last_name); ?></p>
                                 <p class="text-semibold mar-no text-main">Registration No : <?= $seller->reg_no; ?></p>
                                 <p class="text-muted"><?= $seller->legal_company_name; ?></p>
@@ -93,6 +93,8 @@
                                     <p><?= $seller->email; ?></p>
                                     <p class="text-main text-semibold">Company Name</p>
                                     <p><?= $seller->legal_company_name; ?></p>
+                                    <p class="text-main text-semibold">Store Name</p>
+                                    <p><?= $seller->store_name; ?></p>
                                     <p class="text-main text-semibold">Address</p>
                                     <p><?= $seller->address; ?></p>
                                     <p class="text-main text-semibold">Registration No</p>
