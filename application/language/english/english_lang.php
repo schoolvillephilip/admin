@@ -24,4 +24,4 @@ $lang['warranty_types'] = 'Service Center,Repair by vendor,replacement by vendor
 
 // $lang['brands'] = 'sony,binatone,itel,samsung,infinix,hp,philips,lenovo,tecno,itel,samsung';
 
-$lang['colours'] = 'green,yellow,black,onyx black,red,pink,purple,grey,silver,white,blue,gold';
+$lang['colours'] = 'green,yellow,black,onyx black,red,pink,purple,grey,silver,white,blue,gold,orange';
