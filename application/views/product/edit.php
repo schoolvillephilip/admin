@@ -886,6 +886,13 @@
             $(`#${target}`).remove();
         });
 
+
+        $('.datepicker').datepicker({
+            startDate: '0d'
+        });
+    }
+
+    $(document).ready(function(){
         // Delete any of the looped variation
         $('.delete_variation_row').on('click', function(){
             let vid = $(this).data('rid');
@@ -902,11 +909,8 @@
                 }
             });
         });
-
-        $('.datepicker').datepicker({
-            startDate: '0d'
-        });
-    }
+    });
+    
     $(document).ready(function () {
         $('[data-toggle="popover"]').popover({animation: true});
     });
