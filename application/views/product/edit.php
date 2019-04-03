@@ -464,7 +464,7 @@
                                                         <tbody class="variation_body">
                                                         <?php $x = 1;
                                                         foreach ($variations as $variation) : ?>
-                                                            <tr data-row-id="<?= $x; ?>">
+                                                            <tr id="<?= $variation->id?>" data-row-id="<?= $x; ?>">
                                                                 <td>
                                                                     <div class="form-group-sm">
                                                                         <input type="hidden" name="variation_id[]" value="<?= $variation->id; ?>">
@@ -547,6 +547,8 @@
                                                                            href="javascript:void(0);"
                                                                            data-original-title="Add Another Variation"
                                                                            data-container="body"></a>
+                                                                        <a class="btn btn-sm btn-default btn-hover-danger demo-pli-trash delete_variation_row"
+                                                                           href="javascript:void(0);" data-rid="<?= $variation->id; ?>" data-original-title="Remove This Variation" data-container="body"></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -883,6 +885,24 @@
             let target = $(this).data('target');
             $(`#${target}`).remove();
         });
+
+        // Delete any of the looped variation
+        $('.delete_variation_row').on('click', function(){
+            let vid = $(this).data('rid');
+            $.ajax({
+                data: {vid : vid},
+                type: "POST",
+                url: base_url + "product/delete_variation_row",
+                cache: false,
+                success: function(resp) {
+                    $(`#${vid}`).remove();
+                },
+                error: function(resp){
+                    console.log(resp);
+                }
+            });
+        });
+
         $('.datepicker').datepicker({
             startDate: '0d'
         });
