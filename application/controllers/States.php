@@ -72,13 +72,14 @@ class States extends CI_Controller{
                     redirect('states');
                     break;  
                 case 'areas':
+                    $sid =$this->input->post('state');
                     $name = $this->input->post('area');
-                    if( $this->admin->get_num_rows('area', array('name' => strtolower($name) ))){
+                    if( $this->admin->get_num_rows('area', array('name' => strtolower($name), 'sid' => $sid  ))){
                         $this->session->set_flashdata('error_msg', 'The Area Address is already existing.');
                         redirect(base_url('states'));
                     }
                     $data = array(
-                        'sid' => $this->input->post('state'),
+                        'sid' => $sid,
                         'name' => cleanit($this->input->post('area'))
                     );
                     $this->db->trans_begin();
