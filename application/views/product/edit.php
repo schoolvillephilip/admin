@@ -547,8 +547,10 @@
                                                                            href="javascript:void(0);"
                                                                            data-original-title="Add Another Variation"
                                                                            data-container="body"></a>
+                                                                        <?php if($x > 1 ) : ?>
                                                                         <a class="btn btn-sm btn-default btn-hover-danger demo-pli-trash delete_variation_row"
                                                                            href="javascript:void(0);" data-rid="<?= $variation->id; ?>" data-original-title="Remove This Variation" data-container="body"></a>
+                                                                        <?php endif; ?>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -910,7 +912,7 @@
             });
         });
     });
-    
+
     $(document).ready(function () {
         $('[data-toggle="popover"]').popover({animation: true});
     });
