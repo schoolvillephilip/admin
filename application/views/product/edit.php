@@ -819,25 +819,21 @@
         let row_id = $('.pricing_table').rowCount() * 1;
         let new_id = row_id + 1;
         $('.pricing_table tbody').append(`<tr id = "${new_id}_field">
+				<td>
+					<div class="form-group-sm col-md-12">
+						<input title="Seller SKU" type="text" class="form-control" name="sku[]"  required/>
+					</div>
+				</td>
 				${variation_name}
+
 				<td>
-					<div class="form-group-sm">
-						<input title="Seller SKU" type="text" class="form-control" name="sku[]" />
+					<div class="form-group-sm col-md-12">
+						<input title="Quantity" type="number" min="1" max="100" class="form-control" name="quantity[]" required />
 					</div>
 				</td>
 				<td>
-					<div class="form-group-sm">
-						<input title="EAN / UPC / ISBN" type="text" class="form-control" name="isbn[]" />
-					</div>
-				</td>
-				<td>
-					<div class="form-group-sm">
-						<input title="Quantity" type="number" min="1" max="100" class="form-control" name="quantity[]" />
-					</div>
-				</td>
-				<td>
-					<div class="form-group-sm">
-							<input title="Price" type="text" class="form-control number amount" required name="sale_price[]" />
+					<div class="form-group-sm col-md-12">
+							<input title="Sale Price" type="text" class="form-control number amount" required name="sale_price[]" required />
 					</div>
 				</td>
 				<td>
@@ -850,8 +846,8 @@
 								<div class="input-group date">
 								<input data-provide="datepicker"
 									   class="form-control datepicker"
-									   data-date-format="yyyy/mm/dd"
-									   placeholder="yyyy/mm/dd"
+									   data-date-format="mm/dd/yyyy"
+									   placeholder="mm/dd/yyyy"
 									   name="start_date[]"
 									   title="Starting date for this variation">
 								<div class="input-group-addon">
@@ -865,8 +861,8 @@
 					<div class="input-group date">
 						<input data-provide="datepicker"
 						   class="form-control datepicker"
-						   data-date-format="yyyy/mm/dd"
-						   placeholder="yyyy/mm/dd" name="end_date[]"
+						   data-date-format="mm/dd/yyyy"
+						   placeholder="mm/dd/yyyy" name="end_date[]"
 						   title="End date for this variation">
 
 						   <div class="input-group-addon">
@@ -881,7 +877,7 @@
 						<a class="btn btn-sm btn-default btn-hover-danger demo-pli-trash delete_row" href="javascript:void(0);" data-target="${new_id}_field" data-original-title="Delete This Variation" data-container="body"></a>
 					</div>
 				</td>
-                </tr>`);
+                            </tr>`);
 
         $('.delete_row').on('click', function () {
             let target = $(this).data('target');
