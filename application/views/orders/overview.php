@@ -60,7 +60,7 @@
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount * $order->qty); ?></td>
 											<td><?= date('h:ia - l, dS F, Y', strtotime($order->order_date)); ?></td>
-                                            <?php if($profile->groups == 1 ): # if not sales rep  ?>
+                                            <?php if($profile->groups == 1 || $profile->groups == 2 ): # if not sales rep  ?>
 											    <td>
                                                 <?php if($order->agent == '0' ) : #No agent has been assigned yet  ?>
                                                 <form class="form-inline" id="<?= $order->order_code; ?>" >
