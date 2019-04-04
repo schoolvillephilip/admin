@@ -45,7 +45,7 @@
 									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Total Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
-                                    <?php if($profile->groups == 1 ):
+                                    <?php if($profile->groups == 1 || $profile->groups == 2):
                                         ?>
 									<th class="min-desktop">Assigned To</th>
                                     <?php endif; ?>
