@@ -90,7 +90,7 @@ defined('USER_ROLES') OR define('USER_ROLES', array(
     # Administrator
     1 => array('dashboard', 'product', 'orders', 'brands', 'users','sellers', 'categories', 'sellers', 'account', 'settings', 'states', 'profile_settings', 'help', 'profile', 'questions', 'request', 'broadcast' ),
     # Manager
-    2 => array('dashboard', 'product', 'brands', 'categories', 'settings', 'states' , 'brands', 'profile', 'request'),
+    2 => array('dashboard', 'product', 'orders', 'brands', 'profile', 'request'),
     # Accountant
     3 => array('dashboard', 'sales', 'account', 'orders', 'Paymentverification', 'profile', 'help', 'logout'),
     # Sales Rep.
