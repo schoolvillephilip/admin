@@ -135,7 +135,7 @@ class Orders extends MY_Controller{
         // Some crazy checks
         $group = $this->session->userdata('group_id');
         if( $group > 2  ){
-            $this->session->set_flashdata('error_msg', "Watch your step... The ground is slippery because you don't have the admin role to do this :(");
+            $this->session->set_flashdata('error_msg', "Watch your step... The ground is slippery because you don't have the role to do this :(");
             echo json_decode(array('status' => 0 ));
             exit;
         }

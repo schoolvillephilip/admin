@@ -66,7 +66,7 @@
                                 <span class="menu-title">Dashboard</span>
                             </a>
                         </li>
-                        <?php if (in_array('sellers', USER_ROLES[$group])) : ?>
+                        <?php if (in_array('product', USER_ROLES[$group])) : ?>
                             <li <?php if ($pg_name == 'sellers') echo 'class="active"' ?>>
                                 <a href="#">
                                     <i class="demo-pli-list-view"></i>
