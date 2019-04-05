@@ -251,10 +251,31 @@ Class Admin_model extends CI_Model
         return $this->db->query($query)->result();
     }
 
-    function get_user_lists($search = '', $limit = '', $offset = '')
+    /*
+     * Return all users based on type or all
+     * */
+    function get_user_lists($search = '', $limit = '', $offset = '', $user_type ='')
     {
         $query = "SELECT * FROM users";
         if ($search != '') $query .= " WHERE (first_name LIKE '%$search%') OR (last_name LIKE '%$search%') OR (email LIKE '%$search%')";
+
+        if( $user_type != '' ){
+            $prepend = ( $search != '' ) ? " AND " : " WHERE ";
+            switch ($user_type){
+                case 'sales_rep':
+                    $query .= $prepend ." groups = 4 ";
+                    break;
+                case 'accountant':
+                    $query .= $prepend ." groups = 3 ";
+                    break;
+                case 'manager':
+                    $query .= $prepend ." groups = 2 ";
+                    break;
+                default:
+                    $query .= $prepend ." groups = 0 ";
+                    break;
+            }
+        }
         if (!empty($limit)) $query .= " LIMIT {$offset},{$limit} ";
         return $this->db->query($query)->result();
     }

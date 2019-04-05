@@ -55,5 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 
  $route['manage/(:any)'] = "manage/index";
  $route['orders/status_type/(:any)'] = "orders/index/$2";
- $route['users'] = "sellers/all_users";
+
 

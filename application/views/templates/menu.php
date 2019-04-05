@@ -94,6 +94,7 @@
                                             <span class="menu-title">All Orders</span>
                                         </a>
                                     </li>
+
                                     <li <?php if ($sub_name == 'orders') echo 'class="active-link"' ?>>
                                         <a href="<?= base_url('orders/status_type/pending/') ?>">
                                             <span class="menu-title">Pending Orders</span>
@@ -148,11 +149,24 @@
                                 </a>
                                 <ul class="collapse <?php if ($pg_name == 'sellers') echo 'in'; ?>">
                                     <li <?php if ($sub_name == 'users') echo 'class="active-link"' ?>><a
-                                                href="<?= base_url('users') ?>">All Users</a></li>
+                                                href="<?= base_url('users/') ?>">All Buyers</a></li>
+
                                     <li <?php if ($sub_name == 'sellers_overview') echo 'class="active-link"' ?>><a
-                                                href="<?= base_url('sellers') ?>">Sellers</a></li>
+                                                href="<?= base_url('sellers/') ?>">All Sellers</a></li>
+
+                                    <li <?php if ($sub_name == 'sales_rep') echo 'class="active-link"' ?>><a
+                                                href="<?= base_url('users?type=sales_rep') ?>">Sales Rep.</a></li>
+
+                                    <?php if( $group == 1) : ?>
+                                        <li <?php if ($sub_name == 'manager') echo 'class="active-link"' ?>><a
+                                                    href="<?= base_url('users?type=manager') ?>">Manager</a></li>
+
+                                        <li <?php if ($sub_name == 'accountant') echo 'class="active-link"' ?>><a
+                                                    href="<?= base_url('users?type=accountant') ?>">Accountant</a></li>
+                                    <?php endif; ?>
+
                                     <li <?php if ($sub_name == 'approve_sellers') echo 'class="active-link"' ?>><a
-                                                href="<?= base_url('sellers/approve'); ?>">Approve Sellers</a></li>
+                                                href="<?= base_url('sellers/approve/'); ?>">Approve Sellers</a></li>
                                 </ul>
                             </li>
                         <?php endif ?>
