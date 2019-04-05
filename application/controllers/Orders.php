@@ -36,6 +36,7 @@ class Orders extends MY_Controller{
         $array['is_limit'] = true;
         $page_data['pagination'] = $this->pagination->create_links();
         $page_data['orders'] = $this->admin->get_orders_by_type( $type, $array );
+
         if( $this->session->userdata('group_id') == 4 ) { # Sales Rep
             $this->load->view('salesrep/orders/overview', $page_data);
         }else{

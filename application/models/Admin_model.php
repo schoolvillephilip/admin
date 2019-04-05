@@ -292,7 +292,7 @@ Class Admin_model extends CI_Model
         $query = "SELECT p.id, p.product_status,p.sku, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
             LEFT JOIN users as s ON ( p.seller_id = s.id )";
 
-        $query .= " WHERE p.product_status != 'approved'";
+        $query .= " WHERE (p.product_status != 'approved' AND p.product_status != 'draft')";
         if ($id != '') {
             $query .= " AND p.seller_id = {$id} ";
         }
@@ -326,7 +326,7 @@ Class Admin_model extends CI_Model
      * args = pagination or other get query
      */
     function get_orders_by_type( $type = '', $args = array()){
-        $query = "SELECT id, product_id, order_code, txnref, agent, payment_method, SUM(qty) qty, SUM(amount) amount, order_date FROM orders";
+        $query = "SELECT id, product_id, order_code, txnref, agent, payment_method, SUM(qty) qty, SUM(amount) amount, active_status, order_date FROM orders";
         switch ($type) {
             case 'success':
                 $query .= " WHERE payment_made = 'success'";

@@ -39,15 +39,16 @@
 								   width="100%">
 								<thead>
 								<tr>
-                                    <th style="display: none;">id</th>
+                                    <th style="display: none;">Unique id</th>
 									<th>Order Code</th>
                                     <th class="min-desktop text-center">Payment Method</th>
 									<th class="min-desktop">Total Quantity</th>
 									<th class="min-desktop">Total Amount (&#8358;)</th>
 									<th class="min-desktop">Date Ordered</th>
-                                    <?php if($profile->groups == 1 || $profile->groups == 2):
-                                        ?>
-									<th class="min-desktop">Assigned To</th>
+                                    <?php if( ($profile->groups == 1 || $profile->groups == 2) && ($this->uri->segment(3) == 'pending' )):  ?>
+									    <th class="min-desktop">Assigned To</th>
+                                    <?php else : ?>
+                                        <th>Present Status</th>
                                     <?php endif; ?>
 								</tr>
 								</thead>
@@ -60,7 +61,7 @@
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount * $order->qty); ?></td>
 											<td><?= date('h:ia - l, dS F, Y', strtotime($order->order_date)); ?></td>
-                                            <?php if($profile->groups == 1 || $profile->groups == 2 ): # if not sales rep  ?>
+                                            <?php if( ($profile->groups == 1 || $profile->groups == 2) && ($this->uri->segment(3) == 'pending' )):  ?>
 											    <td>
                                                 <?php if($order->agent == '0' ) : #No agent has been assigned yet  ?>
                                                 <form class="form-inline" id="<?= $order->order_code; ?>" >
@@ -84,6 +85,8 @@
                                                     <span class="text text-semibold"><?= ucwords($user); ?></span>
                                                 <?php endif; ?>
                                             </td>
+                                            <?php else : ?>
+                                                <td><?= ucfirst($order->active_status); ?></td>
                                             <?php endif; ?>
 										</tr>
 									<?php endforeach; ?>
@@ -115,7 +118,7 @@
 <script>
     $('#order-datatable').dataTable({
         "responsive": true,
-        "order": [[ 0, "desc" ]]
+        "order": [[ 0, "desc" ]],
         "language": {
             "paginate": {
                 "previous": '<i class="demo-psi-arrow-left"></i>',

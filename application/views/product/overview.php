@@ -38,6 +38,7 @@
                                    width="100%">
                                 <thead>
                                 <tr>
+                                    <th style="display: none;">Unique Id</th>
                                     <th>Product Name</th>
                                     <th>Category Name</th>
                                     <th class="min-tablet">Product Line</th>
@@ -50,6 +51,7 @@
                                     $category = $this->admin->get_single_category($product->category_id);
                                     ?>
                                     <tr>
+                                        <td style="display: none;"><?= $product->id; ?></td>
                                         <td>
                                             <a class="btn-link" href="<?= base_url('product/detail/' . $product->id); ?> "> <?= $product->product_name ?></a>
                                         </td>
@@ -93,6 +95,7 @@
 <script>
     $('#demo-dt-basic').dataTable({
         "responsive": true,
+        "order": [[ 0, "desc" ]],
         "language": {
             "paginate": {
                 "previous": '<i class="demo-psi-arrow-left"></i>',

@@ -333,16 +333,16 @@ class Product extends MY_Controller
 		$pid = cleanit($pid);
 		$sid = cleanit( $sid);
 		if( $this->admin->product_listing_action($action, $pid, $sid) ){
-			$this->session->set_flashdata('success_msg', 'The product has been ' . $action . 'ed successfully.');
+			$this->session->set_flashdata('success_msg', 'The product has been ' . $action . 'd successfully.');
             // Track the action
             $activity_log = array('uid' => $this->session->userdata('logged_id'),
-                'context' => "The product with the Id (" . $pid . ") was " . $action. "ed"
+                'context' => "The product with the Id (" . $pid . ") was " . $action. "d"
             );
             $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $activity_log);
-			redirect('product');
+			redirect($_SERVER['HTTP_REFERER']);
 		}else{
 			$this->session->set_flashdata('error_msg', 'Oops! There was error processing the action');
-			redirect('product');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 
