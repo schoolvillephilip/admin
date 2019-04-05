@@ -120,6 +120,7 @@ class Product extends MY_Controller
             $return['message'] = '';
             // Product Block
             $certifications = $this->input->post('certifications');
+            $from_overseas = ( $this->input->post('from_overseas') == 'on' ) ? 1 : 0;
             $certifications = (!empty($certifications)) ? json_encode($certifications) : '[]';
             $warranty_type = $this->input->post('warranty_type');
             $warranty_type = (!empty($warranty_type)) ? json_encode($warranty_type) : '[]';
@@ -148,6 +149,7 @@ class Product extends MY_Controller
                 'warranty_type' => $warranty_type,
                 'warranty_address' => $warranty_address,
                 'certifications' => $certifications,
+                'from_overseas' => $from_overseas,
             );
             //     Product Features Block
             // Since we are getting the specification name; we loop through the specification json
