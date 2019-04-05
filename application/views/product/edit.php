@@ -200,6 +200,31 @@
                                                                     </div>
                                                                 </div>
 
+
+                                                                <div class="form-group">
+                                                                    <label
+                                                                            class="col-lg-3 col-md-3 col-sm-12 col-xs-12 control-label">Is this product from overseas?</label>
+                                                                    <div class="col-lg-7 col-md-7 col-sm-11 col-xs-11">
+                                                                        <div class="radio">
+                                                                            <input id="no" class="magic-radio" type="radio" name="from_overseas" <?php if($product->from_overseas == 0) echo 'checked'; ?> value="off">
+                                                                            <label for="no">No</label>
+
+                                                                            <input id="yes" class="magic-radio" type="radio" name="from_overseas" <?php if($product->from_overseas == 1) echo 'checked'; ?>  value="on">
+                                                                            <label for="yes">Yes</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
+                                                                        <a href="javascript:void(0);"
+                                                                           title="Overseas"
+                                                                           data-placement="top" data-toggle="popover"
+                                                                           tabindex="-1"
+                                                                           data-trigger="focus"
+                                                                           data-content="Please check if this product is not from Nigeria.">
+                                                                            <i class="demo-pli-question help_text"
+                                                                               title="Help Text"></i> </a>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
