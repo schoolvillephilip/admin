@@ -810,7 +810,7 @@
                 $('.edit_product_form').trigger('reset');
                 $('#status').html(`<p class="alert alert-success">Congrats the product has been edited successfully.</p>`).slideDown('fast')
                     .delay(5000).slideUp('slow');
-                // window.location.href = `${base_url}product/detail/${product_id}`;
+                window.location.href = `${base_url}product/detail/${product_id}`;
             }
             console.log(response);
         });
