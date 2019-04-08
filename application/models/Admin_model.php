@@ -294,7 +294,7 @@ Class Admin_model extends CI_Model
         }
         if ($product_status != '') {
             if( $id != '' ){
-                $query .= " AND p.product_status != '{$product_status}'";
+                $query .= " AND p.product_status == '{$product_status}'";
             }else{
                 $query .= " WHERE p.product_status == '{$product_status}'";
             }
