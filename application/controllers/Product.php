@@ -21,7 +21,7 @@ class Product extends MY_Controller
         $page = isset($_GET['page']) ? xss_clean($_GET['page']) : 0;
         if ($page > 1) $page -= 1;
         $array = array('str' => $str, 'is_limit' => false);
-        $x = (array)$this->admin->get_product_list('','',$array);
+        $x = (array)$this->admin->get_product_list('','approved',$array);
         $count = (count($x));
 //        if( !empty( $str )){
 //            die( $count );
@@ -40,7 +40,7 @@ class Product extends MY_Controller
         $array['offset'] = $page;
         $array['is_limit'] = true;
         $page_data['pagination'] = $this->pagination->create_links();
-		$page_data['products'] = $this->admin->get_product_list( '','',$array );
+		$page_data['products'] = $this->admin->get_product_list( '','approved',$array );
 		$this->load->view('product/overview', $page_data);
 	}
 
