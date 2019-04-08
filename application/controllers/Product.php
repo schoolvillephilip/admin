@@ -23,6 +23,11 @@ class Product extends MY_Controller
         $array = array('str' => $str, 'is_limit' => false);
         $x = (array)$this->admin->get_product_list('','',$array);
         $count = (count($x));
+//        if( !empty( $str )){
+//            die( $count );
+//        }else{
+//            die('New count ' . $count );
+//        }
         $this->load->library('pagination');
         $this->config->load('pagination');
         $config = $this->config->item('pagination');

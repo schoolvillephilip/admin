@@ -290,15 +290,24 @@ Class Admin_model extends CI_Model
             LEFT JOIN users as s ON ( p.seller_id = s.id )
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id)";
         if ($id != '') {
-            $query .= " WHERE p.seller_id = $id";
+            $query .= " WHERE (p.seller_id = $id";
         }
         if ($product_status != '') {
-            $query .= " AND p.product_status != '{$product_status}'";
+            if( $id != '' ){
+                $query .= " AND p.product_status != '{$product_status}'";
+            }else{
+                $query .= " WHERE p.product_status == '{$product_status}'";
+            }
         }
         if (!empty($args) && !empty($args['str'])) {
             $str = $args['str'];
-            $query .= " AND p.product_name LIKE '%{$str}%'";
+            if( $id != '' || $product_status != '' ){
+                $query .= " AND p.product_name LIKE '%{$str}%' )";
+            }else{
+                $query .= " WHERE p.product_name LIKE '%{$str}%'";
+            }
         }
+//        die($query );
         $limit = $args['is_limit'];
         if ($limit == true) {
             $query .= " GROUP BY p.id ORDER BY p.created_on DESC LIMIT " . $args['offset'] . "," . $args['limit'];
