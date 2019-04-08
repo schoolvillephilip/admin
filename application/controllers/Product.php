@@ -37,7 +37,7 @@ class Product extends MY_Controller
         $config["num_links"] = 5;
         $this->pagination->initialize($config);
         $array['limit'] = $config['per_page'];
-        $array['offset'] = $page;
+        $array['offset'] = $page * 100;
         $array['is_limit'] = true;
         $page_data['pagination'] = $this->pagination->create_links();
 		$page_data['products'] = $this->admin->get_product_list( '','',$array );

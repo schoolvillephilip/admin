@@ -23,6 +23,7 @@ $config['cur_tag_open'] = '<li class="active"><a href="">';
 $config['cur_tag_close'] = '</a></li>';
 $config['num_tag_open'] = '<li class="page">';
 $config['num_tag_close'] = '</li>';
+$config['use_page_numbers'] = TRUE;
 // $config['display_pages'] = FALSE;
 // 
 // $config['anchor_class'] = 'follow_link';
