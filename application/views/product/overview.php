@@ -95,6 +95,8 @@
 <script>
     $('#demo-dt-basic').dataTable({
         "responsive": true,
+        "pageLength": 100,
+        "paging": false,
         "order": [[ 0, "desc" ]],
         "language": {
             "paginate": {
