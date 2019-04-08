@@ -314,7 +314,12 @@ Class Admin_model extends CI_Model
         } else {
             $query .= " GROUP BY p.id ORDER BY p.created_on DESC";
         }
-        return $this->db->query($query)->result();
+        $query_result = $this->db->query($query);
+        if( $query_result ){
+            return $query_result->result();
+        }else{
+            return '';
+        }
     }
 
     function get_unapprove_product($id = '')
