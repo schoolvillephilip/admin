@@ -23,11 +23,6 @@ class Product extends MY_Controller
         $array = array('str' => $str, 'is_limit' => false);
         $x = (array)$this->admin->get_product_list('','approved',$array);
         $count = (count($x));
-//        if( !empty( $str )){
-//            die( $count );
-//        }else{
-//            die('New count ' . $count );
-//        }
         $this->load->library('pagination');
         $this->config->load('pagination');
         $config = $this->config->item('pagination');
@@ -115,6 +110,7 @@ class Product extends MY_Controller
             $page_data['product_id'] = $id;
             $page_data['page_title'] = 'Edit product ( ' . $page_data['product']->product_name . ' )';
             $page_data['brands'] = $this->admin->get_results('brands')->result();
+            $page_data['categories'] = $this->admin->run_sql("SELECT id, name FROM categories")->result();
             $this->load->view('product/edit', $page_data);
         } else {
             // Process
@@ -139,6 +135,7 @@ class Product extends MY_Controller
             $product_table = array(
                 'product_name' => cleanit($this->input->post('product_name', true)),
                 'brand_name' => cleanit($this->input->post('brand_name', true)),
+                'category_id' => cleanit($this->input->post('category_id', true)),
                 'model' => cleanit($this->input->post('model', true)),
                 'main_colour' => $this->input->post('main_colour'),
                 'product_description' => $description,

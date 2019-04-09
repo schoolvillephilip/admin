@@ -101,14 +101,16 @@
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Shop
-                                                                        Name</label>
+                                                                    <label class="col-lg-3 control-label">Selected Category</label>
                                                                     <div class="col-lg-7">
-                                                                        <input type="text"
-                                                                               placeholder="Enter In Here Your Store Name"
-                                                                               value="<?= $product->product_line; ?>"
-                                                                               name="product_line" class="form-control">
-                                                                        <span class="text-sm text-dark">Eg: Fouani Nigeria, Trendy Woman Ltd, SEOLAK</span>
+                                                                        <select class="select2" style="width: 100%;" name="category_id" data-width="100%">
+                                                                            <?php foreach ( $categories as $category): ?>
+                                                                            <option value="<?= $category->id; ?>" <?php if($category->id == $product->category_id ) echo 'selected'; ?> >
+                                                                                <?= $category->name; ?>
+                                                                            </option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
+                                                                        <span class="text-sm text-dark">The selected category</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
