@@ -754,8 +754,12 @@
                             // Call the default addedfile event handler
                             myDropzone.emit("addedfile", mockFile);
                             myDropzone.emit("thumbnail", mockFile, v.fileURL);
-                            $('input[type="radio"]').first().prop('checked', true);
+                            // $('input[type="radio"]').first().prop('checked', true);
                             // Make sure that there is no progress bar, etc...
+                            if( v.featured === 1 ){
+                                $('#'+v.filename).prop('checked', true);
+                            }
+
                             myDropzone.emit("complete", mockFile);
 
                         });
