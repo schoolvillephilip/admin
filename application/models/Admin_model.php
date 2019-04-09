@@ -322,6 +322,33 @@ Class Admin_model extends CI_Model
         }
     }
 
+
+    /*
+     * Get all approved products
+     * */
+    function get_approved_list($args = array() ){
+        $query = "SELECT p.id, p.product_status,p.sku, o.sold, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
+            LEFT JOIN users as s ON ( p.seller_id = s.id )
+            LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id) WHERE p.product_status = 'approved'";
+
+        if( $args['str'] != '' ){
+            $str = cleaint($args['str']);
+            $query .= " AND p.product_name = LIKE '%{$str}%'";
+        }
+        $limit = $args['is_limit'];
+        if ($limit == true) {
+            $query .= " GROUP BY p.id ORDER BY p.created_on DESC LIMIT " . $args['offset'] . "," . $args['limit'];
+        } else {
+            $query .= " GROUP BY p.id ORDER BY p.created_on DESC";
+        }
+        $query_result = $this->db->query($query);
+        if( $query_result ){
+            return $query_result->result();
+        }else{
+            return '';
+        }
+    }
+
     function get_unapprove_product($id = '')
     {
         $query = "SELECT p.id, p.product_status,p.sku, p.product_name, p.created_on, p.category_id, p.product_line, p.product_status, p.seller_id, s.first_name, s.last_name,p.created_on FROM products as p
