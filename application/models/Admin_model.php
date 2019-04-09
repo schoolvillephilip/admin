@@ -332,8 +332,8 @@ Class Admin_model extends CI_Model
             LEFT JOIN ( SELECT SUM(qty) as sold, product_id, seller_id from orders GROUP BY orders.product_id) as o ON (p.id = o.product_id AND s.id = o.seller_id) WHERE p.product_status = 'approved'";
 
         if( $args['str'] != '' ){
-            $str = cleanint($args['str']);
-            $query .= " AND p.product_name = LIKE '%{$str}%'";
+            $str = cleanit($args['str']);
+            $query .= " AND p.product_name LIKE '%{$str}%'";
         }
         $limit = $args['is_limit'];
         if ($limit == true) {
