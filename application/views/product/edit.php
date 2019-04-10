@@ -775,7 +775,7 @@
             removeBtn.prop('disabled', false);
             file._captionLabel = Dropzone.createElement("<span class='text-sm text-dark'> &nbsp;&nbsp; Make this the featured Image &nbsp; </span> &nbsp;&nbsp; ");
             file._captionBox = Dropzone.createElement(`<input id="${file.name}" type='radio' name='featured_image' value="${file.name}">`);
-            file._deleteBtn = Dropzone.createElement(`<button type="button" class='btn btn-xs dz-cancel btn-danger btn-delete-image' style="margin:5px;" data-dz-remove="" onclick="deleteImage('${file.name}')"> &nbsp;&nbsp; Delete This Image&nbsp; </button> &nbsp;&nbsp;`);
+            file._deleteBtn = Dropzone.createElement(`<button type="button" class='btn btn-xs dz-cancel btn-danger btn-delete-image' data-img-name="${file.name}" style="margin:5px;" data-dz-remove=""> &nbsp;&nbsp; Delete This Image&nbsp; </button> &nbsp;&nbsp;`);
             file.previewElement.appendChild(file._deleteBtn);
             file.previewElement.appendChild(file._captionBox);
             file.previewElement.appendChild(file._captionLabel);
@@ -860,7 +860,6 @@
 					</div>
 				</td>
 				${variation_name}
-
 				<td>
 					<div class="form-group-sm col-md-12">
 						<input title="Quantity" type="number" min="1" max="100" class="form-control" name="quantity[]" required />
@@ -965,6 +964,7 @@
     }
 </script>
 
+
 <script type="text/javascript">
     $(document).ready(function(){
         $(".number").inputFilter(function (value) {
@@ -976,6 +976,11 @@
             let resp = addCommas(n);
             $(this).val( resp );
         });
+
+        $('.btn-delete-image').on('click', function(e){
+            e.preventDefault();
+            alert('You clicked me');
+        })
 
         let product_description = `<?= $product->product_description; ?>`;
         $('#product_description').summernote({
