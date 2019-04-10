@@ -262,7 +262,7 @@ class Product extends MY_Controller
                 $return['message'] = 'Success: Your product has been updated.';
             }
             $this->session->set_flashdata($return['status'] . '_msg', $return['message']);
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect(base_url('product/detail/' . $id.'/'));
         }
     }
 
