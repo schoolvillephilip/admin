@@ -810,7 +810,7 @@
             $('#processing').hide();
             if (response.status == 'error') {
                 $('#processing').hide();
-                $('#status').html(`<p class="alert alert-error">There was an error posting the product. <br /> ${response.message} </p>`).slideDown('fast').delay(4000).slideUp('slow');
+                $('#status').html(`<p class="alert alert-error">There was an error updating the product. <br /> ${response.message} </p>`).slideDown('fast').delay(4000).slideUp('slow');
             } else {
                 $('#processing').hide();
                 $('.edit_product_form').trigger('reset');

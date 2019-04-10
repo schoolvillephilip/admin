@@ -343,9 +343,13 @@ class Product extends MY_Controller
                 'context' => "The product with the Id (" . $pid . ") was " . $action. "d"
             );
             $this->admin->insert_data(TABLE_SYSTEM_ACTIVITIES, $activity_log);
-			redirect($_SERVER['HTTP_REFERER']);
-		}else{
-			$this->session->set_flashdata('error_msg', 'Oops! There was error processing the action');
+            if( $action == "approve") {
+                redirect(base_url('product/approve/'));
+            }else{
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }else{
+            $this->session->set_flashdata('error_msg', 'Oops! There was error processing the action');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
