@@ -73,6 +73,9 @@
                                             <td>Model:</td>
                                             <td><?= $product->model; ?></td>
                                         </tr>
+                                        <td>Model:</td>
+                                        <td><?= $product->weight; ?></td>
+                                        </tr>
                                         <tr>
                                             <td>Main Color</td>
                                             <td><?= $product->main_colour; ?></td>
