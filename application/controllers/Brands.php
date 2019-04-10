@@ -21,7 +21,7 @@ class Brands extends CI_Controller{
         $page_data['least_sub'] = '';
 		$page_data['profile'] = $this->admin->get_profile_details($this->session->userdata('logged_id'),
 			'first_name,last_name,email,profile_pic');
-        $page_data['brands'] = $this->admin->run_sql("SELECT * FROM brands WHERE status = 1")->result();
+        $page_data['brands'] = $this->admin->run_sql("SELECT * FROM brands WHERE status = 1");
 		$this->load->view('brands/all_brands', $page_data);
 	}
 
