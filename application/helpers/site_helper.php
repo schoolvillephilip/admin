@@ -215,7 +215,7 @@ if (!function_exists('paymentMethod')) {
                 return 'Interswitch Webpay';
                 break;
             case 3:
-                return 'Payment Via Bank Transfer';
+                return 'Payment Via Bank Transfer ';
                 break;
             default:
                 return 'Payment mehod not understood';

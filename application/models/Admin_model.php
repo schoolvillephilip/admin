@@ -281,8 +281,10 @@ Class Admin_model extends CI_Model
     }
 
     /**
+     * On view of a seller profile
      * @param $id , $type( product_status)
      * @return CI_DB_result
+     *
      */
     function get_product_list($id = '', $product_status = '', $args = array())
     {
@@ -1089,6 +1091,17 @@ Class Admin_model extends CI_Model
         $this->db->select('image_name,featured_image');
         $this->db->where('product_id', $id);
         return $this->db->get('product_gallery')->result();
+    }
+
+    function payment_by_bank_details( $order_code ){
+        $query = "SELECT SUM(o.amount) amount, o.delivery_charge, o.status, o.active_status, o.payment_made, b.bank, b.deposit_type,b.remark, b.pop,
+        CONCAT(u.first_name, ' ', u.last_name) AS name, u.phone, u.email
+        FROM orders o
+        JOIN users u ON(o.buyer_id = u.id)
+        LEFT JOIN bank_transfer b ON(b.order_code = o.order_code)
+        WHERE o.order_code = '{$order_code}' GROUP BY o.order_code";
+        $query_result = $this->run_sql( $query )->row();
+        return $query_result;
     }
 
 

@@ -31,14 +31,14 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="tab-content">
-                                        <div class="tab-pane fade in active" id="details-tab-<?= $x; ?>">
+                                        <div class="tab-pane fade in active">
                                             <div class="table-responsive">
-                                                <div class="alert alert-info">
-                                                    <p>Note the following</p>
-                                                    <ul>
-                                                        <li>Orders are marked as <b>'certified'</b> automatically when payment method is Interswitch webpay and the transaction is successful</li>
-                                                    </ul>
-                                                </div>
+<!--                                                <div class="alert alert-info">-->
+<!--                                                    <p>Note the following</p>-->
+<!--                                                    <ul>-->
+<!--                                                        <li>Orders will be are marked as <b>'certified'</b> </li>-->
+<!--                                                    </ul>-->
+<!--                                                </div>-->
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
@@ -48,50 +48,82 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td class="text-semibold">Item Unique ID</td>
-                                                        <td>
-                                                            <?= $order->id; ?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-semibold">Transaction ID</td>
-                                                        <td>
-                                                            <?= $order->txnref; ?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-semibold">Payment Method</td>
-                                                        <td>
-                                                            <?= paymentMethod( $order->payment_method); ?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-semibold">Order Assigned To</td>
-                                                        <td>
-                                                            <?php
-                                                                if( $order->agent == 0 ){
-                                                                    echo 'Not yet Assigned to an agent';
-                                                                }else{
-                                                                    $user = $this->admin->get_row('users', array('id' => $order->agent ));
-                                                                    echo '<a class="btn-link" href="#"> ' .$user->first_name .' '.$user->last_name  . ' </a>';
-                                                                }
-                                                            ?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-semibold">Product Name</td>
-                                                        <td><a class="btn-link"
-                                                               href="<?= base_url('product/detail/' . $order->product_id); ?>"><?= $order->product_name; ?></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
                                                         <td class="text-semibold">Buyer's Name</td>
-                                                        <td><?= $order->first_name . ' ' . $order->last_name ; ?></td>
+                                                        <td>
+                                                            <?= $order->name; ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="text-semibold">Other Email/Phone</td>
-                                                        <td><?= $order->email . ' ' . $order->phone; ?></td>
+                                                        <td class="text-semibold">Orders</td>
+                                                        <td>
+                                                            <a target="_blank" href="<?= base_url('orders/detail/' . $order_code .'/'); ?>" class="btn-link">See Order Details</a>
+                                                        </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td class="text-semibold">Amount Expected To Pay</td>
+                                                        <td>
+                                                            <?= ngn(($order->amount + $order->delivery_charge)); ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-semibold">Paid From</td>
+                                                        <td>
+                                                            <?= $order->bank; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-semibold">Deposit Type</td>
+                                                        <td>
+                                                            <?= $order->deposit_type; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-semibold">Remark/Comment</td>
+                                                        <td>
+                                                            <?= $order->remark; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-semibold">Proof of Payment</td>
+                                                        <td>
+                                                            <?php if( !empty($order->pop) ) : ?>
+                                                                <a href="<?= STATIC_CATEGORY_PATH . $order->pop; ?>" target="_blank">
+                                                                    <img src="<?= STATIC_CATEGORY_PATH . $order->pop; ?>" class="img img-responsive" style="width: 80px;" />
+                                                                </a>
+                                                            <?php else: ?>
+                                                                <span>No POP uploaded</span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php if($order->payment_made !='success') : ?>
+                                                        <tr>
+                                                        <td class="text-semibold">Action</td>
+                                                        <td>
+                                                            <?= form_open('orders/bank_transfer_process/'); ?>
+                                                                <div class="form-group">
+                                                                    <label for="action_btn">Select An Action</label>
+                                                                    <select name="action" class="form-control" required>
+                                                                        <option value="" selected>-- Select An Action --</option>
+                                                                        <option value="cancelled">Cancel Transaction</option>
+                                                                        <option value="certified">Payment Was received</option>
+                                                                    </select>
+                                                                </div>
+                                                                <input type="hidden" name="order" value="<?= $order_code?>" />
+                                                                <input type="hidden" name="status" value='<?= $order->status; ?>' />
+                                                                <input type="hidden" name="phone" value="<?= $order->phone; ?>" />
+                                                                <input type="hidden" name="name" value="<?= $order->name; ?>" />
+                                                                <div class="form-group">
+                                                                    <button class="btn btn-success" type="submit">Submit</button>
+                                                                </div>
+                                                            <?= form_close(); ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php else: ?>
+                                                        <tr>
+                                                            <td>Action</td>
+                                                            <td><label class="label label-success">Payment has been marked has success</label></td>
+                                                        </tr>
+                                                    <?php endif;?>
                                                     </tbody>
                                                 </table>
                                             </div>

@@ -215,8 +215,71 @@ class Orders extends MY_Controller{
 
     // View payment via bank transfer
     public function bank_transfer_view(){
+        $page_data['page_title'] = 'Bank Transfer Payment Overview';
+        $page_data['pg_name'] = 'orders';
+        $page_data['sub_name'] = 'orders_overview';
+        $page_data['least_sub'] = '';
+        $id = $this->session->userdata('logged_id');
+        $page_data['profile'] = $this->admin->get_profile_details( $id,
+            'first_name,last_name,email,profile_pic, groups');
         $order_code = cleanit($this->uri->segment(3));
+        $page_data['order'] = $this->admin->payment_by_bank_details( $order_code );
+        $page_data['order_code'] = $order_code;
+//        var_dump($page_data['order']); exit;
+        $this->load->view('orders/bank_transfer', $page_data);
+    }
 
 
+    function bank_transfer_process(){
+
+        $order = $o = $this->input->post('order');
+        $action = $this->input->post('action');
+        $status = $this->input->post('status');
+        $phone = $this->input->post('phone');
+        $name = $this->input->post('name');
+        $json_array = json_decode($status, true);
+        $update_array = array();
+        switch ($action) {
+            case 'cancelled':
+                $array = array("cancelled" => array('msg' => "Order was marked as cancelled : Transaction not completed.", 'datetime' => get_now()));
+                $status_array = array_merge($json_array, $array);
+                $update_array['status'] = json_encode($status_array);
+                $update_array['active_status'] = 'cancelled';
+                $update_array['payment_made'] = 'fail';
+                try {
+                    $this->admin->update_data($order, $update_array, 'orders', 'order_code');
+                    // Release the order back
+                    $orders = $this->admin->run_sql("SELECT qty, product_variation_id FROM orders WHERE order_code = '{$order}'")->result();
+                    foreach( $orders as $order ){
+                        $this->admin->set_field('product_variation', 'quantity', "quantity+{$order->qty}", array('id' => $order->product_variation_id));
+                    }
+                    $this->session->set_flashdata('success_msg', "The order has been marked as cancelled.");
+                } catch (Exception $e) {
+                    $this->session->set_flashdata('error_msg', "There was an error updating the order." . $e);
+                }
+                break;
+            case 'certified':
+                $array = array("certified" => array('msg' => "Order payment verification was successful.", 'datetime' => get_now()));
+                $status_array = array_merge($json_array, $array);
+                $update_array['status'] = json_encode($status_array);
+                $update_array['active_status'] = 'certified';
+                $update_array['payment_made'] = 'success';
+                try {
+                    $this->admin->update_data($order, $update_array, 'orders', 'order_code');
+                    $this->session->set_flashdata('success_msg', "The order has been marked has certified/success.");
+                } catch (Exception $e) {
+                    $this->session->set_flashdata('error_msg', "There was an error updating the order.");
+                }
+                // send SMS to the user First Install Africasta
+//                $buyer_message = "Dear {$name}, your order {$order} payment has been verified. Kindly login to your Onitshamarket.com account to view order status.";
+//                $sms_array = array( $phone => $buyer_message );
+//                $this->load->library('AfricaSMS', $sms_array);
+//                $this->africasms->sendsms();
+                break;
+            default:
+                break;
+        }
+//        die( $order );
+        redirect( 'orders/bank_transfer_view/' . $o .'/');
     }
 }

@@ -57,7 +57,12 @@
 										<tr>
                                             <td style="display: none;"><?= $order->id; ?></td>
 											<td><a title="Click to see more details for this order" class="btn-link" href="<?= base_url('orders/detail/' . $order->order_code .'/'); ?>"><?= $order->order_code; ?></a></td>
-                                            <td class="text-center"><?= paymentMethod( $order->payment_method); ?></td>
+                                            <td class="text-center">
+                                                <?= paymentMethod( $order->payment_method); ?>
+                                                <?php if($order->payment_method == 3): ?>
+                                                    (<a class="btn-link" href="<?= base_url('orders/bank_transfer_view/' . $order->order_code .'/'); ?>">View Detail</a>)
+                                                <?php endif; ?>
+                                            </td>
 											<td class="text-center"><?= $order->qty; ?></td>
 											<td><?= ngn($order->amount * $order->qty); ?></td>
 											<td><?= date('h:ia - l, dS F, Y', strtotime($order->order_date)); ?></td>
