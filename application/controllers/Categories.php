@@ -167,7 +167,7 @@ class Categories extends MY_Controller
 		if ($this->input->post()) {
 			$option = $this->input->post('options');
 			if (!empty($option)) {
-				$option_explode = explode(',', $option);
+				$option_explode = explode(',', trim($option));
 				$opt = json_encode($option_explode);
 			} else {
 				$opt = '';
@@ -175,7 +175,7 @@ class Categories extends MY_Controller
 			$multiple = ($this->input->post('multiple') === 'on') ? true : false;
 			$data = array(
 				'spec_name' => cleanit($this->input->post('spec_name')),
-				'options' => $opt,
+				'options' => trim($opt),
 				'multiple_options' => $multiple,
 				'description' => cleanit($this->input->post('description'))
 			);
@@ -205,7 +205,7 @@ class Categories extends MY_Controller
 			// update
 			$option = $this->input->post('options');
 			if (!empty($option)) {
-				$option_explode = explode(',', $option);
+				$option_explode = explode(',', trim($option));
 				$opt = json_encode($option_explode);
 			} else {
 				$opt = '';
