@@ -211,4 +211,12 @@ class Orders extends MY_Controller{
             }
         }
     }
+
+
+    // View payment via bank transfer
+    public function bank_transfer_view(){
+        $order_code = cleanit($this->uri->segment(3));
+
+
+    }
 }
