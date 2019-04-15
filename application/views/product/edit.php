@@ -775,7 +775,7 @@
             removeBtn.prop('disabled', false);
             file._captionLabel = Dropzone.createElement("<span class='text-sm text-dark'> &nbsp;&nbsp; Make this the featured Image &nbsp; </span> &nbsp;&nbsp; ");
             file._captionBox = Dropzone.createElement(`<input id="${file.name}" type='radio' name='featured_image' value="${file.name}">`);
-            file._deleteBtn = Dropzone.createElement(`<button type="button" class='btn btn-xs dz-cancel btn-danger btn-delete-image' data-img-name="${file.name}" style="margin:5px;" data-dz-remove=""> &nbsp;&nbsp; Delete This Image&nbsp; </button> &nbsp;&nbsp;`);
+            file._deleteBtn = Dropzone.createElement(`<button type="button" class='btn btn-xs dz-cancel btn-danger btn-delete-image' onclick="deleteImage('${file.name}')" style="margin:5px;" data-dz-remove=""> &nbsp;&nbsp; Delete This Image&nbsp; </button> &nbsp;&nbsp;`);
             file.previewElement.appendChild(file._deleteBtn);
             file.previewElement.appendChild(file._captionBox);
             file.previewElement.appendChild(file._captionLabel);
@@ -975,11 +975,6 @@
             let n = $(this).val();
             let resp = addCommas(n);
             $(this).val( resp );
-        });
-
-        $('.btn-delete-image, .dz-cancel').on('click', function(e){
-            e.preventDefault();
-            alert('You clicked me');
         });
 
         let product_description = `<?= $product->product_description; ?>`;
