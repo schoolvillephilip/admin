@@ -977,10 +977,10 @@
             $(this).val( resp );
         });
 
-        $('.btn-delete-image').on('click', function(e){
+        $('.btn-delete-image, .dz-cancel').on('click', function(e){
             e.preventDefault();
             alert('You clicked me');
-        })
+        });
 
         let product_description = `<?= $product->product_description; ?>`;
         $('#product_description').summernote({
