@@ -1,6 +1,6 @@
 <?php $this->load->view('templates/meta_tags'); ?>
 <style>
-    .product-img{
+    .product-img {
         background-color: #FFFFFF;
     }
 </style>
@@ -48,7 +48,8 @@
                                         <tr>
                                             <td><strong>Seller:</strong></td>
                                             <td>
-                                                <a class="btn-link" href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
+                                                <a class="btn-link"
+                                                   href="<?= base_url('sellers/detail/' . $product->seller_id); ?>"><?= $product->first_name . ' ' . $product->last_name; ?></a>
                                                 <button data-target="#demo-modal-wo-anim" data-toggle="modal"
                                                         class="btn btn-primary btn-sm" style="float: right"><i
                                                             class="demo-pli-lock-user icon-fw"></i>Message
@@ -73,8 +74,9 @@
                                             <td>Model:</td>
                                             <td><?= $product->model; ?></td>
                                         </tr>
-                                        <td>Model:</td>
-                                        <td><?= $product->weight; ?></td>
+                                        <tr>
+                                            <td>Weight:</td>
+                                            <td><?= $product->weight; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Main Color</td>
@@ -184,7 +186,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($variations as $variation) :?>
+                            <?php foreach ($variations as $variation) : ?>
                                 <tr>
                                     <td><?= $variation->variation; ?></td>
                                     <td><?= $variation->quantity; ?></td>
@@ -288,29 +290,30 @@
                     (<?= ucwords($product->first_name . ' ' . $product->last_name); ?>)</h4>
             </div>
             <?= form_open('product/message_seller/'); ?>
-                <div class="modal-body">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">Title</label>
-                                    <input type="text" name="title" class="form-control">
-                                </div>
+            <div class="modal-body">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Title</label>
+                                <input type="text" name="title" class="form-control">
                             </div>
-                            <input type="hidden" name="seller_id" value="<?= $product->seller_id; ?>">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <textarea placeholder="Message" name="message" rows="13" class="form-control"></textarea>
-                                </div>
+                        </div>
+                        <input type="hidden" name="seller_id" value="<?= $product->seller_id; ?>">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <textarea placeholder="Message" name="message" rows="13"
+                                          class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" type="button">Discard</button>
-                    <button class="btn btn-primary" type="submit">Send Message</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Discard</button>
+                <button class="btn btn-primary" type="submit">Send Message</button>
+            </div>
             <?= form_close(); ?>
         </div>
     </div>
