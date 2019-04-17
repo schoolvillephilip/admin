@@ -317,6 +317,15 @@
                             <li class="list-divider"></li>
                         <?php endif ?>
 
+
+                        <li class="<?php if ($pg_name == 'jobs') echo 'active' ?>">
+                            <a href="<?= base_url('jobs'); ?>">
+                                <i class="demo-pli-file"></i>
+                                <span class="menu-title">Jobs</span>
+                            </a>
+                        </li>
+                        <li class="list-divider"></li>
+
                         <li <?php if ($pg_name == 'pro_settings') echo 'class="active"' ?>>
                             <a href="#">
                                 <i class="demo-pli-add-user-star"></i>

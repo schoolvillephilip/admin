@@ -301,6 +301,16 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="col-lg-3 control-label">Actual Weight</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="email" class="form-control"
+                                                                               value="<?= $product->actual_weight; ?>"
+                                                                               name="actual_weight"
+                                                                               placeholder="Actual Weight for the Item">
+                                                                        <span class="text-sm text-dark">Please enter the actual weight for this item</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="col-lg-3 control-label">Weight * (In
                                                                         Kg)</label>
                                                                     <div class="col-lg-7">
@@ -759,9 +769,7 @@
                             if( v.featured === 1 ){
                                 $('#'+v.filename).prop('checked', true);
                             }
-
                             myDropzone.emit("complete", mockFile);
-
                         });
                         let existing_file_count = data.length;
                         myDropzone.options.maxFiles = myDropzone.options.maxFiles - existing_file_count;
@@ -781,7 +789,6 @@
             file.previewElement.appendChild(file._captionLabel);
             $('input[type="radio"]').first().prop('checked', true);
         });
-
         myDropzone.on("sendingmultiple", function (file, xhr, formData) {
             // Show the total progress bar when upload starts
             let formDataArray = $('.edit_product_form').serializeArray();
@@ -790,7 +797,6 @@
                 formData.append(formDataItem.name, formDataItem.value);
             }
         });
-
         uplodaBtn.on('click', function (e) {
             e.preventDefault();
             if (myDropzone.getQueuedFiles().length > 0) {
@@ -831,7 +837,6 @@
             uplodaBtn.prop('disabled', true);
             removeBtn.prop('disabled', true);
         });
-
     });
 
 </script>
@@ -1063,7 +1068,7 @@
             });
         }
 
-        function deleteFile(src) {
+        function deleteFile(src){
             $.ajax({
                 data: {src : src},
                 type: "POST",

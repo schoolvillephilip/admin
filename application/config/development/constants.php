@@ -88,7 +88,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 // My Constants
 defined('USER_ROLES') OR define('USER_ROLES', array(
     # Administrator
-    1 => array('dashboard', 'product', 'orders', 'brands', 'users','sellers', 'categories', 'sellers', 'account', 'settings', 'states', 'profile_settings', 'help', 'profile', 'questions', 'request', 'broadcast'),
+    1 => array('dashboard', 'product', 'orders', 'brands', 'users','sellers', 'categories', 'sellers', 'account', 'settings', 'states', 'profile_settings', 'help', 'profile', 'questions', 'request', 'broadcast', 'jobs'),
     # Manager
     2 => array('dashboard', 'product', 'brands', 'categories', 'settings', 'states' , 'brands', 'profile', 'request', 'questions'),
     # Accountant

@@ -147,6 +147,7 @@ class Product extends MY_Controller
                 'main_material' => $this->input->post('main_material',true),
                 'dimensions' => cleanit($this->input->post('dimensions',true)),
                 'weight' => cleanit($this->input->post('weight',true)),
+                'actual_weight' => cleanit($this->input->post('actual_weight')),
                 'product_warranty' => $product_warranty,
                 'warranty_type' => $warranty_type,
                 'warranty_address' => $warranty_address,
