@@ -76,6 +76,10 @@
                                         </tr>
                                         <tr>
                                             <td>Weight:</td>
+                                            <td><?= $product->actual_weight; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Weight:</td>
                                             <td><?= $product->weight; ?></td>
                                         </tr>
                                         <tr>
