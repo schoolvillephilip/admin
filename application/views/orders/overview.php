@@ -149,10 +149,11 @@
             type: "POST",
             dataType: 'json',
             success: function (data) {
-                // window.location.href = base_url + "orders/";
+                window.location.reload();
             },
             error: function (data) {
-                // window.location.href = base_url + "orders/";
+                $('#modal_confirm').modal('hide');
+                alert("Error Assigning Agent");
             }
         });
     });
