@@ -153,7 +153,9 @@
                     window.location.reload();
                 }else{
                     $('#modal_confirm').modal('hide');
-                    alert("Error Assigning Agent Ensure you select a valid sales rep");
+                    $('#modal_confirm').on('hidden.bs.modal', function () {
+                        alert("Error Assigning Agent Ensure you select a valid sales rep");
+                    });
                 }
             },
             error: function () {
