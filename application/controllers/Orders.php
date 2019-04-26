@@ -142,6 +142,7 @@ class Orders extends MY_Controller{
         }
 	    $order_code = $this->input->post('order_code');
 	    $agent_id = $this->input->post('agent_id');
+	    if(!empty($order_code) && !empty($agent_id)):
         try {
             // Mail the agent
             $this->admin->update_data($order_code, array('agent' => $agent_id), 'orders',  'order_code');
@@ -151,6 +152,7 @@ class Orders extends MY_Controller{
         } catch (Exception $e) {
             $this->session->set_flashdata('error_msg','There was an error performing the action.');
         }
+	    endif;
         echo json_encode(array('status' => 0));
         exit;
     }

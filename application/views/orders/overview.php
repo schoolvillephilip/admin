@@ -149,11 +149,16 @@
             type: "POST",
             dataType: 'json',
             success: function (data) {
-                window.location.reload();
+                if(data.status === 1){
+                    window.location.reload();
+                }else{
+                    $('#modal_confirm').modal('hide');
+                    alert("Error Assigning Agent Ensure you select a valid sales rep");
+                }
             },
-            error: function (data) {
+            error: function () {
                 $('#modal_confirm').modal('hide');
-                alert("Error Assigning Agent");
+                alert("Error Assigning Agent contact webmaster");
             }
         });
     });
